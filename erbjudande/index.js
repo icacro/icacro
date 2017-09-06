@@ -6,6 +6,7 @@
 		'.bookning-container { background: none; }' +
 		'.bookning-container::before { display: none; }' +
 		'.category-bookning-section .ruler { margin-top: 3rem; border-bottom: 1px solid #d9d6d2; }' + 
+		'.category-bookning-section p { font-size: 1.4rem; }' + 
 		'.news-module-container .item-module { width: auto; }' +
 		'.ica-card-module { float: none; }' +
 		'.ica-card-module .heading-icatext { margin-bottom: 5px; }' +
