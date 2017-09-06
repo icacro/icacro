@@ -1,6 +1,10 @@
 (function($) {
 	'use strict';
 
+	if (/cro-fromlogin/.test(window.location.href)) {
+		window.location.replace('https://www.ving.se/ica-erbjudanden?partner=icakort&utm_source=ica&utm_medium=partnership&utm_campaign=discount');
+	}
+
 	var styles = '<style type="text/css">' +
 		'@media only screen and (min-width: 980px) { .cro .hero-with-main .main { margin-top: -35rem; } }' +
 		'@media only screen and (min-width: 700px) and (max-width: 979px) { .cro .hero-with-main .main { margin-top: -25rem; } }' +
@@ -20,21 +24,25 @@
 		'.cro .skaffa-ica-kort p { display: inline-block; margin: 10px 0 0 10px; font-size: 1.4rem; font-weight: bold; }' + 
 		'.cro .skaffa-ica-kort .button { float: right; margin: 6px 0 0 0; }' + 
 		'</style>';
-	var ctaTarget = 'https://www.ica.se/logga-in/?returnurl=https%3a%2f%2fwww.ica.se%2fErbjudanden%2fNojeserbjudanden%2fVing%2f';
+	var returnUrl = encodeURIComponent('https://www.ica.se/erbjudanden/nojeserbjudanden/ving/?cro-fromlogin');
+	var ctaTarget = 'https://www.ica.se/logga-in/?returnurl=' + returnUrl;
 	var ctaHtml = '<div class="column size20of20 lg_size12of20 full-bleed-background pl" style="background-color: white;">' +
 		'<h1>Spara alltid minst 600:- per resa</h1>' +
 		'<p>' + $('.article-name').find('p').text() + '</p>' +
 		'<a href="' + ctaTarget + '" class="button button--auto-width">Klicka här för resor och rabatter</a>' +
 		'<div class="ruler"></div>' +
 		'</div>';
-	var getCardTarget = 'https://www.ica.se/ansokan/?returnurl=https%3a%2f%2fwww.ica.se%2fErbjudanden%2fNojeserbjudanden%2fVing%2f'
+	var getCardTarget = 'https://www.ica.se/ansokan/?returnurl='  + returnUrl;
 	var getCardHtml = '<div class="skaffa-ica-kort pl grid_fluid">' +
     	'<div class="column size20of20">' +
     	'<img src="/Templates/CardBank/Views/images/ica-card-big.png">' +
     	'<p>Skaffa ICA-kort och ta del av alla erbjudanden</p>' +
     	'<a href="' + getCardTarget +'" class="button button--small">Få rabatt</a>' +
 		'</div>' +
-		'</div>'
+		'</div>';
+	var heroHtml = '<source srcset="/imagevaultfiles/id_167759/cf_259/header_ving_480x300.jpg?" media="(max-width: 479px)">' +
+		'<source srcset="/imagevaultfiles/id_167760/cf_259/header_ving_980x430.jpg?" media="(max-width: 979px)">' +
+		'<img src="/imagevaultfiles/id_167761/cf_259/header_ving_1900x480.jpg?" alt="Header image" class="lazyNoscriptActive">';
 
 	var main = $('.category-bookning-section .column:nth-child(1)');
 	var side = $('.category-bookning-section .column:nth-child(2)');
@@ -54,6 +62,7 @@
 		$('body').addClass('cro');
 
 		hero.prepend(getCardHtml);
+		hero.find('.image-header').html(heroHtml); // ersätt hero-bilder med motsvarande utan prisblobb
 
 		side.html('');
 		side.addClass('news-module-container');
