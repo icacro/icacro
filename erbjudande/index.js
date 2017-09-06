@@ -12,6 +12,9 @@
 		'.ica-card-module .heading-icatext { margin-bottom: 5px; }' +
 		'.ica-card-module a { color: #A02971; }' +
 		'.ica-card-module p { line-height: 1.3; margin-bottom: .5em; }' +
+		'.ica-kort-icon { height: 4rem; display: inline-block; }' +
+		'.skaffa-ica-kort { position: absolute; z-index: 1; background-color: #D1C1D9; /* width: 100%; */ display: flex; flex-wrap: wrap; }' +
+		'.skaffa-ica-kort { display: inline-block; font-weight: bold; }' + 
 		'</style>';
 	var ctaTarget = 'https://';
 	var ctaHtml = '<div class="column size20of20 lg_size12of20 full-bleed-background pl" style="background-color: white;">' +
@@ -20,6 +23,13 @@
 		'<a href="' + ctaTarget + '" class="button button--auto-width">Klicka här för resor och rabatter</a>' +
 		'<div class="ruler"></div>' +
 		'</div>';
+	var getCardHtml = '<div class="skaffa-ica-kort pl grid-fluid">' +
+    	'<div class="column size20of20">' +
+    	'<img src="/Templates/CardBank/Views/images/ica-card-big.png" class="ica-kort-icon">' +
+    	'<p>Skaffa ICA-kort och ta del av alla erbjudanden</p>' +
+    	'<a href="#" class="button button--small">Få rabatt</a>' +
+		'</div>' +
+		'</div>'
 
 	var main = $('.category-bookning-section .column:nth-child(1)');
 	var side = $('.category-bookning-section .column:nth-child(2)');
