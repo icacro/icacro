@@ -6,23 +6,32 @@
 	}
 
 	var styles = '<style type="text/css">' +
-		'@media only screen and (min-width: 980px) { .cro .hero-with-main .main { margin-top: -35rem; } }' +
-		'@media only screen and (min-width: 700px) and (max-width: 979px) { .cro .hero-with-main .main { margin-top: -25rem; } }' +
+		'@media only screen and (min-width: 980px) { .cro .hero-with-main .main { margin-top: -22rem; } }' +
+		'@media only screen and (min-width: 700px) and (max-width: 979px) { .cro .hero-with-main .main { margin-top: -20rem; } }' +
 		'@media only screen and (max-width: 699px) { .cro .hero-with-main .main { margin-top: auto; } }' +
+		'@media only screen and (max-width: 480px) {' +
+            '.cro .skaffa-ica-kort img { float: left; }'+
+            '.cro .skaffa-ica-kort p { display: block !important; }'+
+            '.cro .skaffa-ica-kort .button { float: none !important; }'+
+        '}' +
+		'@media only screen and (min-width: 480px) { .cro .top-hero-header .logo-type { top: 90px; } }' +
+        '@media only screen and (max-width: 400px) { .cro .top-hero-header .logo-type { top: 95px !important; } }' +
+		'.cro .cro-hero-container { width: 100%; position: absolute; z-index: 1; }' +
+        '.cro .top-hero-header .logo-type { top: 75px; }' +
 		'.cro .bookning-container { background: none; }' +
 		'.cro .bookning-container::before { display: none; }' +
-		'.cro .category-bookning-section p { font-size: 1.4rem; }' + 
-		'.cro .category-bookning-section .ruler { margin-top: 3rem; border-bottom: 1px solid #d9d6d2; }' + 
+		'.cro .category-bookning-section p { font-size: 1.4rem; }' +
+		'.cro .category-bookning-section .ruler { margin-top: 3rem; border-bottom: 1px solid #d9d6d2; }' +
 		'.cro .news-module-container .item-module { width: auto; }' +
 		'.cro .ica-card-module { float: none; }' +
 		'.cro .ica-card-module .heading-icatext { margin-bottom: 5px; }' +
 		'.cro .ica-card-module a { color: #A02971; text-decoration: none; }' +
 		'.cro .ica-card-module p { line-height: 1.3; margin-bottom: .5em; }' +
-		'.cro .skaffa-ica-kort { position: absolute; z-index: 1; background-color: #D1C1D9; width: 100%; }' +
-		'.cro .skaffa-ica-kort > div { max-width: 1220px; margin: 0 auto; padding: 0 20px; }' +
-		'.cro .skaffa-ica-kort img { float: left; height: 4rem; display: inline-block; }' +
-		'.cro .skaffa-ica-kort p { display: inline-block; margin: 10px 0 0 10px; font-size: 1.4rem; font-weight: bold; }' + 
-		'.cro .skaffa-ica-kort .button { float: right; margin: 6px 0 0 0; }' + 
+		'.cro .skaffa-ica-kort { margin: 0; background-color: #D1C1D9; }' +
+		'.cro .skaffa-ica-kort > div { display: block; max-width: 1220px; margin: 0 auto; padding: 0 20px; }' +
+		'.cro .skaffa-ica-kort img { height: 4rem; display: inline-block; vertical-align: inherit; }' +
+		'.cro .skaffa-ica-kort p { display: inline-block; margin: 10px 0 0 10px; font-size: 1.4rem; font-weight: bold; }' +
+		'.cro .skaffa-ica-kort .button { float: right; margin: 6px 0 0 0; }' +
 		'</style>';
 	var returnUrl = encodeURIComponent('https://www.ica.se/erbjudanden/nojeserbjudanden/ving/?cro-fromlogin');
 	var ctaTarget = 'https://www.ica.se/logga-in/?returnurl=' + returnUrl;
@@ -33,11 +42,13 @@
 		'<div class="ruler"></div>' +
 		'</div>';
 	var getCardTarget = 'https://www.ica.se/ansokan/?returnurl='  + returnUrl;
-	var getCardHtml = '<div class="skaffa-ica-kort pl grid_fluid">' +
+	var getCardHtml = '<div class="cro-hero-container">' +
+		'<div class="skaffa-ica-kort pl grid_fluid">' +
     	'<div class="column size20of20">' +
     	'<img src="/Templates/CardBank/Views/images/ica-card-big.png">' +
     	'<p>Skaffa ICA-kort och ta del av alla erbjudanden</p>' +
     	'<a href="' + getCardTarget +'" class="button button--small">Få rabatt</a>' +
+		'</div>' +
 		'</div>' +
 		'</div>';
 	var heroHtml = '<source srcset="/imagevaultfiles/id_167759/cf_259/header_ving_480x300.jpg?" media="(max-width: 479px)">' +
@@ -49,6 +60,7 @@
 	var saknarInloggning = $('.news-module-container .ica-card-module');
 	var villkor = $('.text-module', $('.composition-modules .column:nth-child(1)'));
 	var hero = $('.top-hero-header');
+	var vingLogo = hero.find('.logo-type');
 
 
 	addStyles();
@@ -62,7 +74,8 @@
 		$('body').addClass('cro');
 
 		hero.prepend(getCardHtml);
-		hero.find('.image-header').html(heroHtml); // ersätt hero-bilder med motsvarande utan prisblobb
+        hero.find('.image-header').html(heroHtml); // ersätt hero-bilder med motsvarande utan prisblobb
+		hero.find('.cro-hero-container').append(vingLogo); // flytta vingloggan
 
 		side.html('');
 		side.addClass('news-module-container');
