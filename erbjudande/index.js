@@ -22,12 +22,12 @@
 		'.cro .bookning-container::before { display: none; }' +
 		'.cro .category-bookning-section p { font-size: 1.4rem; }' +
 		'.cro .category-bookning-section .ruler { margin-top: 3rem; border-bottom: 1px solid #d9d6d2; }' +
-		'.cro .news-module-container .item-module { width: auto; }' +
+		'.cro .category-bookning-section .item-module { width: auto; }' +
 		'.cro .ica-card-module { float: none; }' +
 		'.cro .ica-card-module .heading-icatext { margin-bottom: 5px; }' +
 		'.cro .ica-card-module a { color: #A02971; text-decoration: none; }' +
 		'.cro .ica-card-module p { line-height: 1.3; margin-bottom: .5em; }' +
-		'.cro .skaffa-ica-kort { margin: 0; background-color: #D1C1D9; }' +
+		'.cro .skaffa-ica-kort { margin: 0; background-color: #E9BED7; }' +
 		'.cro .skaffa-ica-kort > div { display: block; max-width: 1220px; margin: 0 auto; padding: 0 20px; }' +
 		'.cro .skaffa-ica-kort img { height: 4rem; display: inline-block; vertical-align: inherit; }' +
 		'.cro .skaffa-ica-kort p { display: inline-block; margin: 10px 0 0 10px; font-size: 1.4rem; font-weight: bold; }' +
@@ -51,9 +51,11 @@
 		'</div>' +
 		'</div>' +
 		'</div>';
-	var heroHtml = '<source srcset="/imagevaultfiles/id_167759/cf_259/header_ving_480x300.jpg?" media="(max-width: 479px)">' +
+	var heroHtml = '<picture class="image-header">' +
+		'<source srcset="/imagevaultfiles/id_167759/cf_259/header_ving_480x300.jpg?" media="(max-width: 479px)">' +
 		'<source srcset="/imagevaultfiles/id_167760/cf_259/header_ving_980x430.jpg?" media="(max-width: 979px)">' +
-		'<img src="/imagevaultfiles/id_167761/cf_259/header_ving_1900x480.jpg?" alt="Header image" class="lazyNoscriptActive">';
+		'<img src="/imagevaultfiles/id_167761/cf_259/header_ving_1900x480.jpg?" alt="Header image" class="lazyNoscriptActive">' +
+		'</picture>';
 
 	var main = $('.category-bookning-section .column:nth-child(1)');
 	var side = $('.category-bookning-section .column:nth-child(2)');
@@ -74,7 +76,7 @@
 		$('body').addClass('cro');
 
 		hero.prepend(getCardHtml);
-        hero.find('.image-header').html(heroHtml); // ersätt hero-bilder med motsvarande utan prisblobb
+        hero.find('.img-wrapper').html(heroHtml); // ersätt hero-bilder med motsvarande utan prisblobb
 		hero.find('.cro-hero-container').append(vingLogo); // flytta vingloggan
 
 		side.html('');
