@@ -8,7 +8,10 @@
                 '.cro .recipe-preamble { font-size: 20px; line-height: 1.4; }' +
                 '.cro .recipe-header__difficulty { color: #808283; font-size: 18px; }' +
                 '.cro .recipe-header__comments { display: none; }' +
-                '.cro .button { background-color: #6B3250; }' +
+                '.cro .js-recipe-save,' +
+                '.cro .js-open-shoppinglist-modal,' +
+                '.cro .comments__header .button { background-color: #6B3250; }' +
+                '.cro .comments__header .button:hover { background-color: #DC438C; }' +
                 '.cro .rating-stars[data-rating^=\'5\'] g,' +
                 '.cro .rating-stars[data-rating^=\'4\'] .rating-stars__five ~ g,' +
                 '.cro .rating-stars[data-rating^=\'3\'] .rating-stars__four ~ g,' +
@@ -89,6 +92,9 @@
             var howto = $('.recipe-content #recipe-howto');
             divider.before(howto);
             divider.after(ingredients);
+
+            // ändra hover-färg på timerknappar
+            howto.find('.js-track-cookmode-timeropen').removeClass('green blue');
 
             // lägg till coachmarks för inköpsliste-CTA
             var coachmarkInkopslista = '<div class="coachmark-arrow coachmark-arrow--left-up">' +
