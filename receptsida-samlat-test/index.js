@@ -49,10 +49,13 @@
                 // kommentarer
                 '.cro .comments { background-color: transparent; margin: auto; }' +
                 '.cro .comments__inner-wrapper { max-width: none; padding: 0; }' +
+                '.cro .comments__icon { line-height: inherit; margin: 0; position: static; font-size: inherit; }' +
                 '.cro .comments__icon svg { display: none; }' +
-                '.cro .comments__icon .comments__icon__text { color: #3f3f40; position: static; }' +
+                '.cro .comments__icon .comments__icon__text { color: #3f3f40; position: static; font-size: 24px; }' +
                 '.cro .comments__icon .comments__icon__text:before { content: \'(\'; }' +
                 '.cro .comments__icon .comments__icon__text:after { content: \')\'; }' +
+                '.cro .comments__header__text { float: left; margin-right: 10px; }' +
+                '.cro .comments__header .button { margin: 0; vertical-align: initial; }' +
                 '.cro .comments__form .button:last-child { display: none; }' +
                 '.cro .cro-triangle-icon { position: relative; }' +
                 '.cro .cro-triangle-icon:before {' +
