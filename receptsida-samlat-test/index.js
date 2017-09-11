@@ -45,6 +45,27 @@
 
                 '.cro .servings-warning.active{margin-bottom: 30px;}' +
                 '.cro #recipe-howto > h3{margin-top: 20px;}' +
+
+                // kommentarer
+                '.cro .comments { background-color: transparent; margin: auto; }' +
+                '.cro .comments__inner-wrapper { max-width: none; padding: 0; }' +
+                '.cro .comments__icon svg { display: none; }' +
+                '.cro .comments__icon .comments__icon__text { color: #3f3f40; position: static; }' +
+                '.cro .comments__icon .comments__icon__text:before { content: \'(\'; }' +
+                '.cro .comments__icon .comments__icon__text:after { content: \')\'; }' +
+                '.cro .comments__form .button:last-child { display: none; }' +
+                '.cro .cro-triangle-icon { position: relative; }' +
+                '.cro .cro-triangle-icon:before {' +
+                    'content: \'\';' +
+                    'width: 0;' +
+                    'height: 0;' +
+                    'border-left: 6px solid transparent;' +
+                    'border-right: 6px solid transparent;' +
+                    'border-top: 6px solid #a02971;' +
+                    'position: absolute;' +
+                    'top: 5px;' +
+                    'right: 0;' +
+                '}' +
                 '</style>';
 
             $('head').append(styles);
@@ -77,6 +98,10 @@
         },
         manipulateDom: function () {
             $('body').addClass('cro');
+            if ($('#hdnIcaState').val()) {
+                $('body').addClass('cro-logged-in');
+                $('.comments__header .button').click();
+            }
 
             // flytta svårighetsgrad ovanför rubriken
             var difficulty = $('.recipe-header__difficulty');
@@ -108,6 +133,9 @@
                 '</svg>' +
                 '</div>';
             $('.cro .js-open-shoppinglist-modal').after(coachmarkInkopslista);
+
+            var triangleIcon = '<span class="cro-triangle-icon"></span>';
+            $('.comments__list__show-more').append(triangleIcon);
 
             this.triggerCookingMode();
         }
