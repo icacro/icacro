@@ -9,14 +9,16 @@
                 '.cro .recipe-header__difficulty { color: #808283; font-size: 18px; }' +
                 '.cro .recipe-header__comments { display: none; }' +
                 '.cro .js-recipe-save,' +
-                '.cro .js-open-shoppinglist-modal,' +
+                '.cro .js-open-shoppinglist-modal:not(.button--secondary),' +
                 '.cro .comments__header .button { background-color: #6B3250; }' +
-                '.cro .comments__header .button:hover { background-color: #DC438C; }' +
-                '.cro .rating-stars[data-rating^=\'5\'] g,' +
-                '.cro .rating-stars[data-rating^=\'4\'] .rating-stars__five ~ g,' +
-                '.cro .rating-stars[data-rating^=\'3\'] .rating-stars__four ~ g,' +
-                '.cro .rating-stars[data-rating^=\'2\'] .rating-stars__three ~ g,' +
-                '.cro .rating-stars[data-rating^=\'1\'] .rating-stars__two ~ g { fill: #6B3250; }' +
+                '.cro .comments__header .button:hover,' +
+                '.cro .js-open-shoppinglist-modal:not(.button--secondary):hover { background-color: #DC438C; }' +
+                // Struntar i att färga ratingstjärnor
+                // '.cro .rating-stars[data-rating^=\'5\'] g,' +
+                // '.cro .rating-stars[data-rating^=\'4\'] .rating-stars__five ~ g,' +
+                // '.cro .rating-stars[data-rating^=\'3\'] .rating-stars__four ~ g,' +
+                // '.cro .rating-stars[data-rating^=\'2\'] .rating-stars__three ~ g,' +
+                // '.cro .rating-stars[data-rating^=\'1\'] .rating-stars__two ~ g { fill: #6B3250; }' +
                 '.cro .custom-select select { font-size: 12px; padding: 9px 32px 6px 11px; }' +
                 '.cro .ingredients ul { list-style-type: none; padding: 0; }' +
                 '.cro .ingredients li:first-child { border-top: solid 1px #D5D7DA; }' +
@@ -42,12 +44,13 @@
                 '.cro #recipe-howto .howto-steps > h2,' +
                 '.cro #recipe-howto .howto-steps > h3,' +
                 '.cro #recipe-howto .howto-steps > p{display: none!important;}' +
+                '.cro .js-track-cookmode-timeropen, .cro .js-track-cookmode-timeropen:hover, .cro .js-track-cookmode-timeropen:active { color: #d91463; background-color: #fbe7ef; }' +
 
                 '.cro .servings-warning.active{margin-bottom: 30px;}' +
                 '.cro #recipe-howto > h3{margin-top: 20px;}' +
 
                 // kommentarer
-                '.cro .comments { background-color: transparent; margin: auto; }' +
+                '.cro .comments { background-color: transparent; }' +
                 '.cro .comments__inner-wrapper { max-width: none; padding: 0; }' +
                 '.cro .comments__icon { line-height: inherit; margin: 0; position: static; font-size: inherit; }' +
                 '.cro .comments__icon svg { display: none; }' +
@@ -57,16 +60,29 @@
                 '.cro .comments__header__text { float: left; margin-right: 10px; }' +
                 '.cro .comments__header .button { margin: 0; vertical-align: initial; }' +
                 '.cro .comments__form .button:last-child { display: none; }' +
+                '.cro .comments__list { padding: 0 20px; border-radius: 4px; background-color: #fefefe; border: solid 1px #d5d7da; }' +
+                '.cro .comments__list__item-wrapper:first-child { border: none; }' +
+                '.cro .comments__list__header { display: flex; }' +
+                '.cro .comments__list__body, .cro .comments__list__date { color: #808283; }' +
+                '.cro .comments__list__name, .cro .comments__list__date { margin: 0; }' +
+                '.cro .comments__list__name { flex-grow: 1; text-transform: none; }' +
+                '.cro .comments__list__date { margin-right: 2rem; }' +
+                '.cro .comments__list__report { display: block; order: 3; float: none; }' +
+                '.cro .comments__list__report--right { display: none; }' +
+                '.cro .comments__list__report a { padding: 0; }' +
+                '.cro .cro-close-icon { fill: #d5d7da !important; }' +
+                '.cro .comments__list__show-more { border: none; }' +
+                '.cro .comments__list__show-more .button { padding: 0; font-weight: normal; height: auto; line-height: inherit; margin: 0; min-width: 19rem; }' +
                 '.cro .cro-triangle-icon { position: relative; }' +
                 '.cro .cro-triangle-icon:before {' +
                     'content: \'\';' +
                     'width: 0;' +
                     'height: 0;' +
-                    'border-left: 6px solid transparent;' +
-                    'border-right: 6px solid transparent;' +
-                    'border-top: 6px solid #a02971;' +
+                    'border-left: 7px solid transparent;' +
+                    'border-right: 7px solid transparent;' +
+                    'border-top: 8px solid #a02971;' +
                     'position: absolute;' +
-                    'top: 5px;' +
+                    'top: 6px;' +
                     'right: 0;' +
                 '}' +
                 '</style>';
@@ -97,6 +113,13 @@
             $(document).on('click', '.cooking-step__check', function () {
                 $('.ta-next').removeClass('ta-next');
                 $($('.cooking-step:not(.completed)')[0]).addClass('ta-next');
+            });
+
+            $(document).on('click', '.comments__list__show-more .button', function () {
+                var closeIcon = '<svg class="cro-close-icon" viewBox="0 0 12 12" width="12px" height="12px">' +
+                    '<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/Assets/icons/sprite.svg#close"></use>' +
+                    '</svg>';
+                $('.comments__list__report a').html(closeIcon);
             });
         },
         manipulateDom: function () {
@@ -137,8 +160,15 @@
                 '</div>';
             $('.cro .js-open-shoppinglist-modal').after(coachmarkInkopslista);
 
+            var closeIcon = '<svg class="cro-close-icon" viewBox="0 0 12 12" width="12px" height="12px">' +
+                '<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/Assets/icons/sprite.svg#close"></use>' +
+                '</svg>';
+            $('.comments__list__report a').html(closeIcon);
+
+            var visaFler = $('.comments__list__show-more');
+            $('.comments__inner-wrapper').append(visaFler);
             var triangleIcon = '<span class="cro-triangle-icon"></span>';
-            $('.comments__list__show-more').append(triangleIcon);
+            visaFler.append(triangleIcon);
 
             this.triggerCookingMode();
         }
