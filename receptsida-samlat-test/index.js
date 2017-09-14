@@ -70,18 +70,35 @@
                 '.cro .rating-stars svg  { width: 83px; }' +
                 '.cro .rating-stars .recipe-meta  { font-size: 12px; font-weight: normal; }' +
                 '.cro .comments__form { max-width: none; }' +
-                '.cro .comments__form .cro-input-wrapper { display: flex; }' +
-                '.cro .comments__form .input-text--textarea { flex-grow: 1; margin: 0; }' +
-                '.cro .comments__form .cro-input-wrapper .input-text__input-wrapper {  font-size: 0; display: block; border: solid 1px #808283; border-top-left-radius: 4px; border-bottom-left-radius: 4px; }' +
-                '.cro .comments__form textarea { height: 71px; padding: 5px 30px 5px 5px !important; width: 100%; margin: 0; border: none !important; font-family: icatext, sans-serif; font-size: 14px; font-style: italic; }' +
+                '.cro .comments__form .input-text__input-wrapper {' +
+                    'display: flex;' +
+                    'font-size: 0;' +
+                '}' +
+                '.cro .comments__form textarea {' +
+                    'border-bottom-left-radius: 4px !important;' +
+                    'border-top-left-radius: 4px;' +
+                    'border-top-right-radius: 0;' +
+                    'border-bottom-right-radius: 0;' +
+                    'flex-grow: 1;' +
+                    'height: 71px;' +
+                    'padding: 5px 30px 5px 5px !important;' +
+                    'width: 100%;' +
+                    'margin: 0;' +
+                    'border: solid 1px #808283 !important;' +
+                    'font-family: icatext, sans-serif;' +
+                    'font-size: 14px;' +
+                    'font-style: italic;' +
+                '}' +
                 '@media only screen and (min-width: 768px) { .cro .comments__form textarea { height: 51px; } }' +
                 '@media only screen and (min-width: 1024px) { .cro .comments__form textarea { height: 41px; } }' +
-                '.cro .input-text.input-text--textarea .input-text__icon { right: 1rem; }' +
-                '.cro .comments__form .cro-input-wrapper { display: flex; }' +
-                '.cro .comments__form .cro-input-wrapper .button { line-height: 73px; border-bottom-left-radius: 0; border-top-left-radius: 0; border-bottom-right-radius: 4px; height: auto; border-top-right-radius: 4px; margin: 0; }' +
-                '@media only screen and (min-width: 768px) { .cro .comments__form .cro-input-wrapper .button { line-height: 53px; } }' +
-                '@media only screen and (min-width: 1024px) { .cro .comments__form .cro-input-wrapper .button { line-height: 43px; } }' +
+                '.cro .input-text.input-text--textarea .input-text__icon { right: 19rem; }' +
+                '.cro .comments__form .input-text__input-wrapper .button { line-height: 71px; border-bottom-left-radius: 0; border-top-left-radius: 0; border-bottom-right-radius: 4px; height: auto; border-top-right-radius: 4px; margin: 0; }' +
+                '@media only screen and (min-width: 768px) { .cro .comments__form .input-text__input-wrapper .button { line-height: 51px; } }' +
+                '@media only screen and (min-width: 1024px) { .cro .comments__form .input-text__input-wrapper .button { line-height: 41px; } }' +
                 '.cro .comments__form .input-text__label { display: none; }' +
+                '.cro .comments__form .checkbox--block { margin: 1rem 0 0 0; }' +
+                '.cro .comments__form .checkbox--block .checkbox__label { font-size: 12px; }' +
+                '.cro .comments__form .checkbox--block .checkbox__label:before { border-width: 2px; }' +
                 '.cro .comments__form .button--link { display: none; }' +
                 '.cro .comments__list { padding: 0 20px; border-radius: 4px; background-color: #fefefe; border: solid 1px #d5d7da; }' +
                 '.cro .comments__list__item-wrapper:first-child { border: none; }' +
@@ -213,14 +230,11 @@
                 $('.comments__form .button:last-child').after($('.recipe-rating-wrapper .rating-stars'));
 
                 // Lägg textarea och skicka-knapp i en flex-wrapper
-                var wrapper = $('<div class="cro-input-wrapper"></div>');
-                wrapper.append($('.comments__form .input-text--textarea'), $('.comments__form .button:not(.button--link)'));
-                $('.recipe-rating-wrapper').after(wrapper);
-
-                $('.cro-input-wrapper').after($('.input-text--textarea .input__error'));
+                $('.comments__form .input-text__input-wrapper').append($('.comments__form .button:not(.button--link)'));
 
                 $('.comments__form .input-text__input').attr('placeholder', 'Har du något bra tips eller bara vill uttrycka din nöjdhet eller missnöjdhet med ord.');
-                $('.comments__form .input-text__input').attr('placeholder', 'Har du något bra tips eller bara vill uttrycka din nöjdhet eller missnöjdhet med ord.');
+
+                $('.comments__form .input-text--textarea').after($('.comments__form .rating-stars'));
             }, 0);
 
             // Flytta kupong
