@@ -4,13 +4,14 @@
     var cro = {
         addStyles: function() {
             var styles = '<style type="text/css">' +
-                '.cro h1 { font-size: 32px; margin-top: 20px; }' +
-                '@media only screen and (min-width: 768px) { .cro h1 { font-size: 38px; } }' +
-                '@media only screen and (min-width: 1024px) { .cro h1 { font-size: 64px; } }' +
-                '.cro .recipe-preamble { font-size: 20px; line-height: 1.4; }' +
+                '.cro h1 { font-size: 32px; margin-top: 20px !important; }' +
+                '@media only screen and (min-width: 768px) { .cro h1 { font-size: 38px !important; } }' +
+                '@media only screen and (min-width: 1024px) { .cro h1 { font-size: 64px !important; } }' +
+                '.cro .recipe-preamble { font-size: 20px; line-height: 1.4; margin-top: 0; }' +
                 '.cro .recipe-header__difficulty { color: #808283; font-size: 18px; }' +
                 '.cro .recipe-header__comments { display: none; }' +
                 '.cro .js-recipe-save,' +
+                '.cro .js-login-return-function,' +
                 '.cro .js-open-shoppinglist-modal:not(.button--secondary),' +
                 '.cro .comments__header .button,' +
                 '.cro .comments__form .button { background-color: #6B3250; }' +
@@ -67,10 +68,12 @@
                 '.cro .recipe-rating-wrapper { margin: 0; padding: 0; }' +
                 '.cro .recipe-rating-wrapper p { display: none; }' +
                 '.cro .recipe-rating-wrapper .arrow-down  { left: -24px; transform: scale(-.5, .5) rotate(0); top: -5px; }' +
+                '.cro .recipe-rating-wrapper > .button { margin-top: 7px; }' +
+                '.cro .rating-stars { display: block; }' +
                 '.cro .rating-stars svg  { width: 83px; }' +
                 '.cro .rating-stars .recipe-meta  { font-size: 12px; font-weight: normal; }' +
                 '.cro .comments__form { max-width: none; }' +
-                '.cro .comments__form .input-text__input-wrapper {' +
+                '.cro .comments__form .input-text--textarea .input-text__input-wrapper {' +
                     'display: flex;' +
                     'font-size: 0;' +
                 '}' +
@@ -89,6 +92,16 @@
                     'font-size: 14px;' +
                     'font-style: italic;' +
                 '}' +
+                '.cro .comments__form input[type="email"] {' +
+                    'border-radius: 4px !important;' +
+                    'padding: 5px 30px 5px 5px !important;' +
+                    'border: solid 1px #808283 !important;' +
+                    'font-family: icatext, sans-serif;' +
+                    'font-size: 14px;' +
+                    'font-weight: normal;' +
+                    'margin: 3px 0 0 0;' +
+                    'height: 38px;' +
+                '}' +
                 '@media only screen and (min-width: 768px) { .cro .comments__form textarea { height: 51px; } }' +
                 '@media only screen and (min-width: 1024px) { .cro .comments__form textarea { height: 41px; } }' +
                 '.cro .input-text.input-text--textarea .input-text__icon { right: 19rem; }' +
@@ -98,7 +111,7 @@
                 '.cro .comments__form .input-text__label { display: none; }' +
                 '.cro .comments__form .checkbox--block { margin: 1rem 0 0 0; }' +
                 '.cro .comments__form .checkbox--block .checkbox__label { font-size: 12px; }' +
-                '.cro .comments__form .checkbox--block .checkbox__label:before { border-width: 2px; }' +
+                '.cro .comments__form .checkbox--block .checkbox__label:before { margin-bottom: -2px; border-width: 2px; }' +
                 '.cro .comments__form .button--link { display: none; }' +
                 '.cro .comments__list { padding: 0 20px; border-radius: 4px; background-color: #fefefe; border: solid 1px #d5d7da; }' +
                 '.cro .comments__list__item-wrapper:first-child { border: none; }' +
@@ -144,7 +157,7 @@
                 $('#recipe-howto > ol').hide();
                 $('.close-button-cookie-mode')[0].click();
                 body.removeClass('ta-hideModal');
-				$('#recipe-howto').find('>ol:first').after(cook);
+                $('#recipe-howto').find('>ol:first').after(cook);
                 $($('.cooking-step:not(.completed)')[0]).addClass('ta-next');
             }
             $('html').removeClass('force-no-scroll');
@@ -226,7 +239,15 @@
             // Recipe-wrapper finns inte förrän senare
             setTimeout(function () {
                 // Flytta ner rating till kommentarsformuläret
-                $('.comments__form').prepend($('.recipe-rating-wrapper'));
+                var commmentsForm = $('.comments__form');
+                if (commmentsForm.length) {
+                    commmentsForm.prepend($('.recipe-rating-wrapper'));
+                } else {
+                    commmentsForm = $('<div class="comments__form"></div>');
+                    commmentsForm.prepend($('.recipe-rating-wrapper'));
+                    $('.comments__inner-wrapper').prepend(commmentsForm);
+                }
+
                 $('.comments__form .button:last-child').after($('.recipe-rating-wrapper .rating-stars'));
 
                 // Lägg textarea och skicka-knapp i en flex-wrapper
@@ -235,6 +256,8 @@
                 $('.comments__form .input-text__input').attr('placeholder', 'Har du något bra tips eller bara vill uttrycka din nöjdhet eller missnöjdhet med ord.');
 
                 $('.comments__form .input-text--textarea').after($('.comments__form .rating-stars'));
+
+                $('.recipe-rating-wrapper h4').after($('.comments__header .button'));
             }, 0);
 
             // Flytta kupong
