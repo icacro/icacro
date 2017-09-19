@@ -138,6 +138,69 @@
                     'top: 6px;' +
                     'right: 0;' +
                 '}' +
+
+                // coachmark
+                '.cro .coachmark-wrapper {' +
+                    'position: absolute;' +
+                    'z-index: 99;' +
+                    'right: 35px;' +
+                    'top: 52px;' +
+                    'opacity: 0;' +
+                    '-webkit-transition: opacity 250ms ease;' +
+                    'transition: opacity 250ms ease;' +
+                '}' +
+                '@media only screen and (max-width: 480px) { .cro .coachmark-wrapper { opacity: 0; } }' +
+                '.cro .coachmark-tooltip--top-right {' +
+                    '-webkit-transform-origin: 100% 0%;' +
+                    'transform-origin: 100% 0%;' +
+                    'border-radius: .8rem 0 .8rem .8rem;' +
+                '}' +
+                '.cro .coachmark-tooltip {' +
+                    'font-family: IcaText;' +
+                    'font-weight: bold;' +
+                    'background: #3F3F40;' +
+                    'color: #FFF;' +
+                    'cursor: pointer;' +
+                    'display: inline-block;' +
+                    'line-height: 1.6rem;' +
+                    'font-size: 1.4rem;' +
+                    'max-width: 35rem;' +
+                    'padding: 1rem;' +
+                    'position: relative;' +
+                    '-webkit-transform: scale(1) translateY(0);' +
+                    'transform: scale(1) translateY(0);' +
+                    '-webkit-transition: opacity 250ms ease, -webkit-transform 250ms ease;' +
+                    'transition: opacity 250ms ease, -webkit-transform 250ms ease;' +
+                    'transition: opacity 250ms ease, transform 250ms ease;' +
+                    'transition: opacity 250ms ease, transform 250ms ease, -webkit-transform 250ms ease;' +
+                '}' +
+                '.cro .coachmark-arrow, .coachmark-tooltip {' +
+                    'cursor: pointer;' +
+                    'display: inline-block;' +
+                '}' +
+                '.cro .coachmark-tooltip--top-right .coachmark-tooltip__arrow::before {' +
+                    'content: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyB3aWR0aD0iMjBweCIgaGVpZ2h0PSIxMHB4IiB2aWV3Qm94PSIwIDAgMjAgMTAiIHZlcnNpb249IjEuMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayI+CiAgICA8IS0tIEdlbmVyYXRvcjogU2tldGNoIDQ2LjIgKDQ0NDk2KSAtIGh0dHA6Ly93d3cuYm9oZW1pYW5jb2RpbmcuY29tL3NrZXRjaCAtLT4KICAgIDx0aXRsZT5hcnJvd191cF9sZWZ0PC90aXRsZT4KICAgIDxkZXNjPkNyZWF0ZWQgd2l0aCBTa2V0Y2guPC9kZXNjPgogICAgPGRlZnM+PC9kZWZzPgogICAgPGcgaWQ9IlN5bWJvbHMiIHN0cm9rZT0ibm9uZSIgc3Ryb2tlLXdpZHRoPSIxIiBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPgogICAgICAgIDxnIGlkPSJhcnJvd191cF9sZWZ0IiBmaWxsPSIjM0YzRjQwIj4KICAgICAgICAgICAgPHBhdGggZD0iTTIwLDAuMzgyMzMyOTYzIEwyMCw5Ljk5NzE1ODY1IEwwLDEwIEM1LjgwNzIwMjU4LDkuOTk4MTA1NzYgMTAuNTc1OTgzNCw4LjExNTk0MDQ3IDE0LjMwNjM0MjYsNC4zNTM1MDQxMSBDMTguMDM2NzAxNywwLjU5MTA2Nzc1MiAxOS45MzQ1ODc1LC0wLjczMjY1NTk2NCAyMCwwLjM4MjMzMjk2MyBaIiBpZD0iVHJpYW5nbGUiPjwvcGF0aD4KICAgICAgICA8L2c+CiAgICA8L2c+Cjwvc3ZnPg==);' +
+                    'right: 0;' +
+                    'top: -1.2rem;' +
+                '}' +
+                '.cro .coachmark-tooltip__arrow::before {' +
+                    'height: 1rem;' +
+                    'position: absolute;' +
+                    'width: 2rem;' +
+                '}' +
+                '.cro .coachmark-tooltip:hover::after {' +
+                    'background: #A02971;' +
+                    'border-radius: 5rem;' +
+                    'content: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4KPCEtLSBHZW5lcmF0ZWQgYnkgSWNvTW9vbi5pbyAtLT4KPCFET0NUWVBFIHN2ZyBQVUJMSUMgIi0vL1czQy8vRFREIFNWRyAxLjEvL0VOIiAiaHR0cDovL3d3dy53My5vcmcvR3JhcGhpY3MvU1ZHLzEuMS9EVEQvc3ZnMTEuZHRkIj4KPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHdpZHRoPSIxMyIgaGVpZ2h0PSIyMiIgdmlld0JveD0iMCAwIDIzIDMyIiBmaWxsPSIjZmZmIj4KPHBhdGggZD0iTTE1LjIyNCAxMy4wOTFsNC41ODIgNC42MDZxMC4zMTUgMC4yOTEgMC4zNjQgMC42OTF0LTAuMTk0IDAuNjY3cS0xLjA0MiAxLjMzMy0yLjM3NiAyLjM3Ni0wLjI2NyAwLjI0Mi0wLjY2NyAwLjE5NHQtMC43MTUtMC4zMzlsLTQuNTgyLTQuNjA2LTQuNjA2IDQuNjA2cS0wLjI5MSAwLjI5MS0wLjY5MSAwLjMzOXQtMC42OTEtMC4xOTRxLTEuMzA5LTEuMDQyLTIuMzUyLTIuMzUyLTAuMjQyLTAuMjkxLTAuMTk0LTAuNjkxdDAuMzM5LTAuNjkxbDQuNjA2LTQuNjA2LTQuNTgyLTQuNTgycS0wLjMxNS0wLjMxNS0wLjM2NC0wLjcxNXQwLjE5NC0wLjY2N3ExLjAxOC0xLjMwOSAyLjM1Mi0yLjM3NiAwLjI5MS0wLjI0MiAwLjY5MS0wLjE5NHQwLjY5MSAwLjM2NGw0LjYwNiA0LjM4OCA0LjU4Mi00LjM4OHEwLjMxNS0wLjMxNSAwLjcxNS0wLjM2NHQwLjY2NyAwLjE5NHExLjMzMyAxLjA0MiAyLjM3NiAyLjM3NiAwLjI0MiAwLjI2NyAwLjE5NCAwLjY2N3QtMC4zNjQgMC43MTV6Ij48L3BhdGg+Cjwvc3ZnPgo=);' +
+                    'height: 2.1rem;' +
+                    'line-height: 3.6rem;' +
+                    'position: absolute;' +
+                    'right: -.8rem;' +
+                    'text-align: center;' +
+                    'top: -.9rem;' +
+                    'width: 2.1rem;' +
+                    'z-index: 1;' +
+                '}' +
                 '</style>';
 
             $('head').append(styles);
@@ -173,6 +236,15 @@
                     '<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/Assets/icons/sprite.svg#close"></use>' +
                     '</svg>';
                 $('.comments__list__report a').html(closeIcon);
+            });
+
+            $(document).on('click', '.cro .coachmark-wrapper', function () {
+                $('.cro .coachmark-wrapper').css('opacity', '0');
+            });
+
+            $(document).on('click', '.cro .js-recipe-save', function () {
+                $('html, body').animate({scrollTop: '0px'}, 300);
+                setTimeout(function() {$('.cro .coachmark-wrapper').css('opacity', '1');}, 350);
             });
         },
         manipulateDom: function () {
@@ -262,6 +334,9 @@
 
             // Flytta kupong
             $('#ingredients-section').append($('.recipe-ad'));
+
+            // Lägg till coachmark för sparat recept
+            $('body').append('<div class="coachmark-wrapper"><div class="coachmark-tooltip coachmark-tooltip--top-right"><span class="coachmark-tooltip__arrow" style="position: absolute; top: 0px; right: 0px; transform: translateX(0px);"></span>Du hittar dina sparade recept här</div></div>');
 
             this.triggerCookingMode();
         }
