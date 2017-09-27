@@ -47,8 +47,17 @@
         ga('send', 'event', 'A/B', action, 'Skapa konto - Lösenord');
       });
     } else {
-      // Spara
+      // Lägg på sparaklick-parametern för att särskilja funktionerna
+      $('.recipe-action-buttons .button.js-login-return-function').on('click', function () {
+        this.href += encodeURIComponent('?sparaklick');
+      });
+
+      // Spara oninloggad
       $('body').on('click', '.recipe-action-buttons .button.js-login-return-function', function () {
+        ga('send', 'event', 'A/B', 'Klick på spara');
+      });
+      // Spara inloggad
+      $('body').on('click', '.recipe-action-buttons .button.js-recipe-save:not(.button--active)', function () {
         ga('send', 'event', 'A/B', 'Klick på spara');
       });
 
