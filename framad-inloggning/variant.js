@@ -71,13 +71,6 @@
 
                 var action = $(this).hasClass('button--heart') ? 'SPARA' : 'KOMMENTERA';
                 self.createModal(action);
-
-                // ga('send', {
-                //     hitType: 'event',
-                //     eventCategory: 'Videos',
-                //     eventAction: 'play',
-                //     eventLabel: 'Fall Campaign'
-                // });
             });
         },
         getIframeStyles: function () {
@@ -253,6 +246,7 @@
 
             $('body').addClass('cro');
 
+            // fäll ut kommentarsformuläret ifall man är inloggad
             if ($('#hdnIcaState').val()) {
                 $('.comments__header .button').click();
             }

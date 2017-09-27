@@ -47,6 +47,11 @@
         ga('send', 'event', 'A/B', action, 'Skapa konto - Lösenord');
       });
     } else {
+      // fäll ut kommentarsformuläret ifall man är inloggad
+      if ($('#hdnIcaState').val()) {
+          $('.comments__header .button').click();
+      }
+
       // Lägg på sparaklick-parametern för att särskilja funktionerna
       $('.recipe-action-buttons .button.js-login-return-function').on('click', function () {
         this.href += encodeURIComponent('?sparaklick');
