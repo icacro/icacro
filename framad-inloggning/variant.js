@@ -110,6 +110,8 @@
             });
 
             setTimeout(function () {
+                self.showLoader();
+                
                 var iframe = $('.cro-iframe-container iframe');
 
                 iframe.on('load', function () {
