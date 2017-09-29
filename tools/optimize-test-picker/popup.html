@@ -1,0 +1,38 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Optimize Test Picker</title>
+    <style type="text/css">
+      body {
+        margin: 10px;
+        white-space: nowrap;
+      }
+
+      h1 {
+        font-size: 15px;
+      }
+
+      #container {
+        /*align-items: center;
+        display: flex;
+        justify-content: space-between;*/
+      }
+    </style>
+    <script src="popup.js"></script>
+  </head>
+  <body>
+    <h1>Optimize Test Picker</h1>
+    <div id="container">
+      <label for="testSegment">Test Segment</label>
+      <input type="number" name="testSegment" />
+
+      <label for="experimentId">Experiment ID</label>
+      <input type="text" name="experimentId" />
+
+      <label for="variantId">Variant</label>
+      <input type="number" name="variantId" />
+
+      <input type="submit" value="GO!" />
+    </div>
+  </body>
+</html>
