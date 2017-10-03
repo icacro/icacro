@@ -1,10 +1,21 @@
+// ==UserScript==
+// @name         Receptsidan: Samlat test
+// @namespace    https://www.ica.se/
+// @version      0.1
+// @description  try to take over the world!
+// @author       You
+// @match        https://www.ica.se/recept/*
+// @match        http://test3-sezvm3485t.ica.ia-hc.net/recept/*
+// @grant        none
+// ==/UserScript==
+
 (function($) {
     'use strict';
 
     var cro = {
         addStyles: function() {
             var styles = '<style type="text/css">' +
-                '.cro h1 { font-size: 32px; margin-top: 20px !important; }' +
+                '.cro h1 { font-size: 32px; margin-top: 20px !important; font-weight: 900; }' +
                 '@media only screen and (min-width: 768px) { .cro h1 { font-size: 38px !important; } }' +
                 '@media only screen and (min-width: 1024px) { .cro h1 { font-size: 64px !important; } }' +
                 '.cro .recipe-preamble { font-size: 20px; line-height: 1.4; margin-top: 0; }' +
@@ -18,41 +29,16 @@
                 '.cro .comments__header .button:hover,' +
                 '.cro .comments__form .button:hover,' +
                 '.cro .js-open-shoppinglist-modal:not(.button--secondary):hover { background-color: #DC438C; }' +
-                // Struntar i att färga ratingstjärnor
-                // '.cro .rating-stars[data-rating^=\'5\'] g,' +
-                // '.cro .rating-stars[data-rating^=\'4\'] .rating-stars__five ~ g,' +
-                // '.cro .rating-stars[data-rating^=\'3\'] .rating-stars__four ~ g,' +
-                // '.cro .rating-stars[data-rating^=\'2\'] .rating-stars__three ~ g,' +
-                // '.cro .rating-stars[data-rating^=\'1\'] .rating-stars__two ~ g { fill: #6B3250; }' +
+                '.cro .js-recipe-save.button--active { color: #eb1f07; background-color: #fde8e6; }' +
+                '.cro .js-recipe-save.button--active svg { fill: #eb1f07; }' +
+                '.cro .js-recipe-save.button--active:hover { color: white; background-color: #DC438C; }' +
+                '.cro .js-recipe-save.button--active:hover svg { fill: white; }' +
                 '.cro .custom-select select { font-size: 12px; padding: 9px 32px 6px 11px; }' +
                 '.cro .ingredients ul { list-style-type: none; padding: 0; }' +
                 '.cro .ingredients li:first-child { border-top: solid 1px #D5D7DA; }' +
                 '.cro .ingredients li { border-bottom: solid 1px #D5D7DA; padding: 10px 0; font-size: 20px; line-height: 1.4; }' +
                 '.cro .ingredients strong { font-size: 20px; margin-top: 20px; display: inline-block; }' +
-                '.cro .coachmark-arrow { font-family: \'icahand\', arial , sans-serif; font-size: 2.4rem; font-weight: normal; position: relative; text-align: left; margin: 10px 0 0 25px; }' +
-                '.cro .ingredients .coachmark-arrow--left-up svg { left: -30px; top: -10px; -webkit-transform: scale(-1, -1) rotate(-20deg); transform: scale(-1, -1) rotate(-20deg); }' +
-                '.cro .ingredients .coachmark-arrow svg { content: \'\'; height: 35px; position: absolute; width: 20px; }' +
                 '.cro .cooking-step__content__instruction { font-size: 20px; line-height: 1.4; }' +
-
-                // css för autostart av laga läge ( saxad från tidigare test)
-                'html.force-no-scroll {overflow: auto!important;}' +
-                '.force-no-scroll.mobile-device body.cro{overflow: auto!important;}' +
-                '.cro.ta-hideModal .modal-container {display: none!important;}' +
-                '.cro .js-start-cooking-mode  {display: none!important;}' +
-                '.cro .pl .checkbox__input:checked+.checkbox__label::before {background: #90b400;border-color: #90b400;}' +
-                '.cro .pl .checkbox:hover .checkbox__label {color: #90b400;}' +
-                '.cro .pl .checkbox:hover .checkbox__label::before {border-color: #90b400;}' +
-                '.cro .cooking-step .checkbox:focus .checkbox__label::before {border-color: #90b400;}' +
-                '.cro .cooking-step.completed .cooking-step__content__instruction {text-decoration: line-through;}' +
-                '.cro .cooking-step.ta-next:not(.completed) {font-weight: bold;margin: 30px 0;}' +
-
-                '.cro #recipe-howto .howto-steps > h2,' +
-                '.cro #recipe-howto .howto-steps > h3,' +
-                '.cro #recipe-howto .howto-steps > p{display: none!important;}' +
-                '.cro .js-track-cookmode-timeropen, .cro .js-track-cookmode-timeropen:hover, .cro .js-track-cookmode-timeropen:active { color: #d91463; background-color: #fbe7ef; }' +
-
-                '.cro .servings-warning.active{margin-bottom: 30px;}' +
-                '.cro #recipe-howto > h3{margin-top: 20px;}' +
 
                 // kommentarer
                 '.cro .comments { background-color: transparent; }' +
@@ -102,6 +88,14 @@
                     'margin: 3px 0 0 0;' +
                     'height: 38px;' +
                 '}' +
+                '@media only screen and (max-width: 767px) { '+
+                    '.cro .comments__form { padding: 15px; }'+
+                    '.cro .comments__form .input-text--textarea .input-text__input-wrapper { display: block;}'+
+                    '.cro .comments__header, .cro .comments__list { margin: 15px; }'+
+                    '.cro .comments__form textarea, .cro .comments__form textarea:focus { font-size: 14px !important; border-radius: 4px !important; margin-bottom: 5px !important; }' +
+                    '.cro .comments__form .input-text__input-wrapper .button { line-height: 43px !important; display: inline-block; border-radius: 5rem !important;} '+
+                    '.cro .input-text.input-text--textarea .input-text__icon { right: 1rem !important; }' +
+                '}' +
                 '@media only screen and (min-width: 768px) { .cro .comments__form textarea { height: 51px; } }' +
                 '@media only screen and (min-width: 1024px) { .cro .comments__form textarea { height: 41px; } }' +
                 '.cro .input-text.input-text--textarea .input-text__icon { right: 19rem; }' +
@@ -119,13 +113,8 @@
                 '.cro .comments__list__body, .cro .comments__list__date { color: #808283; }' +
                 '.cro .comments__list__name, .cro .comments__list__date { margin: 0; }' +
                 '.cro .comments__list__name { flex-grow: 1; text-transform: none; }' +
-                '.cro .comments__list__date { margin-right: 2rem; }' +
-                '.cro .comments__list__report { display: block; order: 3; float: none; }' +
-                '.cro .comments__list__report--right { display: none; }' +
-                '.cro .comments__list__report a { padding: 0; }' +
-                '.cro .cro-close-icon { fill: #d5d7da !important; pointer-events: none; }' +
                 '.cro .comments__list__show-more { border: none; }' +
-                '.cro .comments__list__show-more .button { padding: 0; font-weight: normal; height: auto; line-height: inherit; margin: 0; min-width: 19rem; }' +
+                '.cro .comments__list__show-more .button { padding: 0; height: auto; line-height: inherit; margin: 0; min-width: 19rem; }' +
                 '.cro .cro-triangle-icon { position: relative; }' +
                 '.cro .cro-triangle-icon:before {' +
                     'content: \'\';' +
@@ -138,113 +127,24 @@
                     'top: 6px;' +
                     'right: 0;' +
                 '}' +
-
-                // coachmark
-                '.cro .coachmark-wrapper {' +
-                    'position: absolute;' +
-                    'z-index: 99;' +
-                    'right: 35px;' +
-                    'top: 52px;' +
-                    'opacity: 0;' +
-                    '-webkit-transition: opacity 250ms ease;' +
-                    'transition: opacity 250ms ease;' +
-                '}' +
-                '@media only screen and (max-width: 480px) { .cro .coachmark-wrapper { opacity: 0; } }' +
-                '.cro .coachmark-tooltip--top-right {' +
-                    '-webkit-transform-origin: 100% 0%;' +
-                    'transform-origin: 100% 0%;' +
-                    'border-radius: .8rem 0 .8rem .8rem;' +
-                '}' +
-                '.cro .coachmark-tooltip {' +
-                    'font-family: IcaText;' +
-                    'font-weight: bold;' +
-                    'background: #3F3F40;' +
-                    'color: #FFF;' +
-                    'cursor: pointer;' +
-                    'display: inline-block;' +
-                    'line-height: 1.6rem;' +
-                    'font-size: 1.4rem;' +
-                    'max-width: 35rem;' +
-                    'padding: 1rem;' +
-                    'position: relative;' +
-                    '-webkit-transform: scale(1) translateY(0);' +
-                    'transform: scale(1) translateY(0);' +
-                    '-webkit-transition: opacity 250ms ease, -webkit-transform 250ms ease;' +
-                    'transition: opacity 250ms ease, -webkit-transform 250ms ease;' +
-                    'transition: opacity 250ms ease, transform 250ms ease;' +
-                    'transition: opacity 250ms ease, transform 250ms ease, -webkit-transform 250ms ease;' +
-                '}' +
-                '.cro .coachmark-arrow, .coachmark-tooltip {' +
-                    'cursor: pointer;' +
-                    'display: inline-block;' +
-                '}' +
-                '.cro .coachmark-tooltip--top-right .coachmark-tooltip__arrow::before {' +
-                    'content: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyB3aWR0aD0iMjBweCIgaGVpZ2h0PSIxMHB4IiB2aWV3Qm94PSIwIDAgMjAgMTAiIHZlcnNpb249IjEuMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayI+CiAgICA8IS0tIEdlbmVyYXRvcjogU2tldGNoIDQ2LjIgKDQ0NDk2KSAtIGh0dHA6Ly93d3cuYm9oZW1pYW5jb2RpbmcuY29tL3NrZXRjaCAtLT4KICAgIDx0aXRsZT5hcnJvd191cF9sZWZ0PC90aXRsZT4KICAgIDxkZXNjPkNyZWF0ZWQgd2l0aCBTa2V0Y2guPC9kZXNjPgogICAgPGRlZnM+PC9kZWZzPgogICAgPGcgaWQ9IlN5bWJvbHMiIHN0cm9rZT0ibm9uZSIgc3Ryb2tlLXdpZHRoPSIxIiBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPgogICAgICAgIDxnIGlkPSJhcnJvd191cF9sZWZ0IiBmaWxsPSIjM0YzRjQwIj4KICAgICAgICAgICAgPHBhdGggZD0iTTIwLDAuMzgyMzMyOTYzIEwyMCw5Ljk5NzE1ODY1IEwwLDEwIEM1LjgwNzIwMjU4LDkuOTk4MTA1NzYgMTAuNTc1OTgzNCw4LjExNTk0MDQ3IDE0LjMwNjM0MjYsNC4zNTM1MDQxMSBDMTguMDM2NzAxNywwLjU5MTA2Nzc1MiAxOS45MzQ1ODc1LC0wLjczMjY1NTk2NCAyMCwwLjM4MjMzMjk2MyBaIiBpZD0iVHJpYW5nbGUiPjwvcGF0aD4KICAgICAgICA8L2c+CiAgICA8L2c+Cjwvc3ZnPg==);' +
-                    'right: 0;' +
-                    'top: -1.2rem;' +
-                '}' +
-                '.cro .coachmark-tooltip__arrow::before {' +
-                    'height: 1rem;' +
-                    'position: absolute;' +
-                    'width: 2rem;' +
-                '}' +
-                '.cro .coachmark-tooltip:hover::after {' +
-                    'background: #A02971;' +
-                    'border-radius: 5rem;' +
-                    'content: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4KPCEtLSBHZW5lcmF0ZWQgYnkgSWNvTW9vbi5pbyAtLT4KPCFET0NUWVBFIHN2ZyBQVUJMSUMgIi0vL1czQy8vRFREIFNWRyAxLjEvL0VOIiAiaHR0cDovL3d3dy53My5vcmcvR3JhcGhpY3MvU1ZHLzEuMS9EVEQvc3ZnMTEuZHRkIj4KPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHdpZHRoPSIxMyIgaGVpZ2h0PSIyMiIgdmlld0JveD0iMCAwIDIzIDMyIiBmaWxsPSIjZmZmIj4KPHBhdGggZD0iTTE1LjIyNCAxMy4wOTFsNC41ODIgNC42MDZxMC4zMTUgMC4yOTEgMC4zNjQgMC42OTF0LTAuMTk0IDAuNjY3cS0xLjA0MiAxLjMzMy0yLjM3NiAyLjM3Ni0wLjI2NyAwLjI0Mi0wLjY2NyAwLjE5NHQtMC43MTUtMC4zMzlsLTQuNTgyLTQuNjA2LTQuNjA2IDQuNjA2cS0wLjI5MSAwLjI5MS0wLjY5MSAwLjMzOXQtMC42OTEtMC4xOTRxLTEuMzA5LTEuMDQyLTIuMzUyLTIuMzUyLTAuMjQyLTAuMjkxLTAuMTk0LTAuNjkxdDAuMzM5LTAuNjkxbDQuNjA2LTQuNjA2LTQuNTgyLTQuNTgycS0wLjMxNS0wLjMxNS0wLjM2NC0wLjcxNXQwLjE5NC0wLjY2N3ExLjAxOC0xLjMwOSAyLjM1Mi0yLjM3NiAwLjI5MS0wLjI0MiAwLjY5MS0wLjE5NHQwLjY5MSAwLjM2NGw0LjYwNiA0LjM4OCA0LjU4Mi00LjM4OHEwLjMxNS0wLjMxNSAwLjcxNS0wLjM2NHQwLjY2NyAwLjE5NHExLjMzMyAxLjA0MiAyLjM3NiAyLjM3NiAwLjI0MiAwLjI2NyAwLjE5NCAwLjY2N3QtMC4zNjQgMC43MTV6Ij48L3BhdGg+Cjwvc3ZnPgo=);' +
-                    'height: 2.1rem;' +
-                    'line-height: 3.6rem;' +
-                    'position: absolute;' +
-                    'right: -.8rem;' +
-                    'text-align: center;' +
-                    'top: -.9rem;' +
-                    'width: 2.1rem;' +
-                    'z-index: 1;' +
-                '}' +
+                '.cro .coachmark-arrow { display: block; font-family: \'icahand\', arial , sans-serif; font-size: 2.4rem; font-weight: normal; position: relative; text-align: left; margin: 10px 0 0 25px; }' +
+                '.cro .ingredients .coachmark-arrow--left-up svg { left: -30px; top: -10px; -webkit-transform: scale(-1, -1) rotate(-20deg); transform: scale(-1, -1) rotate(-20deg); }' +
+                '.cro .ingredients .coachmark-arrow svg { content: \'\'; height: 35px; position: absolute; width: 20px; }' +
                 '</style>';
 
             $('head').append(styles);
         },
-        triggerCookingMode: function () {
-            var body = $('body');
-
-            body.addClass('ta-hideModal');
-
-            $('.js-start-cooking-mode').trigger('click');
-            if ($('.servings-picker-modal').length) {
-                $('.servings-picker-modal > .button')[0].click();
-            }
-
-            var cook = $('.cooking-mode-modal .howto-timers-wrapper');
-            if (cook.length) {
-                $('#recipe-howto > ol').hide();
-                $('.close-button-cookie-mode')[0].click();
-                body.removeClass('ta-hideModal');
-                $('#recipe-howto').find('>ol:first').after(cook);
-                $($('.cooking-step:not(.completed)')[0]).addClass('ta-next');
-            }
-            $('html').removeClass('force-no-scroll');
-        },
         addEventListeners: function () {
-            $(document).on('click', '.cooking-step__check', function () {
-                $('.ta-next').removeClass('ta-next');
-                $($('.cooking-step:not(.completed)')[0]).addClass('ta-next');
-            });
 
             $(document).on('click', '.comments__list__show-more .button', function () {
-                var closeIcon = '<svg class="cro-close-icon" viewBox="0 0 12 12" width="12px" height="12px">' +
-                    '<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/Assets/icons/sprite.svg#close"></use>' +
-                    '</svg>';
-                $('.comments__list__report a').html(closeIcon);
+                $('.comments__list__report').remove();
             });
 
-            $(document).on('click', '.cro .coachmark-wrapper', function () {
-                $('.cro .coachmark-wrapper').css('opacity', '0');
-            });
-
-            $(document).on('click', '.cro .js-recipe-save', function () {
-                $('html, body').animate({scrollTop: '0px'}, 300);
-                setTimeout(function() {$('.cro .coachmark-wrapper').css('opacity', '1');}, 350);
+            $(document).on('click', '.cro .js-recipe-save:not(.button--active)', function () {
+                if(!/ABTEST_mittica_after_save/.test(document.cookie)) {
+                    $('.myica-icon').addClass('variation1');
+                    $('html, body').animate({scrollTop: '0px'}, 300);
+                }
             });
         },
         manipulateDom: function () {
@@ -262,16 +162,6 @@
             var sparaKnapp = $('.cro .recipe-action-buttons');
             $('.recipe-preamble').after(sparaKnapp);
 
-            // byt plats på gör så här och ingredienser
-            var divider = $('.recipe-column-divider');
-            var ingredients = $('.recipe-content #ingredients-section');
-            var howto = $('.recipe-content #recipe-howto');
-            divider.before(howto);
-            divider.after(ingredients);
-
-            // ändra hover-färg på timerknappar
-            howto.find('.js-track-cookmode-timeropen').removeClass('green blue');
-
             // lägg till coachmarks för inköpsliste-CTA
             var coachmarkInkopslista = '<div class="coachmark-arrow coachmark-arrow--left-up">' +
                 'Stå inte vilsen i butiken igen!' +
@@ -285,10 +175,7 @@
                 '</div>';
             $('.cro .js-open-shoppinglist-modal').after(coachmarkInkopslista);
 
-            var closeIcon = '<svg class="cro-close-icon" viewBox="0 0 12 12" width="12px" height="12px">' +
-                '<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/Assets/icons/sprite.svg#close"></use>' +
-                '</svg>';
-            $('.comments__list__report a').html(closeIcon);
+            $('.comments__list__report').remove();
 
             var visaFler = $('.comments__list__show-more');
             $('.comments__inner-wrapper').append(visaFler);
@@ -330,15 +217,15 @@
                 $('.comments__form .input-text--textarea').after($('.comments__form .rating-stars'));
 
                 $('.recipe-rating-wrapper h4').after($('.comments__header .button'));
+
+                // Trigga coachmark för sparat recept om applicerbart
+                if($('.js-recipe-save').hasClass('button--active')) {
+                    $('.myica-icon').addClass('variation1');
+                }
             }, 0);
 
             // Flytta kupong
             $('#ingredients-section').append($('.recipe-ad'));
-
-            // Lägg till coachmark för sparat recept
-            $('body').append('<div class="coachmark-wrapper"><div class="coachmark-tooltip coachmark-tooltip--top-right"><span class="coachmark-tooltip__arrow" style="position: absolute; top: 0px; right: 0px; transform: translateX(0px);"></span>Du hittar dina sparade recept här</div></div>');
-
-            this.triggerCookingMode();
         }
     };
 
