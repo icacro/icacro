@@ -18,6 +18,7 @@
                 '.cro h1 { font-size: 32px; margin-top: 20px !important; font-weight: 900; }' +
                 '@media only screen and (min-width: 768px) { .cro h1 { font-size: 38px !important; } }' +
                 '@media only screen and (min-width: 1024px) { .cro h1 { font-size: 64px !important; } }' +
+                '.cro .ingredients, .cro .recipe-howto { margin-bottom: 0; }' +
                 '.cro .recipe-preamble { font-size: 20px; line-height: 1.4; margin-top: 0; }' +
                 '.cro .recipe-header__difficulty { color: #808283; font-size: 18px; }' +
                 '.cro .recipe-header__comments { display: none; }' +
@@ -41,7 +42,7 @@
                 '.cro .cooking-step__content__instruction { font-size: 20px; line-height: 1.4; }' +
 
                 // kommentarer
-                '.cro .comments { background-color: transparent; }' +
+                '.cro .comments { background-color: transparent; margin-top: 60px; }' +
                 '.cro .comments__inner-wrapper { max-width: none; padding: 0; }' +
                 '.cro .comments__icon { line-height: inherit; margin: 0; position: static; font-size: inherit; }' +
                 '.cro .comments__icon svg { display: none; }' +
@@ -130,6 +131,15 @@
                 '.cro .coachmark-arrow { display: block; font-family: \'icahand\', arial , sans-serif; font-size: 2.4rem; font-weight: normal; position: relative; text-align: left; margin: 10px 0 0 25px; }' +
                 '.cro .ingredients .coachmark-arrow--left-up svg { left: -30px; top: -10px; -webkit-transform: scale(-1, -1) rotate(-20deg); transform: scale(-1, -1) rotate(-20deg); }' +
                 '.cro .ingredients .coachmark-arrow svg { content: \'\'; height: 35px; position: absolute; width: 20px; }' +
+                '.cro .climate__item-rating { display: none; }' +
+                '.cro .nutrient__container, .cro .climate__container { display: none; }' +
+                '.cro .climate__current-value { border: 0 !important; padding: 0; }' +
+                '.cro .nutrient__show-more, .cro .climate__show-more { display: block; text-transform: uppercase; font-size: 12px; font-weight: 900; }' +
+                '.cro .nutrient__show-more { margin-top: 15px; }' +
+                '.recipe-details .cro-triangle-icon:before { top: 0px !important; right: -20px !important; }' +
+                '.cro .nutrient__subheading { margin-bottom: 25px; }' +
+                '.cro .climate__current-value { display: inline-block; margin: 0 !important; vertical-align: middle; }' +
+                '.cro .climate__show-more:before { content: "\\A"; white-space: pre; }' +
                 '</style>';
 
             $('head').append(styles);
@@ -226,6 +236,27 @@
 
             // Flytta kupong
             $('#ingredients-section').append($('.recipe-ad'));
+
+            // Flytta näringsvärden och klimatguide
+            $('.recipe-content').after($('.recipe-details'));
+
+            var nutrientsToggle = '<a href="#" class="nutrient__show-more">Visa mer <span class="cro-triangle-icon"></span></a><div class="nutrient__container"></div>';
+            $('.nutrient').append(nutrientsToggle);
+            $('.nutrient__container').append($('.nutrient__graphic')).append($('.nutrient .block-link'));
+            $('.nutrient').find('.nutrient__show-more').click(function (e) {
+                e.preventDefault();
+                $('.nutrient').find('.nutrient__container').css('display', 'block');
+                $(this).hide();
+            });
+
+            var climateToggle = '<a href="#" class="climate__show-more">Visa mer <span class="cro-triangle-icon"></span></a><div class="climate__container"></div>';
+            $('.climate').append(climateToggle);
+            $('.climate__container').append($('.climate > p')).append($('.climate .block-link'));
+            $('.climate').find('.climate__show-more').click(function (e) {
+                e.preventDefault();
+                $('.climate').find('.climate__container').css('display', 'block');
+                $(this).hide();
+            });
         }
     };
 
