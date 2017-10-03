@@ -1,10 +1,6 @@
 (function($) {
 	'use strict';
 
-	if (/cro-fromlogin/.test(window.location.href)) {
-		window.location.replace('https://www.ving.se/ica-erbjudanden?partner=icakort&utm_source=ica&utm_medium=partnership&utm_campaign=discount');
-	}
-
 	var styles = '<style type="text/css">' +
 		'@media only screen and (min-width: 980px) { .cro .hero-with-main .main { margin-top: -22rem; } }' +
 		'@media only screen and (min-width: 700px) and (max-width: 979px) { .cro .hero-with-main .main { margin-top: -20rem; } }' +
@@ -33,12 +29,13 @@
 		'.cro .skaffa-ica-kort p { display: inline-block; margin: 10px 0 0 10px; font-size: 1.4rem; font-weight: bold; }' +
 		'.cro .skaffa-ica-kort .button { float: right; margin: 6px 0 0 0; }' +
 		'</style>';
-	var returnUrl = encodeURIComponent('https://www.ica.se/erbjudanden/nojeserbjudanden/ving/?cro-fromlogin');
+	var returnUrl = encodeURIComponent('https://www.ica.se/erbjudanden/nojeserbjudanden/ving/');
+     
 	var ctaTarget = 'https://www.ica.se/logga-in/?returnurl=' + returnUrl;
 	var ctaHtml = '<div class="column size20of20 lg_size12of20 full-bleed-background pl" style="background-color: white;">' +
 		'<h1>Spara alltid minst 600:- per resa</h1>' +
 		'<p>' + $('.article-name').find('p').text() + '</p>' +
-		'<a href="' + ctaTarget + '" class="button button--auto-width">Klicka här för resor och rabatter</a>' +
+		'<a href="' + ctaTarget + '" class="button button--auto-width cro-cta">Klicka här för resor och rabatter</a>' +
 		'<div class="ruler"></div>' +
 		'</div>';
 	var getCardTarget = 'https://www.ica.se/ansokan/?returnurl='  + returnUrl;
@@ -51,6 +48,7 @@
 		'</div>' +
 		'</div>' +
 		'</div>';
+ 
 	var heroHtml = '<picture class="image-header">' +
 		'<source srcset="/imagevaultfiles/id_167759/cf_259/header_ving_480x300.jpg?" media="(max-width: 479px)">' +
 		'<source srcset="/imagevaultfiles/id_167760/cf_259/header_ving_980x430.jpg?" media="(max-width: 979px)">' +
@@ -87,6 +85,11 @@
 		side.append(wrapper);
 
 		$('.category-bookning-section').prepend(ctaHtml);
+
+		if ($('#hdnIcaState').val()) {
+			var target = 'https://www.ving.se/ica-erbjudanden?partner=icakort&utm_source=ica&utm_medium=partnership&utm_campaign=discount';
+			$('.category-bookning-section').find('.cro-cta').attr('href', target);
+		}
 
 		main.html('');
 		main.append(villkor);
