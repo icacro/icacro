@@ -128,18 +128,26 @@
                     'top: 6px;' +
                     'right: 0;' +
                 '}' +
-                '.cro .coachmark-arrow { display: block; font-family: \'icahand\', arial , sans-serif; font-size: 2.4rem; font-weight: normal; position: relative; text-align: left; margin: 10px 0 0 25px; }' +
+                '.cro .coachmark-arrow { display: block; font-family: \'icahand\', arial, sans-serif; font-size: 2.4rem; font-weight: normal; position: relative; text-align: left; margin: 10px 0 0 25px; }' +
                 '.cro .ingredients .coachmark-arrow--left-up svg { left: -30px; top: -10px; -webkit-transform: scale(-1, -1) rotate(-20deg); transform: scale(-1, -1) rotate(-20deg); }' +
                 '.cro .ingredients .coachmark-arrow svg { content: \'\'; height: 35px; position: absolute; width: 20px; }' +
                 '.cro .climate__item-rating { display: none; }' +
                 '.cro .nutrient__container, .cro .climate__container { display: none; }' +
+                '.nutrient { margin-bottom: 16px; }' +
+                '@media (min-width: 768px) { .nutrient { margin-bottom: 0; } }' +
                 '.cro .climate__current-value { border: 0 !important; padding: 0; }' +
-                '.cro .nutrient__show-more, .cro .climate__show-more { display: block; text-transform: uppercase; font-size: 12px; font-weight: 900; }' +
-                '.cro .nutrient__show-more { margin-top: 15px; }' +
+                '.cro .nutrient__show-more a, .cro .climate__show-more a { text-transform: uppercase; font-size: 12px; font-weight: 900; }' +
+                '.cro .nutrient__show-more, .cro .climate__show-more { margin-top: 15px; }' +
                 '.recipe-details .cro-triangle-icon:before { top: 0px !important; right: -20px !important; }' +
-                '.cro .nutrient__subheading { margin-bottom: 25px; }' +
-                '.cro .climate__current-value { display: inline-block; margin: 0 !important; vertical-align: middle; }' +
-                '.cro .climate__show-more:before { content: "\\A"; white-space: pre; }' +
+                '.cro .nutrient__subheading { margin-bottom: 15px; }' +
+                '.cro .climate__current-value { font-size: 18px !important; display: inline-block; margin: 0 !important; vertical-align: middle; }' +
+                '.cro .climate__current-value span:not(.unit-prefix) { font-weight: 900; }' +
+                '.cro .nutrient__graphic { margin-top: 15px; }' +
+                '.cro .climate h3:not(.climate__current-value) { padding-bottom: 10px; }' +
+                '.cro .climate h3 .unit-prefix:before { font-size: 12px; left: 24px; top: 14px; }' +
+                '.cro .nutrient__summary__text__data { font-size: 18px; font-weight: 900; }' +
+                '.cro .nutrient__summary .circle-icon:before { height: 40px; width: 40px; }' +
+                '.cro .nutrient__summary .circle-icon svg { margin-left: -7px; margin-top: -8px; width: 15px; height: 15px; }' +
                 '</style>';
 
             $('head').append(styles);
@@ -240,7 +248,7 @@
             // Flytta näringsvärden och klimatguide
             $('.recipe-content').after($('.recipe-details'));
 
-            var nutrientsToggle = '<a href="#" class="nutrient__show-more">Visa mer <span class="cro-triangle-icon"></span></a><div class="nutrient__container"></div>';
+            var nutrientsToggle = '<div class="nutrient__show-more"><a href="#">Visa mer <span class="cro-triangle-icon"></span></a></div><div class="nutrient__container"></div>';
             $('.nutrient').append(nutrientsToggle);
             $('.nutrient__container').append($('.nutrient__graphic')).append($('.nutrient .block-link'));
             $('.nutrient').find('.nutrient__show-more').click(function (e) {
@@ -249,7 +257,7 @@
                 $(this).hide();
             });
 
-            var climateToggle = '<a href="#" class="climate__show-more">Visa mer <span class="cro-triangle-icon"></span></a><div class="climate__container"></div>';
+            var climateToggle = '<div class="climate__show-more"><a href="#">Visa mer <span class="cro-triangle-icon"></span></a></div><div class="climate__container"></div>';
             $('.climate').append(climateToggle);
             $('.climate__container').append($('.climate > p')).append($('.climate .block-link'));
             $('.climate').find('.climate__show-more').click(function (e) {
