@@ -148,6 +148,7 @@
                 '.cro .nutrient__summary__text__data { font-size: 18px; font-weight: 900; }' +
                 '.cro .nutrient__summary .circle-icon:before { height: 40px; width: 40px; }' +
                 '.cro .nutrient__summary .circle-icon svg { margin-left: -7px; margin-top: -8px; width: 15px; height: 15px; }' +
+                '.cro .nutrient__static-text { margin-top: 0; }' +
                 '</style>';
 
             $('head').append(styles);
