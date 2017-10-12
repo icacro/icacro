@@ -72,6 +72,12 @@
                 var action = $(this).hasClass('button--heart') ? 'SPARA' : 'KOMMENTERA';
                 self.createModal(action);
             });
+
+            $(window).on("message onmessage", function(e) {
+                if (e.originalEvent.origin === 'https://www.ica.se' && /mobilebankdid/i.test(e.originalEvent.data) {
+                    self.showLoader();
+                }
+            });
         },
         getIframeStyles: function () {
             var styles = '<style type="text/css">' +
