@@ -154,16 +154,8 @@
             $('head').append(styles);
         },
         addEventListeners: function () {
-
             $(document).on('click', '.comments__list__show-more .button', function () {
                 $('.comments__list__report').remove();
-            });
-
-            $(document).on('click', '.cro .js-recipe-save:not(.button--active)', function () {
-                if(!/ABTEST_mittica_after_save/.test(document.cookie)) {
-                    $('.myica-icon').addClass('variation1');
-                    $('html, body').animate({scrollTop: '0px'}, 300);
-                }
             });
         },
         manipulateDom: function () {
