@@ -157,6 +157,10 @@
             $(document).on('click', '.comments__list__show-more .button', function () {
                 $('.comments__list__report').remove();
             });
+
+            $(document).one('focus', '.comments__form .input-text__input', function (){
+                ga('send', 'event', 'A/B', 'Interaktion med kommentarsfält');
+            });
         },
         manipulateDom: function () {
             $('body').addClass('cro');
