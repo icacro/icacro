@@ -74,7 +74,8 @@
             });
 
             $(window).on("message onmessage", function(e) {
-                if (e.originalEvent.origin === 'https://www.ica.se' && /mobilebankdid/i.test(e.originalEvent.data) {
+                var origin = window.location.protocol + '//' + window.location.host;
+                if (e.originalEvent.origin === origin && /mobilebankid/i.test(e.originalEvent.data)) {
                     self.showLoader();
                 }
             });
@@ -117,7 +118,7 @@
 
             setTimeout(function () {
                 self.showLoader();
-                
+
                 var iframe = $('.cro-iframe-container iframe');
 
                 iframe.on('load', function () {
