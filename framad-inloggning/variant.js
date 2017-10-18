@@ -12,6 +12,7 @@
     'use strict';
 
     var test = {
+        hotjarTriggered: false,
         addStyles: function () {
             var styles = '<style type="text/css">' +
                 '@media (max-width: 767px) { .cro .cro-iframe-container { padding-bottom: 135% !important; } }' +
@@ -249,6 +250,12 @@
                         e.preventDefault();
                     });
                 });
+
+                // trigga hotjar heatmap första gången modalen öppnats
+                if (typeof hj === 'function' && !self.hotjarTriggered) {
+                    hj('trigger', 'variant');
+                    self.hotjarTriggered = true;
+                }
             }, 50);
         },
         manipulateDom: function () {
