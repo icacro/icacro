@@ -163,6 +163,7 @@
                             var e = $('.cro-iframe-container iframe').contents().find('h1');
                             if (e.length) {
                                 e.append(text);
+                                e.css({ 'font-family': 'icahand, arial, sans-serif', 'font-size': '3rem' });
 
                                 if (window.screen.width < 768) {
                                     e.css('font-size', '18px');
