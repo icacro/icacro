@@ -19,16 +19,27 @@
           '.cro .searchfield input { font-size: 14px !important; height: 41px !important; background-position: 0 -45px !important; padding-left: 15px !important; }' +
           '.cro .searchfield button { top: 12px !important; background-position: -68px -761px !important; right: 13px !important; }' +
           '.cro .searchfield .autocomplete { top: 51px !important; }' +
+          '.cro .peakHours { margin: 10px 0px 20px; display: flex; align-items: flex-end; }' +
+          '.cro .peakHours .bar { background-color: rgb(235, 31, 7); flex-grow: 1; }' +
           '</style>';
       $('head').append(styles);
     },
     addEventListeners: function () {
+      var self = this;
+
       $('.shoppinglist_choose a').on('click', function () {
         ga('send', 'event', 'Mitt ICA', 'Inköpslistor', 'Klick på val av inköpslista');
       });
-    },
-    searchList: function() {
-      var self = this;
+
+      $('#inkopslistor').on('shoppinglist-updated tool-ready', function () {
+        const txt = $('.sort').find('.active').text();
+        window.test.load(txt);
+      });
+
+      $('#inkopslistor').on('tool-ready', function () {
+        $(this).find('.shopping-items').addClass('variant');
+        ICA.dashboard.shoppingList.isNewShoppingListVariant = true;
+      });
 
       $(document).ajaxComplete(function (event, xhr, settings) {
         if (!settings.url.includes('IngredientSearchHandler')) return;
@@ -45,7 +56,6 @@
             $autocompleteList.children().remove();
           });
       });
-
     },
     addItem: function (item) {
       item = item.replace ? item.replace(/"/g, '') : item;
@@ -109,33 +119,35 @@
     },
     manipulateDom: function () {
       $('body').addClass('cro');
-      $('#inkopslistor').on('shoppinglist-updated', function () {
-        const txt = $('.sort').find('.active').text();
-        window.test.load(txt);
-      });
-      $('#inkopslistor').on('tool-ready', function () {
-        $(this).find('.shopping-items').addClass('variant');
-        ICA.dashboard.shoppingList.isNewShoppingListVariant =true;
 
-      })
+      $('#inkopslistor')
         .removeClass('loaded')
         .data('url', '/templates/ajaxresponse.aspx?ajaxFunction=DashboardShoppinglistsVariant')
         .trigger('reload');
     },
+    peakHours: [],
     load: function(store) {
+      var self = this;
+
+      if (/egen/gi.test(store)) {
+        if ($('.sort').find('.pl').length) $('.sort').find('.pl').remove();
+        return;
+      }
+
+      if (self.peakHours[store]) {
+        if ($('.sort').find('.pl').length) {
+          $('.sort').find('.pl').replaceWith(self.peakHours[store]);
+        } else {
+          $('.sort').append(self.peakHours[store]);
+        }
+
+        return;
+      }
+
       var url = 'https://www.google.se/search?q=' + encodeURIComponent(store);
-      var wrapper = document.createElement('div');
+      var wrapper = $('<div class="peakHours pl"></div>');
+      var loader = $('<div class="loader"></div>');
 
-      var loader = document.createElement('div');
-      wrapper.className = 'pl';
-      loader.className = 'loader';
-
-      Object.assign(wrapper.style, {
-        position: 'relative',
-        'margin': '10px 0 20px',
-        'min-height': '70px',
-        'text-align': 'center'
-      });
       $(wrapper).append(loader);
 
       if ($('.sort').find('.pl').length) {
@@ -144,56 +156,49 @@
         $('.sort').append(wrapper);
       }
 
-
       $.getJSON('https://allorigins.us/get?url=' + encodeURIComponent(url) + '&callback=?', function(data){
         var xPos = 0;
         var timeIndex = 0;
         const timeArr = ['09','12','15','18', '21'];
         const container = document.createDocumentFragment();
-        wrapper.innerHTML = '';
+        wrapper.children().remove();
 
         $(data.contents).find('.xpdopen').find('.lubh-bar').each(function(index){
           const style = $(this).attr('style');
-          const item = document.createElement('div');
-          const hr = timeArr[timeIndex];
-          item.style.cssText = style;
+          const item = $('<div class="bar"></div>').attr('style', style);
+          //const hr = timeArr[timeIndex];
 
-          Object.assign(item.style, {
-            width: '10px',
-            'background-color': '#EB1F07',
-            left: xPos + 'px',
-            position: 'absolute',
-            bottom: '0'
-          });
-          xPos += 11;
-          if ((index % 3) === 0 && hr) {
-            var txt = document.createTextNode(hr);
-            var time = document.createElement('div');
-            var graph = document.createElement('div');
-            Object.assign(time.style, {
-              'font-size': '12px',
-              'text-align': 'center',
-              width: '21px',
-              left: '11px',
-              position: 'absolute',
-              bottom: '-30px'
-            });
-            Object.assign(graph.style, {
-              width: '1px',
-              height: '10px',
-              'margin-left': '10px',
-              'background-color': '#000'
-            });
-            timeIndex++;
-            time.appendChild(graph);
-            time.appendChild(txt);
-            item.appendChild(time);
-          }
+          //item.style.cssText = style;
 
-          wrapper.appendChild(item);
+          // if ((index % 3) === 0 && hr) {
+          //   var txt = document.createTextNode(hr);
+          //   var time = document.createElement('div');
+          //   var graph = document.createElement('div');
+          //   Object.assign(time.style, {
+          //     'font-size': '12px',
+          //     'text-align': 'center',
+          //     width: '21px',
+          //     left: '11px',
+          //     position: 'absolute',
+          //     bottom: '-30px'
+          //   });
+          //   Object.assign(graph.style, {
+          //     width: '1px',
+          //     height: '10px',
+          //     'margin-left': '10px',
+          //     'background-color': '#000'
+          //   });
+          //   timeIndex++;
+          //   time.appendChild(graph);
+          //   time.appendChild(txt);
+          //   item.append(time);
+          // }
 
-
+          wrapper.append(item);
         });
+
+        // cacha grafen för återrendering
+        self.peakHours[store] = wrapper;
       });
     },
   };
@@ -201,18 +206,7 @@
   window.test.addStyles();
 
   $(document).ready(function (){
-    let tries = 1;
-    const exist = setInterval(function() {
-      if (tries === 60) clearInterval(exist);
-      if ($('.sort').find('.active').length) {
-        clearInterval(exist);
-        const txt = $('.sort').find('.active').text();
-        window.test.load(txt);
-      }
-      tries++;
-    }, 100);
     window.test.manipulateDom();
     window.test.addEventListeners();
-    window.test.searchList();
   });
 })(jQuery);
