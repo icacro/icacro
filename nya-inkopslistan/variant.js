@@ -19,8 +19,9 @@
           '.cro .searchfield input { font-size: 14px !important; height: 41px !important; background-position: 0 -45px !important; padding-left: 15px !important; }' +
           '.cro .searchfield button { top: 12px !important; background-position: -68px -761px !important; right: 13px !important; }' +
           '.cro .searchfield .autocomplete { top: 51px !important; }' +
-          '.cro .peakHours { margin: 10px 0px 20px; display: flex; align-items: flex-end; }' +
-          '.cro .peakHours .bar { background-color: rgb(235, 31, 7); flex-grow: 1; }' +
+          '.cro .peakHours { margin: 10px 0px 20px; display: flex; align-items: flex-end; min-height: 30px; }' +
+          '.cro .peakHours .bar { position: relative; background-color: rgb(235, 31, 7); flex-grow: 1; margin: 0 1px; }' +
+          '.cro .loader { position: relative; margin: 0 auto; position: relative; margin: 20px auto 0; left: 0;}' +
           '</style>';
       $('head').append(styles);
     },
@@ -160,39 +161,37 @@
         var xPos = 0;
         var timeIndex = 0;
         const timeArr = ['09','12','15','18', '21'];
-        const container = document.createDocumentFragment();
+
         wrapper.children().remove();
 
         $(data.contents).find('.xpdopen').find('.lubh-bar').each(function(index){
           const style = $(this).attr('style');
-          const item = $('<div class="bar"></div>').attr('style', style);
-          //const hr = timeArr[timeIndex];
+          const item = $('<div class="bar"></div>').attr('style', style.replace('#eceff1', '#eb1f07'));
+          const hr = timeArr[timeIndex];
 
-          //item.style.cssText = style;
-
-          // if ((index % 3) === 0 && hr) {
-          //   var txt = document.createTextNode(hr);
-          //   var time = document.createElement('div');
-          //   var graph = document.createElement('div');
-          //   Object.assign(time.style, {
-          //     'font-size': '12px',
-          //     'text-align': 'center',
-          //     width: '21px',
-          //     left: '11px',
-          //     position: 'absolute',
-          //     bottom: '-30px'
-          //   });
-          //   Object.assign(graph.style, {
-          //     width: '1px',
-          //     height: '10px',
-          //     'margin-left': '10px',
-          //     'background-color': '#000'
-          //   });
-          //   timeIndex++;
-          //   time.appendChild(graph);
-          //   time.appendChild(txt);
-          //   item.append(time);
-          // }
+          if (index!== 0 && (index % 3) === 0 && hr) {
+            var txt = document.createTextNode(hr);
+            var time = document.createElement('div');
+            var graph = document.createElement('div');
+            Object.assign(time.style, {
+              'font-size': '12px',
+              'text-align': 'center',
+              width: '20px',
+              left: '-11px',
+              position: 'absolute',
+              bottom: '-30px'
+            });
+            Object.assign(graph.style, {
+              width: '1px',
+              height: '10px',
+              'margin-left': '10px',
+              'background-color': '#000'
+            });
+            timeIndex++;
+            time.appendChild(graph);
+            time.appendChild(txt);
+            item.append(time);
+          }
 
           wrapper.append(item);
         });
