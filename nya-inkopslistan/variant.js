@@ -20,7 +20,7 @@
           '.cro .searchfield button { top: 12px !important; background-position: -68px -761px !important; right: 13px !important; }' +
           '.cro .searchfield .autocomplete { top: 51px !important; }' +
           '.cro .peakHours { margin: 10px 0px 20px; display: flex; align-items: flex-end; min-height: 30px; }' +
-          '.cro .peakHours .bar { position: relative; background-color: rgb(235, 31, 7); flex-grow: 1; margin: 0 1px; }' +
+          '.cro .peakHours .bar { color:#696969; border-bottom: 1px solid #696969; position: relative; flex-grow: 1; margin: 0 1px; }' +
           '.cro .loader { position: relative; margin: 0 auto; position: relative; margin: 20px auto 0; left: 0;}' +
           '</style>';
       $('head').append(styles);
@@ -148,8 +148,9 @@
       var url = 'https://www.google.se/search?q=' + encodeURIComponent(store);
       var wrapper = $('<div class="peakHours pl"></div>');
       var loader = $('<div class="loader"></div>');
+      let currentHr = (new Date()).getUTCHours() + 1;
 
-      $(wrapper).append(loader);
+        $(wrapper).append(loader);
 
       if ($('.sort').find('.pl').length) {
         $('.sort').find('.pl').replaceWith(wrapper);
@@ -158,42 +159,61 @@
       }
 
       $.getJSON('https://allorigins.us/get?url=' + encodeURIComponent(url) + '&callback=?', function(data){
-        var xPos = 0;
-        var timeIndex = 0;
+        let xPos = 0;
+        let timeIndex = 0;
         const timeArr = ['09','12','15','18', '21'];
+
+        let hrCounter = 6;
 
         wrapper.children().remove();
 
         $(data.contents).find('.xpdopen').find('.lubh-bar').each(function(index){
-          const style = $(this).attr('style');
-          const item = $('<div class="bar"></div>').attr('style', style.replace('#eceff1', '#eb1f07'));
-          const hr = timeArr[timeIndex];
+            const style = $(this).attr('style');
+            const height = style.slice(style.indexOf(':') + 1, style.indexOf(';') - 1);
+            const isActive = currentHr === hrCounter;
 
-          if (index!== 0 && (index % 3) === 0 && hr) {
-            var txt = document.createTextNode(hr);
-            var time = document.createElement('div');
-            var graph = document.createElement('div');
-            Object.assign(time.style, {
-              'font-size': '12px',
-              'text-align': 'center',
-              width: '20px',
-              left: '-11px',
-              position: 'absolute',
-              bottom: '-30px'
-            });
+            const opacity = isActive ? '1' : '.2';
+            const newStyle = `height:${height}px; background-color: rgba(235, 31, 7, ${opacity});`;
+
+            const item = $('<div class="bar"></div>').attr('style', newStyle);
+            const hr = timeArr[timeIndex];
+            const time = document.createElement('div');
+            const graph = document.createElement('div');
+
             Object.assign(graph.style, {
-              width: '1px',
-              height: '10px',
-              'margin-left': '10px',
-              'background-color': '#000'
+                width: '1px',
+                height: '10px',
+                'margin-left': '10px',
+                'background-color': '#AAA'
             });
-            timeIndex++;
-            time.appendChild(graph);
-            time.appendChild(txt);
-            item.append(time);
-          }
 
-          wrapper.append(item);
+            Object.assign(time.style, {
+                'font-size': '12px',
+                'text-align': 'center',
+                width: '20px',
+                left: '-11px',
+                position: 'absolute',
+                bottom: '-25px'
+            });
+
+            hrCounter++;
+
+            if (index!== 0 && (index % 3) === 0 && hr) {
+                timeIndex++;
+                time.appendChild(graph);
+                time.appendChild(document.createTextNode(hr));
+            } else if(index !== 0) {
+                Object.assign(graph.style, {
+                    height: '5px'
+                });
+                Object.assign(time.style, {
+                    bottom: '-5px'
+                });
+                time.appendChild(graph);
+            }
+
+            item.append(time);
+            wrapper.append(item);
         });
 
         // cacha grafen för återrendering
