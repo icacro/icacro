@@ -169,11 +169,10 @@
 
         $(data.contents).find('.xpdopen').find('.lubh-bar').each(function(index){
             const style = $(this).attr('style');
-            const height = style.slice(style.indexOf(':') + 1, style.indexOf(';') - 1);
+            const height = style.slice(style.indexOf('height:'), style.indexOf('px'));
             const isActive = currentHr === hrCounter;
-
             const opacity = isActive ? '1' : '.2';
-            const newStyle = `height:${height}px; background-color: rgba(235, 31, 7, ${opacity});`;
+            const newStyle = `${height}px; background-color: rgba(235, 31, 7, ${opacity});`;
 
             const item = $('<div class="bar"></div>').attr('style', newStyle);
             const hr = timeArr[timeIndex];
