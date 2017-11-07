@@ -24,13 +24,18 @@
           '.cro .loader { position: relative; margin: 0 auto; position: relative; margin: 20px auto 0; left: 0;}' +
           '.shoppinglist__storesort { margin: 10px; position: relative; }' +
           '.shoppinglist__storesort p { margin-bottom: 2px; }' +
-          '.shoppinglist__storesort .selectedSort { display: flex; justify-content: space-between; border: solid 1px rgba(0,0,0,0.1); background-color: white; cursor: pointer; padding: 11px; color: #a02971; text-transform: uppercase; font-weight: 600; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none; }' +
+          '.shoppinglist__storesort .selectedSort { display: flex; justify-content: space-between; border: solid 1px rgba(0,0,0,0.1); background-color: white; cursor: pointer; padding: 11px; color: #a02971; text-transform: uppercase; font-weight: 900; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none; }' +
           '.shoppinglist__storesort .selectedSort .arrow { transform: rotateZ(180deg); fill: #a02971; margin-top: 2px; }' +
           '.shoppinglist__storesort.open .selectedSort .arrow { transform: rotateZ(0); }' +
-          '.shoppinglist__storesort ul { display: none; background-color: white; padding: 7px 11px; border: solid 1px rgba(0,0,0,0.1); position: absolute; z-index: 100; width: 100%; box-sizing: border-box; }' +
+          '.shoppinglist__storesort ul { display: none; background-color: white; padding: 7px 11px; border: solid 1px rgba(0,0,0,0.1); position: absolute; z-index: 100; width: 100%; box-sizing: border-box; padding: 5px 0 5px 0 !important; }' +
           '.shoppinglist__storesort.open ul { display: block; }' +
-          '.shoppinglist__storesort li { cursor: pointer; padding: 5px; color: #a02971; text-transform: uppercase; font-weight: 600; }' +
-          '.shoppinglist__storesort li.active:before { content: \'✓\'; position: absolute; left: 7px; font-size: 12px; }' +
+          '.shoppinglist__storesort li { cursor: pointer; padding: 6px 5px; }' +
+          '.shoppinglist__storesort li.active { font-weight: 600; color: rgb(235,31,1); }' +
+          '.sort-shoppinglist-button { display: none; }' +
+          '.sort { background-color: white; padding: 10px; margin: 10px; border: solid 1px rgba(0,0,0,0.1); }' +
+          '.sort > span { display: none; }' +
+          '.sort li.active { font-size: 16px; font-weight: 900; }' +
+          '.shoppinglist_choose { padding-top: 10px !important; }' +
           '</style>';
       $('head').append(styles);
     },
@@ -57,7 +62,8 @@
         var storeSort = $('<div class="shoppinglist__storesort"></div>')
           .append(sortList);
 
-        var selectedSort = $('<div class="selectedSort"></div>').text(sortList.find('.active').text())
+        var selectedSortText = $('<span class="text"></span>').text(sortList.find('.active').text());
+        var selectedSort = $('<div class="selectedSort"></div>').append(selectedSortText)
         .append(`<svg class="arrow" viewBox="0 0 32 32" width="15px" height="15px">
   <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/Assets/icons/sprite.svg#arrow-up"></use>
 </svg>`)
@@ -68,7 +74,15 @@
         storeSort.prepend(selectedSort);
         storeSort.prepend('<p>Sortera efter butik</p>');
 
-        $('.shoppinglist_choose').before(storeSort);
+        $('.shoppinglist_choose')
+          .before(storeSort)
+          .before($('.shoppinglist__container .sort'));
+
+        if (sortList.find('.active').data('orderid') == 0) {
+          $('.sort').css('display', 'none');
+        } else {
+          $('.sort').css('display', 'block');
+        }
       });
 
       $(document).ajaxComplete(function (event, xhr, settings) {
@@ -95,6 +109,7 @@
 
       ICA.legacy.setCookie('shoppingRound', newsortorder);
 
+      $('.selectedSort .text').text($(this).text());
       $(this).closest('.open').removeClass('open');
 
       ICA.legacy.shoppingList.get(currentListId, currentListSecureId, newsortorder, function (data) {
@@ -104,14 +119,23 @@
         $('#selectedShoppinglistOrderid', $shoppingList).val(newsortorder);
 
         if (newsortorder == 0) {
+          $('.sort').css('display', 'none');
           $shoppingList.removeClass('sorted');
         } else {
           $shoppingList.addClass('sorted');
+          $('.sort').css('display', 'block');
         }
         //update sortorder-text
         var storelistItems = $('div.sort ul li');
         storelistItems.removeClass('active');
         storelistItems.each(function (index) {
+          if ($(this).attr('data-orderid') == newsortorder)
+            $(this).addClass('active');
+        });
+
+        var dropdownItems = $('.shoppinglist__storesort ul li');
+        dropdownItems.removeClass('active');
+        dropdownItems.each(function (index) {
           if ($(this).attr('data-orderid') == newsortorder)
             $(this).addClass('active');
         });
@@ -238,7 +262,7 @@
       $.getJSON('https://allorigins.us/get?url=' + encodeURIComponent(url) + '&callback=?', function(data){
         let xPos = 0;
         let timeIndex = 0;
-        const timeArr = ['09','12','15','18', '21'];
+        const timeArr = ['09.00','12.00','15.00','18.00', '21.00'];
 
         let hrCounter = 6;
 
@@ -259,15 +283,15 @@
             Object.assign(graph.style, {
                 width: '1px',
                 height: '10px',
-                'margin-left': '10px',
+                'margin-left': '13px',
                 'background-color': '#AAA'
             });
 
             Object.assign(time.style, {
                 'font-size': '12px',
                 'text-align': 'center',
-                width: '20px',
-                left: '-11px',
+                width: '30px',
+                left: '-14px',
                 position: 'absolute',
                 bottom: '-25px'
             });
