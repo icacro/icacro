@@ -263,10 +263,16 @@
         let xPos = 0;
         let timeIndex = 0;
         const timeArr = ['09.00','12.00','15.00','18.00', '21.00'];
+        const $box = $(data.contents).find('.xpdopen');
 
         let hrCounter = 6;
 
         wrapper.children().remove();
+
+        if(!$box) {
+            $('.sort').css({display: 'none'});
+            return;
+        }
 
         $(data.contents).find('.xpdopen').find('.lubh-bar').each(function(index){
             const style = $(this).attr('style');
