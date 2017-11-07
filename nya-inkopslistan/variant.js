@@ -150,7 +150,7 @@
       var loader = $('<div class="loader"></div>');
       let currentHr = (new Date()).getUTCHours() + 1;
 
-        $(wrapper).append(loader);
+      $(wrapper).append(loader);
 
       if ($('.sort').find('.pl').length) {
         $('.sort').find('.pl').replaceWith(wrapper);
@@ -162,11 +162,15 @@
         let xPos = 0;
         let timeIndex = 0;
         const timeArr = ['09','12','15','18', '21'];
-
+        const $box = $(data.contents).find('.xpdopen');
         let hrCounter = 6;
-
         wrapper.children().remove();
 
+        if(!$box) {
+            $('.sort .peakHours').css({display: 'none'});
+            return;
+
+        }
         $(data.contents).find('.xpdopen').find('.lubh-bar').each(function(index){
             const style = $(this).attr('style');
             const height = style.slice(style.indexOf('height:'), style.indexOf('px'));
