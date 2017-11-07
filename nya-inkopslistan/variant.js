@@ -22,10 +22,15 @@
           '.cro .peakHours { margin: 10px 0px 20px; display: flex; align-items: flex-end; min-height: 30px; }' +
           '.cro .peakHours .bar { color:#696969; border-bottom: 1px solid #696969; position: relative; flex-grow: 1; margin: 0 1px; }' +
           '.cro .loader { position: relative; margin: 0 auto; position: relative; margin: 20px auto 0; left: 0;}' +
-          '.shoppinglist__storesort header { padding: 0; }' +
-          '.shoppinglist__storesort .title { color: #3F3F40; font-size: 16px; font-weight: 400; font-family: icatext; margin: 15px 10px 0 15px; }' +
-          '.shoppinglist__storesort .sort-by-modal > .content { background-color: white; margin: 0 10px 10px 10px; padding: 15px; border: solid 1px rgba(0,0,0,0.1); }' +
-          '.shoppinglist__storesort .list-name { color: #a02971; text-transform: uppercase; font-weight: 600 !important; }' +
+          '.shoppinglist__storesort { margin: 10px; position: relative; }' +
+          '.shoppinglist__storesort p { margin-bottom: 2px; }' +
+          '.shoppinglist__storesort .selectedSort { display: flex; justify-content: space-between; border: solid 1px rgba(0,0,0,0.1); background-color: white; cursor: pointer; padding: 11px; color: #a02971; text-transform: uppercase; font-weight: 600; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none; }' +
+          '.shoppinglist__storesort .selectedSort .arrow { transform: rotateZ(180deg); fill: #a02971; margin-top: 2px; }' +
+          '.shoppinglist__storesort.open .selectedSort .arrow { transform: rotateZ(0); }' +
+          '.shoppinglist__storesort ul { display: none; background-color: white; padding: 7px 11px; border: solid 1px rgba(0,0,0,0.1); position: absolute; z-index: 100; width: 100%; box-sizing: border-box; }' +
+          '.shoppinglist__storesort.open ul { display: block; }' +
+          '.shoppinglist__storesort li { cursor: pointer; padding: 5px; color: #a02971; text-transform: uppercase; font-weight: 600; }' +
+          '.shoppinglist__storesort li.active:before { content: \'✓\'; position: absolute; left: 7px; font-size: 12px; }' +
           '</style>';
       $('head').append(styles);
     },
@@ -45,12 +50,23 @@
         $(this).find('.shopping-items').addClass('variant');
         ICA.dashboard.shoppingList.isNewShoppingListVariant = true;
 
-        var sortModal = $('.sort-by-modal').clone(true, true).removeClass('removed');
-        var storeSort = $('<div class="shoppinglist__storesort"></div>')
-        .append(sortModal);
+        var sortList = $('.sort ul')
+          .clone()
+          .on('click', 'li', self.changeSortOrder);
 
-        sortModal.find('h2').text('Sortera efter butik');
-        sortModal.find('.header.red').remove();
+        var storeSort = $('<div class="shoppinglist__storesort"></div>')
+          .append(sortList);
+
+        var selectedSort = $('<div class="selectedSort"></div>').text(sortList.find('.active').text())
+        .append(`<svg class="arrow" viewBox="0 0 32 32" width="15px" height="15px">
+  <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/Assets/icons/sprite.svg#arrow-up"></use>
+</svg>`)
+        .click(function () {
+          $(this).parent().toggleClass('open');
+        });
+
+        storeSort.prepend(selectedSort);
+        storeSort.prepend('<p>Sortera efter butik</p>');
 
         $('.shoppinglist_choose').before(storeSort);
       });
@@ -69,6 +85,54 @@
             $searchField.val('');
             $autocompleteList.children().remove();
           });
+      });
+    },
+    changeSortOrder: function (event) {
+      var $shoppingList = $('#inkopslistor');
+      var currentListId = $('#selectedShoppinglistId', $shoppingList).val();
+      var currentListSecureId = $('#selectedShoppinglistSecureId', $shoppingList).val();
+      var newsortorder = $(this).data('orderid');
+
+      ICA.legacy.setCookie('shoppingRound', newsortorder);
+
+      $(this).closest('.open').removeClass('open');
+
+      ICA.legacy.shoppingList.get(currentListId, currentListSecureId, newsortorder, function (data) {
+        //success callback
+        icadatalayer.add('dashboard-grocery-lists', { 'dashboardGroceryLists': { 'action': 'sort-change'} }); // Add info to datalayer for analytics
+
+        $('#selectedShoppinglistOrderid', $shoppingList).val(newsortorder);
+
+        if (newsortorder == 0) {
+          $shoppingList.removeClass('sorted');
+        } else {
+          $shoppingList.addClass('sorted');
+        }
+        //update sortorder-text
+        var storelistItems = $('div.sort ul li');
+        storelistItems.removeClass('active');
+        storelistItems.each(function (index) {
+          if ($(this).attr('data-orderid') == newsortorder)
+            $(this).addClass('active');
+        });
+
+        loadSuccess(data);
+
+        function loadSuccess(html) {
+          var $shoppingList = $('#inkopslistor');
+          var $items = $('.list .shopping-items', $shoppingList);
+          var tempDom = $('<html></html>');
+          tempDom.append(html);
+
+          $items.html(tempDom.find('ul.shopping-items').html()); //replace all list-items with list-items from ajaxresponse.
+
+          ICA.dashboard.shoppingListItem.update($items.find('.item'));
+          setTimeout(function () {
+            $items.removeClass('loading-data');
+          }, 600);
+          $shoppingList.trigger('shoppinglist-updated');
+          ICA.dashboard.$dashboard.trigger('updated');
+        }
       });
     },
     addItem: function (item) {
