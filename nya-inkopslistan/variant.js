@@ -22,6 +22,10 @@
           '.cro .peakHours { margin: 10px 0px 20px; display: flex; align-items: flex-end; min-height: 30px; }' +
           '.cro .peakHours .bar { color:#696969; border-bottom: 1px solid #696969; position: relative; flex-grow: 1; margin: 0 1px; }' +
           '.cro .loader { position: relative; margin: 0 auto; position: relative; margin: 20px auto 0; left: 0;}' +
+          '.shoppinglist__storesort header { padding: 0; }' +
+          '.shoppinglist__storesort .title { color: #3F3F40; font-size: 16px; font-weight: 400; font-family: icatext; margin: 15px 10px 0 15px; }' +
+          '.shoppinglist__storesort .sort-by-modal > .content { background-color: white; margin: 0 10px 10px 10px; padding: 15px; border: solid 1px rgba(0,0,0,0.1); }' +
+          '.shoppinglist__storesort .list-name { color: #a02971; text-transform: uppercase; font-weight: 600 !important; }' +
           '</style>';
       $('head').append(styles);
     },
@@ -40,6 +44,15 @@
       $('#inkopslistor').on('tool-ready', function () {
         $(this).find('.shopping-items').addClass('variant');
         ICA.dashboard.shoppingList.isNewShoppingListVariant = true;
+
+        var sortModal = $('.sort-by-modal').clone(true, true).removeClass('removed');
+        var storeSort = $('<div class="shoppinglist__storesort"></div>')
+        .append(sortModal);
+
+        sortModal.find('h2').text('Sortera efter butik');
+        sortModal.find('.header.red').remove();
+
+        $('.shoppinglist_choose').before(storeSort);
       });
 
       $(document).ajaxComplete(function (event, xhr, settings) {
