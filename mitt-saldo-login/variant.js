@@ -69,6 +69,8 @@
         addEventListeners: function () {
             var self = this;
 
+
+
             $('#kontosaldo').on('tool-ready', function () {
                 var $header = $(this).find('header');
 
@@ -254,8 +256,6 @@
         manipulateDom: function () {
             var self = this;
 
-            if ($('#hdnIcaState').val()) return;
-
             $('body').addClass('cro pl');
             var returnUrl = encodeURIComponent(window.location.href);
             var iframeContainer = $('<div class="cro-iframe-container"><span class="loader"></span><iframe src="//www.ica.se/logga-in/?returnurl=' + returnUrl + '" frameborder="0"></iframe></div>');
@@ -266,6 +266,8 @@
     test.addStyles();
 
     $(document).ready(function (){
+        if ($('#hdnIcaState').val()) return;
+
         test.manipulateDom();
         test.addEventListeners();
     });
