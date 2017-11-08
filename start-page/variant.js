@@ -15,14 +15,28 @@
         addStyles: function () {
             const styles = `
 <style type="text/css">
-.cro {}
+.cro header .image-slider {
+  position: absolute !important;
+}
+.cro .header-wrapper {
+  position: relative;
+  max-width: 1260px;
+  margin: 0 auto;
+  height: 420px;
+}
+
+@media (max-width: 767px) {
+.cro .header-wrapper {
+  height: 330px;
+}
+
 .cro .rating-star-container {
-  position:relative;
+  position: absolute;
+  top: 10%;
   z-index: 50;
-  margin: 20px 0 0 20px;
+  margin: 0 0 0 20px;
   color: white;
   text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.4);
-
 }
 
 .cro .rating-star-container a {
@@ -77,8 +91,8 @@
                 '.quicklink-list',
                 '.main .link-list',
                 '.recipe-category-listing .banner-image',
-                '.recipe-category-listing .col-12 > h2',
-                // '.search-recipe-container__recipe-count',
+                '.recipe-category-listing > .col-12 > h2',
+                '.search-recipe-container__recipe-count',
                 '.recipe-category-listing .recipe-list-items',
             ].forEach((element) => {
                 const elm = document.querySelector(element);
@@ -93,6 +107,8 @@
                 return response.text();
             }).then((html) => {
                 const shadowDom = document.createElement('div');
+                const wrapper = document.createElement('div');
+                wrapper.className = 'header-wrapper';
                 const container = document.createElement('div');
                 container.className = 'rating-star-container';
                 shadowDom.innerHTML = html;
@@ -118,7 +134,8 @@
                 container.appendChild(ratingContainer);
                 container.appendChild(recipeHeaderDifficulty);
 
-                header.appendChild(container);
+                wrapper.appendChild(container);
+                header.appendChild(wrapper);
             });
         },
         addIcaCard() {
