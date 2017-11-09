@@ -10,11 +10,6 @@
 
 (function($) {
     'use strict';
-const banners = [
-    {
-
-    }
-]
     var test = {
         addStyles: function () {
             const styles = `
