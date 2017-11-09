@@ -10,7 +10,11 @@
 
 (function($) {
     'use strict';
+const banners = [
+    {
 
+    }
+]
     var test = {
         addStyles: function () {
             const styles = `
@@ -125,12 +129,18 @@ margin-top:-120px;
     margin-bottom: 0;
 }
 .cro .main .image-container a {
-align-self: center;
-margin-top:auto;
+    align-self: center;
+    margin-top:auto;
 }
 .cro .main .image-container img {
-align-self: center;
-margin-top:auto;
+    align-self: center;
+    margin-top:auto;
+}
+.cro .offers-container {
+    width: 100%;
+    background-color: white;
+    -webkit-filter: drop-shadow( 1px 1px 2px rgba(0,0,0,0.4) );
+    filter: drop-shadow( 1px 1px 2px rgba(0,0,0,0.4) );
 }
 }
 
@@ -158,6 +168,12 @@ margin-top:auto;
         },
         toArray (list) {
             return Array.prototype.slice.call(list);
+        },
+        create(className, append) {
+            const div = document.createElement('div');
+            div.className = className;
+            document.querySelector(append).appendChild(div);
+            return this;
         },
         replaceBackgroundBanner(url) {
             fetch(url).then((response) => {
@@ -222,6 +238,11 @@ margin-top:auto;
         addCoupons() {
 
         },
+        addBigBanner() {
+            const offersContainer = document.createElement('div');
+            offersContainer.className = 'offers-container';
+            document.querySelector('.banner-container').appendChild(offersContainer);
+        },
         addCROClass() {
             document.querySelector('body').classList.add('cro');
         },
@@ -229,8 +250,8 @@ margin-top:auto;
             this.addCROClass();
             this.hideElements();
             this.replaceBackgroundBanner('https://www.ica.se/recept/tabbouleh-med-quinoa-722825/');
-            this.addCoupons();
             this.addIcaCard();
+            this.addBigBanner();
         }
     };
 
