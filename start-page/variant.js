@@ -207,7 +207,7 @@ margin-top:auto;
             button.className = 'button';
             const image = document.createElement('img');
             image.src = 'https://www.ica.se/ImageVaultFiles/id_61323/cf_259/ansok-ica-kort.png';
-            button.href = '/ansokan';
+            button.href = '/ansokan/?step=6369766963666f726d';
 
             header.appendChild(document.createTextNode('ICA-Kortet ger mer rabatt!'));
             subHeader.appendChild(document.createTextNode('Bli ICA-bonusmedlem.'));
