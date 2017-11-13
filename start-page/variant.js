@@ -418,7 +418,8 @@ max-height: 450px;
             self.create('', icaImageContainer, 'ICA-Kortet ger mer rabatt!', 'h1');
             self.create('', icaImageContainer, 'Bli ICA-bonusmedlem.', 'h3');
             self.create('', icaImageContainer, 'https://www.ica.se/ImageVaultFiles/id_61323/cf_259/ansok-ica-kort.png', 'img');
-            self.create('button', icaImageContainer, 'Skapa konto och bli medlem', 'button');
+            self.create('button', icaImageContainer, 'Skapa konto och bli medlem', 'a')
+              .href = '/ansokan/?step=6369766963666f726d';
             document.querySelector('.main').appendChild(icaImageContainer);
 
         },
