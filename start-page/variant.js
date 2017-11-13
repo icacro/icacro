@@ -65,7 +65,7 @@
         title: 'Torsk med potatis och äggsås i kastrull',
         stars: 4,
         cookTime: '60 MIN | MEDEL',
-        image: 'https://www.ica.se/imagevaultfiles/id_171018/cf_259/raggmunk-med-lingonapple-v47-723024.jpg',
+        image: 'https://www.ica.se/imagevaultfiles/id_155207/cf_259/torsk-med-potatis-och-aggsas-i-kastrull-721634-lit.jpg',
         url: 'https://www.ica.se/recept/torsk-med-potatis-och-aggsas-i-kastrull-721644/',
         coupons: [
             {
