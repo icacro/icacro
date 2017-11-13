@@ -13,6 +13,7 @@
 
     const banners = [
     {
+        recipeId: 722825,
         title: 'After Eight Kladdkaka',
         starts: 4,
         cookTime: '15 min | ENKELT',
@@ -36,6 +37,7 @@
         ]
     },
         {
+        recipeId: 722825,
         title: 'After Eight Kladdkaka',
         starts: 4,
         cookTime: '15 min | ENKELT',
@@ -59,6 +61,7 @@
         ]
     },
         {
+        recipeId: 722825,
         title: 'Apornas planet',
         starts: 4,
         cookTime: '15 min | ENKELT',
@@ -320,8 +323,8 @@ margin-top:-120px;
 max-height: 450px;
 }
 }
-
-
+.cro .unslider-controls { pointer-events: none; }
+.cro .unslider-arrow { pointer-events: auto; }
 </style>`;
             const style = document.createElement('style');
             style.setAttribute('type', 'text/css');
@@ -395,7 +398,7 @@ max-height: 450px;
             self.create('offer-text', ratingContainer, 'Erbjudande på:', 'h3');
             self.create('recipepage__headline', ratingContainer, banner.title, 'h1');
             self.create('recipe-header__difficulty', ratingContainer, banner.cookTime, 'h4');
-            self.create('button banner-button', bannerWrapper, 'Lägg till recept', 'button');
+            self.createSaveRecipeCTA(banner, bannerWrapper);
             banner.coupons.forEach((coupon) => {
                 couponsWrapper.appendChild(self.addCoupon(coupon));
             });
@@ -423,7 +426,72 @@ max-height: 450px;
             this.hideElements();
             this.addBanners();
             this.addIcaCard();
+
+            let recipeId = this.getActionCookie();
+            if (recipeId) {
+                this.addRecipeToShoppingList(recipeId);
+                this.saveRecipe(recipeId);
+            }
+        },
+      createSaveRecipeCTA(banner, parentNode) {
+        const self = this;
+        const cta = self.create('button banner-button', parentNode, 'Lägg till i inköpslistan och spara recept', 'a');
+        cta.href = `/logga-in/?returnUrl=${encodeURIComponent(window.location)}`;
+        cta.dataset['recipeId'] = banner.recipeId;
+        cta.onclick = (e) => {
+          self.setActionCookie(banner.recipeId);
+        };
+      },
+      addRecipeToShoppingList(recipeId) {
+        // kolla upp med Nicklas vad GTM kräver för nedanstående event
+        // dataLayer.push({
+        //     'event': 'recipe-add-to-shopping-list'
+        // });
+
+        ICA.ajax.post('/Templates/Recipes/Handlers/ShoppingListHandler.ashx', {
+          recipeIds: [recipeId],
+          ShoppingListId: 0,
+          numberOfServings: 0,
+          recipes:[],
+          shoppingListName: createShoppingsListName()
+        });
+
+        function createShoppingsListName() {
+          let d = new Date();
+          let year = d.getFullYear();
+          let month = d.getMonth();
+          let day = d.getDate();
+          let months = { 10: 'nov', 11: 'dec' }; // testet kommer endast ligga ute i nov, senast dec
+
+          return `Att handla, ${day} ${months[month]} ${year}`;
         }
+      },
+      saveRecipe(recipeId) {
+        // kolla upp med Nicklas vad GTM kräver för nedanstående event
+        // dataLayer.push({
+        //     'event': 'recipe-save'
+        // });
+
+        ICA.ajax.get('/Templates/Recipes/Handlers/FavoriteRecipesHandler.ashx', {
+          recipeId: recipeId,
+          method: 'Add'
+        });
+      },
+      setActionCookie(recipeId){
+        let d = new Date();
+        d.setDate(new Date().getDate() + 1); // expires tomorrow
+
+        ICA.legacy.setCookie('saveRecipeAndAddToShoppingListFromStartpage', recipeId, d);
+      },
+      getActionCookie() {
+        let actionCookie = ICA.legacy.getCookie('saveRecipeAndAddToShoppingListFromStartpage');
+
+        if (actionCookie) {
+          ICA.legacy.killCookie('saveRecipeAndAddToShoppingListFromStartpage');
+        }
+
+        return actionCookie;
+      }
     };
 
     test.addStyles();
