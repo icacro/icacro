@@ -102,12 +102,18 @@ position: absolute; // in banner-container
    filter: drop-shadow( 0px 0px 2px rgba(0,0,0,0.2) );
 }
 
+.cro .has-hover .image-slider li.active,
+.cro .unslider-controls {
+  z-index: 21 !important;
+}
+
 .cro .banner-container {
 
    width: 100%;
    height: 100%;
    background-color: white;
    padding: 0 5px;
+   z-index: 20 !important;
 }
 .cro .banner-wrapper {
   position: relative;
@@ -293,6 +299,8 @@ margin-top:-120px;
 }
 }
 
+
+
 </style>`;
             const style = document.createElement('style');
             style.setAttribute('type', 'text/css');
@@ -301,7 +309,8 @@ margin-top:-120px;
         },
         hideElements() {
             [
-                '.image-slider',
+                '.image-slider li',
+                '.image-slider .lazy-spinner',
                 '.header-content',
                 '.push-items-list',
                 '.quicklink-list',
@@ -350,7 +359,7 @@ margin-top:-120px;
         },
         addBanner(banner, index) {
             const self = this;
-            const bannerContainer = self.create('banner-container');
+            const bannerContainer = self.create('banner-container', null, null, 'li');
             const bannerWrapper = self.create('banner-wrapper', bannerContainer);
             const ratingContainer = self.create('rating-star-container', bannerWrapper);
             const couponsContainer = self.create('coupons-container', bannerWrapper);
@@ -368,9 +377,9 @@ margin-top:-120px;
         },
         addBanners() {
             const self = this;
-            const header = document.querySelector('.header');
+            const slider = document.querySelector('.image-slider ul');
             banners.forEach((banner, index) => {
-                header.appendChild(self.addBanner(banner, index));
+                slider.appendChild(self.addBanner(banner, index));
             });
             $('.banner').slick();
         },
@@ -396,5 +405,6 @@ margin-top:-120px;
 
     $(document).ready(function (){
         test.manipulateDom();
+        ICA.icaCallbacks.initUnslider();
     });
 })(jQuery);
