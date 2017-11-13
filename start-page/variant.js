@@ -15,7 +15,7 @@
     {
         recipeId: 721648,
         title: 'Semmelmuffins',
-        starts: 4,
+        stars: 4,
         cookTime: '60 MIN | MEDEL',
         image: 'https://www.ica.se/imagevaultfiles/id_155248/cf_259/semmelmuffins-721648-stor.jpg',
         url: 'https://www.ica.se/recept/semmelmuffins-721648/',
@@ -39,7 +39,7 @@
         {
         recipeId: 721668,
         title: 'Viltskavsgryta med messmör och lingon',
-        starts: 4,
+        stars: 4,
         cookTime: '45 MIN | MEDEL',
         image: 'https://www.ica.se/imagevaultfiles/id_155280/cf_259/viltskavsgryta-med-messmor-och-lingon-721658-liten.jpg',
         url: 'https://www.ica.se/recept/viltskavsgryta-med-messmor-och-lingon-721668/',
@@ -63,7 +63,7 @@
         {
         recipeId: 721644,
         title: 'Torsk med potatis och äggsås i kastrull',
-        starts: 4,
+        stars: 4,
         cookTime: '60 MIN | MEDEL',
         image: 'https://www.ica.se/imagevaultfiles/id_171018/cf_259/raggmunk-med-lingonapple-v47-723024.jpg',
         url: 'https://www.ica.se/recept/torsk-med-potatis-och-aggsas-i-kastrull-721644/',
