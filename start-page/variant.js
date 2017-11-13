@@ -350,7 +350,7 @@ margin-top:-120px;
         },
         addBanner(banner, index) {
             const self = this;
-            const bannerContainer = self.create('banner-container slick-slide slick-cloned');
+            const bannerContainer = self.create('banner-container');
             const bannerWrapper = self.create('banner-wrapper', bannerContainer);
             const ratingContainer = self.create('rating-star-container', bannerWrapper);
             const couponsContainer = self.create('coupons-container', bannerWrapper);
@@ -361,8 +361,6 @@ margin-top:-120px;
             self.create('recipepage__headline', ratingContainer, banner.title, 'h1');
             self.create('recipe-header__difficulty', ratingContainer, banner.cookTime);
             self.create('button banner-button', bannerWrapper, 'Lägg till recept', 'button');
-            self.addStyle(bannerContainer, { 'width': '624px' });
-            bannerContainer.dataset.slickIndex = index;
             banner.coupons.forEach((coupon) => {
                 couponsWrapper.appendChild(self.addCoupon(coupon));
             });
@@ -371,19 +369,10 @@ margin-top:-120px;
         addBanners() {
             const self = this;
             const header = document.querySelector('.header');
-            const imageSlider = self.create('slick-class slick-initialized slick-slider', header);
-            self.create('slick-prev slick-arrow', imageSlider, 'Previous', 'button');
-            self.create('slick-next slick-arrow', imageSlider, 'Next', 'button');
-            const slickList = self.create('slick-list draggable', imageSlider);
-            const slickTrack = self.create('slick-track', slickList);
-            self.addStyle(slickTrack, {
-                'opacity': '1',
-                'width': '1872px',
-                'transform': 'translate3d(0px, 0px, 0px)'
-            });
             banners.forEach((banner, index) => {
-                slickTrack.appendChild(self.addBanner(banner, index));
+                header.appendChild(self.addBanner(banner, index));
             });
+            $('.banner').slick();
         },
         addIcaCard() {
             const self = this;
@@ -393,6 +382,7 @@ margin-top:-120px;
             self.create('', icaImageContainer, 'https://www.ica.se/ImageVaultFiles/id_61323/cf_259/ansok-ica-kort.png', 'img');
             self.create('button', icaImageContainer, 'Skapa konto och bli medlem', 'button');
             document.querySelector('.main').appendChild(icaImageContainer);
+
         },
         manipulateDom: function () {
             this.addCROClass();
