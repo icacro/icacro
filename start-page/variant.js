@@ -238,25 +238,25 @@ margin-left: 0 !important;
   color: white;
 }
 
-.cro .rating-star-container .recipepage__headline {
-  font-size: 3.3rem;
-  margin-bottom: 9px;
+.cro .rating-star-container .headline {
+  font-size: 36px;
+  margin-bottom: 5px;
   margin-top: 5px;
   max-width: none;
   font-family: icarubrik;
-  font-weight: 700;
+  font-weight: 600;
   line-height: 3rem;
 }
 
-.cro .rating-star-container .recipe-header__difficulty {
+.cro .rating-star-container .difficulty {
   text-transform: uppercase;
-  font-family: icarubrik;
-  font-weight: 600;
+  font: 16px icatext;
+  font-weight: 900;
   margin-top: 6px;
 }
 
 .cro .rating-star-container .offer-text {
-  font: 17px icarubrik;
+  font: 19px icatext, sans-serif;
   font-weight: 600;
 }
 .cro .rating-star-container svg .active {
@@ -374,24 +374,19 @@ max-height: 450px;
             if (parent) parent.appendChild(div);
             return div;
         },
-        testing() {
-
-        },
         addStars(stars) {
             const arr = ['0', '26', '52', '78', '104'];
             const strs = arr.map((x, index) => (
 `<g transform="translate(${x} 0)" class="${index < stars ? 'active' : ''}">
 <path d="M23.2 10.303q.194.509-.073.97-1.188 2.182-5.067 5.479 1.018 4.194 1.212 6.715.049.679-.533 1.067-.315.194-.63.194-.242 0-.533-.121-.412-.242-1.333-.679-3.273-1.624-4.606-2.473-1.333.849-4.606 2.473-.921.436-1.333.679-.606.315-1.164-.073-.582-.388-.533-1.067.194-2.521 1.212-6.715-3.879-3.297-5.067-5.479-.267-.461-.073-.97.17-.509.63-.679 1.358-.606 6.861-.8 1.988-5.77 3.248-7.03.388-.339.824-.339.461 0 .8.339 1.285 1.261 3.273 7.03 5.503.194 6.861.8.461.194.63.679z"></path>
 </g>`));
-          return `<a href="#" class="rating-stars" data-recipeid="722893" data-rating="${stars}" title="${stars}">
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="-0.12099626660346985 1.4550001621246338 127.39400121569633 25.34600469470024">
+          return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="-0.12099626660346985 1.4550001621246338 127.39400121569633 25.34600469470024">
 <linearGradient id="half" x1="0" x2="100%" y1="0" y2="0">
 <stop offset="50%" stop-color="currentColor"></stop>
 <stop offset="50%" stop-color="#d5d7da"></stop>
 </linearGradient>
 ${strs.join('')}
-</svg>
-</a>`;
+</svg>`;
         },
         addCoupon(coupon) {
             const self = this;
@@ -420,9 +415,9 @@ ${strs.join('')}
             self.create('image', couponsImageContainer, banner.image, 'img');
 
             self.create('offer-text', ratingContainer, 'Erbjudande på:', 'h3');
-            self.create('offer-text', ratingContainer).innerHTML = self.addStars(banner.stars);
-            self.create('recipepage__headline', ratingContainer, banner.title, 'h1');
-            self.create('recipe-header__difficulty', ratingContainer, banner.cookTime, 'h4');
+            self.create('headline', ratingContainer, banner.title, 'h1');
+            self.create('rating', ratingContainer).innerHTML = self.addStars(banner.stars);
+            self.create('difficulty', ratingContainer, banner.cookTime, 'h4');
             self.createSaveRecipeCTA(banner, bannerWrapper);
             banner.coupons.forEach((coupon) => {
                 couponsWrapper.appendChild(self.addCoupon(coupon));
