@@ -13,73 +13,73 @@
 
     const banners = [
     {
-        recipeId: 722825,
-        title: 'After Eight Kladdkaka',
+        recipeId: 721648,
+        title: 'Semmelmuffins',
         starts: 4,
-        cookTime: '15 min | ENKELT',
-        image: 'https://www.ica.se/imagevaultfiles/id_171018/cf_259/raggmunk-med-lingonapple-v47-723024.jpg',
-        url: '',
+        cookTime: '60 MIN | MEDEL',
+        image: 'https://www.ica.se/imagevaultfiles/id_155248/cf_259/semmelmuffins-721648-stor.jpg',
+        url: 'https://www.ica.se/recept/semmelmuffins-721648/',
         coupons: [
             {
                 title: 'Margarin',
-                image: '/Templates/GlobalSearch/Views/images/buffe_logga.png',
-                discount: '5 kr i rabatt',
-                subtitle: 'Milda 1kg',
+                image: 'https://www.ica.se/Handlers/Image.ashx?w=150&h=150&m=p&bgr=fff&u=http://extbild.ica.se//PictureWeb/80/1026/14_1000555305.jpg',
+                discount: '5 kr rabatt',
+                subtitle: 'Milda 1 kg',
                 url: ''
             },
             {
-                title: 'Margarin',
-                image: '/Templates/GlobalSearch/Views/images/buffe_logga.png',
-                discount: '5 kr i rabatt',
-                subtitle: 'Milda 1kg',
+                title: 'Mandelmassa',
+                image: 'https://www.ica.se/Handlers/Image.ashx?w=150&h=150&m=p&bgr=fff&u=http://extbild.ica.se//PictureWeb/80/1044/14_1000555323.jpg',
+                discount: '25% rabatt',
+                subtitle: 'ICA 200 g',
                 url: ''
             }
         ]
     },
         {
-        recipeId: 722825,
-        title: 'After Eight Kladdkaka',
+        recipeId: 721668,
+        title: 'Viltskavsgryta med messmör och lingon',
         starts: 4,
-        cookTime: '15 min | ENKELT',
-        image: 'https://www.ica.se/imagevaultfiles/id_171018/cf_259/raggmunk-med-lingonapple-v47-723024.jpg',
-        url: '',
+        cookTime: '45 MIN | MEDEL',
+        image: 'https://www.ica.se/imagevaultfiles/id_155280/cf_259/viltskavsgryta-med-messmor-och-lingon-721658-liten.jpg',
+        url: 'https://www.ica.se/recept/viltskavsgryta-med-messmor-och-lingon-721668/',
         coupons: [
             {
                 title: 'Margarin',
-                image: '/Templates/GlobalSearch/Views/images/buffe_logga.png',
-                discount: '5 kr i rabatt',
-                subtitle: 'Milda 1kg',
+                image: 'https://www.ica.se/Handlers/Image.ashx?w=150&h=150&m=p&bgr=fff&u=http://extbild.ica.se//PictureWeb/80/1026/14_1000555305.jpg',
+                discount: '5 kr rabatt',
+                subtitle: 'Milda 1 kg',
                 url: ''
             },
             {
-                title: 'Margarin',
-                image: '/Templates/GlobalSearch/Views/images/buffe_logga.png',
-                discount: '5 kr i rabatt',
-                subtitle: 'Milda 1kg',
+                title: 'Buljongkuber',
+                image: 'https://www.ica.se/Handlers/Image.ashx?w=150&h=150&m=p&bgr=fff&u=http://extbild.ica.se//PictureWeb/80/1028/14_1000555307.jpg',
+                discount: '25% rabatt',
+                subtitle: 'Knorr 6-pack',
                 url: ''
             }
         ]
     },
         {
-        recipeId: 722825,
-        title: 'Apornas planet',
+        recipeId: 721644,
+        title: 'Torsk med potatis och äggsås i kastrull',
         starts: 4,
-        cookTime: '15 min | ENKELT',
+        cookTime: '60 MIN | MEDEL',
         image: 'https://www.ica.se/imagevaultfiles/id_171018/cf_259/raggmunk-med-lingonapple-v47-723024.jpg',
-        url: '',
+        url: 'https://www.ica.se/recept/torsk-med-potatis-och-aggsas-i-kastrull-721644/',
         coupons: [
             {
-                title: 'Margarin',
-                image: '/Templates/GlobalSearch/Views/images/buffe_logga.png',
-                discount: '5 kr i rabatt',
-                subtitle: 'Milda 1kg',
+                title: 'iMat',
+                image: 'https://www.ica.se/Handlers/Image.ashx?w=150&h=150&m=p&bgr=fff&u=http://extbild.ica.se//PictureWeb/80/1029/14_1000555308.jpg',
+                discount: '15% rabatt',
+                subtitle: 'Oatly 250 g',
                 url: ''
             },
             {
-                title: 'Margarin',
-                image: '/Templates/GlobalSearch/Views/images/buffe_logga.png',
+                title: 'Torskfilé',
+                image: 'https://www.ica.se/Handlers/Image.ashx?w=150&h=150&m=p&bgr=fff&u=http://extbild.ica.se//PictureWeb/80/1038/14_1000555317.jpg',
                 discount: '5 kr i rabatt',
-                subtitle: 'Milda 1kg',
+                subtitle: 'ICA 600 g',
                 url: ''
             }
         ]
@@ -198,7 +198,8 @@ margin-left: 0 !important;
 width: 100%;
 height: 60px;
 background-repeat: no-repeat;
-background-size: 100%;
+background-size: contain;
+background-position: center;
 }
 
 .cro .banner-wrapper .coupons-image {
