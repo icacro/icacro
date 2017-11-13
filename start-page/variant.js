@@ -195,21 +195,24 @@ margin-left: 0 !important;
 }
 
 .cro .coupons-container .coupons-container__item .coupons-image {
-width: 100%;
-height: 60px;
-background-repeat: no-repeat;
-background-size: contain;
-background-position: center;
+  width: 100%;
+  height: 60px;
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
 }
 
-.cro .banner-wrapper .coupons-image {
-    height: 220px;
-    overflow: hidden;
+.cro .banner-wrapper .banner-image {
+  height: 220px;
+  overflow: hidden;
 }
 
-.cro .banner-wrapper .coupons-image img {
-    width: 100%;
-margin-left: 0 !important;
+.cro .banner-wrapper .banner-image img {
+  width: 100%;
+  position: relative;
+  margin-left: 0 !important;
+  height: auto !important;
+  min-width: 375px;
 }
 
 .cro .banner-wrapper .banner-button {
@@ -413,7 +416,7 @@ ${strs.join('')}
             const couponsContainer = self.create('coupons-container', bannerWrapper);
 
             const couponsWrapper = self.create('coupons-wrapper', couponsContainer);
-            const couponsImageContainer = self.create('coupons-image', bannerWrapper);
+            const couponsImageContainer = self.create('banner-image', bannerWrapper);
             self.create('image', couponsImageContainer, banner.image, 'img');
 
             self.create('offer-text', ratingContainer, 'Erbjudande på:', 'h3');
