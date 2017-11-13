@@ -97,6 +97,13 @@ position: absolute; // in banner-container
 .start-page>header {
     height: 450px;
 }
+
+
+.cro .shadow .coupons-container__item img {
+width: 100% !important;
+margin-left: 0 !important;
+}
+
 .shadow {
    -webkit-filter: drop-shadow( 0px 0px 2px rgba(0,0,0,0.2) );
    filter: drop-shadow( 0px 0px 2px rgba(0,0,0,0.2) );
@@ -184,9 +191,21 @@ position: absolute; // in banner-container
     align-self: center;
 }
 
+.cro .coupons-container .coupons-container__item .coupons-image {
+width: 100%;
+height: 60px;
+background-repeat: no-repeat;
+background-size: 100%;
+}
+
 .cro .banner-wrapper .coupons-image {
     height: 220px;
     overflow: hidden;
+}
+
+.cro .banner-wrapper .coupons-image img {
+    width: 100%;
+margin-left: 0 !important;
 }
 
 .cro .banner-wrapper .banner-button {
@@ -297,8 +316,10 @@ margin-top:-120px;
     -webkit-filter: drop-shadow( 1px 1px 2px rgba(0,0,0,0.4) );
     filter: drop-shadow( 1px 1px 2px rgba(0,0,0,0.4) );
 }
+.start-page-icase>header.full-size-image .image-slider, .start-page-icase>header.full-size-image .image-slider ul, .start-page-icase>header.full-size-image .image-slider li {
+max-height: 450px;
 }
-
+}
 
 
 </style>`;
@@ -349,7 +370,11 @@ margin-top:-120px;
         addCoupon(coupon) {
             const self = this;
             const couponItem = self.create('shadow coupons-container__item');
-            self.create('', couponItem, coupon.image, 'img');
+            const img = self.create('coupons-image', couponItem);
+            self.addStyle(img, {
+              'background-image': `url(${coupon.image})`
+            });
+
             self.create('', couponItem, coupon.title, 'h3');
             self.create('', couponItem, coupon.discount, 'h1');
             self.create('', couponItem, coupon.subtitle, 'h4');
@@ -366,9 +391,10 @@ margin-top:-120px;
             const couponsWrapper = self.create('coupons-wrapper', couponsContainer);
             const couponsImageContainer = self.create('coupons-image', bannerWrapper);
             self.create('image', couponsImageContainer, banner.image, 'img');
+
             self.create('offer-text', ratingContainer, 'Erbjudande på:', 'h3');
             self.create('recipepage__headline', ratingContainer, banner.title, 'h1');
-            self.create('recipe-header__difficulty', ratingContainer, banner.cookTime);
+            self.create('recipe-header__difficulty', ratingContainer, banner.cookTime, 'h4');
             self.create('button banner-button', bannerWrapper, 'Lägg till recept', 'button');
             banner.coupons.forEach((coupon) => {
                 couponsWrapper.appendChild(self.addCoupon(coupon));
@@ -381,7 +407,6 @@ margin-top:-120px;
             banners.forEach((banner, index) => {
                 slider.appendChild(self.addBanner(banner, index));
             });
-            $('.banner').slick();
         },
         addIcaCard() {
             const self = this;
