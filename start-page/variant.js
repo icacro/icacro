@@ -85,11 +85,7 @@
         ]
     }
 ];
-/*
-position: absolute; // in banner-container
-   top: 0;
-   left: 0;
-*/
+
     var test = {
         addStyles: function () {
             const styles = `
@@ -464,6 +460,13 @@ ${strs.join('')}
 
         },
         manipulateDom: function () {
+          let recipeId = this.getActionCookie();
+          if (recipeId && this.isLoggedIn()) {
+            this.addRecipeToShoppingList(recipeId);
+            this.saveRecipe(recipeId);
+            this.addRecipeToSavedList(recipeId);
+          }
+
             this.addCROClass();
             this.hideElements();
             this.addBanners();
@@ -472,30 +475,25 @@ ${strs.join('')}
             var returnUrl = encodeURIComponent(window.location.href);
             var iframeContainer = $('<div class="cro-iframe-container"><span class="loader"></span><iframe src="//www.ica.se/logga-in/?returnurl=' + returnUrl + '" frameborder="0"></iframe></div>');
             $('body').append(iframeContainer);
-
-            let recipeId = this.getActionCookie();
-            if (recipeId) {
-                this.addRecipeToShoppingList(recipeId);
-                this.saveRecipe(recipeId);
-            }
         },
       createSaveRecipeCTA(banner, parentNode) {
         const self = this;
+        let savedRecipes = self.getSavedRecipes();
+        if (savedRecipes.includes(banner.recipeId)) return;
+
         const cta = self.create('button banner-button', parentNode, 'Lägg till i inköpslistan och spara recept', 'a');
         cta.href = `/logga-in/?returnUrl=${encodeURIComponent(window.location)}`;
         cta.dataset['recipeId'] = banner.recipeId;
+        cta.dataset['tracking'] = `{ "name": "${banner.title}", "URL": "${banner.url}" }`;
+        cta.classList.add('js-add-to-new-shoppinglist');
         cta.onclick = (e) => {
-          debugger;
           e.preventDefault();
           self.setActionCookie(banner.recipeId);
           self.createModal();
         };
       },
       addRecipeToShoppingList(recipeId) {
-        // kolla upp med Nicklas vad GTM kräver för nedanstående event
-        // dataLayer.push({
-        //     'event': 'recipe-add-to-shopping-list'
-        // });
+        // tracking sker via klassnamn
 
         ICA.ajax.post('/Templates/Recipes/Handlers/ShoppingListHandler.ashx', {
           recipeIds: [recipeId],
@@ -516,10 +514,13 @@ ${strs.join('')}
         }
       },
       saveRecipe(recipeId) {
-        // kolla upp med Nicklas vad GTM kräver för nedanstående event
-        // dataLayer.push({
-        //     'event': 'recipe-save'
-        // });
+        let banner = banners.filter((b) => b.recipeId == recipeId)[0];
+
+        dataLayer.push({
+          'event': 'recipe-save',
+          'name': banner.title,
+          'URL': banner.url
+        });
 
         ICA.ajax.get('/Templates/Recipes/Handlers/FavoriteRecipesHandler.ashx', {
           recipeId: recipeId,
@@ -539,7 +540,22 @@ ${strs.join('')}
           ICA.legacy.killCookie('saveRecipeAndAddToShoppingListFromStartpage');
         }
 
-        return actionCookie;
+        return +actionCookie; // coerce to number
+      },
+      addRecipeToSavedList(recipeId) {
+        let self = this;
+        let d = new Date();
+        d.setDate(new Date().getDate() + 1); // expires tomorrow
+
+        let savedRecipes = self.getSavedRecipes();
+
+        savedRecipes.push(recipeId);
+
+        ICA.legacy.setCookie('cro_start_savedRecipes', JSON.stringify(savedRecipes), d);
+      },
+      getSavedRecipes() {
+        let cookie = ICA.legacy.getCookie('cro_start_savedRecipes');
+        return cookie ? JSON.parse(cookie) : [];
       },
       // hotjarTriggered: false,
       loaderIsActive: false,
@@ -573,6 +589,8 @@ ${strs.join('')}
         addEventListeners: function () {
             var self = this;
 
+            $('.header').off('mousedown');
+
             $(window).on("message onmessage", function(e) {
                 var origin = window.location.protocol + '//' + window.location.host;
                 if (e.originalEvent.origin === origin && /mobilebankid/i.test(e.originalEvent.data)) {
@@ -605,7 +623,7 @@ ${strs.join('')}
                 var iframe = $('.cro-iframe-container iframe');
 
                 iframe.on('load', function () {
-                    var regex = new RegExp(window.location.href, 'gi');
+                    var regex = new RegExp(`^${window.location.href}$`, 'gi');
                     if(regex.test(this.contentWindow.location)) {
                         window.location.reload(true);
                     }
@@ -669,7 +687,7 @@ ${strs.join('')}
                         function addIframeTracking() {
                             var e = $('.cro-iframe-container iframe').contents();
                             if (e.length) {
-                                var eventAction = 'SALDO';
+                                var eventAction = 'Spara recept från startsidan';
 
                                 // Fortsätt (Mobilt BankId)
                                 e.find('#submit-login-mobile-bank-id').on('click', function () {
@@ -735,13 +753,17 @@ ${strs.join('')}
                 //     self.hotjarTriggered = true;
                 // }
             }, 50);
-        }
+        },
+      isLoggedIn() {
+        return $('#hdnIcaState').val() ? true : false;
+      }
     };
 
     test.addStyles();
 
     $(document).ready(function (){
         test.manipulateDom();
+        test.addEventListeners();
         ICA.icaCallbacks.initUnslider();
     });
 })(jQuery);
