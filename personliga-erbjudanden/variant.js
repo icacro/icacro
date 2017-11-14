@@ -34,6 +34,10 @@
                 padding: 15px 10px;
                 margin-bottom: 10px;
               }
+              .cro .personal-offer .toggle-personal-offer { width: 100%; text-align:right; height:20px; }
+              .cro .personal-offer .toolbar__icon--indicator { margin-top: 4px; }
+              .cro .personal-offer .toolbar__icon--indicator.arrow { transform: rotateZ(180deg); fill: #a02971; }
+              .cro .personal-offer__container.hide { display: none; }
               .cro .personal-offer__preamble, .cro .personal-offer__preamble--strong { display: block; margin-bottom: 10px; }
               .cro .personal-offer__recipe-and-coupon {
                 display: flex;
@@ -127,16 +131,13 @@
             self.create('', containerText).innerHTML = self.addStars(banner.stars);
             return container;
         },
-        isLoggedIn() { return $('#hdnIcaState').val() ? true : false; },
         addCoupon() {
             const self = this;
             const container = self.create('personal-offer__recipe-and-coupon-l50-s100');
             const loginUrl = `/logga-in?returnUrl=${encodeURIComponent(window.location)}`;
-            const kupongCta = self.isLoggedIn()
-              ? `<a href="#" data-url="" data-login-url="${loginUrl}" class="button button--auto-width button--load-coupon js-loggin-btn">Ladda kupong</a>`
-              : `<a href="#" data-url="" data-login-url="${loginUrl}" class="button button--auto-width button--load-coupon js-loggin-btn">Ladda kupong</a>`;
+            const kupongCta = `<a href="#" data-url="" data-login-url="${loginUrl}" class="button button--auto-width button--load-coupon js-loggin-btn">Ladda kupong</a>`;
 
-              const kupongTemplate =
+            const kupongTemplate =
               `<article class="hse-recipe-list grid_fluid pl  loaded">
                   <div class="hse-recipe-list__wrapper">
                       <div class="column size6of20 lg_size5of20">
@@ -156,14 +157,36 @@
                   </div>
 
               </article>`;
-
             container.innerHTML = kupongTemplate;
             return container;
         },
+        addToggleButton(personalOffer){
+          const self = this;
+          const arrow = `
+              <svg class="toolbar__icon toolbar__icon--indicator" viewBox="0 0 32 32" width="20px" height="20px">
+                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/Assets/icons/sprite.svg#arrow-up"></use>
+              </svg>
+          `;
+          const toggle = self.create('toggle-personal-offer', personalOffer, '', 'div');
+          self.create('toggle-personal-offer__text', toggle, 'Dölj', 'span');
+          const svg = self.create('toggle-personal-offer__svg', toggle, null, 'span');
+          svg.innerHTML = arrow;
+          return toggle;
+        },
         addBlock() {
             const self = this;
-            const container = self.create('personal-offer');
-            self.create('', container, 'Dölj', 'a');
+            const personalOffer = self.create('personal-offer');
+            const toggle = self.addToggleButton(personalOffer);
+            const container = self.create('personal-offer__container', personalOffer);
+            toggle.addEventListener('click', () => {
+              if(container.classList.contains('hide')) {
+                container.classList.remove('hide');
+                toggle.querySelector('.toolbar__icon--indicator').classList.remove('arrow');
+              } else {
+                container.classList.add('hide');
+                toggle.querySelector('.toolbar__icon--indicator').classList.add('arrow');
+              }
+            });
             self.create('personal-offer__h1', container, 'Hej', 'h1');
             self.create('personal-offer__preamble--strong', container, 'Efter', 'strong');
             self.create('personal-offer__preamble--strong', container, 'I sådana fall....', 'span');
@@ -171,13 +194,10 @@
             const recipeAndCoupon = self.create('personal-offer__recipe-and-coupon', container);
             recipeAndCoupon.appendChild(self.addRecepie());
             recipeAndCoupon.appendChild(self.addCoupon());
-            return container;
+            return personalOffer;
         },
         addCROClass() {
             document.querySelector('body').classList.add('cro');
-        },
-        addToggleButton(){
-
         },
         manipulateDom: function () {
             this.addCROClass();

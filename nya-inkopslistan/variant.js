@@ -12,7 +12,7 @@
   'use strict';
   window.test = window.test || {};
   window.test = {
-    addStyles: function () {
+    addStyles: function () { 
       var styles = '<style type="text/css">' +
           '.cro .controls .sort { margin-top: 56px !important; }' +
           '.cro .controls .searchfield { height: 41px !important; background-position: 100% -45px !important; }' +
