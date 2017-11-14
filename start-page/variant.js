@@ -302,12 +302,15 @@ margin-top:-120px;
 }
 .cro .ica-card-container h3 {
     line-height: 2rem;
-    font-size: 1.7rem;
-    margin-bottom: 0;
+    font-size: 24px;
+    margin-bottom: -10px;
+    font-weight: 100;
+    font-family: icatext;
+    margin-top: 10px;
 }
 .cro .ica-card-container a {
     align-self: center;
-    margin-top:auto;
+    margin-top: 20px;
 }
 .cro .ica-card-container img {
     align-self: center;
@@ -345,6 +348,16 @@ max-height: 450px;
   left: 0;
   width: 100%;
   height: 100%;
+}
+
+.cro .usp-list li {
+  font: 24px icarubrik;
+  font-weight: 600;
+  margin-bottom: 15px;
+}
+.cro .usp-list svg {
+  fill: #8DB72C;
+margin-right: 5px;
 }
 </style>`;
             const style = document.createElement('style');
@@ -454,6 +467,12 @@ ${strs.join('')}
             self.create('', icaImageContainer, 'ICA-Kortet ger mer rabatt!', 'h1');
             self.create('', icaImageContainer, 'Bli ICA-bonusmedlem.', 'h3');
             self.create('', icaImageContainer, 'https://www.ica.se/ImageVaultFiles/id_61323/cf_259/ansok-ica-kort.png', 'img');
+            let usps = self.create('usp-list', icaImageContainer, null, 'ul');
+            usps.innerHTML = `
+<li><svg viewBox="0 0 32 32" width="15px" height="15px"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/Assets/icons/sprite.svg#check"></use></svg> ICA-kort med bonus</li>
+<li><svg viewBox="0 0 32 32" width="15px" height="15px"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/Assets/icons/sprite.svg#check"></use></svg> Personliga erbjudanden</li>
+<li><svg viewBox="0 0 32 32" width="15px" height="15px"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/Assets/icons/sprite.svg#check"></use></svg> Kortpriser varje vecka</li>
+`;
             self.create('button', icaImageContainer, 'Skapa konto och bli medlem', 'a')
               .href = '/ansokan/?step=6369766963666f726d';
             document.querySelector('.main').appendChild(icaImageContainer);
