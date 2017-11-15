@@ -44,15 +44,15 @@
                 align-self: flex-end;
                 height: 20px;
               }
-              
-              .cro .personal-offer__toggle-header { 
+
+              .cro .personal-offer__toggle-header {
                 display: none;
                 flex-grow: 1;
                 margin: 0;
-              } 
+              }
 
-              .cro .personal-offer--hidden .personal-offer__container { display: none; } 
-              .cro .personal-offer--hidden .personal-offer__toggle-header { display: block; } 
+              .cro .personal-offer--hidden .personal-offer__container { display: none; }
+              .cro .personal-offer--hidden .personal-offer__toggle-header { display: block; }
               .cro .personal-offer--hidden .toolbar__icon--indicator { transform: rotateZ(180deg) translateY(2px); }
 
               .cro .personal-offer .toolbar__icon--indicator { fill: #a02971; }
@@ -106,6 +106,17 @@
             style.setAttribute('type', 'text/css');
             style.appendChild(document.createTextNode(styles));
             document.querySelector('head').appendChild(style);
+        },
+        loadJS(callback) {
+          const script = document.createElement('script');
+          script.setAttribute('async', '');
+          script.setAttribute('src', 'https://rawgit.com/Banzaci/icacro/0.1/main.js');// Prod cdn.
+          document.querySelector('head').appendChild(script);
+          if (callback) {
+            script.onreadystatechange = script.onload = function() {
+              callback();
+            };
+          }
         },
         addStars(stars) {
             const arr = ['0', '26', '52', '78', '104'];
@@ -188,8 +199,8 @@
               </svg>
           `;
           const toggle = self.create('toggle-personal-offer', personalOffer, '', 'div');
-          self.create('personal-offer__toggle-header', toggle, 'Personligt erbjudande', 'h3');
-          self.create('toggle-personal-offer__text', toggle, 'Dölj', 'span');
+          // self.create('personal-offer__toggle-header', toggle, 'Personligt erbjudande', 'h3');
+          self.create('toggle-personal-offer__text', toggle, 'Visa personligt erbjudande', 'span');
           const svg = self.create('toggle-personal-offer__svg', toggle, null, 'span');
           svg.innerHTML = arrow;
           return toggle;
@@ -202,8 +213,10 @@
             toggle.addEventListener('click', () => {
               if (personalOffer.classList.contains('personal-offer--hidden')) {
                 personalOffer.classList.remove('personal-offer--hidden');
+                toggle.querySelector('.toggle-personal-offer__text').innerHTML = 'Visa personligt erbjudande';
               } else {
                 personalOffer.classList.add('personal-offer--hidden');
+                toggle.querySelector('.toggle-personal-offer__text').innerHTML = 'Dölj personligt erbjudande';
               }
             });
             self.create('personal-offer__h1', container, 'Hej', 'h1');
@@ -227,9 +240,13 @@
         }
     };
 
-    test.addStyles();
+    // test.addStyles();
 
     $(document).ready(function (){
+      test.loadJS(() => {
+        console.log('Loaded');
+        test.addStyles();
         test.manipulateDom();
+      });
     });
 })(jQuery);

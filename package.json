@@ -1,0 +1,24 @@
+{
+  "name": "icacro",
+  "version": "1.0.0",
+  "description": "",
+  "main": "template.js",
+  "dependencies": {},
+  "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.2",
+    "babel-preset-env": "^1.6.1",
+    "html-webpack-plugin": "^2.30.1",
+    "path": "^0.12.7",
+    "webpack": "^3.0.0"
+  },
+  "scripts": {
+    "build": "webpack"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://git.ica.ia-hc.net/exapfg/icacro.git"
+  },
+  "author": "",
+  "license": "ISC"
+}
