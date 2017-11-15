@@ -10,6 +10,7 @@
 
 (function($) {
     'use strict';
+  const couponId = 458288;
     const banner = {
       title: 'Banner',
       cookTime: '45 MIN | ENKELT',
@@ -17,7 +18,7 @@
       preamble: 'En variant på....',
       img: '/imagevaultfiles/id_171018/cf_5291/raggmunk-med-lingonapple-v47-723024.jpg'
     };
-    const coupon = {
+    let coupon = {
       title: 'Banner',
       discount: '5kr rabatt',
       stars: 4,
@@ -44,15 +45,15 @@
                 align-self: flex-end;
                 height: 20px;
               }
-              
-              .cro .personal-offer__toggle-header { 
+
+              .cro .personal-offer__toggle-header {
                 display: none;
                 flex-grow: 1;
                 margin: 0;
-              } 
+              }
 
-              .cro .personal-offer--hidden .personal-offer__container { display: none; } 
-              .cro .personal-offer--hidden .personal-offer__toggle-header { display: block; } 
+              .cro .personal-offer--hidden .personal-offer__container { display: none; }
+              .cro .personal-offer--hidden .personal-offer__toggle-header { display: block; }
               .cro .personal-offer--hidden .toolbar__icon--indicator { transform: rotateZ(180deg) translateY(2px); }
 
               .cro .personal-offer .toolbar__icon--indicator { fill: #a02971; }
@@ -133,12 +134,6 @@
             if (parent) parent.appendChild(div);
             return div;
         },
-        hideElements() {
-            [].forEach((element) => {
-                const elm = document.querySelector(element);
-                elm.parentNode.removeChild(elm);
-            });
-        },
         addRecepie() {
             const self = this;
             const container = self.create('personal-offer__recipe-and-coupon-l50-s100');
@@ -158,7 +153,7 @@
             const kupongCta = `<a href="#" data-url="" data-login-url="${loginUrl}" class="button button--auto-width button--load-coupon js-loggin-btn">Ladda kupong</a>`;
 
             const kupongTemplate =
-              `<article class="hse-recipe-list grid_fluid pl  loaded">
+              `<article class="hse-recipe-list grid_fluid pl loaded">
                   <div class="hse-recipe-list__wrapper">
                       <div class="column size6of20 lg_size5of20">
                           <picture>
@@ -169,7 +164,7 @@
                         <h1>${coupon.title}</h1>
                   <span>${coupon.discount}</span>
                   <p>${coupon.preamble}</p>
-                  <a href="${coupon.originalPopupUrl}">Mer info</a>
+                  <a href="/kampanj/hse/458288">Mer info</a>
                       </div>
                       <div class="column size6of20 lg_size5of20 coupon-load-wrapper" data-offerid="${coupon.offerId}">
                           ${kupongCta}
@@ -220,11 +215,17 @@
         },
         manipulateDom: function () {
             this.addCROClass();
-            this.hideElements();
             const container = this.addBlock();
             const dashboard = document.querySelector('#dashboard');
             dashboard.insertBefore(container, dashboard.firstChild);
-        }
+          this.loadCouponData();
+        },
+      loadCouponData() {
+        const self = this;
+        window.fetch(`/api/jsonhse/${couponId}`)
+          .then((response) => response.json())
+          .then((json) => coupon = $().extend({}, coupon, json));
+      }
     };
 
     test.addStyles();
