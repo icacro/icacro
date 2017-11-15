@@ -34,8 +34,13 @@
                 padding: 15px 10px;
                 margin-bottom: 10px;
               }
-              .cro .personal-offer .toggle-personal-offer { width: 100%; text-align:right; height:20px; }
-              .cro .personal-offer .toolbar__icon--indicator { margin-top: 4px; }
+              .cro .personal-offer .toggle-personal-offer { width: 100%; display: flex; justify-content: flex-end; }
+.cro .personal-offer .toggle-personal-offer__svg {
+    align-self: flex-end;
+    height: 20px;
+}
+
+              .cro .personal-offer .toolbar__icon--indicator { }
               .cro .personal-offer .toolbar__icon--indicator.arrow { transform: rotateZ(180deg); fill: #a02971; }
               .cro .personal-offer__container.hide { display: none; }
               .cro .personal-offer__preamble, .cro .personal-offer__preamble--strong { display: block; margin-bottom: 10px; }
