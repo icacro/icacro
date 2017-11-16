@@ -1,25 +1,23 @@
 // ==UserScript==
-// @name         Personal-offers
+// @name         testName
+// @path         testPath
 // @namespace    http://tampermonkey.net/
 // @version      0.1
-// @description  try to take over the world!
-// @author       You
-// @match        https://www.ica.se/mittica/*
+// @match        https://www.ica.se/*
 // @grant        none
 // ==/UserScript==
 
 (function($) {
     'use strict';
+    hj;
     const test = {
         addStyles() {
           const styles = `
-              .cro { background: #333; }
-            `;
+            .cro { }
+          `;
           return styles;
         },
-        manipulateDom() {
-            console.log(this);
-        }
+        manipulateDom() {}
     };
 
     const loadJS = (callback) => {
@@ -27,7 +25,7 @@
       script.setAttribute('async', '')
       script.setAttribute('src', 'https://rawgit.com/Banzaci/icacro/0.1/main.js');// Prod cdn. //Check tag
       document.querySelector('head').appendChild(script);
-      script.onreadystatechange = script.onload = function() {
+      script.onreadystatechange = script.onload = () => {
         callback();
       };
     }
