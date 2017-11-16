@@ -4,14 +4,13 @@ const fs = require("fs");
 
 module.exports = function(env) {
   try {
-    if (!env || !env.path) throw new Error('Missing path "npm run build --env.path ...."');
-    const fullPath = `./src/${env.path}`;
-    console.log(fullPath);
+    if (!env || !env.project) throw new Error('Missing path "npm run build --env.project ...."');
+    const fullPath = `./src/${env.project}`;
     if (!fs.existsSync(fullPath))  throw new Error('No path exist.');
     return {
       entry: path.join(path.resolve(__dirname, fullPath), 'variant.js'),
       output: {
-        path: path.resolve(__dirname, `src/${env.path}`),
+        path: path.resolve(__dirname, `src/${env.project}`),
         filename: 'variant.min.js'
       },
       plugins: [
