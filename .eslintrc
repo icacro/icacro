@@ -14,8 +14,10 @@
   },
   "globals": {
     "ICACRO": true,
+    "ICA": true,
     "hj": true,
     "jQuery": true,
-    "$":  true
+    "$":  true,
+    "ga":  true
   }
 }

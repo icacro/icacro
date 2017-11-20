@@ -109,6 +109,29 @@
         .cro .personal-offer__recipe-and-coupon > div { width: 100%; padding: 0; }
         .cro .personal-offer__recipe-and-coupon .personal-offer__recipe-text p { display: none; }
       }
+
+      /* login frame */
+      @media (max-width: 767px) { .cro .cro-iframe-container { padding-bottom: 135% !important; } }
+      .cro > .cro-iframe-container { display: none; }
+      .cro .modal-copntainer .cro-iframe-container { display: initial; }
+      .cro .container { text-align: center; margin-top: 50px;}
+      .cro .container h2 { font: 28px icahand; margin-bottom: 20px; }
+      .cro .cro-iframe-container {
+        position: relative;
+        height: 0;
+        overflow: hidden;
+        padding-bottom: 85%;
+        background-color: #F3F0EB;
+      }
+      .cro .cro-iframe-container iframe {
+        opacity: 0;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+      }
+      /* login frame */
       `;
       return styles;
     },
@@ -226,6 +249,231 @@
       return window.fetch(`/api/jsonhse/${couponId}`, { credentials: 'same-origin' })
         .then(response => response.json())
         .then((json) => { coupon = $().extend({}, coupon, json); });
+    },
+    setActionCookie(offerId) {
+      const d = new Date();
+      d.setDate(new Date().getDate() + 1); // expires tomorrow
+
+      ICA.legacy.setCookie('cro_personalOffer_actionCookie_loadCoupon', offerId, d);
+    },
+    getActionCookie() {
+      const actionCookie = ICA.legacy.getCookie('cro_personalOffer_actionCookie_loadCoupon');
+
+      if (actionCookie) {
+        ICA.legacy.killCookie('cro_personalOffer_actionCookie_loadCoupon');
+      }
+
+      return +actionCookie; // coerce to number
+    },
+    loaderIsActive: false,
+    buttonHandlerPollTimeout: null,
+    showLoader() {
+      const container = $('.cro-iframe-container');
+      container.find('.loader').show();
+      container.find('iframe').css('opacity', '0');
+      this.loaderIsActive = true;
+    },
+    hideLoader() {
+      const container = $('.cro-iframe-container');
+      container.find('.loader').hide();
+      container.find('iframe').css('opacity', '1');
+      this.loaderIsActive = false;
+    },
+    addButtonHandlerPoll() {
+      const self = this;
+      const iframe = $('.cro-iframe-container iframe');
+      const e = iframe.contents().find('.remodal-wrapper #grey-card-btn, .remodal-wrapper .pink-card-btn');
+
+      if (e.length) {
+        e.click(() => {
+          self.showLoader();
+        });
+        window.clearTimeout(self.buttonHandlerPollTimeout);
+      } else {
+        self.buttonHandlerPollTimeout = window.setTimeout(
+          self.addButtonHandlerPoll.bind(self),
+          1000,
+        );
+      }
+    },
+    addEventListeners() {
+      const self = this;
+
+      $('.header').off('mousedown');
+
+      $(window).on('message onmessage', (e) => {
+        const origin = `${window.location.protocol}//${window.location.host}`;
+        if (e.originalEvent.origin === origin && /mobilebankid/i.test(e.originalEvent.data)) {
+          self.showLoader();
+        }
+      });
+    },
+    getIframeStyles() {
+      const styles = `<style type="text/css">
+      @media  (max-width: 767px) {
+      h3.greeting, h3.card-heading { font-size: 18px; }
+      img.card-icon { width: 50px; }
+      .select-card-modal { border: 0; padding: 0; margin: 0; }
+      .remodal-wrapper { padding: 0; }
+      }
+      </style>`;
+      return styles;
+    },
+    createModal() {
+      const self = this;
+      const modal = new coreComponents.modal({
+        tpl: $('.cro-iframe-container').get(0),
+        size: 'md',
+        container: $('.modal-container').get(0),
+      });
+
+      setTimeout(() => {
+        self.showLoader();
+
+        const iframe = $('.cro-iframe-container iframe');
+
+        iframe.on('load', function () {
+          const regex = new RegExp(`^${window.location.href}$`, 'gi');
+          if (regex.test(this.contentWindow.location)) {
+            window.location.reload(true);
+          }
+
+          if (this.contentWindow.location.href.indexOf('logga-in') !== -1) {
+            let hideHeaderBar;
+            let appendHeader;
+            let addStyles;
+            let addIframeTracking;
+
+            let headerBarTimeout = window.setTimeout(hideHeaderBar, 10);
+            let appendHeaderTimeout = window.setTimeout(appendHeader, 10);
+            let addStylesTimeout = window.setTimeout(addStyles, 10);
+            let addIframeTrackingTimeout = window.setTimeout(addIframeTracking, 10);
+            const hideHeaderBarDeferred = $.Deferred();
+            const appendHeaderDeferred = $.Deferred();
+            const addStylesDeferred = $.Deferred();
+            const addIframeTrackingDeferred = $.Deferred();
+
+            $.when(
+              hideHeaderBarDeferred,
+              appendHeaderDeferred,
+              addStylesDeferred,
+              addIframeTrackingDeferred,
+            ).done(() => {
+              self.hideLoader();
+            });
+
+            hideHeaderBar = function () {
+              const e = $('.cro-iframe-container iframe').contents().find('.header-bar');
+              if (e.length) {
+                e.hide();
+                window.clearTimeout(headerBarTimeout);
+                hideHeaderBarDeferred.resolve();
+              } else {
+                headerBarTimeout = window.setTimeout(hideHeaderBar, 0);
+              }
+            };
+
+            appendHeader = function () {
+              const e = $('.cro-iframe-container iframe').contents().find('h1');
+              if (e.length) {
+                e.append(' för att lägga till i inköpslistan och spara recept');
+                e.css({ 'font-family': 'icahand, arial, sans-serif', 'font-size': '3rem' });
+
+                if (window.screen.width < 768) {
+                  e.css('font-size', '18px');
+                  e.parent().css('margin', '0');
+                }
+                window.clearTimeout(appendHeaderTimeout);
+                appendHeaderDeferred.resolve();
+              } else {
+                appendHeaderTimeout = window.setTimeout(appendHeader, 0);
+              }
+            };
+
+            addStyles = function () {
+              const e = $('.cro-iframe-container iframe').contents().find('body');
+              if (e.length) {
+                e.append(self.getIframeStyles());
+                window.clearTimeout(addStylesTimeout);
+                addStylesDeferred.resolve();
+              } else {
+                addStylesTimeout = window.setTimeout(addStyles, 0);
+              }
+            };
+
+            addIframeTracking = function () {
+              const e = $('.cro-iframe-container iframe').contents();
+              if (e.length) {
+                const eventAction = 'Spara recept från startsidan';
+
+                // Fortsätt (Mobilt BankId)
+                e.find('#submit-login-mobile-bank-id').on('click', () => {
+                  ga('send', 'event', 'A/B', eventAction, 'Logga in - Mobilt BankId');
+                });
+
+                // Behöver du hjälp (Mobilt BankId)
+                e.find('.login-support-bank-id-link').on('click', () => {
+                  ga('send', 'event', 'A/B', eventAction, 'Behöver du hjälp');
+                });
+
+                // Skapa konto (Mobilt BankId)
+                e.find('.get-mobile-bank-id-link').on('click', () => {
+                  ga('send', 'event', 'A/B', eventAction, 'Skapa konto - Mobilt BankId');
+                });
+
+                // Logga in (Lösenord)
+                e.find('#log-in-submit').on('click', () => {
+                  ga('send', 'event', 'A/B', eventAction, 'Logga in - Lösenord');
+                });
+
+                // Glömt lösenord (Lösenord)
+                e.find('.login-support-password-link').on('click', () => {
+                  ga('send', 'event', 'A/B', eventAction, 'Glömt lösenord');
+                });
+
+                // Skapa konto (Lösenord)
+                e.find('.create-account-link').on('click', () => {
+                  ga('send', 'event', 'A/B', eventAction, 'Skapa konto - Lösenord');
+                });
+
+                window.clearTimeout(addIframeTrackingTimeout);
+                addIframeTrackingDeferred.resolve();
+              } else {
+                addIframeTrackingTimeout = window.setTimeout(addIframeTracking, 0);
+              }
+            };
+          }
+
+          $('.cro-iframe-container iframe').contents().find('form').on('submit', () => {
+            if (!$(this).find('input.error').length) {
+              self.showLoader();
+            }
+          });
+
+          $('.cro-iframe-container iframe').contents().find('#submit-login-mobile-bank-id').on('click', () => {
+            if (!$(this).find('input.error').length) {
+              self.buttonHandlerPollTimeout = setTimeout(
+                self.addButtonHandlerPoll.bind(self),
+                1000,
+              );
+            }
+          });
+
+          $('.cro-iframe-container iframe').contents().find('a[href*="www.ica.se"]').each(() => {
+            $(this).attr('href', $(this).attr('href').replace('http://', 'https://'));
+          })
+            .click(function (e) {
+              window.location.href = $(this).attr('href');
+              e.preventDefault();
+            });
+        });
+
+        // trigga hotjar heatmap första gången modalen öppnats
+        // if (typeof hj === 'function' && !self.hotjarTriggered) {
+        //     hj('trigger', 'variant');
+        //     self.hotjarTriggered = true;
+        // }
+      }, 50);
     },
   };
 
