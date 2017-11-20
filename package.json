@@ -17,7 +17,7 @@
     "webpack": "^3.0.0"
   },
   "scripts": {
-    "dev": "webpack --env.project --watch",
+    "dev": "webpack --env.project",
     "create": "node index.js"
   },
   "repository": {

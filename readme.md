@@ -2,7 +2,10 @@ To create a new project:
   - npm run create name-of-project
 
 To build a project
-  - npm run build --env.project name-of-project
+  - npm run dev name-of-project
+
+To build and watch a project
+  - npm run dev name-of-project -- --watch
 
 Util library is in folder icacro.
 
