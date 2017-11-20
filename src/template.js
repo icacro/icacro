@@ -21,18 +21,17 @@
       `;
       return styles;
     },
-    manipulateDom() {}
+    manipulateDom() {},
   };
 
   const loadJS = (callback) => {
     const script = document.createElement('script');
-    script.setAttribute('async', '')
+    script.setAttribute('async', '');
     script.setAttribute('src', `https://cdn.rawgit.com/Banzaci/icacro/v${helperVersion}/dist/main.min.js`);
     document.querySelector('head').appendChild(script);
-    script.onreadystatechange = script.onload = () => {
-      callback();
-    };
-  }
+    script.onreadystatechange = callback;
+    script.onload = callback;
+  };
 
   $(document).ready(() => {
     loadJS(() => {
