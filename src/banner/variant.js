@@ -1,18 +1,15 @@
 // ==UserScript==
-// @name         testName
-// @path         testPath
+// @name         Banner
+// @path         //./src/banner/variant.js
 // @namespace    http://tampermonkey.net/
 // @version      0.1
 // @match        https://www.ica.se/*
 // @grant        none
 // ==/UserScript==
 
-// import { ICACRO, $ELM } from '../../icacro/src/main';
-
 (function($) {
     'use strict';
-    hj;
-    const helperVersion = '#version';
+    hj('trigger','variant2');
     const test = {
         addStyles() {
           const styles = `
@@ -20,13 +17,29 @@
           `;
           return styles;
         },
-        manipulateDom() {}
+        ajax(url, method = 'get') {
+          return fetch(url, { method })
+            .then((response) => {
+              return response;
+            })
+            .catch((err) => {
+              console.log(err);
+              return err;
+            });
+        },
+        manipulateDom() {
+          const page = this.ajax('https://www.ica.se/erbjudanden/butikserbjudanden/utvalda-kuponger/');
+          console.log(this);
+          page.then((result) => {
+            // console.log(result);
+          });
+        }
     };
 
     const loadJS = (callback) => {
       const script = document.createElement('script');
       script.setAttribute('async', '')
-      script.setAttribute('src', `https://cdn.rawgit.com/Banzaci/icacro/v${helperVersion}/dist/main.min.js`);
+      script.setAttribute('src', 'https://rawgit.com/Banzaci/icacro/0.8/dist/main.min.js');// Prod cdn. //Check tag
       document.querySelector('head').appendChild(script);
       script.onreadystatechange = script.onload = () => {
         callback();

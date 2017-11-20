@@ -1,4 +1,5 @@
 const fs = require('fs.extra');
+const pktJs = require('./icacro/package.json');
 require('shelljs/global');
 const args = process.argv;
 function capitalizeFirstLetter(string) {
@@ -18,6 +19,7 @@ try {
       sed('-i', 'hj', `hj('trigger','variant${files.length}')`, out);
       sed('-i', 'testPath', `//${out}`, out);
       sed('-i', 'testName', capitalizeFirstLetter(project), out);
+      sed('-i', '#version', pktJs.version, out);
     });
   });
 } catch (e) {
