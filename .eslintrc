@@ -4,6 +4,16 @@
   "rules": {
     "func-names": ["error", "never"],
     "linebreak-style": 0,
-    "wrap-iife": ["error", "any"]
+    "wrap-iife": ["error", "any"],
+    "quotes": ["error", "single", { "allowTemplateLiterals": true }]
+  },
+  "env": {
+    "es6": true,
+    "browser": true
+  },
+  "globals": {
+    "hj": true,
+    "jQuery": true,
+    "$":  true
   }
 }
