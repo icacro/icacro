@@ -112,24 +112,13 @@
       `;
       return styles;
     },
-    loadJS(callback) {
-      const script = document.createElement('script');
-      script.setAttribute('async', '');
-      script.setAttribute('src', 'https://rawgit.com/Banzaci/icacro/0.1/main.js');// Prod cdn.
-      document.querySelector('head').appendChild(script);
-      if (callback) {
-        script.onreadystatechange = script.onload = function() {
-          callback();
-        };
-      }
-    },
     addStars(stars) {
       const arr = ['0', '26', '52', '78', '104'];
       const strs = arr.map((x, index) => (
         `<g transform="translate(${x} 0)" class="${index < stars ? 'active' : ''}">
         <path d="M23.2 10.303q.194.509-.073.97-1.188 2.182-5.067 5.479 1.018 4.194 1.212 6.715.049.679-.533 1.067-.315.194-.63.194-.242 0-.533-.121-.412-.242-1.333-.679-3.273-1.624-4.606-2.473-1.333.849-4.606 2.473-.921.436-1.333.679-.606.315-1.164-.073-.582-.388-.533-1.067.194-2.521 1.212-6.715-3.879-3.297-5.067-5.479-.267-.461-.073-.97.17-.509.63-.679 1.358-.606 6.861-.8 1.988-5.77 3.248-7.03.388-.339.824-.339.461 0 .8.339 1.285 1.261 3.273 7.03 5.503.194 6.861.8.461.194.63.679z"></path>
         </g>`));
-        return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="-0.12099626660346985 1.4550001621246338 127.39400121569633 25.34600469470024">
+      return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="-0.12099626660346985 1.4550001621246338 127.39400121569633 25.34600469470024">
         <linearGradient id="half" x1="0" x2="100%" y1="0" y2="0">
           <stop offset="50%" stop-color="currentColor"></stop>
           <stop offset="50%" stop-color="#d5d7da"></stop>
@@ -137,8 +126,7 @@
         ${strs.join('')}</svg>`;
     },
     create(className, parent, text, type) {
-      const self = this;
-      const t = type ? type : 'div';
+      const t = type || 'div';
       const div = document.createElement(t);
       if (text && type === 'img') {
         div.src = text;
@@ -191,7 +179,7 @@
       wrapper.innerHTML = kupongTemplate;
       container.appendChild(wrapper);
     },
-    addToggleButton(personalOffer){
+    addToggleButton(personalOffer) {
       const self = this;
       const arrow = `
       <svg class="toolbar__icon toolbar__icon--indicator" viewBox="0 0 32 32" width="20px" height="20px">
@@ -229,29 +217,28 @@
 
       return personalOffer;
     },
-    manipulateDom: function () {
+    manipulateDom() {
       const container = this.addBlock();
       const dashboard = document.querySelector('#dashboard');
       dashboard.insertBefore(container, dashboard.firstChild);
     },
     loadCouponData() {
       return window.fetch(`/api/jsonhse/${couponId}`, { credentials: 'same-origin' })
-      .then((response) => response.json())
-      .then((json) => coupon = $().extend({}, coupon, json));
-    }
+        .then(response => response.json())
+        .then((json) => { coupon = $().extend({}, coupon, json); });
+    },
   };
 
   const loadJS = (callback) => {
     const script = document.createElement('script');
-    script.setAttribute('async', '')
+    script.setAttribute('async', '');
     script.setAttribute('src', `https://cdn.rawgit.com/Banzaci/icacro/v${helperVersion}/dist/main.min.js`);
     document.querySelector('head').appendChild(script);
-    script.onreadystatechange = script.onload = () => {
-      callback();
-    };
-  }
+    script.onreadystatechange = callback;
+    script.onload = callback;
+  };
 
-  $(document).ready(function (){
+  $(document).ready(() => {
     loadJS(() => {
       Object.assign(test, ICACRO());
       test.style(test.addStyles());
