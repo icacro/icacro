@@ -3,6 +3,7 @@
   "parser": "babel-eslint",
   "rules": {
     "func-names": ["error", "never"],
-    "linebreak-style": 0
+    "linebreak-style": 0,
+    "wrap-iife": ["error", "any"]
   }
 }
