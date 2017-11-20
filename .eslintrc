@@ -1,0 +1,8 @@
+{
+  "extends": "airbnb",
+  "parser": "babel-eslint",
+  "rules": {
+    "func-names": ["error", "never"],
+    "linebreak-style": 0
+  }
+}

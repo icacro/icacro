@@ -7,39 +7,66 @@
 // @grant        none
 // ==/UserScript==
 
+// import { ICACRO, $ELM } from '../../icacro/src/main';
 (function($) {
     'use strict';
     hj('trigger','variant2');
     const test = {
         addStyles() {
           const styles = `
-            .cro { }
+            .cro .banner { display:flex; }
+            .cro .banner .banner__title { font-size: 20px; }
           `;
           return styles;
         },
-        ajax(url, method = 'get') {
-          return fetch(url, { method })
-            .then((response) => {
-              return response;
-            })
-            .catch((err) => {
-              console.log(err);
-              return err;
-            });
+        getElementContentByTagAndAttr(regexp, tag, attr) {
+          const elements = document.querySelectorAll(tag);
+          return this.toArray(elements).reduce((acc, element) => {
+            if(new RegExp(regexp).test(element[attr])) {
+              acc.push(element[attr]);
+            }
+            return acc;
+          }, []);
+        },
+        printBanner(content, { title, discount, preamble, url, img }) {
+          const banner = $ELM();
+          const titleElement = $ELM();
+          titleElement
+            .css('banner__title')
+            .html(title);
+          banner
+            .css('banner')
+            .append(titleElement);
+          content.append(banner);
+        },
+        loadBanners(ids, content) {
+          ids.forEach((id) => {
+            this.load(id)
+              .then((response) => {
+                this.printBanner(content, {
+                  title: 'Buljongkuber',
+                  discount: '25% rabatt',
+                  preamble: 'Knoww 6pack',
+                  url: '',
+                  img: ''
+                });// response
+              });
+          })
         },
         manipulateDom() {
-          const page = this.ajax('https://www.ica.se/erbjudanden/butikserbjudanden/utvalda-kuponger/');
-          console.log(this);
-          page.then((result) => {
-            // console.log(result);
-          });
+          const content = $ELM('.content');
+          const regexp = /www.ica.se\/kampanj/g;
+          const banners = this.getElementContentByTagAndAttr(regexp, 'a', 'href');
+          const ids = banners.map((banner) => banner.match(/\d+$/)[0]);
+          content.html(' ');
+          this.loadBanners(ids, content);
         }
     };
 
     const loadJS = (callback) => {
       const script = document.createElement('script');
       script.setAttribute('async', '')
-      script.setAttribute('src', 'https://rawgit.com/Banzaci/icacro/0.8/dist/main.min.js');// Prod cdn. //Check tag
+      script.setAttribute('src', 'https://rawgit.com/Banzaci/icacro/v0.12.0/dist/main.min.js');// Prod cdn. //Check tag
       document.querySelector('head').appendChild(script);
       script.onreadystatechange = script.onload = () => {
         callback();
