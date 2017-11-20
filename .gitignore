@@ -2,3 +2,4 @@ tools/optimize-test-picker/Thumbs.db
 icacro
 node_modules
 ./npm-debug.log
+**/*.min.js
