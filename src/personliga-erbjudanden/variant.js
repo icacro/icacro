@@ -1,3 +1,6 @@
+/* eslint no-inner-declarations: "off" */
+/* eslint no-use-before-define: "off" */
+
 // ==UserScript==
 // @name         Personliga-erbjudanden
 // @path         //./src/personliga-erbjudanden/variant.js
@@ -12,9 +15,9 @@
 (function ($) {
   'use strict';
 
-  hj('trigger', 'variant3');
+  hj && hj('trigger', 'variant3'); // eslint-disable-line
   const helperVersion = '0.12.0';
-  const couponId = 458274; // 458288; // torsk
+  const couponId = 458278; // 458288; // torsk
   const banner = {
     title: 'Lysande gul fiskgryta',
     cookTime: '45 MIN | MEDEL',
@@ -30,7 +33,7 @@
   };
   const test = {
     addStyles() {
-      const couponCss = `@media (min-width:700px){.hse-recipe-list .coupon-load-wrapper{width:30% !important;}.hse-recipe-list .lg_size10of20{width:45% !important;}}.hse-recipe-list .column{padding:0;}.hse-recipe-list{margin:0;padding:0;background-color:#F8EBF3}.hse-recipe-list__wrapper{align-items:center;background-color:#FFF;display:flex;flex-direction:row;margin:10px;position:relative}.hse-recipe-list__wrapper::after{background:url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4KPCEtLSBHZW5lcmF0b3I6IEFkb2JlIElsbHVzdHJhdG9yIDIxLjAuMSwgU1ZHIEV4cG9ydCBQbHVnLUluIC4gU1ZHIFZlcnNpb246IDYuMDAgQnVpbGQgMCkgIC0tPgo8c3ZnIHZlcnNpb249IjEuMSIgaWQ9IkxheWVyXzEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4IgoJIHZpZXdCb3g9IjAgMCAxMCAyMCIgc3R5bGU9ImVuYWJsZS1iYWNrZ3JvdW5kOm5ldyAwIDAgMTAgMjA7IiB4bWw6c3BhY2U9InByZXNlcnZlIj4KPHN0eWxlIHR5cGU9InRleHQvY3NzIj4KCS5zdDB7ZmlsbDojRjhFQkYzO30KPC9zdHlsZT4KPHBhdGggY2xhc3M9InN0MCIgZD0iTTIuNDk3MDIxLDkuOTg4ODA3YzAsNC4xNDIxNTEsMy4zNTc4NDksNy41MDAwMDEsNy41LDcuNTAwMDAxdi0xNQoJQzUuODU0ODcsMi40ODg4MDcsMi40OTcwMjEsNS44NDY2NTYsMi40OTcwMjEsOS45ODg4MDd6Ii8+Cjwvc3ZnPgo=) space;background-size:17px 19px;bottom:0;content:'';display:block;height:100%;position:absolute;right:0;top:0;width:13px}.hse-recipe-list__offer-content h1{font-size:1.6rem;line-height:1.3;margin-bottom:0}@media (min-width:480px){.hse-recipe-list__offer-content{border-left:0!important;padding-left:0!important}.hse-recipe-list__offer-content h1{font-size:1.8rem}}.hse-recipe-list__offer-content span{color:#EB1F07;font-family:icarubrik;font-size:2.2rem;font-weight:700}.hse-recipe-list__offer-content p{color:#808283;font-size:1.3rem;line-height:1;margin-bottom:0;}.hse-recipe-list .coupon-load-wrapper{padding-left:0;padding-right:0;right:20px}.hse-recipe-list .coupon-load-wrapper .button--load-coupon{font-size:12px;align-items:center;background:#F8EBF3;color:#A02971;cursor:pointer;display:flex;flex-direction:column;justify-content:center;line-height:1.4rem}.hse-recipe-list .coupon-load-wrapper .button--onload-coupon{margin:0 auto;min-width:0;transition:width .2s 250ms ease,color .1s .2s ease;width:90px}@media (min-width:768px){.hse-recipe-list .coupon-load-wrapper .button--onload-coupon{width:115px}}@media (min-width:1024px){.hse-recipe-list .coupon-load-wrapper .button--onload-coupon{width:150px}}.hse-recipe-list .coupon-load-wrapper .button--onload-coupon.loading{color:transparent;height:40px;margin:0 auto;position:relative;transition:width 250ms ease,color .1s ease;width:40px}.hse-recipe-list .coupon-load-wrapper .button--onload-coupon.loading .loader{display:inline-block}.hse-recipe-list .coupon-load-wrapper .button--onload-coupon .loader{border-width:4px;display:none;height:28px;margin-left:-14px;margin-top:-14px;width:28px}.hse-recipe-list.offer-loaded{background-color:#F7F7F7;}.hse-recipe-list.offer-loaded .hse-recipe-list__wrapper::after{background:url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4KPCEtLSBHZW5lcmF0b3I6IEFkb2JlIElsbHVzdHJhdG9yIDIxLjAuMSwgU1ZHIEV4cG9ydCBQbHVnLUluIC4gU1ZHIFZlcnNpb246IDYuMDAgQnVpbGQgMCkgIC0tPgo8c3ZnIHZlcnNpb249IjEuMSIgaWQ9IkxheWVyXzEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4IgoJIHZpZXdCb3g9IjAgMCAxMCAyMCIgc3R5bGU9ImVuYWJsZS1iYWNrZ3JvdW5kOm5ldyAwIDAgMTAgMjA7IiB4bWw6c3BhY2U9InByZXNlcnZlIj4KPHN0eWxlIHR5cGU9InRleHQvY3NzIj4KCS5zdDB7ZmlsbDojRjdGN0Y3O30KPC9zdHlsZT4KPHBhdGggY2xhc3M9InN0MCIgZD0iTTIuNDk3MDIxLDkuOTg4ODA3YzAsNC4xNDIxNTEsMy4zNTc4NDksNy41MDAwMDEsNy41LDcuNTAwMDAxdi0xNQoJQzUuODU0ODcsMi40ODg4MDcsMi40OTcwMjEsNS44NDY2NTYsMi40OTcwMjEsOS45ODg4MDd6Ii8+Cjwvc3ZnPgo=) space}.hse-recipe-list.offer-loaded .hse-recipe-list__wrapper img{filter:grayscale(1);opacity:.4}.hse-recipe-list.offer-loaded .hse-recipe-list__offer-content span{color:#D5D7DA}.hse-recipe-list.offer-loaded .coupon-load-wrapper a{background:#DDE9BF;color:#8DB72C;pointer-events:none;transition:width .2s ease,color .2s 250ms ease,background .2s ease}.hse-modal-login{padding:30px 0;text-align:center}.hse-modal-login h3{margin:0 0 15px;max-width:none}.hse-modal-login p{max-width:none}`;
+      const couponCss = `@media (min-width:700px){.hse-recipe-list .coupon-load-wrapper{width:30% !important;}.hse-recipe-list .lg_size10of20{width:45% !important;}}.hse-recipe-list .column{padding:0;}.hse-recipe-list{margin:0;padding:0;background-color:#F8EBF3}.hse-recipe-list__wrapper{align-items:center;background-color:#FFF;display:flex;flex-direction:row;margin:10px;position:relative}.hse-recipe-list__wrapper::after{background:url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4KPCEtLSBHZW5lcmF0b3I6IEFkb2JlIElsbHVzdHJhdG9yIDIxLjAuMSwgU1ZHIEV4cG9ydCBQbHVnLUluIC4gU1ZHIFZlcnNpb246IDYuMDAgQnVpbGQgMCkgIC0tPgo8c3ZnIHZlcnNpb249IjEuMSIgaWQ9IkxheWVyXzEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4IgoJIHZpZXdCb3g9IjAgMCAxMCAyMCIgc3R5bGU9ImVuYWJsZS1iYWNrZ3JvdW5kOm5ldyAwIDAgMTAgMjA7IiB4bWw6c3BhY2U9InByZXNlcnZlIj4KPHN0eWxlIHR5cGU9InRleHQvY3NzIj4KCS5zdDB7ZmlsbDojRjhFQkYzO30KPC9zdHlsZT4KPHBhdGggY2xhc3M9InN0MCIgZD0iTTIuNDk3MDIxLDkuOTg4ODA3YzAsNC4xNDIxNTEsMy4zNTc4NDksNy41MDAwMDEsNy41LDcuNTAwMDAxdi0xNQoJQzUuODU0ODcsMi40ODg4MDcsMi40OTcwMjEsNS44NDY2NTYsMi40OTcwMjEsOS45ODg4MDd6Ii8+Cjwvc3ZnPgo=) space;background-size:17px 19px;bottom:0;content:'';display:block;height:100%;position:absolute;right:0;top:0;width:13px}.hse-recipe-list__offer-content h1{font-size:1.6rem;line-height:1.3;margin-bottom:0}@media (min-width:480px){.hse-recipe-list__offer-content{border-left:0!important;padding-left:0!important}.hse-recipe-list__offer-content h1{font-size:1.8rem}}.hse-recipe-list__offer-content span{color:#EB1F07;font-family:icarubrik;font-size:2.2rem;font-weight:700}.hse-recipe-list__offer-content p{color:#808283;font-size:1.3rem;line-height:1;margin-bottom:0;}.hse-recipe-list .coupon-load-wrapper{padding-left:0;padding-right:0;right:20px}.hse-recipe-list .coupon-load-wrapper .button--load-coupon{font-size:12px;align-items:center;background:#F8EBF3;color:#A02971;cursor:pointer;display:flex;flex-direction:column;justify-content:center;line-height:1.4rem}.hse-recipe-list .coupon-load-wrapper .button--onload-coupon{margin:0 auto;min-width:0;transition:width .2s 250ms ease,color .1s .2s ease;width:90px}@media (min-width:768px){.hse-recipe-list .coupon-load-wrapper .button--onload-coupon{width:115px}}@media (min-width:1024px){.hse-recipe-list .coupon-load-wrapper .button--onload-coupon{width:150px}}.hse-recipe-list .coupon-load-wrapper .button--onload-coupon.loading{color:transparent;height:40px;margin:0 auto;position:relative;transition:width 250ms ease,color .1s ease;width:40px}.hse-recipe-list .coupon-load-wrapper .button--onload-coupon.loading .loader{display:inline-block}.hse-recipe-list .coupon-load-wrapper .button--onload-coupon .loader{border-width:4px;display:none;height:28px;margin-left:-14px;margin-top:-14px;width:28px}.hse-recipe-list.offer-loaded{background-color:#F7F7F7;}.hse-recipe-list.offer-loaded .hse-recipe-list__wrapper::after{width:9px;background:url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4KPCEtLSBHZW5lcmF0b3I6IEFkb2JlIElsbHVzdHJhdG9yIDIxLjAuMSwgU1ZHIEV4cG9ydCBQbHVnLUluIC4gU1ZHIFZlcnNpb246IDYuMDAgQnVpbGQgMCkgIC0tPgo8c3ZnIHZlcnNpb249IjEuMSIgaWQ9IkxheWVyXzEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4IgoJIHZpZXdCb3g9IjAgMCAxMCAyMCIgc3R5bGU9ImVuYWJsZS1iYWNrZ3JvdW5kOm5ldyAwIDAgMTAgMjA7IiB4bWw6c3BhY2U9InByZXNlcnZlIj4KPHN0eWxlIHR5cGU9InRleHQvY3NzIj4KCS5zdDB7ZmlsbDojRjdGN0Y3O30KPC9zdHlsZT4KPHBhdGggY2xhc3M9InN0MCIgZD0iTTIuNDk3MDIxLDkuOTg4ODA3YzAsNC4xNDIxNTEsMy4zNTc4NDksNy41MDAwMDEsNy41LDcuNTAwMDAxdi0xNQoJQzUuODU0ODcsMi40ODg4MDcsMi40OTcwMjEsNS44NDY2NTYsMi40OTcwMjEsOS45ODg4MDd6Ii8+Cjwvc3ZnPgo=) space}.hse-recipe-list.offer-loaded .hse-recipe-list__wrapper img{filter:grayscale(1);opacity:.4}.hse-recipe-list.offer-loaded .hse-recipe-list__offer-content span{color:#D5D7DA}.hse-recipe-list.offer-loaded .coupon-load-wrapper a{background:#DDE9BF;color:#8DB72C;pointer-events:none;transition:width .2s ease,color .2s 250ms ease,background .2s ease}.hse-modal-login{padding:30px 0;text-align:center}.hse-modal-login h3{margin:0 0 15px;max-width:none}.hse-modal-login p{max-width:none}`;
       const styles = `
       ${couponCss}
       .cro .personal-offer {
@@ -176,6 +179,9 @@
       const self = this;
       const wrapper = self.create('personal-offer__coupon');
       const loginUrl = `/logga-in?returnUrl=${encodeURIComponent(window.location)}`;
+      const imageUrl = /Handlers/.test(coupon.Offer.Image.ImageUrl)
+        ? coupon.Offer.Image.ImageUrl
+        : `/Handlers/Image.ashx?w=150&h=150&m=p&bgr=fff&u=${coupon.Offer.Image.ImageUrl}`;
       const kupongCta = `<a href="#" data-url="" data-login-url="${loginUrl}" class="button button--auto-width button--load-coupon js-loggin-btn">
       ${coupon.Offer.LoadedOnCard ? 'Kupong laddad' : 'Ladda kupong'}
       </a>`;
@@ -184,7 +190,7 @@
         <div class="hse-recipe-list__wrapper">
           <div class="column size6of20 lg_size5of20">
             <picture>
-              <img src="/Handlers/Image.ashx?w=150&h=150&m=p&bgr=fff&u=${coupon.Offer.Image.ImageUrl}">
+              <img src="${imageUrl}">
             </picture>
           </div>
           <div class="column size10of20 lg_size10of20 hse-recipe-list__offer-content">
@@ -244,11 +250,17 @@
       const container = this.addBlock();
       const dashboard = document.querySelector('#dashboard');
       dashboard.insertBefore(container, dashboard.firstChild);
+
+      const returnUrl = encodeURIComponent(window.location.href);
+      const iframeContainer = $(`<div class="cro-iframe-container"><span class="loader"></span><iframe src="//www.ica.se/logga-in/?returnurl=${returnUrl}" frameborder="0"></iframe></div>`);
+      $('body').append(iframeContainer);
     },
     loadCouponData() {
-      return window.fetch(`/api/jsonhse/${couponId}`, { credentials: 'same-origin' })
-        .then(response => response.json())
-        .then((json) => { coupon = $().extend({}, coupon, json); });
+      return coupon.Offer
+        ? Promise.resolve(coupon)
+        : window.fetch(`/api/jsonhse/${couponId}`, { credentials: 'same-origin' })
+          .then(response => response.json())
+          .then((json) => { coupon = $().extend({}, coupon, json); });
     },
     setActionCookie(offerId) {
       const d = new Date();
@@ -264,6 +276,41 @@
       }
 
       return +actionCookie; // coerce to number
+    },
+    loadCouponOnCard() {
+      return this.loadCouponData().then(() => {
+        const opts = {
+          OfferId: parseInt(coupon.Offer.OfferId, 10),
+          CampaignId: parseInt(coupon.CampaignId, 10),
+          StoreId: parseInt(coupon.StoreId, 10),
+          StoreGroupId: parseInt(coupon.StoreGroupId, 10),
+        };
+
+        return window.fetch(
+          '/api/jsonhse/Claimoffer',
+          {
+            credentials: 'same-origin',
+            method: 'POST',
+            headers: {
+              Accept: 'application/json',
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(opts),
+          },
+        );
+      });
+    },
+    checkActionCookie() {
+      const id = this.getActionCookie();
+      if (id && this.isLoggedIn()) {
+        this.loadCouponOnCard().then(this.changeOfferStatus);
+      }
+    },
+    changeOfferStatus(response) {
+      if (response.ok) {
+        $ELM('.hse-recipe-list').css('offer-loaded');
+        $ELM('.button--load-coupon').element.innerText = 'Kupong laddad';
+      }
     },
     loaderIsActive: false,
     buttonHandlerPollTimeout: null,
@@ -299,7 +346,16 @@
     addEventListeners() {
       const self = this;
 
-      $('.header').off('mousedown');
+      $('.personal-offer').on('click', '.button--load-coupon', (e) => {
+        e.preventDefault();
+
+        if (self.isLoggedIn()) {
+          self.loadCouponOnCard().then(self.changeOfferStatus);
+        } else {
+          self.setActionCookie(couponId);
+          self.createModal();
+        }
+      });
 
       $(window).on('message onmessage', (e) => {
         const origin = `${window.location.protocol}//${window.location.host}`;
@@ -339,11 +395,6 @@
           }
 
           if (this.contentWindow.location.href.indexOf('logga-in') !== -1) {
-            let hideHeaderBar;
-            let appendHeader;
-            let addStyles;
-            let addIframeTracking;
-
             let headerBarTimeout = window.setTimeout(hideHeaderBar, 10);
             let appendHeaderTimeout = window.setTimeout(appendHeader, 10);
             let addStylesTimeout = window.setTimeout(addStyles, 10);
@@ -362,7 +413,7 @@
               self.hideLoader();
             });
 
-            hideHeaderBar = function () {
+            function hideHeaderBar() {
               const e = $('.cro-iframe-container iframe').contents().find('.header-bar');
               if (e.length) {
                 e.hide();
@@ -371,12 +422,12 @@
               } else {
                 headerBarTimeout = window.setTimeout(hideHeaderBar, 0);
               }
-            };
+            }
 
-            appendHeader = function () {
+            function appendHeader() {
               const e = $('.cro-iframe-container iframe').contents().find('h1');
               if (e.length) {
-                e.append(' för att lägga till i inköpslistan och spara recept');
+                e.append(' för ladda kupongen');
                 e.css({ 'font-family': 'icahand, arial, sans-serif', 'font-size': '3rem' });
 
                 if (window.screen.width < 768) {
@@ -388,9 +439,9 @@
               } else {
                 appendHeaderTimeout = window.setTimeout(appendHeader, 0);
               }
-            };
+            }
 
-            addStyles = function () {
+            function addStyles() {
               const e = $('.cro-iframe-container iframe').contents().find('body');
               if (e.length) {
                 e.append(self.getIframeStyles());
@@ -399,9 +450,9 @@
               } else {
                 addStylesTimeout = window.setTimeout(addStyles, 0);
               }
-            };
+            }
 
-            addIframeTracking = function () {
+            function addIframeTracking() {
               const e = $('.cro-iframe-container iframe').contents();
               if (e.length) {
                 const eventAction = 'Spara recept från startsidan';
@@ -441,16 +492,16 @@
               } else {
                 addIframeTrackingTimeout = window.setTimeout(addIframeTracking, 0);
               }
-            };
+            }
           }
 
-          $('.cro-iframe-container iframe').contents().find('form').on('submit', () => {
+          $('.cro-iframe-container iframe').contents().find('form').on('submit', function () {
             if (!$(this).find('input.error').length) {
               self.showLoader();
             }
           });
 
-          $('.cro-iframe-container iframe').contents().find('#submit-login-mobile-bank-id').on('click', () => {
+          $('.cro-iframe-container iframe').contents().find('#submit-login-mobile-bank-id').on('click', function () {
             if (!$(this).find('input.error').length) {
               self.buttonHandlerPollTimeout = setTimeout(
                 self.addButtonHandlerPoll.bind(self),
@@ -459,7 +510,7 @@
             }
           });
 
-          $('.cro-iframe-container iframe').contents().find('a[href*="www.ica.se"]').each(() => {
+          $('.cro-iframe-container iframe').contents().find('a[href*="www.ica.se"]').each(function () {
             $(this).attr('href', $(this).attr('href').replace('http://', 'https://'));
           })
             .click(function (e) {
@@ -491,6 +542,8 @@
       Object.assign(test, ICACRO());
       test.style(test.addStyles());
       test.manipulateDom();
+      test.checkActionCookie();
+      test.addEventListeners();
     });
   });
 })(jQuery);
