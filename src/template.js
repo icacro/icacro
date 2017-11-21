@@ -12,7 +12,7 @@
 (function ($) {
   'use strict';
 
-  hj;
+  hj && hjf;// eslint-disable-line
   const helperVersion = '#version';
   const test = {
     addStyles() {

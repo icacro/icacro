@@ -16,7 +16,7 @@ try {
     fs.mkdirSync(path);
     const out = `${path}/variant.js`;
     fs.copy('./src/template.js', out, { replace: false }, () => {
-      sed('-i', 'hj', `hj('trigger','variant${files.length}')`, out);
+      sed('-i', 'hjf', `hj('trigger','variant${files.length}')`, out);
       sed('-i', 'testPath', `//${out}`, out);
       sed('-i', 'testName', capitalizeFirstLetter(project), out);
       sed('-i', '#version', pktJs.version, out);

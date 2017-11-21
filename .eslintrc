@@ -18,6 +18,7 @@
     "hj": true,
     "jQuery": true,
     "$":  true,
-    "ga":  true
+    "ga":  true,
+    "$ELM": true
   }
 }
