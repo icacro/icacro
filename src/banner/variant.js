@@ -18,7 +18,7 @@ import { ICACRO, $ELM } from '../../icacro/src/main';
     addStyles() {
       const styles = `
         .cro .grow-one { flex-grow: 1; }
-        .cro .banner { display:flex; background-color: #F8EBF3;}
+        .cro .banner { display:flex; background-color: #F8EBF3; margin-bottom: 10px; }
         .cro .banner-row {
           display:flex;
           width:100%;
@@ -137,7 +137,6 @@ import { ICACRO, $ELM } from '../../icacro/src/main';
           .then((response) => {
             const { Header, Offer } = response;
             const { OfferCondition, Brand, SizeOrQuantity } = Offer;
-            console.log(response);
             this.printBanner(content, {
               title: Header,
               discount: OfferCondition.Conditions[0],
