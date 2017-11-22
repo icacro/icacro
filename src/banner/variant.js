@@ -13,6 +13,7 @@ import { ICACRO, $ELM } from '../../icacro/src/main';
   'use strict';
 
   hj && hj('trigger', 'variant2');// eslint-disable-line
+
   const test = {
     addStyles() {
       const styles = `
@@ -39,7 +40,7 @@ import { ICACRO, $ELM } from '../../icacro/src/main';
           top: 0;
           width: 13px;
         }
-        .cro .banner .banner-column { padding: 20px; }
+        .cro .banner .banner-column { padding: 20px 10px; }
         .cro .banner .banner-column .download {
           align-items: center;
           background: #F8EBF3;
@@ -63,6 +64,7 @@ import { ICACRO, $ELM } from '../../icacro/src/main';
           font-size: 1.3rem;
         }
         .cro .banner .banner-column .banner-column__more-info { font-size: 20px; }
+        .cro .banner-column__image img { max-width: 140px; max-height: 100px; }
       `;
       return styles;
     },
@@ -130,14 +132,18 @@ import { ICACRO, $ELM } from '../../icacro/src/main';
     },
     loadBanners(ids, content) {
       ids.forEach((id) => {
-        this.load(id)
-          .then(() => { // response
+        this.load(`https://www.ica.se/api/jsonhse/${id}`, { credentials: 'same-origin' })
+          .then(response => response.json())
+          .then((response) => {
+            const { Header, Offer } = response;
+            const { OfferCondition, Brand, SizeOrQuantity } = Offer;
+            console.log(response);
             this.printBanner(content, {
-              title: 'Buljongkuber',
-              discount: '25% rabatt',
-              preamble: 'Knorr 6pack',
+              title: Header,
+              discount: OfferCondition.Conditions[0],
+              preamble: `${Brand} ${SizeOrQuantity.Text}`,
               url: '',
-              img: 'https://www.ica.se/Handlers/Image.ashx?w=150&h=150&m=p&bgr=fff&u=http://extbild.ica.se//PictureWeb/80/1033/14_1000555312.jpg',
+              img: Offer.Image.ImageUrl,
             });
           });
       });

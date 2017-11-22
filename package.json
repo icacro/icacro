@@ -30,5 +30,8 @@
     "url": "https://git.ica.ia-hc.net/exapfg/icacro.git"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "common-tags": "^1.4.0"
+  }
 }
