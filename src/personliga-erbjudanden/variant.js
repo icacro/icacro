@@ -10,20 +10,19 @@
 // @grant        none
 // ==/UserScript==
 
-// import { ICACRO, $ELM } from '../../icacro/src/main';
-
 (function ($) {
   'use strict';
 
   hj && hj('trigger', 'variant3'); // eslint-disable-line
   const helperVersion = '0.12.0';
-  const couponId = 458278; // 458288; // torsk
+  const couponId = 458285; // 458288; // torsk
   const banner = {
     title: 'Lysande gul fiskgryta',
     cookTime: '45 MIN | MEDEL',
     stars: 4,
     preamble: 'Denna fiskgryta får sin lysande solgula färg och ljuvliga smak av saffran, vitlök och tomatpuré.',
     img: '/imagevaultfiles/id_63144/cf_5291/lysande_gul_fiskgryta-1677.jpg',
+    url: 'https://www.ica.se/recept/lysande-gul-fiskgryta-1677/',
   };
   let coupon = {};
   const content = {
@@ -71,9 +70,13 @@
         align-items: flex-start;
         margin-top: 15px;
       }
-      .cro .personal-offer__recipe-and-coupon > div { width: 50%; display: flex; flex-direction: row; }
+      .cro .personal-offer__recipe-and-coupon > div { width: 50%; display: flex; }
       .cro .personal-offer__recipe { padding-right: 5px; }
       .cro .personal-offer__coupon { padding-left: 5px; }
+
+      .cro .personal-offer__recipe a { color: #3F3F40; display: flex; flex-direction: row; }
+      .cro .personal-offer__recipe a h4 { color: #808283; }
+
       .cro .personal-offer__recipe .personal-offer__recipe-text {
         width:100%;
       }
@@ -105,7 +108,6 @@
       @media (max-width: 980px) {
         .cro .dashboard { position: relative; }
         .cro .dashboard .toolbars-wrapper { position: absolute; top: 0; left: 0;}
-        .cro .personal-offer { margin-top: 58px; }
       }
       @media (max-width: 520px) {
         .cro .personal-offer__recipe-and-coupon { flex-direction: column; }
@@ -146,8 +148,8 @@
         </g>`));
       return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="-0.12099626660346985 1.4550001621246338 127.39400121569633 25.34600469470024">
         <linearGradient id="half" x1="0" x2="100%" y1="0" y2="0">
-          <stop offset="50%" stop-color="currentColor"></stop>
-          <stop offset="50%" stop-color="#d5d7da"></stop>
+        <stop offset="50%" stop-color="currentColor"></stop>
+        <stop offset="50%" stop-color="#d5d7da"></stop>
         </linearGradient>
         ${strs.join('')}</svg>`;
     },
@@ -166,8 +168,10 @@
     addRecepie() {
       const self = this;
       const container = self.create('personal-offer__recipe');
-      const containerImage = self.create('personal-offer__recipe-image', container);
-      const containerText = self.create('personal-offer__recipe-text', container);
+      const a = self.create('', container, null, 'a');
+      a.href = banner.url;
+      const containerImage = self.create('personal-offer__recipe-image', a);
+      const containerText = self.create('personal-offer__recipe-text', a);
       self.create('', containerImage, banner.img, 'img');
       self.create('', containerText, banner.cookTime, 'h4');
       self.create('', containerText, banner.title, 'h2');
@@ -187,23 +191,22 @@
       </a>`;
       const kupongTemplate =
       `<article class="hse-recipe-list grid_fluid pl ${coupon.Offer.LoadedOnCard ? 'offer-loaded' : ''}">
-        <div class="hse-recipe-list__wrapper">
-          <div class="column size6of20 lg_size5of20">
-            <picture>
-              <img src="${imageUrl}">
-            </picture>
-          </div>
-          <div class="column size10of20 lg_size10of20 hse-recipe-list__offer-content">
-            <h1>${coupon.Header}</h1>
-            <span>${coupon.Offer.OfferCondition.Conditions[0]}</span>
-            <p>${coupon.Offer.Brand} ${coupon.Offer.SizeOrQuantity.Text}</p>
-            <a href="/kampanj/hse/458288">Mer info</a>
-          </div>
-          <div class="column size6of20 lg_size5of20 coupon-load-wrapper" data-offerid="${coupon.offerId}">
-          ${kupongCta}
-        </div>
+      <div class="hse-recipe-list__wrapper">
+      <div class="column size6of20 lg_size5of20">
+      <picture>
+      <img src="${imageUrl}">
+      </picture>
       </div>
-
+      <div class="column size10of20 lg_size10of20 hse-recipe-list__offer-content">
+      <h1>${coupon.Header}</h1>
+      <span>${coupon.Offer.OfferCondition.Conditions[0]}</span>
+      <p>${coupon.Offer.Brand} ${coupon.Offer.SizeOrQuantity.Text}</p>
+      <a href="/kampanj/hse/${couponId}">Mer info</a>
+      </div>
+      <div class="column size6of20 lg_size5of20 coupon-load-wrapper" data-offerid="${coupon.offerId}">
+      ${kupongCta}
+      </div>
+      </div>
       </article>`;
       wrapper.innerHTML = kupongTemplate;
       container.appendChild(wrapper);
@@ -212,7 +215,7 @@
       const self = this;
       const arrow = `
       <svg class="toolbar__icon toolbar__icon--indicator" viewBox="0 0 32 32" width="20px" height="20px">
-        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/Assets/icons/sprite.svg#arrow-up"></use>
+      <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/Assets/icons/sprite.svg#arrow-up"></use>
       </svg>
       `;
       const toggle = self.create('toggle-personal-offer', personalOffer, '', 'div');
@@ -250,6 +253,14 @@
       const container = this.addBlock();
       const dashboard = document.querySelector('#dashboard');
       dashboard.insertBefore(container, dashboard.firstChild);
+
+      icadatalayer.add('HSE', {
+        HSE: {
+          action: 'display',
+          title: coupon.PageName,
+          hseurl: `/kampanj/hse/${couponId}`,
+        },
+      });
 
       const returnUrl = encodeURIComponent(window.location.href);
       const iframeContainer = $(`<div class="cro-iframe-container"><span class="loader"></span><iframe src="//www.ica.se/logga-in/?returnurl=${returnUrl}" frameborder="0"></iframe></div>`);
@@ -297,7 +308,19 @@
             },
             body: JSON.stringify(opts),
           },
-        );
+        ).then((response) => {
+          if (response.ok) {
+            icadatalayer.add('HSE', {
+              HSE: {
+                action: 'coupon-loaded',
+                name: coupon.PageName,
+                offer: coupon.Offer.ProductName,
+                hseurl: `/kampanj/hse/${couponId}`,
+              },
+            });
+          }
+          return response;
+        });
       });
     },
     checkActionCookie() {
@@ -352,6 +375,13 @@
         if (self.isLoggedIn()) {
           self.loadCouponOnCard().then(self.changeOfferStatus);
         } else {
+          icadatalayer.add('HSE', {
+            HSE: {
+              action: 'login-mousedown',
+              name: coupon.PageName,
+              hseurl: `/kampanj/hse/${couponId}`,
+            },
+          });
           self.setActionCookie(couponId);
           self.createModal();
         }
@@ -367,10 +397,10 @@
     getIframeStyles() {
       const styles = `<style type="text/css">
       @media  (max-width: 767px) {
-      h3.greeting, h3.card-heading { font-size: 18px; }
-      img.card-icon { width: 50px; }
-      .select-card-modal { border: 0; padding: 0; margin: 0; }
-      .remodal-wrapper { padding: 0; }
+        h3.greeting, h3.card-heading { font-size: 18px; }
+        img.card-icon { width: 50px; }
+        .select-card-modal { border: 0; padding: 0; margin: 0; }
+        .remodal-wrapper { padding: 0; }
       }
       </style>`;
       return styles;
