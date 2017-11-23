@@ -15,6 +15,7 @@
   "globals": {
     "ICACRO": true,
     "ICA": true,
+    "icadatalayer": true,
     "hj": true,
     "jQuery": true,
     "$":  true,
