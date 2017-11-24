@@ -14,7 +14,6 @@
   'use strict';
 
   hj && hj('trigger', 'variant3'); // eslint-disable-line
-  const helperVersion = '0.12.0';
   const couponId = 458285; // 458288; // torsk
   const banner = {
     title: 'Lysande gul fiskgryta',
@@ -153,35 +152,46 @@
         </linearGradient>
         ${strs.join('')}</svg>`;
     },
-    create(className, parent, text, type) {
-      const t = type || 'div';
-      const div = document.createElement(t);
-      if (text && type === 'img') {
-        div.src = text;
-      } else if (text) {
-        div.appendChild(document.createTextNode(text));
-      }
-      if (className) div.className = className;
-      if (parent) parent.appendChild(div);
-      return div;
-    },
-    addRecepie() {
-      const self = this;
-      const container = self.create('personal-offer__recipe');
-      const a = self.create('', container, null, 'a');
-      a.href = banner.url;
-      const containerImage = self.create('personal-offer__recipe-image', a);
-      const containerText = self.create('personal-offer__recipe-text', a);
-      self.create('', containerImage, banner.img, 'img');
-      self.create('', containerText, banner.cookTime, 'h4');
-      self.create('', containerText, banner.title, 'h2');
-      self.create('', containerText, banner.preamble, 'p');
-      self.create('', containerText).innerHTML = self.addStars(banner.stars);
+    addRecipe() {
+      const [
+        container,
+        link,
+        imageContainer,
+        textContainer,
+        image,
+        cookTime,
+        title,
+        preamble,
+        stars,
+      ] = $ELM.create(
+        'personal-offer__recipe',
+        'a',
+        'personal-offer__recipe-image',
+        'personal-offer__recipe-text',
+        'img',
+        'h4',
+        'h2',
+        'p',
+        'div',
+      );
+
+      image.image(banner.img);
+      cookTime.text(banner.cookTime);
+      title.text(banner.title);
+      preamble.text(banner.preamble);
+      stars.html(this.addStars(banner.stars));
+
+      imageContainer.append(image);
+      textContainer.appendAll(cookTime, title, preamble, stars);
+
+      link.href(banner.url);
+      link.appendAll(imageContainer, textContainer);
+
+      container.append(link);
       return container;
     },
-    addCoupon(container) {
-      const self = this;
-      const wrapper = self.create('personal-offer__coupon');
+    addCoupon() {
+      const wrapper = $ELM.create('personal-offer__coupon');
       const loginUrl = `/logga-in?returnUrl=${encodeURIComponent(window.location)}`;
       const imageUrl = /Handlers/.test(coupon.Offer.Image.ImageUrl)
         ? coupon.Offer.Image.ImageUrl
@@ -208,51 +218,77 @@
       </div>
       </div>
       </article>`;
-      wrapper.innerHTML = kupongTemplate;
-      container.appendChild(wrapper);
+      wrapper.html(kupongTemplate);
+      return wrapper;
     },
-    addToggleButton(personalOffer) {
-      const self = this;
+    addToggleButton() {
       const arrow = `
       <svg class="toolbar__icon toolbar__icon--indicator" viewBox="0 0 32 32" width="20px" height="20px">
       <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/Assets/icons/sprite.svg#arrow-up"></use>
       </svg>
       `;
-      const toggle = self.create('toggle-personal-offer', personalOffer, '', 'div');
-      self.create('toggle-personal-offer__text', toggle, 'Dölj personligt erbjudande', 'span');
-      const svg = self.create('toggle-personal-offer__svg', toggle, null, 'span');
-      svg.innerHTML = arrow;
+      const [
+        toggle,
+        text,
+        svg,
+      ] = $ELM.create(
+        'toggle-personal-offer',
+        'span toggle-personal-offer__text',
+        'span toggle-personal-offer__svg',
+      );
+
+      text.text('Dölj personligt erbjudande');
+      svg.html(arrow);
+      toggle.appendAll(text, svg);
+
       return toggle;
     },
     addBlock() {
-      const self = this;
-      const personalOffer = self.create('personal-offer');
-      const toggle = self.addToggleButton(personalOffer);
-      const container = self.create('personal-offer__container', personalOffer);
-      toggle.addEventListener('click', () => {
-        if (personalOffer.classList.contains('personal-offer--hidden')) {
-          personalOffer.classList.remove('personal-offer--hidden');
-          toggle.querySelector('.toggle-personal-offer__text').innerHTML = 'Dölj personligt erbjudande';
+      const [
+        personalOffer,
+        container,
+        header,
+        preamble,
+        body,
+        recipeAndCoupon,
+      ] = $ELM.create(
+        'personal-offer',
+        'personal-offer__container',
+        'personal-offer__h1',
+        'strong personal-offer__preamble--strong',
+        'span personal-offer__preamble--strong',
+        'personal-offer__recipe-and-coupon',
+      );
+
+      header.text(content.header);
+      preamble.text(content.preamble);
+      body.text(content.body);
+
+      recipeAndCoupon.append(this.addRecipe());
+
+      this.loadCouponData().then(() => recipeAndCoupon.append(this.addCoupon()));
+
+      container.appendAll(header, preamble, body, recipeAndCoupon);
+
+      const toggle = this.addToggleButton();
+      toggle.element.addEventListener('click', () => {
+        if (personalOffer.element.classList.contains('personal-offer--hidden')) {
+          personalOffer.element.classList.remove('personal-offer--hidden');
+          toggle.element.querySelector('.toggle-personal-offer__text').innerHTML = 'Dölj personligt erbjudande';
         } else {
           personalOffer.classList.add('personal-offer--hidden');
-          toggle.querySelector('.toggle-personal-offer__text').innerHTML = 'Visa personligt erbjudande';
+          toggle.element.querySelector('.toggle-personal-offer__text').innerHTML = 'Visa personligt erbjudande';
         }
       });
-      self.create('personal-offer__h1', container, content.header, 'h1');
-      self.create('personal-offer__preamble--strong', container, content.preamble, 'strong');
-      self.create('personal-offer__preamble--strong', container, content.body, 'span');
 
-      const recipeAndCoupon = self.create('personal-offer__recipe-and-coupon', container);
-      recipeAndCoupon.appendChild(self.addRecepie());
-
-      self.loadCouponData().then(() => self.addCoupon(recipeAndCoupon));
+      personalOffer.appendAll(toggle, container);
 
       return personalOffer;
     },
     manipulateDom() {
       const container = this.addBlock();
       const dashboard = document.querySelector('#dashboard');
-      dashboard.insertBefore(container, dashboard.firstChild);
+      dashboard.insertBefore(container.element, dashboard.firstChild);
 
       icadatalayer.add('HSE', {
         HSE: {
@@ -561,7 +597,7 @@
   const loadJS = (callback) => {
     const script = document.createElement('script');
     script.setAttribute('async', '');
-    script.setAttribute('src', `https://cdn.rawgit.com/Banzaci/icacro/v${helperVersion}/dist/main.min.js`);
+    script.setAttribute('src', `https://cdn.rawgit.com/Banzaci/icacro/1.3/dist/main.min.js`);
     document.querySelector('head').appendChild(script);
     script.onreadystatechange = callback;
     script.onload = callback;
