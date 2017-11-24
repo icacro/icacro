@@ -13,7 +13,7 @@
 (function ($) {
   'use strict';
 
-  hj && hj('trigger', 'variant3'); // eslint-disable-line
+  //hj && hj('trigger', 'variant3'); // eslint-disable-line
   const couponId = 458285; // 458288; // torsk
   const banner = {
     title: 'Lysande gul fiskgryta',
@@ -368,7 +368,7 @@
     changeOfferStatus(response) {
       if (response.ok) {
         $ELM('.hse-recipe-list').css('offer-loaded');
-        $ELM('.button--load-coupon').element.innerText = 'Kupong laddad';
+        $ELM('.button--load-coupon').text('Kupong laddad');
       }
     },
     loaderIsActive: false,
@@ -592,12 +592,87 @@
         // }
       }, 50);
     },
+    addNotification() {
+      const css = `
+      .cro .offer-notification {
+        position: fixed;
+        top: 30vh;
+        right: -200px;
+        z-index: 99999;
+        background-color: white;
+        border-radius: 20px;
+        border-bottom-right-radius: 0;
+        border-top-right-radius: 0;
+        font-weight: 900;
+        font-size: 13px;
+        text-transform: uppercase;
+        box-shadow: 2px 2px 10px 0px #00000052;
+        transition: right 0.5s;
+        padding: 0;
+        display: flex;
+        align-items: center;
+        line-height: 13px;
+      }
+      .cro .offer-notification.show {
+        right: 0;
+      }
+      .cro .offer-notification span {
+        margin-left: 5px;
+      }
+      .cro .offer-notification svg {
+        fill: #a02971;
+        margin-top: 6px;
+        transition: transform 0.5s;
+        pointer-events: none;
+      }
+      .cro .offer-notification.closed {
+        right: -148px;
+      }
+      .cro .offer-notification.closed svg {
+        transform: rotate(180deg) translateY(3px);
+      }
+      .cro .offer-notification a {
+        display: inline-block;
+        background-color: #F5E9F0;
+        padding: 15px 13px 13px 13px;
+      }
+      `;
+      this.style(css);
+
+      const [
+        notification,
+        link,
+        arrow,
+      ] = $ELM.create(
+        'offer-notification',
+        'a',
+        'span',
+      );
+
+      arrow.html(`
+        <svg viewBox="0 0 32 32" width="20px" height="20px">
+        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/Assets/icons/sprite.svg#arrow-right"></use>
+        </svg>`);
+      link.href('/mittica');
+      link.text('Du har en rabatt!');
+      notification.appendAll(arrow, link);
+
+      notification.element.addEventListener('click', (e) => {
+        if (e.target.nodeName.toLowerCase() === 'span') {
+          notification.element.classList.toggle('closed');
+        }
+      });
+
+      $ELM.get('body').append(notification);
+
+      window.setTimeout(() => notification.css('show'), 1 * 1000);
+    },
   };
 
   const loadJS = (callback) => {
     const script = document.createElement('script');
     script.setAttribute('async', '');
-    script.setAttribute('src', `https://cdn.rawgit.com/Banzaci/icacro/1.3/dist/main.min.js`);
+    script.setAttribute('src', `https://cdn.rawgit.com/Banzaci/icacro/1.5.2/dist/main.min.js`);
     document.querySelector('head').appendChild(script);
     script.onreadystatechange = callback;
     script.onload = callback;
@@ -606,10 +681,18 @@
   $(document).ready(() => {
     loadJS(() => {
       Object.assign(test, ICACRO());
-      test.style(test.addStyles());
-      test.manipulateDom();
-      test.checkActionCookie();
-      test.addEventListeners();
+      test.loadCouponData().then(() => {
+        if (!coupon.LoadedOnCard) {
+          if (/^https:\/\/www.ica.se\/mittica\/#:mittica=inkopslistor$/.test(window.location)) {
+            test.style(test.addStyles());
+            test.manipulateDom();
+            test.checkActionCookie();
+            test.addEventListeners();
+          } else {
+            test.addNotification();
+          }
+        }
+      });
     });
   });
 })(jQuery);
