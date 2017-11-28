@@ -4,6 +4,7 @@
   "description": "",
   "main": "template.js",
   "devDependencies": {
+    "babel-cli": "^6.26.0",
     "babel-core": "^6.26.0",
     "babel-eslint": "^8.0.2",
     "babel-loader": "^7.1.2",
@@ -23,7 +24,8 @@
   },
   "scripts": {
     "dev": "webpack --env.project",
-    "create": "node index.js"
+    "create": "node index.js",
+    "https": "webpack-dev-server --https  --env.project"
   },
   "repository": {
     "type": "git",
