@@ -11,7 +11,8 @@
 // ==/UserScript==
 
 import { ICACRO, $ELM } from '../util/main';
-import { styles } from './style'
+import Ratings from '../util/modules/ratings';
+import style from './style';
 
 (function ($) {
   'use strict';
@@ -93,26 +94,6 @@ import { styles } from './style'
 
   // if (hj) hj('trigger','variant5');// eslint-disable-line
   const test = {
-    hideElements() {
-      [
-        '.image-slider li',
-        '.image-slider .lazy-spinner',
-        '.header-content',
-        '.push-items-list',
-        '.quicklink-list',
-        '.main .link-list',
-        '.recipe-category-listing .banner-image',
-        '.recipe-category-listing > .col-12 > h2',
-        '.search-recipe-container__recipe-count',
-        '.recipe-category-listing .recipe-list-items',
-      ].forEach((element) => {
-        const elm = document.querySelector(element);
-        elm.parentNode.removeChild(elm);
-      });
-    },
-    toArray(list) {
-      return Array.prototype.slice.call(list);
-    },
     create(className, parent, text, type) {
       const t = type || 'div';
       const div = document.createElement(t);
@@ -125,51 +106,21 @@ import { styles } from './style'
       if (parent) parent.appendChild(div);
       return div;
     },
-    addStars(stars) {
-      const arr = ['0', '26', '52', '78', '104'];
-      const strs = arr.map((x, index) => (
-        `<g transform="translate(${x} 0)" class="${index < stars ? 'active' : ''}">
-        <path d="M23.2 10.303q.194.509-.073.97-1.188 2.182-5.067 5.479 1.018 4.194 1.212 6.715.049.679-.533 1.067-.315.194-.63.194-.242 0-.533-.121-.412-.242-1.333-.679-3.273-1.624-4.606-2.473-1.333.849-4.606 2.473-.921.436-1.333.679-.606.315-1.164-.073-.582-.388-.533-1.067.194-2.521 1.212-6.715-3.879-3.297-5.067-5.479-.267-.461-.073-.97.17-.509.63-.679 1.358-.606 6.861-.8 1.988-5.77 3.248-7.03.388-.339.824-.339.461 0 .8.339 1.285 1.261 3.273 7.03 5.503.194 6.861.8.461.194.63.679z"></path>
-        </g>`));
-      return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="-0.12099626660346985 1.4550001621246338 127.39400121569633 25.34600469470024">
-        <linearGradient id="half" x1="0" x2="100%" y1="0" y2="0">
-        <stop offset="50%" stop-color="currentColor"></stop>
-        <stop offset="50%" stop-color="#d5d7da"></stop>
-        </linearGradient>
-        ${strs.join('')}
-        </svg>`;
-    },
     addCoupon(coupon) {
-      const [
-        container,
-        img,
-        title,
-        discount,
-        subtitle,
-        moreInfo,
-        button,
-      ] = $ELM.create(
-        'shadow coupons-container__item',
-        'coupons-image',
-        'h3',
-        'h1',
-        'h4',
-        'a',
-        'button .button coupon-button',
-      );
-
-      img.style({ 'background-image': `url(${coupon.image})` });
-      title.text(coupon.title);
-      discount.text(coupon.discount);
-      subtitle.text(coupon.subtitle);
-      moreInfo.text('Mer info');
-      button.text('Ladda kupong');
-
-      container.appendAll(img, title, discount, subtitle, moreInfo, button);
-
-      return container.element;
+      const self = this;
+      const couponItem = self.create('coupons-container__item');
+      const img = self.create('coupons-image', couponItem);
+      self.addStyle(img, {
+        'background-image': `url(${coupon.image})`,
+      });
+      self.create('', couponItem, coupon.title, 'h3');
+      self.create('', couponItem, coupon.discount, 'h1');
+      self.create('', couponItem, coupon.subtitle, 'h4');
+      self.create('', couponItem, 'Mer info', 'a');
+      self.create('button coupon-button', couponItem, 'Ladda kupong', 'button');
+      return couponItem;
     },
-    addBanner(banner, index) {
+    addBanner(banner) {
       const self = this;
       const bannerContainer = self.create('banner-container', null, null, 'li');
       const bannerWrapper = self.create('banner-wrapper', bannerContainer);
@@ -182,13 +133,16 @@ import { styles } from './style'
 
       self.create('offer-text', ratingContainer, 'Erbjudande på:', 'h3');
       self.create('headline', ratingContainer, banner.title, 'h1');
-      self.create('rating', ratingContainer).innerHTML = self.addStars(banner.stars);
+      self.create('rating', ratingContainer).innerHTML = Ratings(banner.stars);
       self.create('difficulty', ratingContainer, banner.cookTime, 'h4');
       self.createSaveRecipeCTA(banner, bannerWrapper);
       banner.coupons.forEach((coupon) => {
         couponsWrapper.appendChild(self.addCoupon(coupon));
       });
       return bannerContainer;
+    },
+    addStyle(element, stl) {
+      Object.assign(element.style, stl);
     },
     addBanners() {
       const self = this;
@@ -220,8 +174,18 @@ import { styles } from './style'
         this.saveRecipe(recipeId);
         this.addRecipeToSavedList(recipeId);
       }
-
-      this.hideElements();
+      this.removeElements([
+        '.image-slider li',
+        '.image-slider .lazy-spinner',
+        '.header-content',
+        '.push-items-list',
+        '.quicklink-list',
+        '.main .link-list',
+        '.recipe-category-listing .banner-image',
+        '.recipe-category-listing > .col-12 > h2',
+        '.search-recipe-container__recipe-count',
+        '.recipe-category-listing .recipe-list-items',
+      ]);
       this.addBanners();
       this.createOffers();
       this.addIcaCard();
@@ -234,8 +198,8 @@ import { styles } from './style'
       const self = this;
       const savedRecipes = self.getSavedRecipes();
       if (savedRecipes.includes(banner.recipeId)) return;
-
-      const cta = self.create('button banner-button', parentNode, 'Lägg till i inköpslistan och spara recept', 'a');
+      const container = self.create('button-wrapper', parentNode);
+      const cta = self.create('button banner-button', container, 'Lägg till i inköpslistan och spara recept', 'a');
       cta.href = `/logga-in/?returnUrl=${encodeURIComponent(window.location)}`;
       cta.dataset['recipeId'] = banner.recipeId;
       cta.dataset['tracking'] = `{ "name": "${banner.title}", "URL": "${banner.url}" }`;
@@ -247,11 +211,14 @@ import { styles } from './style'
       };
     },
     createOffers() {
+      //
       const container = document.querySelector('.main');
       const buttonWrapper = this.create('button-wrapper');
       const offerButton = this.create('button offers-button', buttonWrapper, 'Erbjudande sidan', 'a');
+      const img = this.create('image', null, 'https://www.ica.se/imagevaultfiles/id_166249/cf_9610/st_edited/arr5tmahtlmr5km6k4on.png', 'img');
       offerButton.href = '/erbjudanden/butikserbjudanden/alla-digitala-kuponger/';
       container.insertBefore(offerButton, container.childNodes[0]);
+      container.insertBefore(img, container.childNodes[0]);
     },
     addRecipeToShoppingList(recipeId) {
       // tracking sker via klassnamn
@@ -528,7 +495,7 @@ import { styles } from './style'
   $(document).ready(() => {
     if (/^https:\/\/www.ica.se\/$/.test(window.location)) {
       Object.assign(test, ICACRO());
-      test.style(styles);
+      test.style(style);
       test.manipulateDom();
       test.addEventListeners();
       ICA.icaCallbacks.initUnslider();

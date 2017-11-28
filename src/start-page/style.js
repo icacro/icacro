@@ -57,6 +57,23 @@ const styles = `
   border-radius: 6px;
   display: flex;
   flex-direction: column;
+  position: relative;
+}
+
+.cro .coupons-container .coupons-container__item:after {
+  background-image: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz48c3ZnIHZlcnNpb249IjEuMSIgaWQ9IkxheWVyXzEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4IiB2aWV3Qm94PSIwIDAgMjAgMTAiIHN0eWxlPSJlbmFibGUtYmFja2dyb3VuZDpuZXcgMCAwIDIwIDEwOyIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSI+PHN0eWxlIHR5cGU9InRleHQvY3NzIj4uc3Qwe2ZpbGw6I0Y3RjdGNzt9PC9zdHlsZT48cGF0aCBjbGFzcz0ic3QwIiBkPSJNMTAsMi41Yy00LjEsMC03LjUsMy40LTcuNSw3LjVoMTVDMTcuNSw1LjksMTQuMiwyLjUsMTAsMi41eiIvPjwvc3ZnPg==);
+  background-size: 26px 13px;
+  content: '';
+  display: block;
+  width: 100%;
+  position: absolute;
+  left: 0;
+  bottom: 0px;
+  height: 13px;
+}
+
+.cro .coupons-container .coupons-container__item:after svg {
+  fill: #333;
 }
 
 .cro .coupons-container .coupons-container__item img {
