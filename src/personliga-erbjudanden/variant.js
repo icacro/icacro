@@ -258,7 +258,7 @@ import { ICACRO, $ELM } from '../util/main';
       ] = $ELM.create(
         'personal-offer',
         'personal-offer__container',
-        'personal-offer__h1',
+        'h1 personal-offer__h1',
         'strong personal-offer__preamble--strong',
         'span personal-offer__preamble--strong',
         'personal-offer__recipe-and-coupon',
