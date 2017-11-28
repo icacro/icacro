@@ -9,7 +9,6 @@
 
 (function ($) {
   'use strict';
-
   const loadJS = (callback) => {
     const project = '#project';
     const script = document.createElement('script');
