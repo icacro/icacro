@@ -1,16 +1,17 @@
+/* eslint-disable */
+
 const fs = require('fs.extra');
-const pktJs = require('./icacro/package.json');
 require('shelljs/global');
+
 const args = process.argv;
 function capitalizeFirstLetter(string) {
   return string.charAt(0).toUpperCase() + string.slice(1);
 }
 try {
-
-  if(args.length < 3) throw new Error('Missing path " npm run create ... "');
+  if (args.length < 3) throw new Error('Missing path " npm run create ... "');
   const project = args[2];
   fs.readdir('src', (err, files) => {
-    if (!project)  throw new Error('Missing path " npm run create ... "');
+    if (!project) throw new Error('Missing path " npm run create ... "');
     const path = `./src/${project}`;
     if (fs.existsSync(path)) throw new Error('Path exist"');
     fs.mkdirSync(path);
