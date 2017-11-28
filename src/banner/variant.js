@@ -54,7 +54,7 @@ import { styles } from './style';
       imgElement.append(imgHolder);
 
       readMore.href(url).text('Läs mer');
-      downLoad.href(url).text('Ladda ner');
+      downLoad.href(url).text('Ladda kupong');
 
       titleElement.html(title);
       discountElement.html(discount);

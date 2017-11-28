@@ -22,44 +22,61 @@ right: 0;
 top: 0;
 width: 13px;
 }
-.cro .banner .banner-column { padding: 10px 10px; }
+.cro .banner .banner-column:first-child { margin-left: 10px; }
+.cro .banner .banner-column:last-child {  margin-right: 10px; }
+.cro .banner .banner-column { padding: 10px; }
 .cro .banner .banner-column .download {
-align-items: center;
-background: #F8EBF3;
-color: #A02971;
-cursor: pointer;
-display: flex;
-flex-direction: column;
-justify-content: center;
-margin: 10px 10px 10px 0;
-border-radius: 5rem;
+  align-items: center;
+  background: #F8EBF3;
+  font-weight: bold;
+  color: rgba(160,41,113,1);
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: 10px 10px 10px 0;
+  border-radius: 6rem;
+  width: 100px;
+  line-height: 1.6rem;
+  padding-bottom: 10px;
 }
-.cro .banner .banner-column h1 { font-size: 1.6rem; }
+.cro .banner .banner-column h1 { font-size: 1.6rem; word-break: break-all;}
 .cro .banner .banner-column span {
-color: #EB1F07;
-font-family: icarubrik;
-font-size: 2.2rem;
-font-weight: bold;
+  color: #EB1F07;
+  font-family: icarubrik;
+  font-size: 2.2rem;
+  font-weight: bold;
 }
 .cro .banner .banner-column p {
-color: #808283;
-font-size: 1.3rem;
+  color: #808283;
+  font-size: 1.3rem;
+  margin: 0;
 }
 .cro .banner .banner-column .banner-column__more-info { font-size: 20px; }
+.cro .banner-column__image {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  width: 150px;
+  height: 150px;
+}
 .cro .banner-column__image img {
-max-width: 140px;
-max-height: 140px;
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
 }
 @media only screen and (max-width: 780px){
-.cro .banner-column__image img {
-max-width: 80px;
-max-height: 100px;
-}
-#page {
-padding: 0 5px 5px;
-}
-.cro .banner .banner-column .download {
-border-radius: 2rem;
-}
+  .cro .banner-column__image {
+    width: 65px;
+    height: 65px;
+  }
+  #page {
+    padding: 0 5px 5px;
+  }
+  .cro .banner .banner-column:first-child { padding: 10px; margin-left: 0; }
+  .cro .banner .banner-column:last-child { padding: 10px 10px 10px 0; margin-right: 0; }
+  .cro .banner .banner-column { padding: 10px 0; }
 }
 `
