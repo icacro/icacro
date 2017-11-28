@@ -1,6 +1,6 @@
 const path = require('path');
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
-const fs = require("fs");
+const fs = require('fs');
 
 module.exports = function(env) {
   try {
@@ -14,7 +14,7 @@ module.exports = function(env) {
         filename: 'variant.min.js'
       },
       plugins: [
-        new UglifyJSPlugin()
+        // new UglifyJSPlugin({}),
       ],
       module: {
         rules: [
