@@ -7,7 +7,7 @@
 // @grant        none
 // ==/UserScript==
 
-import { ICACRO, $ELM } from '../../icacro/src/main';
+import { ICACRO, $ELM } from '../util/main';
 import { styles } from './style';
 
 (function ($) {

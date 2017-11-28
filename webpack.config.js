@@ -14,7 +14,7 @@ module.exports = function(env) {
         filename: 'variant.min.js'
       },
       plugins: [
-        // new UglifyJSPlugin({}),
+        new UglifyJSPlugin({}),
       ],
       module: {
         rules: [
