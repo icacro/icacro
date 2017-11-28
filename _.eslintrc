@@ -1,0 +1,25 @@
+{
+  "extends": "airbnb",
+  "parser": "babel-eslint",
+  "rules": {
+    "func-names": ["error", "never"],
+    "linebreak-style": 0,
+    "wrap-iife": ["error", "any"],
+    "quotes": ["error", "single", { "allowTemplateLiterals": true }],
+    "strict": "off",
+  },
+  "env": {
+    "es6": true,
+    "browser": true
+  },
+  "globals": {
+    "ICACRO": true,
+    "ICA": true,
+    "icadatalayer": true,
+    "hj": true,
+    "jQuery": true,
+    "$":  true,
+    "ga":  true,
+    "$ELM": true
+  }
+}
