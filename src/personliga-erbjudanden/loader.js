@@ -14,7 +14,7 @@
     const project = 'personliga-erbjudanden';
     const script = document.createElement('script');
     script.setAttribute('async', '');
-    script.setAttribute('src', `https://cdn.rawgit.com/Banzaci/ica/${project}/variant.min.js`);
+    script.setAttribute('src', `https://cdn.rawgit.com/Banzaci/ica/master/src/${project}/variant.min.js`);
     document.querySelector('head').appendChild(script);
   };
   $(document).ready(loadJS);
