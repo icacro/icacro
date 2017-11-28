@@ -16,10 +16,12 @@
     "ICACRO": true,
     "ICA": true,
     "icadatalayer": true,
+    "dataLayer": true,
     "hj": true,
     "jQuery": true,
     "$":  true,
     "ga":  true,
-    "$ELM": true
+    "$ELM": true,
+    "coreComponents": true
   }
 }
