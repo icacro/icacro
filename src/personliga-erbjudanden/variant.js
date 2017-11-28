@@ -596,7 +596,7 @@
       const css = `
       .cro .offer-notification {
         position: fixed;
-        top: 30vh;
+        top: 17vh;
         right: -200px;
         z-index: 99999;
         background-color: white;
@@ -618,6 +618,7 @@
       }
       .cro .offer-notification span {
         margin-left: 5px;
+        cursor: pointer;
       }
       .cro .offer-notification svg {
         fill: #a02971;
