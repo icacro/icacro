@@ -1,6 +1,6 @@
 // ==UserScript==
-// @name         Banner
-// @path         //./src/banner/variant.js
+// @name         Personliga erbjudanden
+// @path         //./src/personliga-erbjudanden/variant.js
 // @namespace    http://tampermonkey.net/
 // @version      0.1
 // @match        https://www.ica.se/*
@@ -10,7 +10,7 @@
 (function ($) {
   'use strict';
 
-  const loadJS = (callback) => {
+  const loadJS = () => {
     const project = 'personliga-erbjudanden';
     const script = document.createElement('script');
     script.setAttribute('async', '');
