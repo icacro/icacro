@@ -265,7 +265,11 @@ import { ICACRO, $ELM } from '../util/main';
         'personal-offer__recipe-and-coupon',
       );
 
-      header.text(content.mittIcaRubrik);
+      const namn = $ELM.get('.top-bar-display-name').element
+        ? ` ${$ELM.get('.top-bar-display-name').text()}`
+        : '';
+
+      header.text(`Hej${namn}!`);
       preamble.text(content.mittIcaIngress);
       body.text(content.mittIcaText);
 
