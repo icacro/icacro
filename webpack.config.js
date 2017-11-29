@@ -1,5 +1,6 @@
 const path = require('path');
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
+const LiveReloadPlugin = require('webpack-livereload-plugin');
 const fs = require('fs');
 
 module.exports = function(env) {
@@ -13,8 +14,10 @@ module.exports = function(env) {
         path: path.resolve(__dirname, `src/${env.project}`),
         filename: 'variant.min.js'
       },
+      devtool: 'inline-source-map',
       plugins: [
         new UglifyJSPlugin({}),
+        new LiveReloadPlugin(),
       ],
       module: {
         rules: [
@@ -24,6 +27,10 @@ module.exports = function(env) {
             use: [
               'babel-loader',
             ],
+          },
+          {
+            test: /\.css$/,
+            use: ['style-loader', 'css-loader']
           },
         ],
       }
