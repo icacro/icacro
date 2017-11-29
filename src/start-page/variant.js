@@ -109,10 +109,11 @@ import style from './style';
     addCoupon(coupon) {
       const self = this;
       const couponItem = self.create('coupons-container__item');
-      const img = self.create('coupons-image', couponItem);
-      self.addStyle(img, {
-        'background-image': `url(${coupon.image})`,
-      });
+      // const img = self.create('coupons-image', couponItem);
+      // self.addStyle(img, {
+      //   'background-image': `url(${coupon.image})`,
+      // });//
+      self.create('', couponItem, coupon.image, 'img');
       self.create('', couponItem, coupon.title, 'h3');
       self.create('', couponItem, coupon.discount, 'h1');
       self.create('', couponItem, coupon.subtitle, 'h4');
@@ -211,7 +212,6 @@ import style from './style';
       };
     },
     createOffers() {
-      //
       const container = document.querySelector('.main');
       const buttonWrapper = this.create('button-wrapper');
       const offerButton = this.create('button offers-button', buttonWrapper, 'Erbjudande sidan', 'a');

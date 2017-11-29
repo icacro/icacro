@@ -2,18 +2,13 @@ const styles = `
 .cro header .image-slider {
   position: absolute !important;
 }
-.start-page > header {
-  height: 450px;
+.start-page-icase #header {
+  height: 480px;
 }
 
 .cro .shadow .coupons-container__item img {
   width: 100% !important;
   margin-left: 0 !important;
-}
-
-.shadow {
-  -webkit-filter: drop-shadow( 0px 0px 2px rgba(0,0,0,0.2) );
-  filter: drop-shadow( 0px 0px 2px rgba(0,0,0,0.2) );
 }
 
 .cro .has-hover .image-slider li.active,
@@ -68,7 +63,7 @@ const styles = `
   width: 100%;
   position: absolute;
   left: 0;
-  bottom: 0px;
+  bottom: -12px;
   height: 13px;
 }
 
@@ -77,8 +72,10 @@ const styles = `
 }
 
 .cro .coupons-container .coupons-container__item img {
-  max-height: 50px;
-  width: 100%;
+  width: 60% !important;
+  margin-left: 0 !important;
+  height: auto !important;
+  margin: 0 auto !important;
 }
 
 .cro .coupons-container .coupons-container__item h3 {
@@ -125,8 +122,6 @@ const styles = `
 }
 
 .cro .banner-wrapper .banner-image {
-  height: 220px;
-  overflow: hidden;
 }
 
 .cro .banner-wrapper .banner-image img {
@@ -139,11 +134,11 @@ const styles = `
 
 .cro .button-wrapper {
   padding: 0 10px;
+  margin-top: 200px;
 }
 
 .cro .banner-wrapper .banner-button {
   width: 100%;
-  margin: 180px 0 0;
 }
 
 .cro .offers-button {
@@ -153,7 +148,7 @@ const styles = `
 
 @media (max-width: 767px) {
   .cro .banner-wrapper {
-    height: 330px;
+
   }
 }
 
@@ -270,7 +265,8 @@ const styles = `
   .start-page-icase > header.full-size-image .image-slider,
   .start-page-icase > header.full-size-image .image-slider ul,
   .start-page-icase > header.full-size-image .image-slider li {
-    max-height: 450px;
+    max-height: 100%;
+    height: 100% !important;
   }
 }
 .cro .unslider-controls { pointer-events: none; }
