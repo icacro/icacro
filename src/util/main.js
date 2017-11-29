@@ -1,13 +1,18 @@
+/*
+eslint no-param-reassign: [
+"error", { "props": true, "ignorePropertyModificationsFor": ["element"] }]
+*/
 const reservedElements = ['body', 'head', 'img', 'style', 'span', 'ul', 'li', 'input', 'button', 'h1', 'h2', 'h3', 'h4', 'a', 'p', 'strong', 'svg'];
 
 const $ELM_ELEMENT = (element) => {
   return {
-    attr(type, value) {
+    attr(...args) {
+      const [attr, value] = args.length === 2 ? [...args] : args[0].split(':');
       if (value) {
-        element.setAttribute(type, value);
+        element.setAttribute(attr, value);
         return this;
       }
-      return element.getAttribute(type);
+      return element.getAttribute(attr);
     },
     html(str) {
       if (!str) return element.innerHTML;
@@ -73,14 +78,25 @@ const CreateElement = (arg) => {
 
 const CreateElementByObject = (type, iterable) => {
   const element = CreateElement(type);
-  for (const item in iterable) {
-    if (element[item]) {
+  console.clear();
+  Object.keys(iterable).forEach((item) => {
+    const func = element[item];
+    if (func) {
       const value = iterable[item];
       if (value && value.length) {
-        element[item](value);
+        func(value);
       }
     }
-  }
+  });
+  // for (const item in iterable) {
+  //   if (element[item]) {
+  //     console.log(item);
+  //     const value = iterable[item];
+  //     if (value && value.length) {
+  //       element[item](value);
+  //     }
+  //   }
+  // }
   return element;
 }
 
