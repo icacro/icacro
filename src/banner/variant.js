@@ -8,7 +8,8 @@
 // ==/UserScript==
 
 import { ICACRO, $ELM } from '../util/main';
-import { styles } from './style';
+import { styles } from './style.js';
+require('./style.css');
 
 (function ($) {
   'use strict';
@@ -97,7 +98,6 @@ import { styles } from './style';
 
   $(document).ready(() => {
     Object.assign(test, ICACRO());
-    test.style(test.addStyles())
     test.manipulateDom();
   });
 })(jQuery);

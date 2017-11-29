@@ -78,7 +78,6 @@ const CreateElement = (arg) => {
 
 const CreateElementByObject = (type, iterable) => {
   const element = CreateElement(type);
-  console.clear();
   Object.keys(iterable).forEach((item) => {
     const func = element[item];
     if (func) {
@@ -88,17 +87,8 @@ const CreateElementByObject = (type, iterable) => {
       }
     }
   });
-  // for (const item in iterable) {
-  //   if (element[item]) {
-  //     console.log(item);
-  //     const value = iterable[item];
-  //     if (value && value.length) {
-  //       element[item](value);
-  //     }
-  //   }
-  // }
   return element;
-}
+};
 
 export const $ELM = {
   create(...args) {
@@ -141,6 +131,7 @@ export const ICACRO = () => {
         .catch(err => err);
     },
     style(styles) {
+      console.log('Deprecated... use css and require.');
       const style = $ELM.create('style');
       style.attr('type', 'text/css');
       style.append(document.createTextNode(styles));
