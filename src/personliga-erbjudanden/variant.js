@@ -27,7 +27,7 @@ import { ICACRO, $ELM } from '../util/main';
   };
   let coupon = {};
   const content = window.cro || {
-    notifikationText: 'Du har rabatt!',
+    notifikationText: 'Du har fått en rabatt!',
     mittIcaRubrik: 'Hej!',
     mittIcaIngress: 'Eftersom du tittat på torskrecept tidigare så kanske du är sugen på torsk?',
     mittIcaText: 'I sådana fall vill vi tipsa dig om vår mest populära torsksoppa och ge dig en passande rabatt.',
@@ -602,12 +602,13 @@ import { ICACRO, $ELM } from '../util/main';
       .cro .offer-notification {
         position: fixed;
         top: 17vh;
-        right: -200px;
+        right: -210px;
         z-index: 99999;
         background-color: white;
         border-radius: 20px;
         border-bottom-right-radius: 0;
         border-top-right-radius: 0;
+        font-family: icatext, sans-serif;
         font-weight: 900;
         font-size: 13px;
         text-transform: uppercase;
@@ -630,9 +631,6 @@ import { ICACRO, $ELM } from '../util/main';
         margin-top: 6px;
         transition: transform 0.5s;
         pointer-events: none;
-      }
-      .cro .offer-notification.closed {
-        right: -148px;
       }
       .cro .offer-notification.closed svg {
         transform: rotate(180deg) translateY(3px);
@@ -661,17 +659,40 @@ import { ICACRO, $ELM } from '../util/main';
         </svg>`);
       link.href('/mittica');
       link.text(content.notifikationText);
+      link.click(() => this.gaPush({
+        eventAction: 'Personliga erbjudanden',
+        eventLabel: 'Notifikation klickad på',
+      }));
       notification.appendAll(arrow, link);
 
-      notification.element.addEventListener('click', (e) => {
+      notification.click((e) => {
         if (e.target.nodeName.toLowerCase() === 'span') {
           notification.element.classList.toggle('closed');
+          notification.style({
+            right: notification.element.classList.contains('closed')
+              ? `-${link.element.offsetWidth}px`
+              : '0',
+          });
         }
       });
 
       $ELM.get('body').append(notification);
 
+      this.gaPush({
+        eventAction: 'Personliga erbjudanden',
+        eventLabel: 'Notifikation visad',
+      });
+
       window.setTimeout(() => notification.css('show'), 1 * 1000);
+    },
+    pageIsInkopslistor() {
+      return /^https:\/\/www.ica.se\/mittica\/#:mittica=inkopslistor$/.test(window.location);
+    },
+    pageIsLoginForm() {
+      return (
+        /^https:\/\/www.ica.se\/logga-in/.test(window.location) &&
+        /inkopslistor/.test(window.location)
+      );
     },
   };
 
@@ -679,12 +700,12 @@ import { ICACRO, $ELM } from '../util/main';
     Object.assign(test, ICACRO());
     test.loadCouponData().then(() => {
       if (!coupon.LoadedOnCard) {
-        if (/^https:\/\/www.ica.se\/mittica\/#:mittica=inkopslistor$/.test(window.location)) {
+        if (test.pageIsInkopslistor()) {
           test.style(test.addStyles());
           test.manipulateDom();
           test.checkActionCookie();
           test.addEventListeners();
-        } else {
+        } else if (!test.pageIsLoginForm()) {
           test.addNotification();
         }
       }
