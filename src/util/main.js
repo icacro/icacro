@@ -49,6 +49,9 @@ const $ELM_ELEMENT = (element) => {
       Object.assign(element.style, stl);
       return this;
     },
+    click(fn) {
+      element.addEventListener('click', fn);
+    },
     element,
   };
 };
@@ -129,6 +132,11 @@ export const ICACRO = () => {
     },
     isLoggedIn() {
       return $ELM.get('#hdnIcaState').attr('value').length === 1;
+    },
+    gaPush({ eventCategory = 'A/B', eventAction, eventLabel }) {
+      if (ga) {
+        ga('send', 'event', eventCategory, eventAction, eventLabel);
+      }
     },
   };
 };
