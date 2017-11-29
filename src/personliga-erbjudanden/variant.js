@@ -15,15 +15,15 @@ import { ICACRO, $ELM } from '../util/main';
 (function ($) {
   'use strict';
 
-  if (hj) hj('trigger','variant3');// eslint-disable-line
+  // if (hj) hj('trigger','variant3');// eslint-disable-line
   const couponId = 458288; // torsk
   const banner = {
-    title: 'Lysande gul fiskgryta',
-    cookTime: '45 MIN | MEDEL',
+    title: 'Torsk i ugn med dill- och citronsås',
+    cookTime: '30 MIN | MEDEL',
     stars: 4,
-    preamble: 'Denna fiskgryta får sin lysande solgula färg och ljuvliga smak av saffran, vitlök och tomatpuré.',
-    img: '/imagevaultfiles/id_63144/cf_5291/lysande_gul_fiskgryta-1677.jpg',
-    url: 'https://www.ica.se/recept/lysande-gul-fiskgryta-1677/',
+    preamble: 'Ett härligt och lättlagat recept på torsk i ugn med en fantastisk dill- och citronsås.',
+    img: '/imagevaultfiles/id_122727/cf_259/torsk-i-ugn-med-dill-och-citronsas-v38-2015-719374.jpg',
+    url: 'https://www.ica.se/recept/torsk-i-ugn-med-dill-och-citronsas-719374/',
   };
   let coupon = {};
   const content = window.cro || {
@@ -86,6 +86,7 @@ import { ICACRO, $ELM } from '../util/main';
       .cro .personal-offer__recipe .personal-offer__recipe-image {
         padding-right:10px;
         height: 100%;
+        width: 45%;
       }
       .cro .personal-offer__recipe h2 { font-size: 2rem; font-weight: bold; margin: 0; line-height: 1; }
       .cro .personal-offer__recipe h4 {
@@ -280,7 +281,7 @@ import { ICACRO, $ELM } from '../util/main';
           personalOffer.element.classList.remove('personal-offer--hidden');
           toggle.element.querySelector('.toggle-personal-offer__text').innerHTML = 'Dölj personligt erbjudande';
         } else {
-          personalOffer.classList.add('personal-offer--hidden');
+          personalOffer.element.classList.add('personal-offer--hidden');
           toggle.element.querySelector('.toggle-personal-offer__text').innerHTML = 'Visa personligt erbjudande';
         }
       });
