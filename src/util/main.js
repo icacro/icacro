@@ -1,42 +1,79 @@
 /*
 eslint no-param-reassign: [
-"error", { "props": true, "ignorePropertyModificationsFor": ["element"] }]
+  "error", { "props": true, "ignorePropertyModificationsFor": ["element"] }
+]
 */
-const reservedElements = ['body', 'head', 'img', 'style', 'span', 'ul', 'li', 'input', 'button', 'h1', 'h2', 'h3', 'h4', 'a', 'p', 'strong', 'svg'];
+/* eslint no-use-before-define: ["error", { "functions": false }] */
+/* eslint-env es6 */
+const reservedElements = ['div', 'body', 'head', 'img', 'style', 'span', 'ul', 'li', 'input', 'button', 'h1', 'h2', 'h3', 'h4', 'a', 'p', 'strong', 'svg'];
+const GetElement = selector => document.querySelector(selector);
 
 const $ELM_ELEMENT = (element) => {
   return {
     attr(...args) {
-      const [attr, value] = args.length === 2 ? [...args] : args[0].split(':');
-      if (value) {
-        element.setAttribute(attr, value);
+      if (element) {
+        const [attr, value] = args.length === 2 ? [...args] : args[0].split(':');
+        if (value) {
+          element.setAttribute(attr, value);
+          return this;
+        }
+        return element.getAttribute(attr);
+      }
+      throw new Error(`${args} Element does not exist! Function 'attr'`);
+    },
+    click(callback) {
+      if (element) {
+        element.addEventListener('click', callback);
         return this;
       }
-      return element.getAttribute(attr);
+      throw new Error(`${callback} Element does not exist! Function 'click'`);
     },
     html(str) {
-      if (!str) return element.innerHTML;
-      element.innerHTML = str;
-      return this;
+      if (element) {
+        if (!str) return element.innerHTML;
+        element.innerHTML = str;
+        return this;
+      }
+      throw new Error(`${str} Element does not exist! Function 'html'`);
     },
     text(str) {
-      if (!str) return element.innerHTML;
-      element.innerHTML = '';
-      element.appendChild(document.createTextNode(str));
-      return this;
+      if (element) {
+        if (!str) return element.innerHTML;
+        element.innerHTML = '';
+        element.appendChild(document.createTextNode(str));
+        return this;
+      }
+      throw new Error(`${str} Element does not exist! Function 'text'`);
     },
     image(src) {
-      element.src = src;
-      return this;
+      if (element) {
+        element.src = src;
+        return this;
+      }
+      throw new Error(`${src} Element does not exist! Function 'image'`);
     },
     href(url) {
-      element.href = url;
-      return this;
+      if (element) {
+        element.href = url;
+        return this;
+      }
+      throw new Error(`${url} Element does not exist! Function 'href'`);
+    },
+    appendFirst(child) {
+      const c = child.nodeType ? child : child.element;
+      if (element) {
+        element.insertBefore(c, element.childNodes[0]);
+        return this;
+      }
+      throw new Error(`${child} Element does not exist! Function 'append'`);
     },
     append(child) {
       const c = child.nodeType ? child : child.element;
-      element.appendChild(c);
-      return this;
+      if (element) {
+        element.appendChild(c);
+        return this;
+      }
+      throw new Error(`${child} Element does not exist! Function 'append'`);
     },
     appendAll(...childs) {
       return childs.map(this.append);
@@ -46,24 +83,37 @@ const $ELM_ELEMENT = (element) => {
         cn.split(' ')
           .join(',')
           .split(',')
-          .forEach(c => c && element.classList.add(c.replace(/\./g, '').trim()));
+          .forEach(c => c && element && element.classList.add(c.replace(/\./g, '').trim()));
       }
       return this;
     },
-    style(stl) {
-      Object.assign(element.style, stl);
-      return this;
+    get(...args) {
+      if (element) {
+        if (args.length === 1) return $ELM_ELEMENT(element.querySelector(args[0]));
+        return args.map(arg => $ELM_ELEMENT(element.querySelector(arg)));
+      }
+      throw new Error(`${args} Element does not exist! Function 'get'`);
     },
-    click(fn) {
-      element.addEventListener('click', fn);
+    style(stl) {
+      if (element) {
+        Object.assign(element.style, stl);
+        return this;
+      }
+      throw new Error(`${stl} Element does not exist! Function 'style'`);
+    },
+    data(key, value) {
+      if (element) {
+        element.dataset[key] = value;
+        return this;
+      }
+      throw new Error(`${key} ${value} Element does not exist! Function 'data'`);
     },
     element,
   };
 };
 
-const GetElement = selector => document.querySelector(selector);
-
 const CreateElement = (arg) => {
+  if (arg instanceof HTMLElement) return $ELM_ELEMENT(arg);
   const arr = arg.split(' ');
   const type = arr.reduce((acc, current) => {
     if (reservedElements.includes(current)) {
@@ -73,7 +123,8 @@ const CreateElement = (arg) => {
   }, 'div');
 
   const classNames = arr.filter(current => !reservedElements.includes(current)).join();
-  return $ELM_ELEMENT(document.createElement(type)).css(classNames);
+  const dom = document.createElement(type);
+  return $ELM_ELEMENT(dom).css(classNames);
 };
 
 const CreateElementByObject = (type, iterable) => {
@@ -91,6 +142,7 @@ const CreateElementByObject = (type, iterable) => {
 };
 
 export const $ELM = {
+  elms: {},
   create(...args) {
     if (args.length === 1) return CreateElement(args[0]);
     return args.map(arg => CreateElement(arg));
@@ -98,9 +150,26 @@ export const $ELM = {
   build(type, iterable) {
     return CreateElementByObject(type, iterable);
   },
-  get(args) {
-    if (typeof args === 'string') return $ELM_ELEMENT(GetElement(args));
-    return args.map(arg => $ELM_ELEMENT(GetElement(arg)));
+  get(...args) {
+    if (args.length === 1) {
+      const key = Number.isInteger(parseInt(args[0], 10)) ? parseInt(args[0], 10) : args[0];
+      return this.elms[key] || $ELM_ELEMENT(GetElement(key));
+    }
+    return args.map((arg) => {
+      const key = Number.isInteger(parseInt(arg, 10)) ? parseInt(arg, 10) : arg;
+      return this.elms[key] || $ELM_ELEMENT(GetElement(key));
+    });
+  },
+  save(id, element) {
+    this.elms[id] = this.elms[id] || {};
+    this.elms[id] = element;
+  },
+  copy(selector) {
+    const child = GetElement(selector);
+    if (child) {
+      return CreateElement(child.cloneNode(true));
+    }
+    throw new Error(`${selector} Element does not exist! Function 'copy'`);
   },
 };
 
@@ -108,8 +177,8 @@ export const ICACRO = () => {
   $ELM.get('body').css('cro');
   return {
     getElementContentByTagAndAttr(regexp, tag, attr) {
-      const elements = document.querySelectorAll(tag);
-      return this.toArray(elements).reduce((acc, element) => {
+      const qsa = document.querySelectorAll(tag);
+      return this.toArray(qsa).reduce((acc, element) => {
         if (new RegExp(regexp).test(element[attr])) {
           acc.push(element[attr]);
         }
@@ -127,23 +196,27 @@ export const ICACRO = () => {
       const [url, options] = args;
       const ops = Object.assign({}, { method: 'get' }, options);
       return fetch(url, ops)
-        .then(response => response)
+        .then(response => response.json())
         .catch(err => err);
     },
     style(styles) {
-      console.log('Deprecated... use css and require.');
+      console.log('style is deprecated... use css and require.');
       const style = $ELM.create('style');
       style.attr('type', 'text/css');
       style.append(document.createTextNode(styles));
       $ELM.get('head').append(style);
     },
     isLoggedIn() {
-      return $ELM.get('#hdnIcaState').attr('value').length === 1;
+      return $ELM.get('#hdnIcaState').attr('value').length > 1;
     },
     gaPush({ eventCategory = 'A/B', eventAction, eventLabel }) {
       if (ga) {
         ga('send', 'event', eventCategory, eventAction, eventLabel);
       }
     },
+    setCookie(key, value, exp) {
+      const date = exp || new Date().setDate(new Date().getDate() + 1);
+      console.log(key, value, date);
+    }
   };
 };

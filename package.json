@@ -37,6 +37,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "common-tags": "^1.4.0"
+    "common-tags": "^1.4.0",
+    "uniqid": "^4.1.1"
   }
 }
