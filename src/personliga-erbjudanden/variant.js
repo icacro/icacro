@@ -21,7 +21,6 @@ import { ICACRO, $ELM } from '../util/main';
     title: 'Torsk i ugn med dill- och citronsås',
     cookTime: '30 MIN | MEDEL',
     stars: 4,
-    preamble: 'Ett härligt och lättlagat recept på torsk i ugn med en fantastisk dill- och citronsås.',
     img: '/imagevaultfiles/id_122727/cf_259/torsk-i-ugn-med-dill-och-citronsas-v38-2015-719374.jpg',
     url: 'https://www.ica.se/recept/torsk-i-ugn-med-dill-och-citronsas-719374/',
   };
@@ -35,14 +34,166 @@ import { ICACRO, $ELM } from '../util/main';
 
   const test = {
     addStyles() {
-      const couponCss = `@media (min-width:700px){.hse-recipe-list .coupon-load-wrapper{width:30% !important;}.hse-recipe-list .lg_size10of20{width:45% !important;}}.hse-recipe-list .column{padding:0;}.hse-recipe-list{margin:0;padding:0;background-color:#F8EBF3}.hse-recipe-list__wrapper{align-items:center;background-color:#FFF;display:flex;flex-direction:row;margin:10px;position:relative}.hse-recipe-list__wrapper::after{background:url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4KPCEtLSBHZW5lcmF0b3I6IEFkb2JlIElsbHVzdHJhdG9yIDIxLjAuMSwgU1ZHIEV4cG9ydCBQbHVnLUluIC4gU1ZHIFZlcnNpb246IDYuMDAgQnVpbGQgMCkgIC0tPgo8c3ZnIHZlcnNpb249IjEuMSIgaWQ9IkxheWVyXzEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4IgoJIHZpZXdCb3g9IjAgMCAxMCAyMCIgc3R5bGU9ImVuYWJsZS1iYWNrZ3JvdW5kOm5ldyAwIDAgMTAgMjA7IiB4bWw6c3BhY2U9InByZXNlcnZlIj4KPHN0eWxlIHR5cGU9InRleHQvY3NzIj4KCS5zdDB7ZmlsbDojRjhFQkYzO30KPC9zdHlsZT4KPHBhdGggY2xhc3M9InN0MCIgZD0iTTIuNDk3MDIxLDkuOTg4ODA3YzAsNC4xNDIxNTEsMy4zNTc4NDksNy41MDAwMDEsNy41LDcuNTAwMDAxdi0xNQoJQzUuODU0ODcsMi40ODg4MDcsMi40OTcwMjEsNS44NDY2NTYsMi40OTcwMjEsOS45ODg4MDd6Ii8+Cjwvc3ZnPgo=) space;background-size:17px 19px;bottom:0;content:'';display:block;height:100%;position:absolute;right:0;top:0;width:13px}.hse-recipe-list__offer-content h1{font-size:1.6rem;line-height:1.3;margin-bottom:0}@media (min-width:480px){.hse-recipe-list__offer-content{border-left:0!important;padding-left:0!important}.hse-recipe-list__offer-content h1{font-size:1.8rem}}.hse-recipe-list__offer-content span{color:#EB1F07;font-family:icarubrik;font-size:2.2rem;font-weight:700}.hse-recipe-list__offer-content p{color:#808283;font-size:1.3rem;line-height:1;margin-bottom:0;}.hse-recipe-list .coupon-load-wrapper{padding-left:0;padding-right:0;right:20px}.hse-recipe-list .coupon-load-wrapper .button--load-coupon{font-size:12px;align-items:center;background:#F8EBF3;color:#A02971;cursor:pointer;display:flex;flex-direction:column;justify-content:center;line-height:1.4rem}.hse-recipe-list .coupon-load-wrapper .button--onload-coupon{margin:0 auto;min-width:0;transition:width .2s 250ms ease,color .1s .2s ease;width:90px}@media (min-width:768px){.hse-recipe-list .coupon-load-wrapper .button--onload-coupon{width:115px}}@media (min-width:1024px){.hse-recipe-list .coupon-load-wrapper .button--onload-coupon{width:150px}}.hse-recipe-list .coupon-load-wrapper .button--onload-coupon.loading{color:transparent;height:40px;margin:0 auto;position:relative;transition:width 250ms ease,color .1s ease;width:40px}.hse-recipe-list .coupon-load-wrapper .button--onload-coupon.loading .loader{display:inline-block}.hse-recipe-list .coupon-load-wrapper .button--onload-coupon .loader{border-width:4px;display:none;height:28px;margin-left:-14px;margin-top:-14px;width:28px}.hse-recipe-list.offer-loaded{background-color:#F7F7F7;}.hse-recipe-list.offer-loaded .hse-recipe-list__wrapper::after{width:9px;background:url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4KPCEtLSBHZW5lcmF0b3I6IEFkb2JlIElsbHVzdHJhdG9yIDIxLjAuMSwgU1ZHIEV4cG9ydCBQbHVnLUluIC4gU1ZHIFZlcnNpb246IDYuMDAgQnVpbGQgMCkgIC0tPgo8c3ZnIHZlcnNpb249IjEuMSIgaWQ9IkxheWVyXzEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4IgoJIHZpZXdCb3g9IjAgMCAxMCAyMCIgc3R5bGU9ImVuYWJsZS1iYWNrZ3JvdW5kOm5ldyAwIDAgMTAgMjA7IiB4bWw6c3BhY2U9InByZXNlcnZlIj4KPHN0eWxlIHR5cGU9InRleHQvY3NzIj4KCS5zdDB7ZmlsbDojRjdGN0Y3O30KPC9zdHlsZT4KPHBhdGggY2xhc3M9InN0MCIgZD0iTTIuNDk3MDIxLDkuOTg4ODA3YzAsNC4xNDIxNTEsMy4zNTc4NDksNy41MDAwMDEsNy41LDcuNTAwMDAxdi0xNQoJQzUuODU0ODcsMi40ODg4MDcsMi40OTcwMjEsNS44NDY2NTYsMi40OTcwMjEsOS45ODg4MDd6Ii8+Cjwvc3ZnPgo=) space}.hse-recipe-list.offer-loaded .hse-recipe-list__wrapper img{filter:grayscale(1);opacity:.4}.hse-recipe-list.offer-loaded .hse-recipe-list__offer-content span{color:#D5D7DA}.hse-recipe-list.offer-loaded .coupon-load-wrapper a{background:#DDE9BF;color:#8DB72C;pointer-events:none;transition:width .2s ease,color .2s 250ms ease,background .2s ease}.hse-modal-login{padding:30px 0;text-align:center}.hse-modal-login h3{margin:0 0 15px;max-width:none}.hse-modal-login p{max-width:none}`;
+      const couponCss = `
+      .hse-recipe-list {
+        height: 100%;
+        background-color: #F8EBF3;
+        margin: 0;
+        padding: 0 10px;
+      }
+
+      .hse-recipe-list::after { content: none; }
+
+      .hse-recipe-list__wrapper {
+        height: 100%;
+        align-items: center;
+        background-color: #FFF;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        padding: 15px;
+        position: relative
+      }
+
+      .hse-recipe-list__wrapper::after {
+        background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4KPCEtLSBHZW5lcmF0b3I6IEFkb2JlIElsbHVzdHJhdG9yIDIxLjAuMSwgU1ZHIEV4cG9ydCBQbHVnLUluIC4gU1ZHIFZlcnNpb246IDYuMDAgQnVpbGQgMCkgIC0tPgo8c3ZnIHZlcnNpb249IjEuMSIgaWQ9IkxheWVyXzEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4IgoJIHZpZXdCb3g9IjAgMCAxMCAyMCIgc3R5bGU9ImVuYWJsZS1iYWNrZ3JvdW5kOm5ldyAwIDAgMTAgMjA7IiB4bWw6c3BhY2U9InByZXNlcnZlIj4KPHN0eWxlIHR5cGU9InRleHQvY3NzIj4KCS5zdDB7ZmlsbDojRjhFQkYzO30KPC9zdHlsZT4KPHBhdGggY2xhc3M9InN0MCIgZD0iTTIuNDk3MDIxLDkuOTg4ODA3YzAsNC4xNDIxNTEsMy4zNTc4NDksNy41MDAwMDEsNy41LDcuNTAwMDAxdi0xNQoJQzUuODU0ODcsMi40ODg4MDcsMi40OTcwMjEsNS44NDY2NTYsMi40OTcwMjEsOS45ODg4MDd6Ii8+Cjwvc3ZnPgo=) space;
+        background-size: 17px 19px;
+        bottom: 0;
+        content: '';
+        display: block;
+        height: 100%;
+        position: absolute;
+        right: 0;
+        top: 0;
+        width: 13px
+      }
+
+      .hse-recipe-list__offer-content h1 {
+        font-size: 1.6rem;
+        line-height: 1.3;
+        margin-bottom: 0
+      }
+
+      @media (min-width:480px) {
+        .hse-recipe-list__offer-content h1 {
+          font-size: 1.8rem
+        }
+      }
+
+      .hse-recipe-list__offer-content span {
+        color: #EB1F07;
+        font-family: icarubrik;
+        font-size: 2.2rem;
+        font-weight: 700
+      }
+
+      .hse-recipe-list__offer-content p {
+        color: #808283;
+        font-size: 1.3rem;
+        line-height: 1;
+        margin-bottom: 0;
+      }
+
+      .hse-recipe-list .coupon-load-wrapper .button--load-coupon {
+        font-size: 12px;
+        align-items: center;
+        background: #F8EBF3;
+        color: #A02971;
+        cursor: pointer;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        line-height: 1.4rem
+      }
+
+      .hse-recipe-list .coupon-load-wrapper .button--onload-coupon {
+        margin: 0 auto;
+        min-width: 0;
+        transition: width .2s 250ms ease, color .1s .2s ease;
+        width: 90px
+      }
+
+      @media (min-width:768px) {
+        .hse-recipe-list .coupon-load-wrapper .button--onload-coupon {
+          width: 115px
+        }
+      }
+
+      @media (min-width:1024px) {
+        .hse-recipe-list .coupon-load-wrapper .button--onload-coupon {
+          width: 150px
+        }
+      }
+
+      .hse-recipe-list .coupon-load-wrapper .button--onload-coupon.loading {
+        color: transparent;
+        height: 40px;
+        margin: 0 auto;
+        position: relative;
+        transition: width 250ms ease, color .1s ease;
+        width: 40px
+      }
+
+      .hse-recipe-list .coupon-load-wrapper .button--onload-coupon.loading .loader {
+        display: inline-block
+      }
+
+      .hse-recipe-list .coupon-load-wrapper .button--onload-coupon .loader {
+        border-width: 4px;
+        display: none;
+        height: 28px;
+        margin-left: -14px;
+        margin-top: -14px;
+        width: 28px
+      }
+
+      .hse-recipe-list.offer-loaded {
+        background-color: #F7F7F7;
+      }
+
+      .hse-recipe-list.offer-loaded .hse-recipe-list__wrapper::after {
+        width: 9px;
+        background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4KPCEtLSBHZW5lcmF0b3I6IEFkb2JlIElsbHVzdHJhdG9yIDIxLjAuMSwgU1ZHIEV4cG9ydCBQbHVnLUluIC4gU1ZHIFZlcnNpb246IDYuMDAgQnVpbGQgMCkgIC0tPgo8c3ZnIHZlcnNpb249IjEuMSIgaWQ9IkxheWVyXzEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4IgoJIHZpZXdCb3g9IjAgMCAxMCAyMCIgc3R5bGU9ImVuYWJsZS1iYWNrZ3JvdW5kOm5ldyAwIDAgMTAgMjA7IiB4bWw6c3BhY2U9InByZXNlcnZlIj4KPHN0eWxlIHR5cGU9InRleHQvY3NzIj4KCS5zdDB7ZmlsbDojRjdGN0Y3O30KPC9zdHlsZT4KPHBhdGggY2xhc3M9InN0MCIgZD0iTTIuNDk3MDIxLDkuOTg4ODA3YzAsNC4xNDIxNTEsMy4zNTc4NDksNy41MDAwMDEsNy41LDcuNTAwMDAxdi0xNQoJQzUuODU0ODcsMi40ODg4MDcsMi40OTcwMjEsNS44NDY2NTYsMi40OTcwMjEsOS45ODg4MDd6Ii8+Cjwvc3ZnPgo=) space
+      }
+
+      .hse-recipe-list.offer-loaded .hse-recipe-list__wrapper img {
+        filter: grayscale(1);
+        opacity: .4
+      }
+
+      .hse-recipe-list.offer-loaded .hse-recipe-list__offer-content span {
+        color: #D5D7DA
+      }
+
+      .hse-recipe-list.offer-loaded .coupon-load-wrapper a {
+        background: #DDE9BF;
+        color: #8DB72C;
+        pointer-events: none;
+        transition: width .2s ease, color .2s 250ms ease, background .2s ease
+      }
+      `;
       const styles = `
       ${couponCss}
       .cro .personal-offer {
-        background-color: white;
-        padding: 15px 10px;
+        background-color: #F8EBF3;
+        padding: 15px;
         margin-bottom: 10px;
       }
+      .cro .personal-offer * { box-sizing: border-box; }
+
+      .cro .personal-offer__container {
+        background-color: white;
+        display: flex;
+      }
+
+      .cro .personal-offer__message {
+        padding: 15px;
+        width: 50%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+
       .cro .personal-offer .toggle-personal-offer {
         color: #a02971;
         font-family: icatext;
@@ -67,39 +218,37 @@ import { ICACRO, $ELM } from '../util/main';
       .cro .personal-offer .toolbar__icon--indicator { fill: #a02971; }
 
       .cro .personal-offer__preamble, .cro .personal-offer__preamble--strong { display: block; margin-bottom: 10px; }
+
       .cro .personal-offer__recipe-and-coupon {
         display: flex;
-        flex-direction: row;
-        align-items: flex-start;
-        margin-top: 15px;
+        width: 50%;
       }
-      .cro .personal-offer__recipe-and-coupon > div { width: 50%; display: flex; }
-      .cro .personal-offer__recipe { padding-right: 5px; }
-      .cro .personal-offer__coupon { padding-left: 5px; }
 
-      .cro .personal-offer__recipe a { color: #3F3F40; display: flex; flex-direction: row; }
+      .cro .personal-offer__coupon { width: 35%; }
+      .cro .personal-offer__recipe { width: 65%; }
+
+      .cro .personal-offer__recipe a { color: #3F3F40; display: flex; flex-direction: column; }
       .cro .personal-offer__recipe a h4 { color: #808283; }
 
-      .cro .personal-offer__recipe .personal-offer__recipe-text {
-        width:100%;
+      .cro .personal-offer__recipe-text {
+        padding: 10px;
       }
-      .cro .personal-offer__recipe .personal-offer__recipe-image {
-        padding-right:10px;
-        height: 100%;
-        width: 45%;
-      }
-      .cro .personal-offer__recipe h2 { font-size: 2rem; font-weight: bold; margin: 0; line-height: 1; }
-      .cro .personal-offer__recipe h4 {
-        margin: 0 0 5px;
+      .cro .personal-offer__recipe-text h2 { font-size: 2rem; font-weight: bold; margin: 0; line-height: 1; }
+      .cro .personal-offer__recipe-text h4 {
         padding: 0;
         font-size: 1.2rem;
+        font-family: icatext;
         color: #808283;
         line-height: 1;
+        display: inline-block;
+        margin: 0;
+        vertical-align: middle;
       }
-      .cro .personal-offer__recipe .personal-offer__recipe-text p {
-        margin: 5px 0;
+      .cro .personal-offer__recipe-text p {
         line-height: 1.3em;
         font-size: 12px;
+        display: inline-block;
+        margin: 0 10px 0 0;
       }
       .cro .personal-offer__recipe svg .active { fill: #A02971; }
       .cro .personal-offer__recipe svg {
@@ -114,9 +263,12 @@ import { ICACRO, $ELM } from '../util/main';
         .cro .dashboard .toolbars-wrapper { position: absolute; top: 0; left: 0;}
       }
       @media (max-width: 520px) {
-        .cro .personal-offer__recipe-and-coupon { flex-direction: column; }
-        .cro .personal-offer__recipe-and-coupon > div { width: 100%; padding: 0; }
-        .cro .personal-offer__recipe-and-coupon .personal-offer__recipe-text p { display: none; }
+        .cro .personal-offer__container { flex-direction: column; }
+        .cro .personal-offer__message { width: auto; }
+        .cro .personal-offer__recipe-and-coupon { width: auto; }
+        .cro .personal-offer__coupon { width: 50%; }
+        .cro .personal-offer__recipe { width: 50%; }
+        .cro .hse-recipe-list { padding: 10px 10px 0 0; }
       }
 
       /* login frame */
@@ -166,7 +318,6 @@ import { ICACRO, $ELM } from '../util/main';
         image,
         cookTime,
         title,
-        preamble,
         stars,
       ] = $ELM.create(
         'personal-offer__recipe',
@@ -183,11 +334,10 @@ import { ICACRO, $ELM } from '../util/main';
       image.image(banner.img);
       cookTime.text(banner.cookTime);
       title.text(banner.title);
-      preamble.text(banner.preamble);
       stars.html(this.addStars(banner.stars));
 
       imageContainer.append(image);
-      textContainer.appendAll(cookTime, title, preamble, stars);
+      textContainer.appendAll(title, stars, cookTime);
 
       link.href(banner.url);
       link.appendAll(imageContainer, textContainer);
@@ -205,23 +355,23 @@ import { ICACRO, $ELM } from '../util/main';
       ${coupon.Offer.LoadedOnCard ? 'Kupong laddad' : 'Ladda kupong'}
       </a>`;
       const kupongTemplate =
-      `<article class="hse-recipe-list grid_fluid pl ${coupon.Offer.LoadedOnCard ? 'offer-loaded' : ''}">
-      <div class="hse-recipe-list__wrapper">
-      <div class="column size6of20 lg_size5of20">
-      <picture>
-      <img src="${imageUrl}">
-      </picture>
-      </div>
-      <div class="column size10of20 lg_size10of20 hse-recipe-list__offer-content">
-      <h1>${coupon.Header}</h1>
-      <span>${coupon.Offer.OfferCondition.Conditions[0]}</span>
-      <p>${coupon.Offer.Brand} ${coupon.Offer.SizeOrQuantity.Text}</p>
-      <a href="/kampanj/hse/${couponId}">Mer info</a>
-      </div>
-      <div class="column size6of20 lg_size5of20 coupon-load-wrapper" data-offerid="${coupon.offerId}">
-      ${kupongCta}
-      </div>
-      </div>
+      `<article class="hse-recipe-list ${coupon.Offer.LoadedOnCard ? 'offer-loaded' : ''}">
+        <div class="hse-recipe-list__wrapper">
+          <div class="hse-recipe-list__image">
+            <picture>
+            <img src="${imageUrl}">
+            </picture>
+          </div>
+          <div class="hse-recipe-list__offer-content">
+            <h1>${coupon.Header}</h1>
+            <span>${coupon.Offer.OfferCondition.Conditions[0]}</span>
+            <p>${coupon.Offer.Brand} ${coupon.Offer.SizeOrQuantity.Text}</p>
+            <a href="/kampanj/hse/${couponId}">Mer info</a>
+          </div>
+          <div class="coupon-load-wrapper" data-offerid="${coupon.OfferId}">
+            ${kupongCta}
+          </div>
+        </div>
       </article>`;
       wrapper.html(kupongTemplate);
       return wrapper;
@@ -252,6 +402,7 @@ import { ICACRO, $ELM } from '../util/main';
       const [
         personalOffer,
         container,
+        messageContainer,
         header,
         preamble,
         body,
@@ -259,6 +410,7 @@ import { ICACRO, $ELM } from '../util/main';
       ] = $ELM.create(
         'personal-offer',
         'personal-offer__container',
+        'personal-offer__message',
         'h1 personal-offer__h1',
         'strong personal-offer__preamble--strong',
         'span personal-offer__preamble--strong',
@@ -273,24 +425,12 @@ import { ICACRO, $ELM } from '../util/main';
       preamble.text(content.mittIcaIngress);
       body.text(content.mittIcaText);
 
-      recipeAndCoupon.append(this.addRecipe());
+      messageContainer.appendAll(header, preamble, body);
+      recipeAndCoupon.appendAll(this.addCoupon(), this.addRecipe());
+      container.appendAll(messageContainer, recipeAndCoupon);
 
-      this.loadCouponData().then(() => recipeAndCoupon.append(this.addCoupon()));
-
-      container.appendAll(header, preamble, body, recipeAndCoupon);
-
-      const toggle = this.addToggleButton();
-      toggle.element.addEventListener('click', () => {
-        if (personalOffer.element.classList.contains('personal-offer--hidden')) {
-          personalOffer.element.classList.remove('personal-offer--hidden');
-          toggle.element.querySelector('.toggle-personal-offer__text').innerHTML = 'Dölj personligt erbjudande';
-        } else {
-          personalOffer.element.classList.add('personal-offer--hidden');
-          toggle.element.querySelector('.toggle-personal-offer__text').innerHTML = 'Visa personligt erbjudande';
-        }
-      });
-
-      personalOffer.appendAll(toggle, container);
+      personalOffer.css('pl');
+      personalOffer.append(container);
 
       return personalOffer;
     },
