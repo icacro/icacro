@@ -147,24 +147,6 @@ import { ICACRO, $ELM } from '../util/main';
         width: 28px
       }
 
-      .hse-recipe-list.offer-loaded {
-        background-color: #F7F7F7;
-      }
-
-      .hse-recipe-list.offer-loaded .hse-recipe-list__wrapper::after {
-        width: 9px;
-        background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4KPCEtLSBHZW5lcmF0b3I6IEFkb2JlIElsbHVzdHJhdG9yIDIxLjAuMSwgU1ZHIEV4cG9ydCBQbHVnLUluIC4gU1ZHIFZlcnNpb246IDYuMDAgQnVpbGQgMCkgIC0tPgo8c3ZnIHZlcnNpb249IjEuMSIgaWQ9IkxheWVyXzEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4IgoJIHZpZXdCb3g9IjAgMCAxMCAyMCIgc3R5bGU9ImVuYWJsZS1iYWNrZ3JvdW5kOm5ldyAwIDAgMTAgMjA7IiB4bWw6c3BhY2U9InByZXNlcnZlIj4KPHN0eWxlIHR5cGU9InRleHQvY3NzIj4KCS5zdDB7ZmlsbDojRjdGN0Y3O30KPC9zdHlsZT4KPHBhdGggY2xhc3M9InN0MCIgZD0iTTIuNDk3MDIxLDkuOTg4ODA3YzAsNC4xNDIxNTEsMy4zNTc4NDksNy41MDAwMDEsNy41LDcuNTAwMDAxdi0xNQoJQzUuODU0ODcsMi40ODg4MDcsMi40OTcwMjEsNS44NDY2NTYsMi40OTcwMjEsOS45ODg4MDd6Ii8+Cjwvc3ZnPgo=) space
-      }
-
-      .hse-recipe-list.offer-loaded .hse-recipe-list__wrapper img {
-        filter: grayscale(1);
-        opacity: .4
-      }
-
-      .hse-recipe-list.offer-loaded .hse-recipe-list__offer-content span {
-        color: #D5D7DA
-      }
-
       .hse-recipe-list.offer-loaded .coupon-load-wrapper a {
         background: #DDE9BF;
         color: #8DB72C;
@@ -188,7 +170,7 @@ import { ICACRO, $ELM } from '../util/main';
 
       .cro .personal-offer__message {
         padding: 15px;
-        width: 50%;
+        width: 60%;
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -221,11 +203,11 @@ import { ICACRO, $ELM } from '../util/main';
 
       .cro .personal-offer__recipe-and-coupon {
         display: flex;
-        width: 50%;
+        width: 40%;
       }
 
-      .cro .personal-offer__coupon { width: 35%; }
-      .cro .personal-offer__recipe { width: 65%; }
+      .cro .personal-offer__coupon { width: 50%; }
+      .cro .personal-offer__recipe { width: 50%; }
 
       .cro .personal-offer__recipe a { color: #3F3F40; display: flex; flex-direction: column; }
       .cro .personal-offer__recipe a h4 { color: #808283; }
