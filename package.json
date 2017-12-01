@@ -28,7 +28,9 @@
   "scripts": {
     "dev": "webpack --env.project",
     "create": "node index.js",
-    "https": "webpack-dev-server --https  --env.project"
+    "https": "webpack-dev-server --https  --env.project",
+    "patch": "npm version patch",
+    "postversion": "git push && git push --tags"
   },
   "repository": {
     "type": "git",
