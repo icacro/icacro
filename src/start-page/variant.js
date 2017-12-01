@@ -12,85 +12,12 @@
 
 import { ICACRO, $ELM } from '../util/main';
 import Ratings from '../util/modules/ratings';
-import style from './style';
+import banners from './banners';
+
+require('./style.css');
 
 (function ($) {
   'use strict';
-
-  const banners = [
-    {
-      recipeId: 721648,
-      title: 'Semmelmuffins',
-      stars: 4,
-      cookTime: '60 MIN | MEDEL',
-      image: 'https://www.ica.se/imagevaultfiles/id_155248/cf_259/semmelmuffins-721648-stor.jpg',
-      url: 'https://www.ica.se/recept/semmelmuffins-721648/',
-      coupons: [
-        {
-          title: 'Margarin',
-          image: 'https://www.ica.se/Handlers/Image.ashx?w=150&h=150&m=p&bgr=fff&u=http://extbild.ica.se//PictureWeb/80/1026/14_1000555305.jpg',
-          discount: '5 kr rabatt',
-          subtitle: 'Milda 1 kg',
-          url: '',
-        },
-        {
-          title: 'Mandelmassa',
-          image: 'https://www.ica.se/Handlers/Image.ashx?w=150&h=150&m=p&bgr=fff&u=http://extbild.ica.se//PictureWeb/80/1044/14_1000555323.jpg',
-          discount: '25% rabatt',
-          subtitle: 'ICA 200 g',
-          url: '',
-        },
-      ],
-    },
-    {
-      recipeId: 721668,
-      title: 'Viltskavsgryta med messmör och lingon',
-      stars: 4,
-      cookTime: '45 MIN | MEDEL',
-      image: 'https://www.ica.se/imagevaultfiles/id_155280/cf_259/viltskavsgryta-med-messmor-och-lingon-721658-liten.jpg',
-      url: 'https://www.ica.se/recept/viltskavsgryta-med-messmor-och-lingon-721668/',
-      coupons: [
-        {
-          title: 'Margarin',
-          image: 'https://www.ica.se/Handlers/Image.ashx?w=150&h=150&m=p&bgr=fff&u=http://extbild.ica.se//PictureWeb/80/1026/14_1000555305.jpg',
-          discount: '5 kr rabatt',
-          subtitle: 'Milda 1 kg',
-          url: '',
-        },
-        {
-          title: 'Buljongkuber',
-          image: 'https://www.ica.se/Handlers/Image.ashx?w=150&h=150&m=p&bgr=fff&u=http://extbild.ica.se//PictureWeb/80/1028/14_1000555307.jpg',
-          discount: '25% rabatt',
-          subtitle: 'Knorr 6-pack',
-          url: '',
-        },
-      ],
-    },
-    {
-      recipeId: 721644,
-      title: 'Torsk med potatis och äggsås i kastrull',
-      stars: 4,
-      cookTime: '60 MIN | MEDEL',
-      image: 'https://www.ica.se/imagevaultfiles/id_155207/cf_259/torsk-med-potatis-och-aggsas-i-kastrull-721634-lit.jpg',
-      url: 'https://www.ica.se/recept/torsk-med-potatis-och-aggsas-i-kastrull-721644/',
-      coupons: [
-        {
-          title: 'iMat',
-          image: 'https://www.ica.se/Handlers/Image.ashx?w=150&h=150&m=p&bgr=fff&u=http://extbild.ica.se//PictureWeb/80/1029/14_1000555308.jpg',
-          discount: '15% rabatt',
-          subtitle: 'Oatly 250 g',
-          url: '',
-        },
-        {
-          title: 'Torskfilé',
-          image: 'https://www.ica.se/Handlers/Image.ashx?w=150&h=150&m=p&bgr=fff&u=http://extbild.ica.se//PictureWeb/80/1038/14_1000555317.jpg',
-          discount: '5 kr i rabatt',
-          subtitle: 'ICA 600 g',
-          url: '',
-        },
-      ],
-    },
-  ];
 
   // if (hj) hj('trigger','variant5');// eslint-disable-line
   const test = {
@@ -109,15 +36,12 @@ import style from './style';
     addCoupon(coupon) {
       const self = this;
       const couponItem = self.create('coupons-container__item');
-      // const img = self.create('coupons-image', couponItem);
-      // self.addStyle(img, {
-      //   'background-image': `url(${coupon.image})`,
-      // });//
       self.create('', couponItem, coupon.image, 'img');
-      self.create('', couponItem, coupon.title, 'h3');
-      self.create('', couponItem, coupon.discount, 'h1');
-      self.create('', couponItem, coupon.subtitle, 'h4');
-      self.create('', couponItem, 'Mer info', 'a');
+      const wr = self.create('coupons-container__item-wrapper', couponItem);
+      self.create('', wr, coupon.title, 'h3');
+      self.create('', wr, coupon.discount, 'h1');
+      self.create('', wr, coupon.subtitle, 'h4');
+      self.create('', wr, 'Mer info', 'a');
       self.create('button coupon-button', couponItem, 'Ladda kupong', 'button');
       return couponItem;
     },
@@ -131,8 +55,6 @@ import style from './style';
       const couponsWrapper = self.create('coupons-wrapper', couponsContainer);
       const couponsImageContainer = self.create('banner-image', bannerWrapper);
       self.create('image', couponsImageContainer, banner.image, 'img');
-
-      self.create('offer-text', ratingContainer, 'Erbjudande på:', 'h3');
       self.create('headline', ratingContainer, banner.title, 'h1');
       self.create('rating', ratingContainer).innerHTML = Ratings(banner.stars);
       self.create('difficulty', ratingContainer, banner.cookTime, 'h4');
@@ -157,7 +79,7 @@ import style from './style';
       const icaImageContainer = self.create('ica-card-container');
       self.create('', icaImageContainer, 'ICA-Kortet ger mer rabatt!', 'h1');
       self.create('', icaImageContainer, 'Bli ICA-bonusmedlem.', 'h3');
-      self.create('', icaImageContainer, 'https://www.ica.se/ImageVaultFiles/id_61323/cf_259/ansok-ica-kort.png', 'img');
+      self.create('', icaImageContainer, 'https://www.ica.se/ImageVaultFiles/id_78649/cf_3/ICA_Kort_och_Bank.png', 'img');
       const usps = self.create('usp-list', icaImageContainer, null, 'ul');
       usps.innerHTML = `
       <li><svg viewBox="0 0 32 32" width="15px" height="15px"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/Assets/icons/sprite.svg#check"></use></svg> ICA-kort med bonus</li>
@@ -167,6 +89,16 @@ import style from './style';
       self.create('button', icaImageContainer, 'Skapa konto och bli medlem', 'a')
         .href = '/ansokan/?step=6369766963666f726d';
       document.querySelector('.main').appendChild(icaImageContainer);
+    },
+    dinnerTonight() {
+      const container = $ELM.get('.search-recipe-container');
+      const recipeTrendingList = $ELM.get('.recipe-trending-list');
+      const img = $ELM.create('img').image('/imagevaultfiles/id_124300/cf_259/nyttiga_recept.jpg');
+      const seeAll = $ELM.copy('.search-recipe-container__all-recipes');
+      this.removeElements(['.search-recipe-container__all-recipes']);
+      recipeTrendingList.append(seeAll)
+      container.appendFirst(img);
+      container.get('h1').text('Vad blir det för middag ikväll?');
     },
     manipulateDom() {
       const recipeId = this.getActionCookie();
@@ -190,7 +122,7 @@ import style from './style';
       this.addBanners();
       this.createOffers();
       this.addIcaCard();
-
+      this.dinnerTonight();
       const returnUrl = encodeURIComponent(window.location.href);
       const iframeContainer = $(`<div class="cro-iframe-container"><span class="loader"></span><iframe src="//www.ica.se/logga-in/?returnurl=${returnUrl}" frameborder="0"></iframe></div>`);
       $('body').append(iframeContainer);
@@ -200,7 +132,7 @@ import style from './style';
       const savedRecipes = self.getSavedRecipes();
       if (savedRecipes.includes(banner.recipeId)) return;
       const container = self.create('button-wrapper', parentNode);
-      const cta = self.create('button banner-button', container, 'Lägg till i inköpslistan och spara recept', 'a');
+      const cta = self.create('button banner-button', container, 'Lägg recept i inköpslistan', 'a');
       cta.href = `/logga-in/?returnUrl=${encodeURIComponent(window.location)}`;
       cta.dataset['recipeId'] = banner.recipeId;
       cta.dataset['tracking'] = `{ "name": "${banner.title}", "URL": "${banner.url}" }`;
@@ -212,13 +144,15 @@ import style from './style';
       };
     },
     createOffers() {
-      const container = document.querySelector('.main');
-      const buttonWrapper = this.create('button-wrapper');
-      const offerButton = this.create('button offers-button', buttonWrapper, 'Erbjudande sidan', 'a');
-      const img = this.create('image', null, 'https://www.ica.se/imagevaultfiles/id_166249/cf_9610/st_edited/arr5tmahtlmr5km6k4on.png', 'img');
-      offerButton.href = '/erbjudanden/butikserbjudanden/alla-digitala-kuponger/';
-      container.insertBefore(offerButton, container.childNodes[0]);
-      container.insertBefore(img, container.childNodes[0]);
+      const main = $ELM.get('.main');
+      const container = $ELM.create('div coupon-banner');
+      // const buttonWrapper = $ELM.create('button-wrapper');
+      const h1 = $ELM.create('h1').text('Spara pengar med kuponger');
+      const offerButton = $ELM.create('a .button offers-button').text('Gå till ICAs kuponger').href('/erbjudanden/butikserbjudanden/alla-digitala-kuponger/');
+      const img = $ELM.create('img').image('//atgcdn-production.prod.vuitonline.com/online/29/350x350/7310130006029.jpg');
+//splash-promotion__price-number
+      container.appendAll(h1, img, offerButton);
+      main.append(container);
     },
     addRecipeToShoppingList(recipeId) {
       // tracking sker via klassnamn
@@ -495,7 +429,6 @@ import style from './style';
   $(document).ready(() => {
     if (/^https:\/\/www.ica.se\/$/.test(window.location)) {
       Object.assign(test, ICACRO());
-      test.style(style);
       test.manipulateDom();
       test.addEventListeners();
       ICA.icaCallbacks.initUnslider();
