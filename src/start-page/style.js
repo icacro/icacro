@@ -1,3 +1,4 @@
+const css = `
 .cro header .image-slider {
   position: absolute !important;
 }
@@ -19,7 +20,7 @@
 }
 .coupon-banner {
   text-align: center;
-  margin-bottom: 20px;
+  margin-bottom: 30px;
 }
 .coupon-banner img {
   margin: 10px 0;
@@ -77,6 +78,7 @@
   margin: 0 4px;
   padding: 10px;
   border: 8px solid rgba(217,20,99,0.1);
+  border-bottom-width: 17px;
   border-radius: 6px;
   display: flex;
   flex-direction: column;
@@ -84,15 +86,15 @@
 }
 
 .cro .coupons-container .coupons-container__item:after {
-  background-image: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz48c3ZnIHZlcnNpb249IjEuMSIgaWQ9IkxheWVyXzEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4IiB2aWV3Qm94PSIwIDAgMjAgMTAiIHN0eWxlPSJlbmFibGUtYmFja2dyb3VuZDpuZXcgMCAwIDIwIDEwOyIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSI+PHN0eWxlIHR5cGU9InRleHQvY3NzIj4uc3Qwe2ZpbGw6I0Y3RjdGNzt9PC9zdHlsZT48cGF0aCBjbGFzcz0ic3QwIiBkPSJNMTAsMi41Yy00LjEsMC03LjUsMy40LTcuNSw3LjVoMTVDMTcuNSw1LjksMTQuMiwyLjUsMTAsMi41eiIvPjwvc3ZnPg==);
+  background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz48c3ZnIHZlcnNpb249IjEuMSIgaWQ9IkxheWVyXzEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4IiB2aWV3Qm94PSIwIDAgMjAgMTAiIHN0eWxlPSJlbmFibGUtYmFja2dyb3VuZDpuZXcgMCAwIDIwIDEwOyIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSI+PHN0eWxlIHR5cGU9InRleHQvY3NzIj4uc3Qwe2ZpbGw6I2ZmZjt9PC9zdHlsZT48cGF0aCBjbGFzcz0ic3QwIiBkPSJNMTAsMi41Yy00LjEsMC03LjUsMy40LTcuNSw3LjVoMTVDMTcuNSw1LjksMTQuMiwyLjUsMTAsMi41eiIvPjwvc3ZnPg==) space;
   background-size: 26px 13px;
   content: '';
   display: block;
-  width: 100%;
-  position: absolute;
-  left: 0;
-  bottom: -12px;
+  width: 140%;
   height: 13px;
+  position: absolute;
+  bottom: -17px;
+  left: -30px;
 }
 
 .cro .coupons-container .coupons-container__item:after svg {
@@ -107,38 +109,46 @@
 }
 
 .cro .coupons-container .coupons-container__item h3 {
-  font-size: 1.5rem;
-  line-height: 20px;
-  margin: 5px 0 0;
+  font-size: 16px;
+  line-height: 1.3em;
 }
 
 .cro .coupons-container .coupons-container__item h1 {
-  color:#d31c06;
-  font-size: 1.8rem;
+  font-size: 22px;
+  font-weight: 700;
+  color: #EB1F07;
   line-height: 15px;
-  margin: 0;
 }
 
 .cro .coupons-container .coupons-container__item h4 {
-  font-size: 1.2rem;
-  line-height: 15px;
-  margin: 0;
+  color: #808283;
+  font-size: 1.3rem;
+  line-height: 1;
+  font-family: icatext;
+  font-weight: normal;
 }
 
 .cro .coupons-container .coupons-container__item a {
-  font-size: 1.2rem;
+  font-size: 14px;
   line-height: 15px;
   margin-bottom: 5px;
 }
 
 .cro .coupons-container .coupons-container__item .coupon-button {
-  font-size: 1rem;
+  font-size: 12px;
   line-height: 2.2rem;
-  padding: 0 1rem;
-  height: 3rem;
   min-width: auto;
   align-self: center;
   width: 100%;
+  background: #F8EBF3;
+  color: #A02971;
+}
+
+.cro .coupons-container .coupons-container__item.offer-loaded .coupon-button {
+  background: #DDE9BF;
+  color: #8DB72C;
+  pointer-events: none;
+  transition: width .2s ease, color .2s 250ms ease, background .2s ease;
 }
 
 .cro .coupons-container .coupons-container__item .coupons-image {
@@ -257,21 +267,14 @@
   .cro .ica-card-container h1 {
     line-height: 3rem;
     font-size: 3rem;
-    margin-bottom: 0;
-  }
-
-  .cro .ica-card-container h3 {
-    line-height: 2rem;
-    font-size: 24px;
-    margin-bottom: -10px;
-    font-weight: 100;
-    font-family: icatext;
-    margin-top: 10px;
+    margin-bottom: 20px;
   }
 
   .cro .ica-card-container a {
     align-self: center;
     margin-top: 20px;
+    max-width: none;
+    width: 100%;
   }
 
   .cro .ica-card-container img {
@@ -317,6 +320,8 @@
   height: 100%;
 }
 
+.cro .usp-list { margin-bottom: 10px; }
+
 .cro .usp-list li {
   font: 24px icarubrik;
   font-weight: 600;
@@ -326,3 +331,6 @@
   fill: #8DB72C;
   margin-right: 5px;
 }
+`;
+
+export default css;

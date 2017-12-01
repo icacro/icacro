@@ -13,8 +13,7 @@
 import { ICACRO, $ELM } from '../util/main';
 import Ratings from '../util/modules/ratings';
 import banners from './banners';
-
-require('./style.css');
+import css from './style';
 
 (function ($) {
   'use strict';
@@ -77,15 +76,14 @@ require('./style.css');
     addIcaCard() {
       const self = this;
       const icaImageContainer = self.create('ica-card-container');
-      self.create('', icaImageContainer, 'ICA-Kortet ger mer rabatt!', 'h1');
-      self.create('', icaImageContainer, 'Bli ICA-bonusmedlem.', 'h3');
-      self.create('', icaImageContainer, 'https://www.ica.se/ImageVaultFiles/id_78649/cf_3/ICA_Kort_och_Bank.png', 'img');
+      self.create('', icaImageContainer, 'Få rabatt med ICA-Kort', 'h1');
       const usps = self.create('usp-list', icaImageContainer, null, 'ul');
       usps.innerHTML = `
       <li><svg viewBox="0 0 32 32" width="15px" height="15px"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/Assets/icons/sprite.svg#check"></use></svg> ICA-kort med bonus</li>
       <li><svg viewBox="0 0 32 32" width="15px" height="15px"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/Assets/icons/sprite.svg#check"></use></svg> Personliga erbjudanden</li>
       <li><svg viewBox="0 0 32 32" width="15px" height="15px"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/Assets/icons/sprite.svg#check"></use></svg> Kortpriser varje vecka</li>
       `;
+      self.create('', icaImageContainer, 'https://www.ica.se/ImageVaultFiles/id_78649/cf_3/ICA_Kort_och_Bank.png', 'img');
       self.create('button', icaImageContainer, 'Skapa konto och bli medlem', 'a')
         .href = '/ansokan/?step=6369766963666f726d';
       document.querySelector('.main').appendChild(icaImageContainer);
@@ -150,7 +148,7 @@ require('./style.css');
       const h1 = $ELM.create('h1').text('Spara pengar med kuponger');
       const offerButton = $ELM.create('a .button offers-button').text('Gå till ICAs kuponger').href('/erbjudanden/butikserbjudanden/alla-digitala-kuponger/');
       const img = $ELM.create('img').image('//atgcdn-production.prod.vuitonline.com/online/29/350x350/7310130006029.jpg');
-//splash-promotion__price-number
+      // splash-promotion__price-number
       container.appendAll(h1, img, offerButton);
       main.append(container);
     },
@@ -429,6 +427,7 @@ require('./style.css');
   $(document).ready(() => {
     if (/^https:\/\/www.ica.se\/$/.test(window.location)) {
       Object.assign(test, ICACRO());
+      test.style(css);
       test.manipulateDom();
       test.addEventListeners();
       ICA.icaCallbacks.initUnslider();

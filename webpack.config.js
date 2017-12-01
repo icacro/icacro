@@ -17,7 +17,7 @@ module.exports = function(env) {
       devtool: 'inline-source-map',
       plugins: [
         // new UglifyJSPlugin({}),
-        new LiveReloadPlugin(),
+        // new LiveReloadPlugin(),
       ],
       module: {
         rules: [
@@ -30,6 +30,7 @@ module.exports = function(env) {
           },
           {
             test: /\.css$/,
+            exclude: /node_modules/,
             use: ['style-loader', 'css-loader']
           },
         ],
