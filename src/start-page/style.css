@@ -8,8 +8,11 @@
   border-bottom: 1px solid #E7E7E7;
   padding-bottom: 20px;
 }
-.cro .unslider-controls {
-  display: none;
+.cro .unslider-arrow.prev span {
+  background-position: -338px -1885px;
+}
+.cro .unslider-arrow.next span {
+  background-position: -438px -1885px;
 }
 .cro .pl .container-backdrop {
   padding: 0px 10px 30px;
@@ -81,6 +84,7 @@
   border-radius: 6px;
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   position: relative;
 }
 

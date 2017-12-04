@@ -33,16 +33,38 @@ import './style.css';
       return div;
     },
     addCoupon(coupon) {
-      const self = this;
-      const couponItem = self.create('coupons-container__item');
-      self.create('', couponItem, coupon.image, 'img');
-      const wr = self.create('coupons-container__item-wrapper', couponItem);
-      self.create('', wr, coupon.title, 'h3');
-      self.create('', wr, coupon.discount, 'h1');
-      self.create('', wr, coupon.subtitle, 'h4');
-      self.create('', wr, 'Mer info', 'a');
-      self.create('button coupon-button', couponItem, 'Ladda kupong', 'button');
-      return couponItem;
+      const [
+        couponItem,
+        textWrapper,
+        image,
+        title,
+        discount,
+        subtitle,
+        link,
+        button,
+      ] = $ELM.create(
+        'coupons-container__item',
+        'coupons-container__item-wrapper',
+        'img',
+        'h3',
+        'h1',
+        'h4',
+        'a',
+        'button .button coupon-button',
+      );
+
+      image.image(coupon.image);
+      title.text(coupon.title);
+      discount.text(coupon.discount);
+      subtitle.text(coupon.subtitle);
+      link.text('Mer info');
+      link.href(coupon.url);
+      button.text('Ladda kupong');
+
+      textWrapper.appendAll(title, discount, subtitle, link);
+      couponItem.appendAll(image, textWrapper, button);
+
+      return couponItem.element;
     },
     addBanner(banner) {
       const self = this;
