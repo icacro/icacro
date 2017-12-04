@@ -8,6 +8,8 @@ export default [
     url: 'https://www.ica.se/recept/lasagne-med-halloumi-spenat-och-pumpakarnor-718382/',
     coupons: [
       {
+        id: 458278,
+        recipeId: 718382,
         title: 'Bönpasta/ lasagneplattor',
         image: 'https://www.ica.se/Handlers/Image.ashx?w=150&h=150&m=p&bgr=fff&u=http://extbild.ica.se//PictureWeb/80/1030/14_1000555309.jpg',
         discount: '20% rabatt',
@@ -16,10 +18,10 @@ export default [
         PageName: 'LSR 1030 Bönpasta/lasagneplattor',
         OfferId: 1000555309,
         CampaignId: 1030,
-        StoreId: 0,
-        StoreGroupId: 0,
       },
       {
+        id: 458276,
+        recipeId: 718382,
         title: 'Buljongkuber',
         image: 'https://www.ica.se/Handlers/Image.ashx?w=150&h=150&m=p&bgr=fff&u=http://extbild.ica.se//PictureWeb/80/1028/14_1000555307.jpg',
         discount: '25% rabatt',
@@ -28,8 +30,6 @@ export default [
         PageName: 'LSR 1028 Buljong',
         OfferId: 1000555307,
         CampaignId: 1028,
-        StoreId: 0,
-        StoreGroupId: 0,
       },
     ],
   },
@@ -42,6 +42,8 @@ export default [
     url: 'https://www.ica.se/recept/fryst-cheesecake-med-saffran-722867/',
     coupons: [
       {
+        id: 458282,
+        recipeId: 722867,
         title: 'Färskost',
         image: 'https://www.ica.se/Handlers/Image.ashx?w=150&h=150&m=p&bgr=fff&u=http://extbild.ica.se//PictureWeb/80/1033/14_1000555312.jpg',
         discount: '3 kr rabatt',
@@ -50,10 +52,10 @@ export default [
         PageName: 'LSR 1033 Färskost Philadelpia',
         OfferId: 1000555312,
         CampaignId: 1033,
-        StoreId: 0,
-        StoreGroupId: 0,
       },
       {
+        id: 458274,
+        recipeId: 722867,
         title: 'Margarin',
         image: 'https://www.ica.se/Handlers/Image.ashx?w=150&h=150&m=p&bgr=fff&u=http://extbild.ica.se//PictureWeb/80/1026/14_1000555305.jpg',
         discount: '5 kr rabatt',
@@ -62,8 +64,6 @@ export default [
         PageName: 'LSR 1026 Margarin',
         OfferId: 1000555305,
         CampaignId: 1026,
-        StoreId: 0,
-        StoreGroupId: 0,
       },
     ],
   },
@@ -76,6 +76,8 @@ export default [
     url: 'https://www.ica.se/recept/glutenfri-saffranskaka-721310/',
     coupons: [
       {
+        id: 458298,
+        recipeId: 721310,
         title: 'Mandelmassa',
         image: 'https://www.ica.se/Handlers/Image.ashx?w=150&h=150&m=p&bgr=fff&u=http://extbild.ica.se//PictureWeb/80/1044/14_1000555323.jpg',
         discount: '25 % rabatt',
@@ -84,10 +86,10 @@ export default [
         PageName: 'LSR 1044 Mandelmassa',
         OfferId: 1000555323,
         CampaignId: 1044,
-        StoreId: 0,
-        StoreGroupId: 0,
       },
       {
+        id: 458274,
+        recipeId: 721310,
         title: 'Margarin',
         image: 'https://www.ica.se/Handlers/Image.ashx?w=150&h=150&m=p&bgr=fff&u=http://extbild.ica.se//PictureWeb/80/1026/14_1000555305.jpg',
         discount: '5 kr rabatt',
@@ -96,8 +98,6 @@ export default [
         PageName: 'LSR 1026 Margarin',
         OfferId: 1000555305,
         CampaignId: 1026,
-        StoreId: 0,
-        StoreGroupId: 0,
       },
     ],
   },
@@ -110,6 +110,8 @@ export default [
     url: 'https://www.ica.se/recept/mozartkulor-722922/',
     coupons: [
       {
+        id: 458298,
+        recipeId: 722922,
         title: 'Mandelmassa',
         image: 'https://www.ica.se/Handlers/Image.ashx?w=150&h=150&m=p&bgr=fff&u=http://extbild.ica.se//PictureWeb/80/1044/14_1000555323.jpg',
         discount: '25 % rabatt',
@@ -118,10 +120,10 @@ export default [
         PageName: 'LSR 1044 Mandelmassa',
         OfferId: 1000555323,
         CampaignId: 1044,
-        StoreId: 0,
-        StoreGroupId: 0,
       },
       {
+        id: 458297,
+        recipeId: 722922,
         title: 'Baknougat',
         image: 'https://www.ica.se/Handlers/Image.ashx?w=150&h=150&m=p&bgr=fff&u=http://extbild.ica.se//PictureWeb/80/1043/14_1000555322.jpg',
         discount: '5 kr rabatt',
@@ -130,8 +132,6 @@ export default [
         PageName: 'LSR 1043 Baknougat',
         OfferId: 1000555322,
         CampaignId: 1043,
-        StoreId: 0,
-        StoreGroupId: 0,
       },
     ],
   },

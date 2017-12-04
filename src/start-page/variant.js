@@ -22,6 +22,11 @@ import './style.css';
     SAVE_RECIPE: 'SPARA',
     LOAD_COUPON: 'LADDA',
   };
+  const ACTION_COOKIES = {
+    SAVE_RECIPE: 'cro_startpage_actionCookie_saveRecipe',
+    LOAD_COUPON: 'cro_startpage_actionCookie_loadCoupon',
+  };
+  const loadedCoupons = [];
 
   // if (hj) hj('trigger','variant5');// eslint-disable-line
   const test = {
@@ -67,7 +72,9 @@ import './style.css';
       button.text('Ladda kupong');
       button.click(() => {
         if (this.isLoggedIn()) {
-          this.loadCouponOnCard(coupon).then(this.changeOfferStatus);
+          this.loadCouponOnCard(coupon).then((response) => {
+            this.changeOfferStatus(response, coupon);
+          });
         } else {
           icadatalayer.add('HSE', {
             HSE: {
@@ -76,7 +83,17 @@ import './style.css';
               hseurl: coupon.url,
             },
           });
-          // this.setActionCookie(couponId); // TODO: Fiaxa egen actionkaka till ladda kupong
+
+          const cookieData = {
+            PageName: coupon.PageName,
+            recipeId: coupon.recipeId,
+            title: coupon.PageName,
+            url: coupon.PageName,
+            OfferId: coupon.Offer,
+            CampaignId: coupon.PageName,
+          };
+
+          this.setActionCookie(ACTION_COOKIES.LOAD_COUPON, cookieData);
           this.createModal(LOGIN_ACTION.LOAD_COUPON);
         }
       });
@@ -91,6 +108,14 @@ import './style.css';
 
       textWrapper.appendAll(title, discount, subtitle, link);
       couponItem.appendAll(image, textWrapper, button);
+      couponItem.attr('id', `coupon-${coupon.OfferId}-${coupon.recipeId}`);
+
+      this.loadCouponData(coupon).then((data) => {
+        if (data.Offer.LoadedOnCard) {
+          couponItem.css('offer-loaded');
+          button.text('Kupong laddad');
+        }
+      });
 
       return couponItem.element;
     },
@@ -149,12 +174,6 @@ import './style.css';
       container.get('h1').text('Vad blir det för middag ikväll?');
     },
     manipulateDom() {
-      const recipeId = this.getActionCookie();
-      if (recipeId && this.isLoggedIn()) {
-        this.addRecipeToShoppingList(recipeId);
-        this.saveRecipe(recipeId);
-        this.addRecipeToSavedList(recipeId);
-      }
       this.removeElements([
         '.image-slider li',
         '.image-slider .lazy-spinner',
@@ -187,7 +206,7 @@ import './style.css';
       cta.classList.add('js-add-to-new-shoppinglist');
       cta.onclick = (e) => {
         e.preventDefault();
-        self.setActionCookie(banner.recipeId);
+        self.setActionCookie(ACTION_COOKIES.SAVE_RECIPE, banner.recipeId);
         self.createModal(LOGIN_ACTION.SAVE_RECIPE);
       };
     },
@@ -237,20 +256,40 @@ import './style.css';
         method: 'Add',
       });
     },
-    setActionCookie(recipeId) {
+    setActionCookie(cookieName, cookieData) {
+      // TODO: Flytta till main.js
       const d = new Date();
       d.setDate(new Date().getDate() + 1); // expires tomorrow
 
-      ICA.legacy.setCookie('saveRecipeAndAddToShoppingListFromStartpage', recipeId, d);
+      ICA.legacy.setCookie(cookieName, JSON.stringify(cookieData), d);
     },
-    getActionCookie() {
-      const actionCookie = ICA.legacy.getCookie('saveRecipeAndAddToShoppingListFromStartpage');
+    getActionCookie(cookieName) {
+      // TODO: Flytta till main.js
+      const actionCookie = ICA.legacy.getCookie(cookieName);
 
-      if (actionCookie) {
-        ICA.legacy.killCookie('saveRecipeAndAddToShoppingListFromStartpage');
+      if (!actionCookie) {
+        return null;
       }
 
-      return +actionCookie; // coerce to number
+      ICA.legacy.killCookie(cookieName);
+      return JSON.parse(actionCookie);
+    },
+    checkActionCookies() {
+      if (!this.isLoggedIn) return;
+
+      const recipeId = this.getActionCookie(ACTION_COOKIES.SAVE_RECIPE);
+      if (recipeId) {
+        this.addRecipeToShoppingList(recipeId);
+        this.saveRecipe(recipeId);
+        this.addRecipeToSavedList(recipeId);
+      }
+
+      const coupon = this.getActionCookie(ACTION_COOKIES.LOAD_COUPON);
+      if (coupon) {
+        this.loadCouponOnCard(coupon).then((response) => {
+          this.changeOfferStatus(response, coupon);
+        });
+      }
     },
     addRecipeToSavedList(recipeId) {
       const self = this;
@@ -266,6 +305,12 @@ import './style.css';
     getSavedRecipes() {
       const cookie = ICA.legacy.getCookie('cro_start_savedRecipes');
       return cookie ? JSON.parse(cookie) : [];
+    },
+    changeOfferStatus(response, coupon) {
+      if (response.ok) {
+        $ELM.get(`#coupon-${coupon.OfferId}-${coupon.recipeId}`).css('offer-loaded');
+        $ELM.get(`#coupon-${coupon.OfferId}-${coupon.recipeId} .coupon-button`).text('Kupong laddad');
+      }
     },
     // hotjarTriggered: false,
     loaderIsActive: false,
@@ -477,39 +522,47 @@ import './style.css';
         // }
       }, 50);
     },
+    loadCouponData(coupon) {
+      return loadedCoupons[coupon.OfferId]
+        ? Promise.resolve(loadedCoupons[coupon.OfferId])
+        : window.fetch(`/api/jsonhse/${coupon.id}`, { credentials: 'same-origin' })
+          .then(response => response.json())
+          .then((json) => {
+            loadedCoupons[coupon.OfferId] = json;
+            return json;
+          });
+    },
     loadCouponOnCard(coupon) {
-      return this.loadCouponData().then(() => {
-        const opts = {
-          OfferId: coupon.OfferId,
-          CampaignId: coupon.CampaignId,
-          StoreId: coupon.StoreId,
-          StoreGroupId: coupon.StoreGroupId,
-        };
+      const opts = {
+        OfferId: coupon.OfferId,
+        CampaignId: coupon.CampaignId,
+        StoreId: 0,
+        StoreGroupId: 0,
+      };
 
-        return window.fetch(
-          '/api/jsonhse/Claimoffer',
-          {
-            credentials: 'same-origin',
-            method: 'POST',
-            headers: {
-              Accept: 'application/json',
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(opts),
+      return window.fetch(
+        '/api/jsonhse/Claimoffer',
+        {
+          credentials: 'same-origin',
+          method: 'POST',
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
           },
-        ).then((response) => {
-          if (response.ok) {
-            icadatalayer.add('HSE', {
-              HSE: {
-                action: 'coupon-loaded',
-                name: coupon.PageName,
-                offer: coupon.title,
-                hseurl: coupon.url,
-              },
-            });
-          }
-          return response;
-        });
+          body: JSON.stringify(opts),
+        },
+      ).then((response) => {
+        if (response.ok) {
+          icadatalayer.add('HSE', {
+            HSE: {
+              action: 'coupon-loaded',
+              name: coupon.PageName,
+              offer: coupon.title,
+              hseurl: coupon.url,
+            },
+          });
+        }
+        return response;
       });
     },
   };
@@ -517,7 +570,7 @@ import './style.css';
   $(document).ready(() => {
     if (/^https:\/\/www.ica.se\/$/.test(window.location)) {
       Object.assign(test, ICACRO());
-      // test.style(css);
+      test.checkActionCookies();
       test.manipulateDom();
       test.addEventListeners();
       ICA.icaCallbacks.initUnslider();
