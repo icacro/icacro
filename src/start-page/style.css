@@ -205,6 +205,13 @@ button:focus, button:active {outline:0;}
   width: 100%;
   display: block;
 }
+.cro .banner-button.saved {
+  background: #DDE9BF;
+  color: #8DB72C;
+  pointer-events: none;
+  transition: width .2s ease, color .2s 250ms ease, background .2s ease;
+  font-weight: 400;
+}
 
 .cro .offers-button {
   width: 100%;

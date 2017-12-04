@@ -202,19 +202,32 @@ import './style.css';
       $('body').append(iframeContainer);
     },
     createSaveRecipeCTA(banner) {
-      const savedRecipes = this.getSavedRecipes();
       const container = $ELM.create('button-wrapper');
-      if (savedRecipes.includes(banner.recipeId)) return container;
       const cta = $ELM.create('a .button banner-button');
       cta.text('Lägg recept i inköpslistan');
       cta.href(`/logga-in/?returnUrl=${encodeURIComponent(window.location)}`);
       cta.data('recipeId', banner.recipeId);
       cta.data('tracking', `{ "name": "${banner.title}", "URL": "${banner.url}" }`);
-      cta.css('js-add-to-new-shoppinglist');
+      cta.css(`js-add-to-new-shoppinglist banner-button-${banner.recipeId}`);
+
+      const savedRecipes = this.getSavedRecipes();
+      if (savedRecipes.includes(banner.recipeId)) {
+        cta.css('saved');
+        cta.text('Recept tillagt i inköpslistan');
+      }
+
       cta.click((e) => {
         e.preventDefault();
-        this.setActionCookie(ACTION_COOKIES.SAVE_RECIPE, banner.recipeId);
-        this.createModal(LOGIN_ACTION.SAVE_RECIPE);
+        if (this.isLoggedIn()) {
+          this.addRecipeToShoppingList(banner.recipeId);
+          this.saveRecipe(banner.recipeId);
+          this.addRecipeToSavedList(banner.recipeId);
+          cta.css('saved');
+          cta.text('Recept tillagt i inköpslistan');
+        } else {
+          this.setActionCookie(ACTION_COOKIES.SAVE_RECIPE, banner.recipeId);
+          this.createModal(LOGIN_ACTION.SAVE_RECIPE);
+        }
       });
       container.append(cta);
       return container;
@@ -291,6 +304,9 @@ import './style.css';
         this.addRecipeToShoppingList(recipeId);
         this.saveRecipe(recipeId);
         this.addRecipeToSavedList(recipeId);
+        const cta = $ELM.get(`banner-button-${recipeId}`);
+        cta.css('saved');
+        cta.text('Recept tillagt i inköpslistan');
       }
 
       const coupon = this.getActionCookie(ACTION_COOKIES.LOAD_COUPON);
