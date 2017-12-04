@@ -1,6 +1,10 @@
 /*.cro header .image-slider {
   position: absolute !important;
 }*/
+
+.slick-slide, .slick-track:focus {
+  outline: none;
+}
 .start-page-icase #header {
   height: 100%;
 }
