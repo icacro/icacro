@@ -13,7 +13,9 @@
 import { ICACRO, $ELM } from '../util/main';
 import Ratings from '../util/modules/ratings';
 import banners from './banners';
-import css from './style';
+// import css from './style';
+
+require('./style.css');
 
 (function ($) {
   'use strict';
@@ -427,7 +429,7 @@ import css from './style';
   $(document).ready(() => {
     if (/^https:\/\/www.ica.se\/$/.test(window.location)) {
       Object.assign(test, ICACRO());
-      test.style(css);
+      // test.style(css);
       test.manipulateDom();
       test.addEventListeners();
       ICA.icaCallbacks.initUnslider();

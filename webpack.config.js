@@ -17,7 +17,7 @@ module.exports = function(env) {
       devtool: 'inline-source-map',
       plugins: [
         // new UglifyJSPlugin({}),
-        // new LiveReloadPlugin(),
+        new LiveReloadPlugin(),
       ],
       module: {
         rules: [
