@@ -8,7 +8,7 @@
 // ==/UserScript==
 
 import { ICACRO, $ELM } from '../util/main';
-require('./style.css');
+import './style.css';
 
 (function ($) {
   'use strict';

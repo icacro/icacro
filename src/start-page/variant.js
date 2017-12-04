@@ -13,9 +13,7 @@
 import { ICACRO, $ELM } from '../util/main';
 import Ratings from '../util/modules/ratings';
 import banners from './banners';
-// import css from './style';
-
-require('./style.css');
+import './style.css';
 
 (function ($) {
   'use strict';
