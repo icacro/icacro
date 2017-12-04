@@ -18,6 +18,11 @@ import './style.css';
 (function ($) {
   'use strict';
 
+  const LOGIN_ACTION = {
+    SAVE_RECIPE: 'SPARA',
+    LOAD_COUPON: 'LADDA',
+  };
+
   // if (hj) hj('trigger','variant5');// eslint-disable-line
   const test = {
     create(className, parent, text, type) {
@@ -60,6 +65,29 @@ import './style.css';
       link.text('Mer info');
       link.href(coupon.url);
       button.text('Ladda kupong');
+      button.click(() => {
+        if (this.isLoggedIn()) {
+          this.loadCouponOnCard(coupon).then(this.changeOfferStatus);
+        } else {
+          icadatalayer.add('HSE', {
+            HSE: {
+              action: 'login-mousedown',
+              name: coupon.PageName,
+              hseurl: coupon.url,
+            },
+          });
+          // this.setActionCookie(couponId); // TODO: Fiaxa egen actionkaka till ladda kupong
+          this.createModal(LOGIN_ACTION.LOAD_COUPON);
+        }
+      });
+
+      icadatalayer.add('HSE', {
+        HSE: {
+          action: 'display',
+          title: coupon.PageName,
+          hseurl: coupon.url,
+        },
+      });
 
       textWrapper.appendAll(title, discount, subtitle, link);
       couponItem.appendAll(image, textWrapper, button);
@@ -160,7 +188,7 @@ import './style.css';
       cta.onclick = (e) => {
         e.preventDefault();
         self.setActionCookie(banner.recipeId);
-        self.createModal();
+        self.createModal(LOGIN_ACTION.SAVE_RECIPE);
       };
     },
     createOffers() {
@@ -293,7 +321,7 @@ import './style.css';
         }
         </style>`;
     },
-    createModal() {
+    createModal(action = LOGIN_ACTION.SAVE_RECIPE) {
       const self = this;
       const modal = new coreComponents.modal({
         tpl: $('.cro-iframe-container').get(0),
@@ -345,7 +373,10 @@ import './style.css';
             function appendHeader() {
               const e = $('.cro-iframe-container iframe').contents().find('h1');
               if (e.length) {
-                e.append(' för att lägga till i inköpslistan och spara recept');
+                const message = (action === LOGIN_ACTION.SAVE_RECIPE)
+                  ? ' för att lägga till i inköpslistan och spara recept'
+                  : ' för att ladda kupongen';
+                e.append(message);
                 e.css({ 'font-family': 'icahand, arial, sans-serif', 'font-size': '3rem' });
 
                 if (window.screen.width < 768) {
@@ -373,7 +404,9 @@ import './style.css';
             function addIframeTracking() {
               const e = $('.cro-iframe-container iframe').contents();
               if (e.length) {
-                const eventAction = 'Spara recept från startsidan';
+                const eventAction = (action === LOGIN_ACTION.SAVE_RECIPE)
+                  ? 'Spara recept från startsidan'
+                  : 'Ladda kupong från startsida';
 
                 // Fortsätt (Mobilt BankId)
                 e.find('#submit-login-mobile-bank-id').on('click', () => {
@@ -443,6 +476,41 @@ import './style.css';
         //     self.hotjarTriggered = true;
         // }
       }, 50);
+    },
+    loadCouponOnCard(coupon) {
+      return this.loadCouponData().then(() => {
+        const opts = {
+          OfferId: coupon.OfferId,
+          CampaignId: coupon.CampaignId,
+          StoreId: coupon.StoreId,
+          StoreGroupId: coupon.StoreGroupId,
+        };
+
+        return window.fetch(
+          '/api/jsonhse/Claimoffer',
+          {
+            credentials: 'same-origin',
+            method: 'POST',
+            headers: {
+              Accept: 'application/json',
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(opts),
+          },
+        ).then((response) => {
+          if (response.ok) {
+            icadatalayer.add('HSE', {
+              HSE: {
+                action: 'coupon-loaded',
+                name: coupon.PageName,
+                offer: coupon.title,
+                hseurl: coupon.url,
+              },
+            });
+          }
+          return response;
+        });
+      });
     },
   };
 
