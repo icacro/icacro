@@ -9,6 +9,7 @@ const reservedElements = ['div', 'body', 'head', 'img', 'style', 'span', 'ul', '
 const GetElement = selector => document.querySelector(selector);
 
 const $ELM_ELEMENT = (element) => {
+  const rect = arg => element.getBoundingClientRect()[arg];
   return {
     attr(...args) {
       if (element) {
@@ -20,6 +21,9 @@ const $ELM_ELEMENT = (element) => {
         return element.getAttribute(attr);
       }
       throw new Error(`${args} Element does not exist! Function 'attr'`);
+    },
+    height() {
+      return rect('height');
     },
     click(callback) {
       if (element) {
@@ -93,6 +97,14 @@ const $ELM_ELEMENT = (element) => {
         return args.map(arg => $ELM_ELEMENT(element.querySelector(arg)));
       }
       throw new Error(`${args} Element does not exist! Function 'get'`);
+    },
+    children(arg) {
+      if (arg) {
+        const list = Array.from(element.getElementsByTagName(arg));
+        return list.map(child => $ELM_ELEMENT(child));
+      }
+      const list = Array.from(element.childNodes);
+      return list.map(child => $ELM_ELEMENT(child));
     },
     style(stl) {
       if (element) {

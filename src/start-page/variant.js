@@ -43,33 +43,22 @@ import './style.css';
       return div;
     },
     addCoupon(coupon) {
-      const [
-        couponItem,
-        textWrapper,
-        image,
-        title,
-        discount,
-        subtitle,
-        link,
-        button,
-      ] = $ELM.create(
-        'coupons-container__item',
-        'coupons-container__item-wrapper',
-        'img',
-        'h3',
-        'h1',
-        'h4',
-        'a',
-        'button .button coupon-button',
-      );
+      const couponItem = $ELM.create('coupons-container__item');
+      const img = $ELM.create('img');
+      const title = $ELM.create('h3');
+      const discount = $ELM.create('h1');
+      const subtitle = $ELM.create('h4');
+      const moreInfo = $ELM.create('a');
+      const button = $ELM.create('button .button coupon-button');
 
-      image.image(coupon.image);
       title.text(coupon.title);
       discount.text(coupon.discount);
       subtitle.text(coupon.subtitle);
-      link.text('Mer info');
-      link.href(coupon.url);
+      moreInfo.text('Mer info');
       button.text('Ladda kupong');
+      img.image(coupon.image);
+      moreInfo.href(coupon.url);
+
       button.click(() => {
         if (this.isLoggedIn()) {
           this.loadCouponOnCard(coupon).then((response) => {
@@ -105,47 +94,65 @@ import './style.css';
           hseurl: coupon.url,
         },
       });
-
-      textWrapper.appendAll(title, discount, subtitle, link);
-      couponItem.appendAll(image, textWrapper, button);
       couponItem.attr('id', `coupon-${coupon.OfferId}-${coupon.recipeId}`);
-
       this.loadCouponData(coupon).then((data) => {
         if (data.Offer.LoadedOnCard) {
           couponItem.css('offer-loaded');
           button.text('Kupong laddad');
         }
       });
-
-      return couponItem.element;
+      couponItem.appendAll(img, title, discount, subtitle, moreInfo, button);
+      return couponItem;
     },
     addBanner(banner) {
-      const self = this;
-      const bannerContainer = self.create('banner-container', null, null, 'li');
-      const bannerWrapper = self.create('banner-wrapper', bannerContainer);
-      const ratingContainer = self.create('rating-star-container', bannerWrapper);
-      const couponsContainer = self.create('coupons-container', bannerWrapper);
+      const bannerContainer = $ELM.create('li banner-container');
+      const bannerContainerImg = $ELM.create('banner-container__img');
+      const img = $ELM.create('img');
+      img.image(banner.image);
+      bannerContainerImg.append(img);
+      bannerContainerImg.image(banner.image);
+      // bannerContainerImg.style({
+      //   background: `url(${banner.image})`,
+      //   'background-size': 'contain',
+      //   'background-repeat': 'no-repeat',
+      // });
+      const textContainer = $ELM.create('banner-container__text-container');
+      const title = $ELM.create('h1 text-container__title');
+      const ratings = $ELM.create('text-container__ratings');
+      const difficulty = $ELM.create('h4 text-container__difficulty');
+      const couponsWrapper = $ELM.create('coupons-container');
+      const saveButton = this.createSaveRecipeCTA(banner);
 
-      const couponsWrapper = self.create('coupons-wrapper', couponsContainer);
-      const couponsImageContainer = self.create('banner-image', bannerWrapper);
-      self.create('image', couponsImageContainer, banner.image, 'img');
-      self.create('headline', ratingContainer, banner.title, 'h1');
-      self.create('rating', ratingContainer).innerHTML = Ratings(banner.stars);
-      self.create('difficulty', ratingContainer, banner.cookTime, 'h4');
-      self.createSaveRecipeCTA(banner, bannerWrapper);
+      ratings.html(Ratings(banner.stars));
+      title.text(banner.title);
+      difficulty.text(banner.cookTime);
+
       banner.coupons.forEach((coupon) => {
-        couponsWrapper.appendChild(self.addCoupon(coupon));
+        couponsWrapper.append(this.addCoupon(coupon));
       });
+
+      textContainer.appendAll(title, ratings, difficulty);
+      bannerContainer.appendAll(bannerContainerImg, textContainer, saveButton, couponsWrapper);
       return bannerContainer;
     },
     addStyle(element, stl) {
       Object.assign(element.style, stl);
     },
     addBanners() {
-      const self = this;
-      const slider = document.querySelector('.image-slider ul');
-      banners.forEach((banner, index) => {
-        slider.appendChild(self.addBanner(banner, index));
+      const header = $ELM.get('.header');
+      const ul = $ELM.create('ul cro-slider');
+      header.html(' ');
+      banners.forEach((banner) => {
+        ul.append(this.addBanner(banner));
+      });
+      header.append(ul);
+      // console.log(ul.children('li')[0].height());
+      // ul.style({
+      //   width: `${100 * banners.length}%`,
+      //   // height: `${ul.children('li')[0].height().toString()}px`,
+      // });
+      $('.cro-slider').slick({
+        adaptiveHeight: true
       });
     },
     addIcaCard() {
@@ -169,7 +176,7 @@ import './style.css';
       const img = $ELM.create('img').image('/imagevaultfiles/id_124300/cf_259/nyttiga_recept.jpg');
       const seeAll = $ELM.copy('.search-recipe-container__all-recipes');
       this.removeElements(['.search-recipe-container__all-recipes']);
-      recipeTrendingList.append(seeAll)
+      recipeTrendingList.append(seeAll);
       container.appendFirst(img);
       container.get('h1').text('Vad blir det för middag ikväll?');
     },
@@ -194,21 +201,23 @@ import './style.css';
       const iframeContainer = $(`<div class="cro-iframe-container"><span class="loader"></span><iframe src="//www.ica.se/logga-in/?returnurl=${returnUrl}" frameborder="0"></iframe></div>`);
       $('body').append(iframeContainer);
     },
-    createSaveRecipeCTA(banner, parentNode) {
-      const self = this;
-      const savedRecipes = self.getSavedRecipes();
-      if (savedRecipes.includes(banner.recipeId)) return;
-      const container = self.create('button-wrapper', parentNode);
-      const cta = self.create('button banner-button', container, 'Lägg recept i inköpslistan', 'a');
-      cta.href = `/logga-in/?returnUrl=${encodeURIComponent(window.location)}`;
-      cta.dataset['recipeId'] = banner.recipeId;
-      cta.dataset['tracking'] = `{ "name": "${banner.title}", "URL": "${banner.url}" }`;
-      cta.classList.add('js-add-to-new-shoppinglist');
-      cta.onclick = (e) => {
+    createSaveRecipeCTA(banner) {
+      const savedRecipes = this.getSavedRecipes();
+      const container = $ELM.create('button-wrapper');
+      if (savedRecipes.includes(banner.recipeId)) return container;
+      const cta = $ELM.create('a .button banner-button');
+      cta.text('Lägg recept i inköpslistan');
+      cta.href(`/logga-in/?returnUrl=${encodeURIComponent(window.location)}`);
+      cta.data('recipeId', banner.recipeId);
+      cta.data('tracking', `{ "name": "${banner.title}", "URL": "${banner.url}" }`);
+      cta.css('js-add-to-new-shoppinglist');
+      cta.click((e) => {
         e.preventDefault();
-        self.setActionCookie(ACTION_COOKIES.SAVE_RECIPE, banner.recipeId);
-        self.createModal(LOGIN_ACTION.SAVE_RECIPE);
-      };
+        this.setActionCookie(ACTION_COOKIES.SAVE_RECIPE, banner.recipeId);
+        this.createModal(LOGIN_ACTION.SAVE_RECIPE);
+      });
+      container.append(cta);
+      return container;
     },
     createOffers() {
       const main = $ELM.get('.main');
