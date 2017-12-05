@@ -44,7 +44,7 @@ const $ELM_ELEMENT = (element) => {
     },
     text(str) {
       if (element) {
-        if (!str) return element.innerHTML;
+        if (!str) return element.innerText || element.textContent;
         element.innerHTML = '';
         element.appendChild(document.createTextNode(str));
         return this;
