@@ -13,6 +13,8 @@
 import { ICACRO, $ELM } from '../util/main';
 import Ratings from '../util/modules/ratings';
 import banners from './banners';
+import coupons from './coupons';
+
 import './style.css';
 
 (function ($) {
@@ -593,12 +595,16 @@ import './style.css';
   };
 
   $(document).ready(() => {
+    const IC = ICACRO();
     if (/^https:\/\/www.ica.se\/$/.test(window.location)) {
-      Object.assign(test, ICACRO());
+      Object.assign(test, IC);
       test.checkActionCookies();
       test.manipulateDom();
       test.addEventListeners();
-      ICA.icaCallbacks.initUnslider();
+      console.log('ICA');
+    }
+    if (/^https:\/\/www.ica.se\/erbjudanden\/butikserbjudanden\/alla-digitala-kuponger\/$/.test(window.location)) {
+      coupons.manipulateDom(IC);
     }
   });
 })(jQuery);
