@@ -91,6 +91,12 @@ const $ELM_ELEMENT = (element) => {
       }
       return this;
     },
+    toggle(cn) {
+      if (cn) {
+        element.classList.toggle(cn);
+      }
+      return this;
+    },
     get(...args) {
       if (element) {
         if (args.length === 1) return $ELM_ELEMENT(element.querySelector(args[0]));

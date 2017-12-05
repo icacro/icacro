@@ -245,6 +245,13 @@ button:focus, button:active {outline:0;}
 .cro .banner-button {
   width: 100%;
   display: block;
+  overflow: hidden;
+}
+.cro .banner-button .layer {
+  position: absolute;
+  top: -30px;
+  right: 20%;
+  transition: all 0.5s ease;
 }
 .cro .banner-button.saved {
   background: #DDE9BF;
@@ -252,6 +259,10 @@ button:focus, button:active {outline:0;}
   pointer-events: none;
   transition: width .2s ease, color .2s 250ms ease, background .2s ease;
   font-weight: 400;
+}
+
+.cro .banner-button.added .layer{
+  top: 0;
 }
 
 .cro .offers-button {
