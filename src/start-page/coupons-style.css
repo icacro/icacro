@@ -7,7 +7,6 @@ width:100%;
 align-items: center;
 background-color: white;
 margin: 10px 15px;
-min-height: 133px;
 position: relative;
 }
 .cro .banner-row::after {
@@ -26,6 +25,7 @@ width: 13px;
 .cro .banner .banner-column:last-child {  margin-right: 10px; }
 .cro .banner .banner-column { padding: 10px; }
 .cro .banner .banner-column .download {
+  font-size: 12px;
   align-items: center;
   background: #F8EBF3;
   font-weight: bold;
@@ -37,12 +37,14 @@ width: 13px;
   margin: 10px 10px 10px 0;
   border-radius: 6rem;
   width: 100px;
-  line-height: 1.6rem;
+  line-height: 1.4rem;
   padding-bottom: 10px;
 }
 .cro .banner .banner-column .download.is-used {
-  background: #F7F7F7;
-  color: #8DB72C
+  background: #DDE9BF;
+  color: #8DB72C;
+  pointer-events: none;
+  transition: width .2s ease, color .2s 250ms ease, background .2s ease
 }
 .cro .banner .banner-column h1 { font-size: 1.6rem; word-break: break-all;}
 .cro .banner .banner-column span {

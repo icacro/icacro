@@ -27,16 +27,16 @@ const coupons = {
       readMore,
       downLoad,
     ] = $ELM.create(
-      `banner ${isUsedClass}`,
+      `banner`,
       'banner-row',
       'banner-column',
       'banner-column grow-one',
       'banner-column',
       'banner-column__image',
-      `h1 ${isUsedClass}`,
-      `span ${isUsedClass}`,
-      `p ${isUsedClass}`,
-      `img ${isUsedClass}`,
+      `h1`,
+      `span`,
+      `p`,
+      `img`,
       'a',
       `button .button download ${isUsedClass}`,
     );
@@ -82,24 +82,26 @@ const coupons = {
       body: JSON.stringify(data),
     });
   },
+  setActionCookie(offerId) {
+    const d = new Date();
+    d.setDate(new Date().getDate() + 1); // expires tomorrow
+
+    ICA.legacy.setCookie('cro_personalOffer_actionCookie_loadCoupon', offerId, d);
+  },
+  getActionCookie() {
+    const actionCookie = ICA.legacy.getCookie('cro_personalOffer_actionCookie_loadCoupon');
+    if (actionCookie) {
+      ICA.legacy.killCookie('cro_personalOffer_actionCookie_loadCoupon');
+    }
+    return +actionCookie;
+  },
   deactivateCoupon(id) {
-    $ELM.get(id)
-      .css('is-used')
-      .get(
-        '.banner-column__image img',
-        'h1',
-        'p',
-        'span',
-        'button',
-        'img',
-      ).forEach((element) => {
-        element.css('is-used');
-      });
+    $ELM.get(id).get('button').css('is-used');
   },
   async onClick(event, data) {
     event.preventDefault();
-    this.deactivateCoupon(data.CampaignId);
     if (this.isLoggedIn()) {
+      this.deactivateCoupon(data.CampaignId);
       await this.loadCouponOnCard(data);
       icadatalayer.add('HSE', {
         HSE: {
@@ -117,7 +119,7 @@ const coupons = {
           hseurl: `/kampanj/hse/${data.CampaignId}`,
         },
       });
-      this.setCookie('cro_personalOffer_actionCookie_loadCoupon', data.CampaignId);
+      this.setActionCookie(data.CampaignId);
     }
   },
   loadBanners(ids, content) {
