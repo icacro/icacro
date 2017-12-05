@@ -120,6 +120,7 @@ const coupons = {
         },
       });
       this.setActionCookie(data.CampaignId);
+      this.createModal();
     }
   },
   loadBanners(ids, content) {
@@ -165,12 +166,20 @@ const coupons = {
         });
     });
   },
-  manipulateDom(ICACRO) {
-    Object.assign(this, ICACRO);
+  addIframe() {
+    const returnUrl = encodeURIComponent(window.location.href);
+    const iframe = $ELM.create('cro-iframe-container');
+    const iframeContainer = `<span class="loader"></span><iframe src="//www.ica.se/logga-in/?returnurl=${returnUrl}" frameborder="0"></iframe>`;
+    iframe.html(iframeContainer);
+    $ELM.get('body').append(iframe);
+  },
+  manipulateDom(ICACRO, createModal) {
+    Object.assign(this, ICACRO, { createModal });
     const content = $ELM.get('#content');
     const regexp = /www.ica.se\/kampanj\/hse/g;
     const banners = this.getElementContentByTagAndAttr(regexp, 'a', 'href');
     const ids = banners.map(banner => banner.match(/\d+$/)[0]);
+    this.addIframe();
     content.html(' ');
     this.loadBanners(ids, content);
   },
