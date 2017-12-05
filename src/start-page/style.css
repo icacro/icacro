@@ -50,6 +50,15 @@ background-position: -438px -1885px;
   width: 50px !important;
   height: 50px !important;
 }
+
+.cro .slick-prev:hover {
+  background-color: transparent;
+  background-position: -338px -1885px;
+}
+.cro .slick-next:hover {
+  background-color: transparent;
+  background-position: -438px -1885px;
+}
 .cro .slick-arrow {
   background-color: transparent;
   background-image: url('/Templates/General/Views/Images/RWD/sprites/general_sprite1.png?1');
