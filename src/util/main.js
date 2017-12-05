@@ -5,6 +5,8 @@ eslint no-param-reassign: [
 */
 /* eslint no-use-before-define: ["error", { "functions": false }] */
 /* eslint-env es6 */
+import Storage from './modules/storage';
+
 const reservedElements = ['div', 'body', 'head', 'img', 'style', 'span', 'ul', 'li', 'input', 'button', 'h1', 'h2', 'h3', 'h4', 'a', 'p', 'strong', 'svg'];
 const GetElement = selector => document.querySelector(selector);
 
@@ -232,9 +234,16 @@ export const ICACRO = () => {
         ga('send', 'event', eventCategory, eventAction, eventLabel);
       }
     },
-    setCookie(key, value, exp) {
-      const date = exp || new Date().setDate(new Date().getDate() + 1);
-      console.log(key, value, date);
-    }
+    storage: {
+      set(key, value) {
+        Storage.set(key, value);
+      },
+      get(key) {
+        return Storage.get(key);
+      },
+      clear() {
+        Storage.clear();
+      },
+    },
   };
 };

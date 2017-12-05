@@ -82,18 +82,12 @@ const coupons = {
       body: JSON.stringify(data),
     });
   },
-  setActionCookie(offerId) {
-    const d = new Date();
-    d.setDate(new Date().getDate() + 1); // expires tomorrow
-
-    ICA.legacy.setCookie('cro_personalOffer_actionCookie_loadCoupon', offerId, d);
-  },
-  getActionCookie() {
-    const actionCookie = ICA.legacy.getCookie('cro_personalOffer_actionCookie_loadCoupon');
-    if (actionCookie) {
-      ICA.legacy.killCookie('cro_personalOffer_actionCookie_loadCoupon');
+  checkActionCookie() {
+    const coupon = this.storage.get('coupon');
+    if (coupon && this.isLoggedIn()) {
+      this.storage.remove('coupon');
+      this.loadCouponOnCard(coupon);
     }
-    return +actionCookie;
   },
   deactivateCoupon(id) {
     $ELM.get(id).get('button').css('is-used');
@@ -119,7 +113,8 @@ const coupons = {
           hseurl: `/kampanj/hse/${data.CampaignId}`,
         },
       });
-      this.setActionCookie(data.CampaignId);
+      this.storage.set('coupon', data);
+      this.createModal();
     }
   },
   loadBanners(ids, content) {
@@ -165,14 +160,24 @@ const coupons = {
         });
     });
   },
-  manipulateDom(ICACRO) {
-    Object.assign(this, ICACRO);
+  addIframe() {
+    const returnUrl = encodeURIComponent(window.location.href);
+    const iframe = $ELM.create('cro-iframe-container');
+    const iframeContainer = `<span class="loader"></span><iframe src="//www.ica.se/logga-in/?returnurl=${returnUrl}" frameborder="0"></iframe>`;
+    iframe.html(iframeContainer);
+    $ELM.get('body').append(iframe);
+  },
+  manipulateDom(ICACRO, createModal) {
+    Object.assign(this, ICACRO, { createModal });
     const content = $ELM.get('#content');
     const regexp = /www.ica.se\/kampanj\/hse/g;
     const banners = this.getElementContentByTagAndAttr(regexp, 'a', 'href');
     const ids = banners.map(banner => banner.match(/\d+$/)[0]);
+    this.addIframe();
     content.html(' ');
     this.loadBanners(ids, content);
+    this.checkActionCookie();
+    this.storage.clear();
   },
 };
 

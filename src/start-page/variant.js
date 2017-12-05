@@ -549,7 +549,9 @@ import './style.css';
       test.addEventListeners();
     }
     if (/^https:\/\/www.ica.se\/erbjudanden\/butikserbjudanden\/alla-digitala-kuponger\/$/.test(window.location)) {
-      coupons.manipulateDom(IC);
+      coupons.manipulateDom(IC, () => {
+        test.createModal(LOGIN_ACTION.LOAD_COUPON);
+      });
     }
   });
 })(jQuery);
