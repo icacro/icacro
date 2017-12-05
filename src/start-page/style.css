@@ -41,21 +41,29 @@ background-position: -438px -1885px;
 
 .slick-prev:before, .slick-next:before { content: '' }
 .slick-prev {
+  top: 170px;
+  left: -10px;
   background-position: -338px -1885px;
   width: 50px !important;
   height: 50px !important;
 }
 .slick-next {
+  top: 170px;
+  right: -10px;
   background-position: -438px -1885px;
   width: 50px !important;
   height: 50px !important;
 }
 
-.cro .slick-prev:hover {
+.cro .slick-prev:hover,
+.cro .slick-prev:focus,
+.cro .slick-prev:active {
   background-color: transparent;
   background-position: -338px -1885px;
 }
-.cro .slick-next:hover {
+.cro .slick-next:hover,
+.cro .slick-next:focus,
+.cro .slick-next:active {
   background-color: transparent;
   background-position: -438px -1885px;
 }
@@ -88,7 +96,7 @@ button:focus, button:active {outline:0;}
 
 .cro .banner-container__text-container {
   max-width: 100%;
-  margin: 120px 10px 10px;
+  margin: 110px 35px 10px;
   text-shadow: 0 0 5px rgba(0, 0, 0, 0.4);
   position: relative;
 }
