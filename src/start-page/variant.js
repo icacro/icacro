@@ -237,12 +237,9 @@ import './style.css';
     createOffers() {
       const main = $ELM.get('.main');
       const container = $ELM.create('div coupon-banner');
-      // const buttonWrapper = $ELM.create('button-wrapper');
-      const h1 = $ELM.create('h1').text('Spara pengar med kuponger');
       const offerButton = $ELM.create('a .button offers-button').text('Gå till ICAs kuponger').href('/erbjudanden/butikserbjudanden/alla-digitala-kuponger/');
-      const img = $ELM.create('img').image('//atgcdn-production.prod.vuitonline.com/online/29/350x350/7310130006029.jpg');
-      // splash-promotion__price-number
-      container.appendAll(h1, img, offerButton);
+      const img = $ELM.create('img').image('https://raw.githubusercontent.com/Banzaci/ica/master/src/start-page/Coupons_image.png');
+      container.appendAll(img, offerButton);
       main.append(container);
     },
     addRecipeToShoppingList(recipeId) {

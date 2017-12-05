@@ -18,10 +18,10 @@ background-position: -438px -1885px;
 .coupon-banner {
   text-align: center;
   margin-bottom: 30px;
+  background-color: #F8EBF3;
 }
 .coupon-banner img {
-  margin: 10px 0;
-  max-height: 120px;
+  margin: 10px 0 0;
 }
 .cro .search-recipe-container {
   margin-bottom: 20px;
@@ -251,7 +251,7 @@ button:focus, button:active {outline:0;}
 }
 
 .cro .offers-button {
-  width: 100%;
+  width: 90%;
   margin-bottom: 20px;
 }
 
