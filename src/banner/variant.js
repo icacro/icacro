@@ -110,20 +110,17 @@ require('./style.css');
     },
     async onClick(event, data) {
       event.preventDefault();
-      console.clear();
       this.deactivateCoupon(data.CampaignId);
       if (this.isLoggedIn()) {
-        // const response = await this.loadCouponOnCard(data);
-        // console.log(response);
-        // icadatalayer.add('HSE', {
-        //   HSE: {
-        //     action: 'coupon-loaded',
-        //     name: data.PageName,
-        //     offer: data.ProductName,
-        //     hseurl: `/kampanj/hse/${data.CampaignId}`,
-        //   },
-        // });
-
+        const response = await this.loadCouponOnCard(data);
+        icadatalayer.add('HSE', {
+          HSE: {
+            action: 'coupon-loaded',
+            name: data.PageName,
+            offer: data.ProductName,
+            hseurl: `/kampanj/hse/${data.CampaignId}`,
+          },
+        });
       } else {
         icadatalayer.add('HSE', {
           HSE: {
