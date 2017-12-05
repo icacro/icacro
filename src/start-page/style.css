@@ -96,7 +96,7 @@ button:focus, button:active {outline:0;}
   overflow: hidden;
 }
 
-.cro .banner-container__img img { height: 100%; width: 100%; }
+.cro .banner-container__img img { height: auto; width: 100%; }
 
 .cro .banner-container__text-container {
   max-width: 100%;
