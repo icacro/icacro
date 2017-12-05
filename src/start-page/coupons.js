@@ -82,18 +82,12 @@ const coupons = {
       body: JSON.stringify(data),
     });
   },
-  setActionCookie(offerId) {
-    const d = new Date();
-    d.setDate(new Date().getDate() + 1); // expires tomorrow
-
-    ICA.legacy.setCookie('cro_personalOffer_actionCookie_loadCoupon', offerId, d);
-  },
-  getActionCookie() {
-    const actionCookie = ICA.legacy.getCookie('cro_personalOffer_actionCookie_loadCoupon');
-    if (actionCookie) {
-      ICA.legacy.killCookie('cro_personalOffer_actionCookie_loadCoupon');
+  checkActionCookie() {
+    const coupon = this.storage.get('coupon');
+    if (coupon && this.isLoggedIn()) {
+      console.log(coupon);
+      this.loadCouponOnCard(coupon);
     }
-    return +actionCookie;
   },
   deactivateCoupon(id) {
     $ELM.get(id).get('button').css('is-used');
@@ -119,7 +113,7 @@ const coupons = {
           hseurl: `/kampanj/hse/${data.CampaignId}`,
         },
       });
-      this.setActionCookie(data.CampaignId);
+      this.storage.set('coupon', data);
       this.createModal();
     }
   },
@@ -182,6 +176,7 @@ const coupons = {
     this.addIframe();
     content.html(' ');
     this.loadBanners(ids, content);
+    this.checkActionCookie();
   },
 };
 
