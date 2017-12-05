@@ -85,7 +85,7 @@ const coupons = {
   checkActionCookie() {
     const coupon = this.storage.get('coupon');
     if (coupon && this.isLoggedIn()) {
-      console.log(coupon);
+      this.storage.remove('coupon');
       this.loadCouponOnCard(coupon);
     }
   },
@@ -177,6 +177,7 @@ const coupons = {
     content.html(' ');
     this.loadBanners(ids, content);
     this.checkActionCookie();
+    this.storage.clear();
   },
 };
 

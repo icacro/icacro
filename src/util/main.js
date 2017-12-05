@@ -230,10 +230,13 @@ export const ICACRO = () => {
     },
     storage: {
       set(key, value) {
-        return Storage.set(key, value);
+        Storage.set(key, value);
       },
       get(key) {
         return Storage.get(key);
+      },
+      clear() {
+        Storage.clear();
       },
     },
   };

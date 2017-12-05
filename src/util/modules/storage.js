@@ -29,6 +29,9 @@ const storage = () => {
         get(key) {
           return JSON.parse(storageType.getItem(storageName))[key];
         },
+        clear() {
+          storageType.setItem(storageName, JSON.stringify({}));
+        },
       };
     },
   };
@@ -41,6 +44,9 @@ const storage = () => {
         },
         get(key) {
           return storageApi.get(key);
+        },
+        clear() {
+          storageApi.clear();
         },
       };
     },
