@@ -9,6 +9,10 @@ background-position: -338px -1885px; prev
 background-position: -438px -1885px;
  */
 
+.cro #header {
+  background-color: white;
+}
+
 .slick-slide, .slick-track:focus {
   outline: none;
 }
