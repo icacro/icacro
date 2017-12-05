@@ -177,7 +177,6 @@ const coupons = {
     content.html(' ');
     this.loadBanners(ids, content);
     this.checkActionCookie();
-    this.storage.clear();
   },
 };
 

@@ -241,8 +241,8 @@ export const ICACRO = () => {
       get(key) {
         return Storage.get(key);
       },
-      clear() {
-        Storage.clear();
+      remove(key) {
+        Storage.remove(key);
       },
     },
   };
