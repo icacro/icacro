@@ -1,6 +1,6 @@
 {
   "name": "icacro",
-  "version": "1.0.11",
+  "version": "1.0.13",
   "description": "",
   "main": "template.js",
   "devDependencies": {
@@ -31,7 +31,7 @@
     "dev": "webpack --env.project",
     "create": "node index.js",
     "https": "webpack-dev-server --https  --env.project",
-    "patch": "npm version patch -m \"Lyft version till ny version\"",
+    "patch": "npm version patch -m \"Lyft till ny version\"",
     "postversion": "git push && git push --tags"
   },
   "repository": {
