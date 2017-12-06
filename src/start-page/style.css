@@ -27,9 +27,7 @@ background-position: -438px -1885px;
 .coupon-banner img {
   margin: 10px 0 0;
 }
-.cro .search-recipe-container {
-  margin-bottom: 20px;
-}
+
 .cro .search-recipe-container img {
   margin-bottom: 20px;
 }
@@ -37,10 +35,10 @@ background-position: -438px -1885px;
   font-size: 2.8rem;
 }
 .cro .search-recipe-container__all-recipes {
-  font-size: 2.2rem;
+  font-size: 1.5rem;
 }
 .cro .pl .container-backdrop {
-  padding: 15px 10px 30px;
+  padding: 20px 10px 30px;
 }
 
 .slick-prev:before, .slick-next:before { content: '' }
@@ -157,8 +155,12 @@ button:focus, button:active {outline:0;}
   border-radius: 6px;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
   position: relative;
+  justify-content:flex-start;
+}
+
+.cro .recipe-trending-list h2 {
+  font-size: 1.8rem;
 }
 
 .cro .coupons-container__item:after {
@@ -173,6 +175,14 @@ button:focus, button:active {outline:0;}
   left: -30px;
 }
 
+.cro .coupons-container__item-wrapper {
+  align-self: flex-start;
+  margin-bottom: 60px;
+}
+
+.coupons-container__item-image-wrapper {
+  align-self: flex-start;
+}
 .cro .coupons-container__item img {
   width: 60% !important;
   height: auto !important;
@@ -211,9 +221,11 @@ button:focus, button:active {outline:0;}
   line-height: 2.2rem;
   min-width: auto;
   align-self: center;
-  width: 100%;
+  width: 90%;
   background: #F8EBF3;
   color: #A02971;
+  position: absolute;
+  bottom: 15px;
 }
 
 .cro .coupons-container .coupons-container__item.offer-loaded .coupon-button {
