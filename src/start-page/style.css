@@ -22,7 +22,7 @@ background-position: -438px -1885px;
 .coupon-banner {
   text-align: center;
   margin-bottom: 30px;
-  background-color: #F8EBF3;
+  background-color: #F5E9F0;
 }
 .coupon-banner img {
   margin: 10px 0 0;
@@ -48,15 +48,15 @@ background-position: -438px -1885px;
   top: 170px;
   left: -10px;
   background-position: -338px -1885px;
-  width: 50px !important;
-  height: 50px !important;
+  width: 40px !important;
+  height: 40px !important;
 }
 .slick-next {
   top: 170px;
-  right: -10px;
+  right: 5px;
   background-position: -438px -1885px;
-  width: 50px !important;
-  height: 50px !important;
+  width: 40px !important;
+  height: 40px !important;
 }
 
 .cro .slick-prev:hover,
@@ -94,13 +94,14 @@ button:focus, button:active {outline:0;}
   position: absolute;
   top: 0;
   overflow: hidden;
+  background-color: black;
 }
 
-.cro .banner-container__img img { height: auto; width: 100%; }
+.cro .banner-container__img img { height: auto; width: 100%; opacity: .8; }
 
 .cro .banner-container__text-container {
   max-width: 100%;
-  margin: 110px 35px 10px;
+  margin: 70px 35px 10px;
   text-shadow: 0 0 5px rgba(0, 0, 0, 0.4);
   position: relative;
 }
@@ -175,25 +176,26 @@ button:focus, button:active {outline:0;}
 .cro .coupons-container__item img {
   width: 60% !important;
   height: auto !important;
-  margin: 0 auto !important;
+  margin: 0 auto 10px !important;
 }
 
 .cro .coupons-container .coupons-container__item h3 {
   font-size: 16px;
-  line-height: 1.3em;
+  line-height: 1em;
+  margin-bottom: 6px;
 }
 
 .cro .coupons-container .coupons-container__item h1 {
   font-size: 22px;
   font-weight: 700;
   color: #EB1F07;
-  line-height: 15px;
+  line-height: 1.5rem;
 }
 
 .cro .coupons-container .coupons-container__item h4 {
   color: #808283;
   font-size: 1.3rem;
-  line-height: 1;
+  line-height: 1.4;
   font-family: icatext;
   font-weight: normal;
 }
@@ -239,11 +241,11 @@ button:focus, button:active {outline:0;}
 }
 
 .cro .button-wrapper {
-  margin: 10px;
+  margin: 10px 0 30px 35px;
 }
 
 .cro .banner-button {
-  width: 100%;
+  width: 60%;
   display: block;
   overflow: hidden;
 }
