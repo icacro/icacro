@@ -1,6 +1,4 @@
-export const styles = `
-  .cro {}
-  @media only screen and (max-width: 780px) {
-    .cro { }
-  }
-`;
+.cro { }
+@media only screen and (max-width: 780px) {
+  .cro { }
+}

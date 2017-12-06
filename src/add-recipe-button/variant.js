@@ -13,11 +13,16 @@ import { ICACRO, $ELM } from '../util/main';
 
 import './style.css';
 
-if (hj) hj('trigger','variant6');// eslint-disable-line
+// if (hj) hj('trigger','variant6');// eslint-disable-line
 
 function init() {
   const test = {
-    manipulateDom() {},
+    manipulateDom() {
+      const container = $ELM.create('add-to-list');
+      $ELM.get('#ingredients-section h2').insertAfter(container);
+      container.append($ELM.get('.coachmark-arrow--left-up'));
+      container.append($ELM.get('.js-open-shoppinglist-modal'));
+    },
   };
   Object.assign(test, ICACRO());
   test.manipulateDom();

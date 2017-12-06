@@ -1,6 +1,28 @@
-export const styles = `
-  .cro {}
-  @media only screen and (max-width: 780px) {
-    .cro { }
-  }
-`;
+.cro .add-to-list {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  position: absolute;
+  top: -40px;
+  right: 0;
+}
+
+.cro .ingredients .coachmark-arrow {
+  margin: 0;
+}
+
+.cro .pl .coachmark-arrow--left-up {
+  align-self: flex-end;
+  padding-right: 30px;
+  margin-bottom: 0px;
+}
+.cro .pl .coachmark-arrow--left-up svg {
+  transform: scale(-1, -1) rotate(190deg);
+  left: auto;
+  right: 0;
+  top: 1.5rem;
+}
+
+.cro .js-open-shoppinglist-modal {
+  margin-right: 30px;
+}
