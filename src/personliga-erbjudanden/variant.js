@@ -833,7 +833,13 @@ import { ICACRO, $ELM } from '../util/main';
 
       return (actionCookie === 'true'); // coerce to number
     },
-  };
+    triggerHotJar() {
+      const name = window.cro.hotjarTrigger || 'variant3';
+      if (hj) {
+        hj('trigger', name);
+      }
+  },
+},
 
   $(document).ready(() => {
     Object.assign(test, ICACRO());
@@ -844,7 +850,7 @@ import { ICACRO, $ELM } from '../util/main';
           test.manipulateDom();
           test.checkActionCookie();
           test.addEventListeners();
-          if (hj) hj('trigger','variant3');// eslint-disable-line
+          test.triggerHotJar();
         } else if (!test.pageIsLoginForm()) {
           test.addNotification();
         }

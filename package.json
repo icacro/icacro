@@ -31,7 +31,7 @@
     "dev": "webpack --env.project",
     "create": "node index.js",
     "https": "webpack-dev-server --https  --env.project",
-    "patch": "npm version patch -m \"Lyft version till ny version\"",
+    "patch": "npm version patch -m \"Lyft till ny version\"",
     "postversion": "git push && git push --tags"
   },
   "repository": {
