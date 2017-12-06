@@ -17,11 +17,11 @@ import { ICACRO, $ELM } from '../util/main';
 
   const couponId = 458281; // kyckling
   const banner = {
-    title: 'Torsk i ugn med dill- och citronsås',
-    cookTime: '30 MIN | MEDEL',
+    title: 'Kyckling- och bacongryta med champinjoner',
+    cookTime: '30 MIN | ENKEL',
     stars: 4,
-    img: '/imagevaultfiles/id_122727/cf_259/torsk-i-ugn-med-dill-och-citronsas-v38-2015-719374.jpg',
-    url: 'https://www.ica.se/recept/torsk-i-ugn-med-dill-och-citronsas-719374/',
+    img: '/imagevaultfiles/id_168664/cf_259/kyckling-och-bacongryta-med-champinjoner-722791.jpg',
+    url: 'https://www.ica.se/recept/kyckling-och-bacongryta-med-champinjoner-722791/',
   };
   let coupon = {};
   const content = window.cro || {
@@ -29,6 +29,7 @@ import { ICACRO, $ELM } from '../util/main';
     mittIcaRubrik: 'Letar du efter middag till ikväll?',
     mittIcaIngress: 'Vi har ett av våra populäraste recept och en kupong till dig!',
     mittIcaText: 'I sådana fall vill vi tipsa dig om vår mest populära torsksoppa och ge dig en passande rabatt.',
+    hotjarTrigger: 'variant3',
   };
 
   const test = {
@@ -834,7 +835,7 @@ import { ICACRO, $ELM } from '../util/main';
       return (actionCookie === 'true'); // coerce to number
     },
     triggerHotJar() {
-      const name = window.cro.hotjarTrigger || 'variant3';
+      const name = content.hotjarTrigger;
       if (hj) {
         hj('trigger', name);
       }
