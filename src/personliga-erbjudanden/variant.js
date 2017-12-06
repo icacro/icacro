@@ -15,7 +15,7 @@ import { ICACRO, $ELM } from '../util/main';
 (function ($) {
   'use strict';
 
-  const couponId = 458288; // torsk
+  const couponId = 458281; // kyckling
   const banner = {
     title: 'Torsk i ugn med dill- och citronsås',
     cookTime: '30 MIN | MEDEL',
