@@ -107,23 +107,33 @@ import './style.css';
       return couponItem;
     },
     addBanner(banner) {
-      const bannerContainer = $ELM.create('li banner-container');
-      const bannerContainerImg = $ELM.create('banner-container__img');
-      const img = $ELM.create('img');
+      const [
+        bannerContainer,
+        bannerContainerImg,
+        img,
+        textContainer,
+        link,
+        title,
+        ratings,
+        difficulty,
+        couponsWrapper,
+      ] = $ELM.create(
+        'li banner-container',
+        'banner-container__img',
+        'img',
+        'banner-container__text-container',
+        'a text-container__link',
+        'h1 text-container__title',
+        'text-container__ratings',
+        'h4 text-container__difficulty',
+        'coupons-container',
+      );
+
+      const saveButton = this.createSaveRecipeCTA(banner);
+
       img.image(banner.image);
       bannerContainerImg.append(img);
       bannerContainerImg.image(banner.image);
-      // bannerContainerImg.style({
-      //   background: `url(${banner.image})`,
-      //   'background-size': 'contain',
-      //   'background-repeat': 'no-repeat',
-      // });
-      const textContainer = $ELM.create('banner-container__text-container');
-      const title = $ELM.create('h1 text-container__title');
-      const ratings = $ELM.create('text-container__ratings');
-      const difficulty = $ELM.create('h4 text-container__difficulty');
-      const couponsWrapper = $ELM.create('coupons-container');
-      const saveButton = this.createSaveRecipeCTA(banner);
 
       ratings.html(Ratings(banner.stars));
       title.text(banner.title);
@@ -133,7 +143,9 @@ import './style.css';
         couponsWrapper.append(this.addCoupon(coupon));
       });
 
-      textContainer.appendAll(title, ratings, difficulty);
+      link.href(banner.url);
+      link.appendAll(title, ratings, difficulty);
+      textContainer.append(link);
       bannerContainer.appendAll(bannerContainerImg, textContainer, saveButton, couponsWrapper);
       return bannerContainer;
     },
@@ -538,6 +550,9 @@ import './style.css';
         return response;
       });
     },
+    resetParallaxScrolling() {
+      ICA.icaCallbacks.$parallaxContainers = $('.parallax');
+    },
   };
 
   $(document).ready(() => {
@@ -547,6 +562,7 @@ import './style.css';
       test.checkActionCookies();
       test.manipulateDom();
       test.addEventListeners();
+      test.resetParallaxScrolling();
     }
     if (/^https:\/\/www.ica.se\/erbjudanden\/butikserbjudanden\/alla-digitala-kuponger\/$/.test(window.location)) {
       coupons.manipulateDom(IC, () => {
