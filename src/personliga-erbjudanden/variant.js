@@ -15,7 +15,6 @@ import { ICACRO, $ELM } from '../util/main';
 (function ($) {
   'use strict';
 
-  // if (hj) hj('trigger','variant3');// eslint-disable-line
   const couponId = 458288; // torsk
   const banner = {
     title: 'Torsk i ugn med dill- och citronsås',
@@ -26,9 +25,9 @@ import { ICACRO, $ELM } from '../util/main';
   };
   let coupon = {};
   const content = window.cro || {
-    notifikationText: 'Du har fått en rabatt!',
-    mittIcaRubrik: 'Hej!',
-    mittIcaIngress: 'Eftersom du tittat på torskrecept tidigare så kanske du är sugen på torsk?',
+    notifikationText: 'Få rabatt på kvällens middag',
+    mittIcaRubrik: 'Letar du efter middag till ikväll?',
+    mittIcaIngress: 'Vi har ett av våra populäraste recept och en kupong till dig!',
     mittIcaText: 'I sådana fall vill vi tipsa dig om vår mest populära torsksoppa och ge dig en passande rabatt.',
   };
 
@@ -175,6 +174,8 @@ import { ICACRO, $ELM } from '../util/main';
         flex-direction: column;
         justify-content: center;
       }
+
+      .cro .personal-offer__h1 { line-height: 1.1em; }
 
       .cro .personal-offer .toggle-personal-offer {
         color: #a02971;
@@ -387,7 +388,6 @@ import { ICACRO, $ELM } from '../util/main';
         messageContainer,
         header,
         preamble,
-        body,
         recipeAndCoupon,
       ] = $ELM.create(
         'personal-offer',
@@ -395,19 +395,13 @@ import { ICACRO, $ELM } from '../util/main';
         'personal-offer__message',
         'h1 personal-offer__h1',
         'strong personal-offer__preamble--strong',
-        'span personal-offer__preamble--strong',
         'personal-offer__recipe-and-coupon',
       );
 
-      const namn = $ELM.get('.top-bar-display-name').element
-        ? ` ${$ELM.get('.top-bar-display-name').text()}`
-        : '';
-
-      header.text(`Hej${namn}!`);
+      header.text(content.mittIcaRubrik);
       preamble.text(content.mittIcaIngress);
-      body.text(content.mittIcaText);
 
-      messageContainer.appendAll(header, preamble, body);
+      messageContainer.appendAll(header, preamble);
       recipeAndCoupon.appendAll(this.addCoupon(), this.addRecipe());
       container.appendAll(messageContainer, recipeAndCoupon);
 
@@ -724,11 +718,12 @@ import { ICACRO, $ELM } from '../util/main';
       }, 50);
     },
     addNotification() {
+      const rightValue = this.hasClickedOnNotification() ? -229 : -260;
       const css = `
       .cro .offer-notification {
         position: fixed;
         top: 17vh;
-        right: -210px;
+        right: ${rightValue}px;
         z-index: 99999;
         background-color: white;
         border-radius: 20px;
@@ -785,10 +780,13 @@ import { ICACRO, $ELM } from '../util/main';
         </svg>`);
       link.href('/mittica');
       link.text(content.notifikationText);
-      link.click(() => this.gaPush({
-        eventAction: 'Personliga erbjudanden',
-        eventLabel: 'Notifikation klickad på',
-      }));
+      link.click(() => {
+        this.gaPush({
+          eventAction: 'Personliga erbjudanden',
+          eventLabel: 'Notifikation klickad på',
+        });
+        this.saveNotificationClick();
+      });
       notification.appendAll(arrow, link);
 
       notification.click((e) => {
@@ -809,7 +807,11 @@ import { ICACRO, $ELM } from '../util/main';
         eventLabel: 'Notifikation visad',
       });
 
-      window.setTimeout(() => notification.css('show'), 1 * 1000);
+      if (this.hasClickedOnNotification()) {
+        notification.toggle('closed');
+      } else {
+        window.setTimeout(() => notification.css('show'), 1 * 1000);
+      }
     },
     pageIsInkopslistor() {
       return /^https:\/\/www.ica.se\/mittica\/#:mittica=inkopslistor$/.test(window.location);
@@ -819,6 +821,17 @@ import { ICACRO, $ELM } from '../util/main';
         /^https:\/\/www.ica.se\/logga-in/.test(window.location) &&
         /inkopslistor/.test(window.location)
       );
+    },
+    saveNotificationClick() {
+      const d = new Date();
+      d.setDate(new Date().getDate() + 1); // expires tomorrow
+
+      ICA.legacy.setCookie('cro_personalOffer_notificationClick', true, d);
+    },
+    hasClickedOnNotification() {
+      const actionCookie = ICA.legacy.getCookie('cro_personalOffer_notificationClick');
+
+      return (actionCookie === 'true'); // coerce to number
     },
   };
 
@@ -831,6 +844,7 @@ import { ICACRO, $ELM } from '../util/main';
           test.manipulateDom();
           test.checkActionCookie();
           test.addEventListeners();
+          if (hj) hj('trigger','variant3');// eslint-disable-line
         } else if (!test.pageIsLoginForm()) {
           test.addNotification();
         }
