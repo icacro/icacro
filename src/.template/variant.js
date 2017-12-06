@@ -7,22 +7,20 @@
 // @grant        none
 // ==/UserScript==
 
+'use strict';
+
 import { ICACRO, $ELM } from '../util/main';
+
 import './style.css';
 
-(function ($) {
-  'use strict';
-  if (hj) hjf;// eslint-disable-line
+if (hj) hjf;// eslint-disable-line
+
+function init() {
   const test = {
-    addStyles() {
-      return styles;
-    },
     manipulateDom() {},
   };
+  Object.assign(test, ICACRO());
+  test.manipulateDom();
+}
 
-  $(document).ready(() => {
-    Object.assign(test, ICACRO());
-    test.style(test.addStyles())
-    test.manipulateDom();
-  });
-})(jQuery);
+init();

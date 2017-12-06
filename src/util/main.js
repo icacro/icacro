@@ -10,9 +10,10 @@ import Storage from './modules/storage';
 const reservedElements = ['div', 'body', 'head', 'img', 'style', 'span', 'ul', 'li', 'input', 'button', 'h1', 'h2', 'h3', 'h4', 'a', 'p', 'strong', 'svg'];
 const GetElement = selector => document.querySelector(selector);
 
-const $ELM_ELEMENT = (element) => {
+function $ELM_ELEMENT(element) {
   const rect = arg => element.getBoundingClientRect()[arg];
   return {
+    name: 'ELM_ELEMENT',
     attr(...args) {
       if (element) {
         const [attr, value] = args.length === 2 ? [...args] : args[0].split(':');
@@ -101,18 +102,18 @@ const $ELM_ELEMENT = (element) => {
     },
     get(...args) {
       if (element) {
-        if (args.length === 1) return $ELM_ELEMENT(element.querySelector(args[0]));
-        return args.map(arg => $ELM_ELEMENT(element.querySelector(arg)));
+        if (args.length === 1) return new $ELM_ELEMENT(element.querySelector(args[0]));
+        return args.map(arg => new $ELM_ELEMENT(element.querySelector(arg)));
       }
       throw new Error(`${args} Element does not exist! Function 'get'`);
     },
     children(arg) {
       if (arg) {
         const list = Array.from(element.getElementsByTagName(arg));
-        return list.map(child => $ELM_ELEMENT(child));
+        return list.map(child => new $ELM_ELEMENT(child));
       }
       const list = Array.from(element.childNodes);
-      return list.map(child => $ELM_ELEMENT(child));
+      return list.map(child => new $ELM_ELEMENT(child));
     },
     style(stl) {
       if (element) {
@@ -120,6 +121,14 @@ const $ELM_ELEMENT = (element) => {
         return this;
       }
       throw new Error(`${stl} Element does not exist! Function 'style'`);
+    },
+    insertAfter(targetName) {
+      if (element) {
+        const target = (targetName.name === this.name) ? targetName : new $ELM_ELEMENT(GetElement(targetName));
+        element.parentNode.insertBefore(target.element, element.nextSibling);
+        return this;
+      }
+      throw new Error(`${targetName} Element does not exist! Function 'insertAfter'`);
     },
     data(key, value) {
       if (element) {
@@ -133,7 +142,7 @@ const $ELM_ELEMENT = (element) => {
 };
 
 const CreateElement = (arg) => {
-  if (arg instanceof HTMLElement) return $ELM_ELEMENT(arg);
+  if (arg instanceof HTMLElement) return new $ELM_ELEMENT(arg);
   const arr = arg.split(' ');
   const type = arr.reduce((acc, current) => {
     if (reservedElements.includes(current)) {
@@ -144,7 +153,7 @@ const CreateElement = (arg) => {
 
   const classNames = arr.filter(current => !reservedElements.includes(current)).join();
   const dom = document.createElement(type);
-  return $ELM_ELEMENT(dom).css(classNames);
+  return new $ELM_ELEMENT(dom).css(classNames);
 };
 
 const CreateElementByObject = (type, iterable) => {
@@ -173,11 +182,11 @@ export const $ELM = {
   get(...args) {
     if (args.length === 1) {
       const key = Number.isInteger(parseInt(args[0], 10)) ? parseInt(args[0], 10) : args[0];
-      return this.elms[key] || $ELM_ELEMENT(GetElement(key));
+      return this.elms[key] || new $ELM_ELEMENT(GetElement(key));
     }
     return args.map((arg) => {
       const key = Number.isInteger(parseInt(arg, 10)) ? parseInt(arg, 10) : arg;
-      return this.elms[key] || $ELM_ELEMENT(GetElement(key));
+      return this.elms[key] || new $ELM_ELEMENT(GetElement(key));
     });
   },
   save(id, element) {
