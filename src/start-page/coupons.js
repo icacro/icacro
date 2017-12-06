@@ -67,7 +67,7 @@ const coupons = {
       HSE: {
         action: 'display',
         title: data.PageName,
-        hseurl: `/kampanj/hse/${data.CampaignId}`,
+        hseurl: `/kampanj/hse/${id}`,
       },
     });
   },
@@ -95,14 +95,14 @@ const coupons = {
   async onClick(event, data) {
     event.preventDefault();
     if (this.isLoggedIn()) {
-      this.deactivateCoupon(data.CampaignId);
+      this.deactivateCoupon(data.id);
       await this.loadCouponOnCard(data);
       icadatalayer.add('HSE', {
         HSE: {
           action: 'coupon-loaded',
           name: data.PageName,
           offer: data.ProductName,
-          hseurl: `/kampanj/hse/${data.CampaignId}`,
+          hseurl: `/kampanj/hse/${data.id}`,
         },
       });
     } else {
@@ -110,7 +110,7 @@ const coupons = {
         HSE: {
           action: 'login-mousedown',
           name: data.PageName,
-          hseurl: `/kampanj/hse/${data.CampaignId}`,
+          hseurl: `/kampanj/hse/${data.id}`,
         },
       });
       this.storage.set('coupon', data);
@@ -139,9 +139,9 @@ const coupons = {
           } = Offer;
 
           const data = {
+            id,
             CampaignId,
             ProductName,
-            CampaignId,
             PageName,
             OfferId,
             StoreId,
@@ -149,7 +149,7 @@ const coupons = {
           };
           this.printBanner(content, {
             data,
-            id: CampaignId,
+            id,
             isUsed: LoadedOnCard,
             title: Header,
             discount: OfferCondition.Conditions[0],
