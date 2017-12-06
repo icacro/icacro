@@ -47,6 +47,8 @@ import './style.css';
     addCoupon(coupon) {
       const couponItem = $ELM.create('coupons-container__item');
       const img = $ELM.create('img');
+      const wrapper = $ELM.create('coupons-container__item-wrapper');
+      const imageWrapper = $ELM.create('coupons-container__item-image-wrapper');
       const title = $ELM.create('h3');
       const discount = $ELM.create('h1');
       const subtitle = $ELM.create('h4');
@@ -103,7 +105,9 @@ import './style.css';
           button.text('Kupong laddad');
         }
       });
-      couponItem.appendAll(img, title, discount, subtitle, moreInfo, button);
+      imageWrapper.append(img);
+      wrapper.appendAll(title, discount, subtitle, moreInfo);
+      couponItem.appendAll(imageWrapper, wrapper, button);
       return couponItem;
     },
     addBanner(banner) {
@@ -160,13 +164,8 @@ import './style.css';
         ul.append(this.addBanner(banner));
       });
       header.append(ul);
-      // console.log(ul.children('li')[0].height());
-      // ul.style({
-      //   width: `${100 * banners.length}%`,
-      //   // height: `${ul.children('li')[0].height().toString()}px`,
-      // });
       $('.cro-slider').slick({
-        adaptiveHeight: true
+        adaptiveHeight: true,
       });
     },
     addIcaCard() {
@@ -186,13 +185,8 @@ import './style.css';
     },
     dinnerTonight() {
       const container = $ELM.get('.search-recipe-container');
-      const recipeTrendingList = $ELM.get('.recipe-trending-list');
-      const img = $ELM.create('img').image('/imagevaultfiles/id_124300/cf_259/nyttiga_recept.jpg');
-      const seeAll = $ELM.copy('.search-recipe-container__all-recipes');
-      this.removeElements(['.search-recipe-container__all-recipes']);
-      recipeTrendingList.append(seeAll);
-      container.appendFirst(img);
-      container.get('h1').text('Vad blir det för middag ikväll?');
+      this.removeElements(['.recipe-trending-list h2']);
+      container.get('h1').text('Vad är du sugen på?');
     },
     manipulateDom() {
       this.removeElements([
@@ -237,6 +231,9 @@ import './style.css';
     createOffers() {
       const main = $ELM.get('.main');
       const container = $ELM.create('div coupon-banner');
+      container.click(() => {
+        window.location.href = '/erbjudanden/butikserbjudanden/alla-digitala-kuponger/';
+      });
       const offerButton = $ELM.create('a .button offers-button').text('Gå till ICAs kuponger').href('/erbjudanden/butikserbjudanden/alla-digitala-kuponger/');
       const img = $ELM.create('img').image('https://raw.githubusercontent.com/Banzaci/ica/master/src/start-page/Coupons_image.png');
       container.appendAll(img, offerButton);
