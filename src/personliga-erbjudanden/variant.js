@@ -838,8 +838,8 @@ import { ICACRO, $ELM } from '../util/main';
       if (hj) {
         hj('trigger', name);
       }
-  },
-},
+    },
+  };
 
   $(document).ready(() => {
     Object.assign(test, ICACRO());
