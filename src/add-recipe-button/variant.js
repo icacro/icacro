@@ -1,6 +1,6 @@
 // ==UserScript==
-// @name         testName
-// @path         testPath
+// @name         Add-recipe-button
+// @path         //./src/add-recipe-button/variant.js
 // @namespace    http://tampermonkey.net/
 // @version      0.1
 // @match        https://www.ica.se/*
@@ -13,7 +13,7 @@ import { ICACRO, $ELM } from '../util/main';
 
 import './style.css';
 
-if (hj) hjf;// eslint-disable-line
+if (hj) hj('trigger','variant6');// eslint-disable-line
 
 function init() {
   const test = {

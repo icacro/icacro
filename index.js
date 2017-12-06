@@ -17,7 +17,7 @@ try {
     fs.mkdirSync(path);
     const outFile = `${path}/variant.js`;
     const outLoader = `${path}/loader.js`;
-    const outStyle = `${path}/style.js`;
+    const outStyle = `${path}/style.css`;
     fs.copy('./src/.template/variant.js', outFile, { replace: false }, () => {
       sed('-i', 'hjf', `hj('trigger','variant${files.length}')`, outFile);
       sed('-i', 'testPath', `//${outFile}`, outFile);
@@ -26,7 +26,7 @@ try {
     fs.copy('./src/.template/loader.js', outLoader, { replace: false }, () => {
       sed('-i', '#project', project, outLoader);
     });
-    fs.copy('./src/.template/style.js', outStyle, { replace: false });
+    fs.copy('./src/.template/style.css', outStyle, { replace: false });
   });
 } catch (e) {
   console.error(e.name + ': ' + e.message);
