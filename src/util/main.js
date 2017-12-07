@@ -108,12 +108,15 @@ function $ELM_ELEMENT(element) {
       throw new Error(`${args} Element does not exist! Function 'get'`);
     },
     children(arg) {
-      if (arg) {
-        const list = Array.from(element.getElementsByTagName(arg));
+      if (element) {
+        if (arg) {
+          const list = Array.from(element.getElementsByTagName(arg));
+          return list.map(child => new $ELM_ELEMENT(child));
+        }
+        const list = Array.from(element.childNodes);
         return list.map(child => new $ELM_ELEMENT(child));
       }
-      const list = Array.from(element.childNodes);
-      return list.map(child => new $ELM_ELEMENT(child));
+      return [];
     },
     style(stl) {
       if (element) {
