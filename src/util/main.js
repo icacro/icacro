@@ -6,6 +6,8 @@ eslint no-param-reassign: [
 /* eslint no-use-before-define: ["error", { "functions": false }] */
 /* eslint-env es6 */
 import Storage from './modules/storage';
+import Element from './element';
+import CreateElement from './create-element';
 
 const reservedElements = ['div', 'body', 'head', 'img', 'style', 'span', 'ul', 'li', 'input', 'button', 'h1', 'h2', 'h3', 'h4', 'a', 'p', 'strong', 'svg'];
 const GetElement = selector => document.querySelector(selector);
@@ -166,25 +168,25 @@ function $ELM_ELEMENT(element) {
   };
 }
 
-const CreateElement = (arg, options) => {
-  if (arg instanceof HTMLElement) return new $ELM_ELEMENT(arg);
-  const arr = arg.split(' ');
-  const type = arr.reduce((acc, current) => {
-    if (reservedElements.includes(current)) {
-      return current;
-    }
-    return acc;
-  }, 'div');
-  const classNames = arr.filter(current => !reservedElements.includes(current)).join();
-  const dom = document.createElement(type);
-  if (options) {
-    Object.keys(options).forEach((option) => {
-      const value = options[option];
-      dom[option] = value;
-    });
-  }
-  return new $ELM_ELEMENT(dom).css(classNames);
-};
+// const CreateElement = (arg, options) => {
+//   if (arg instanceof HTMLElement) return new $ELM_ELEMENT(arg);
+//   const arr = arg.split(' ');
+//   const type = arr.reduce((acc, current) => {
+//     if (reservedElements.includes(current)) {
+//       return current;
+//     }
+//     return acc;
+//   }, 'div');
+//   const classNames = arr.filter(current => !reservedElements.includes(current)).join();
+//   const dom = document.createElement(type);
+//   if (options) {
+//     Object.keys(options).forEach((option) => {
+//       const value = options[option];
+//       dom[option] = value;
+//     });
+//   }
+//   return new $ELM_ELEMENT(dom).css(classNames);
+// };
 
 const CreateElementByObject = (type, iterable) => {
   const element = CreateElement(type);
@@ -212,11 +214,11 @@ export const $ELM = {
   get(...args) {
     if (args.length === 1) {
       const key = Number.isInteger(parseInt(args[0], 10)) ? parseInt(args[0], 10) : args[0];
-      return this.elms[key] || new $ELM_ELEMENT(GetElement(key));
+      return this.elms[key] || new Element(GetElement(key));
     }
     return args.map((arg) => {
       const key = Number.isInteger(parseInt(arg, 10)) ? parseInt(arg, 10) : arg;
-      return this.elms[key] || new $ELM_ELEMENT(GetElement(key));
+      return this.elms[key] || new Element(GetElement(key));
     });
   },
   save(id, element) {

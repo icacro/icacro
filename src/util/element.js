@@ -1,4 +1,4 @@
-export default class {
+class Element {
   constructor(element) {
     this.element = element;
   }
@@ -6,18 +6,43 @@ export default class {
     if (this.element) {
       const [attr, value] = args.length === 2 ? [...args] : args[0].split(':');
       if (value) {
-        this.dom.setAttribute(attr, value);
+        this.element.setAttribute(attr, value);
         return this;
       }
-      return this.dom.getAttribute(attr);
+      return this.element.getAttribute(attr);
     }
     throw new Error(`${args} Element does not exist! Function 'attr'`);
   }
+  hide() {
+    this.style({
+      display: 'none',
+    });
+  }
+  remove() {
+    this.element.parentNode.removeChild(this.element);
+  }
+  copy(selector) {
+    const child = this.element.querySelector(selector);
+    if (child) {
+      return new Element(child.cloneNode(true));
+    }
+    throw new Error(`${selector} Element does not exist! Function 'copy'`);
+  }
   rect(arg) {
-    return this.dom.getBoundingClientRect()[arg];
+    return this.element.getBoundingClientRect()[arg];
   }
   height() {
     return this.rect('height');
+  }
+  insertAfter(targetName) {
+    if (this.element) {
+      const target = (targetName.name === this.name) ?
+        targetName :
+        new Element(document.querySelector(targetName));
+      this.element.parentNode.insertBefore(target.element, this.element.nextSibling);
+      return this;
+    }
+    throw new Error(`${targetName} Element does not exist! Function 'insertAfter'`);
   }
   click(callback) {
     if (this.element) {
@@ -67,8 +92,9 @@ export default class {
   }
   append(child) {
     const c = child.nodeType ? child : child.element;
+    console.log(c);
     if (this.element) {
-      this.element.appendChild(c);
+      // this.element.appendChild(c);
       return this;
     }
     throw new Error(`${child} Element does not exist! Function 'append'`);
@@ -121,3 +147,5 @@ export default class {
     throw new Error(`${key} ${value} Element does not exist! Function 'data'`);
   }
 }
+
+export default Element;
