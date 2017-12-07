@@ -18,10 +18,21 @@ import './style.css';
   const test = {
     manipulateDom() {
       const section = $ELM.get('#ingredients-section');
-      this.createCoupons().forEach(c => section.append(c));
+      section.append(this.createCoupons());
+
+      $('.coupon-list').slick({
+        dots: true,
+        arrows: false,
+        autoplay: true,
+        autoplaySpeed: 5000,
+        fade: true,
+        slidesToShow: 1,
+      });
     },
     createCoupons() {
-      return loadedCupons.map(this.createCoupon);
+      const container = $ELM.create('coupon-list');
+      loadedCupons.forEach(c => container.append(this.createCoupon(c)));
+      return container;
     },
     createCoupon(coupon) {
       const wrapper = $ELM.create('personal-offer__coupon');
@@ -57,6 +68,12 @@ import './style.css';
     loadCoupons() {
       const oldCoupons = $ELM.get('.slick-track').children();
       const ids = oldCoupons.map(c => /kampanj\/hse\/(\d+)/.exec(c.attr('href'))[1]);
+      this.removeElements(['.recipe-ad']);
+
+      if (oldCoupons.length === 0) {
+        return Promise.reject();
+      }
+
       return Promise.all(ids.map(this.loadCouponData));
     },
     loadCouponData(id) {
@@ -136,9 +153,12 @@ import './style.css';
   $(document).ready(() => {
     Object.assign(test, ICACRO());
 
-    test.loadCoupons().then(() => {
-      test.manipulateDom();
-      // if (hj) hj('trigger', 'variant6');
-    });
+    test.loadCoupons().then(
+      () => {
+        test.manipulateDom();
+        // if (hj) hj('trigger', 'variant6');
+      },
+      () => {}, // couldn't find coupons
+    );
   });
 })(jQuery);
