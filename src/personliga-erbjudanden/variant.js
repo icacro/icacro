@@ -94,6 +94,8 @@ import { ICACRO, $ELM } from '../util/main';
         margin-bottom: 0;
       }
 
+      .hse-recipe-list .coupon-load-wrapper { margin-top: 10px; }
+
       .hse-recipe-list .coupon-load-wrapper .button--load-coupon {
         font-size: 12px;
         align-items: center;
@@ -619,7 +621,7 @@ import { ICACRO, $ELM } from '../util/main';
             function appendHeader() {
               const e = $('.cro-iframe-container iframe').contents().find('h1');
               if (e.length) {
-                e.append(' för ladda kupongen');
+                e.append(' för att ladda kupongen');
                 e.css({ 'font-family': 'icahand, arial, sans-serif', 'font-size': '3rem' });
 
                 if (window.screen.width < 768) {
@@ -647,7 +649,7 @@ import { ICACRO, $ELM } from '../util/main';
             function addIframeTracking() {
               const e = $('.cro-iframe-container iframe').contents();
               if (e.length) {
-                const eventAction = 'Spara recept från startsidan';
+                const eventAction = 'Ladda kupong från riktat erbjudande på Mitt ICA';
 
                 // Fortsätt (Mobilt BankId)
                 e.find('#submit-login-mobile-bank-id').on('click', () => {
@@ -710,12 +712,6 @@ import { ICACRO, $ELM } from '../util/main';
               e.preventDefault();
             });
         });
-
-        // trigga hotjar heatmap första gången modalen öppnats
-        // if (typeof hj === 'function' && !self.hotjarTriggered) {
-        //     hj('trigger', 'variant');
-        //     self.hotjarTriggered = true;
-        // }
       }, 50);
     },
     addNotification() {
@@ -745,7 +741,7 @@ import { ICACRO, $ELM } from '../util/main';
         right: 0;
       }
       .cro .offer-notification span {
-        margin-left: 5px;
+        padding: 5px;
         cursor: pointer;
       }
       .cro .offer-notification svg {
@@ -759,8 +755,7 @@ import { ICACRO, $ELM } from '../util/main';
       }
       .cro .offer-notification a {
         display: inline-block;
-        background-color: #F5E9F0;
-        padding: 15px 13px 13px 13px;
+        padding: 15px 13px 13px 5px;
       }
       `;
       this.style(css);
