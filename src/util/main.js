@@ -144,6 +144,16 @@ function $ELM_ELEMENT(element) {
         display: 'none',
       });
     },
+    remove() {
+      element.parentNode.removeChild(element);
+    },
+    copy(selector) {
+      const child = element.querySelector(selector);
+      if (child) {
+        return CreateElement(child.cloneNode(true));
+      }
+      throw new Error(`${selector} Element does not exist! Function 'copy'`);
+    },
     data(key, value) {
       if (element) {
         if (!value) return element.dataset[key];
