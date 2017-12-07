@@ -619,7 +619,7 @@ import { ICACRO, $ELM } from '../util/main';
             function appendHeader() {
               const e = $('.cro-iframe-container iframe').contents().find('h1');
               if (e.length) {
-                e.append(' för ladda kupongen');
+                e.append(' för att ladda kupongen');
                 e.css({ 'font-family': 'icahand, arial, sans-serif', 'font-size': '3rem' });
 
                 if (window.screen.width < 768) {
@@ -647,7 +647,7 @@ import { ICACRO, $ELM } from '../util/main';
             function addIframeTracking() {
               const e = $('.cro-iframe-container iframe').contents();
               if (e.length) {
-                const eventAction = 'Spara recept från startsidan';
+                const eventAction = 'Ladda kupong från riktat erbjudande på Mitt ICA';
 
                 // Fortsätt (Mobilt BankId)
                 e.find('#submit-login-mobile-bank-id').on('click', () => {
