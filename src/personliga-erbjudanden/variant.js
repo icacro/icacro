@@ -493,8 +493,8 @@ import { ICACRO, $ELM } from '../util/main';
     },
     changeOfferStatus(response) {
       if (response.ok) {
-        $ELM('.hse-recipe-list').css('offer-loaded');
-        $ELM('.button--load-coupon').text('Kupong laddad');
+        $ELM.get('.hse-recipe-list').css('offer-loaded');
+        $ELM.get('.button--load-coupon').text('Kupong laddad');
       }
     },
     loaderIsActive: false,
