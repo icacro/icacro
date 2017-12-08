@@ -33,10 +33,18 @@ class Element {
     }
     throw new Error(`${callback} Element does not exist! Function 'click'`);
   }
+  value() {
+    return this.element.value;
+  }
+  placeholder() {
+    return this.element.placeholder;
+  }
   copy(selector) {
-    const child = this.element.querySelector(selector);
-    if (child) {
-      return new Element(child.cloneNode(true));
+    if (this.element) {
+      const child = this.element.querySelector(selector);
+      if (child) {
+        return new Element(child.cloneNode(true));
+      }
     }
     throw new Error(`${selector} Element does not exist! Function 'copy'`);
   }

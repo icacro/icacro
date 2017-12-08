@@ -12,5 +12,5 @@
 
 var script = document.createElement('script');
 script.setAttribute('async', '');
-script.setAttribute('src', 'https://cdn.rawgit.com/Banzaci/ica/master/src/kupong-receptsidan/variant.min.js');
+script.setAttribute('src', 'https://cdn.rawgit.com/Banzaci/ica/v1.0.20/src/kupong-receptsidan/variant.min.js');
 document.querySelector('head').appendChild(script);

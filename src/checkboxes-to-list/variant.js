@@ -36,12 +36,21 @@ function init() {
       container.append(step);
       return container;
     },
+    sendList(checkedItems) {
+      return Promise.all(checkedItems.map((formData) => {
+        return this.ajax('https://www.ica.se/Templates/ShoppingListTemplate/Handlers/ShoppingListHandler.ashx', {
+          method: 'POST',
+          body: formData,
+        });
+      }));
+    },
     click(e) {
       const element = ELM.create(e);
       const id = element.data('id');
       const secureid = element.data('secureid');
       const items = ELM.get('.recipe-content').children('.ingredients__list__item');
-
+      const listElement = ELM.get('.add-shoppinglist__input');
+      const listName = listElement.element && (listElement.value() || listElement.placeholder());
       const checkedItems = items
         .filter(item => item.find('.checkbox__input').element.checked)
         .map((item) => {
@@ -50,17 +59,15 @@ function init() {
           formData.append('productName', item.text());
           formData.append('shoppingListId', id);
           formData.append('shoppingListSecureId', secureid);
+          formData.append('shoppingListName', listName);
           return formData;
         });
 
-
-      return Promise.all(checkedItems.map((formData) => {
-        console.log(formData);
-        return this.ajax('https://www.ica.se/Templates/ShoppingListTemplate/Handlers/ShoppingListHandler.ashx', {
-          method: 'POST',
-          body: formData,
-        });
-      }));
+      this.sendList(checkedItems);
+      this.closeListModal();
+    },
+    closeListModal() {
+      ELM.get('.modal-container').html(' ');
     },
     modal(element) {
       const lists = element.children('.shoppinglists__item');
@@ -80,8 +87,11 @@ function init() {
       });
       const btnGroup = ELM.get('.button-group');
       const newBtnAdd = btnGroup.copy('.js-add-to-new-shoppinglist');
-      ELM.get('.js-add-to-new-shoppinglist').remove();
-      btnGroup.appendFirst(newBtnAdd);
+      if (newBtnAdd) {
+        ELM.get('.js-add-to-new-shoppinglist').remove();
+        btnGroup.click(this.click.bind(this, newBtnAdd.element))
+        btnGroup.appendFirst(newBtnAdd);
+      }
     },
     appendCheckboxes() {
       const items = ELM.get('.recipe-content').children('.ingredients__list__item');
