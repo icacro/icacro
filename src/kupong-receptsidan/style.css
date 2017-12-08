@@ -38,6 +38,11 @@
   width: 100%;
 }
 
+.cro .hse-recipe-list .coupon-load-wrapper .button--load-coupon.is-used {
+  background: #F7F7F7;
+  color: rgba(141,183,44,1);
+}
+
 .hse-recipe-list__offer-content {
   width: 50%;
   padding: 0 20px;

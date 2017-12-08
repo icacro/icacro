@@ -127,13 +127,16 @@ class Element {
     throw new Error(`${args} Element does not exist! Function 'get'`);
   }
   children(arg) {
-    if (arg) {
-      const func = ReservedElements.some(elm => elm === arg) ? ['getElementsByTagName'] : ['querySelectorAll'];
-      const list = Array.from(this.element[func](arg));
+    if (this.element) {
+      if (arg) {
+        const func = ReservedElements.some(elm => elm === arg) ? ['getElementsByTagName'] : ['querySelectorAll'];
+        const list = Array.from(this.element[func](arg));
+        return list.map(child => new Element(child));
+      }
+      const list = Array.from(this.element.childNodes);
       return list.map(child => new Element(child));
     }
-    const list = Array.from(this.element.childNodes);
-    return list.map(child => new Element(child));
+    throw new Error(`${arg} Element does not exist! Function 'children'`);
   }
   find(classname) {
     return new Element(this.element.querySelector(classname));

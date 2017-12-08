@@ -1,7 +1,10 @@
 import CreateElement from './create-element';
 import Element from './element';
 
-const GetElement = selector => document.querySelector(selector);
+const GetElement = (selector) => {
+  if (selector instanceof HTMLElement) return selector;
+  return document.querySelector(selector);
+};
 
 export function get(...args) {
   if (args.length === 1) {

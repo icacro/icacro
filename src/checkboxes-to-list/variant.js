@@ -40,14 +40,18 @@ function init() {
       const id = element.data('id');
       const secureid = element.data('secureid');
       const items = ELM.get('.recipe-content').children('.ingredients__list__item');
-      const formData = new FormData();
-      formData.append('CommandName', 'AddRow');
-      formData.append('productName', 'TACKY');
-      formData.append('shoppingListId', id);
-      formData.append('shoppingListSecureId', secureid);
-      // const checkedItems = items
-      //   .filter(item => item.find('.checkbox__input').element.checked)
-      //   .map(item => item.text());
+
+      const checkedItems = items
+        .filter(item => item.find('.checkbox__input').element.checked)
+        .map((item) => {
+          const formData = new FormData();
+          formData.append('CommandName', 'AddRow');
+          formData.append('productName', item.text());
+          formData.append('shoppingListId', id);
+          formData.append('shoppingListSecureId', secureid);
+          return formData;
+        });
+
       this.ajax('https://www.ica.se/Templates/ShoppingListTemplate/Handlers/ShoppingListHandler.ashx', {
         method: 'POST',
         body: formData,

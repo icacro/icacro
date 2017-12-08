@@ -8,6 +8,7 @@
 // ==/UserScript==
 
 import { ICACRO, $ELM } from '../util/main';
+
 require('./style.css');
 
 (function ($) {
@@ -112,7 +113,7 @@ require('./style.css');
       event.preventDefault();
       this.deactivateCoupon(data.CampaignId);
       if (this.isLoggedIn()) {
-        const response = await this.loadCouponOnCard(data);
+        await this.loadCouponOnCard(data);
         icadatalayer.add('HSE', {
           HSE: {
             action: 'coupon-loaded',
@@ -146,7 +147,6 @@ require('./style.css');
             const data = {
               CampaignId,
               ProductName,
-              CampaignId,
               PageName,
               OfferId,
               StoreId,

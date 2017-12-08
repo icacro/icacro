@@ -19,8 +19,6 @@ export function proxyTest(element) {
 export function ajax(...args) {
   const [url, options] = args;
   const ops = Object.assign({}, { method: 'get' }, options);
-  console.log(url);
-  console.log(ops);
   return fetch(url, ops)
     .then(response => response.json())
     .catch(err => err);

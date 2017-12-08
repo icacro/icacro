@@ -7,7 +7,6 @@ eslint no-param-reassign: [
 /* eslint-env es6 */
 
 import { create, get, copy } from './functions';
-import { ajax } from './utils';
 
 export const ELM = {
   create,
@@ -15,9 +14,7 @@ export const ELM = {
   copy,
 };
 
-export const CROUTIL = () => {
+export const CROUTIL = (funcs) => {
   get('body').css('cro');
-  return {
-    ajax,
-  };
+  return funcs;
 };
