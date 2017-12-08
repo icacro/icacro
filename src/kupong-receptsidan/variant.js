@@ -125,7 +125,6 @@ import './style.css';
         self.showLoader();
 
         const iframe = $('.cro-iframe-container iframe');
-
         iframe.on('load', function () {
           const regex = new RegExp(`^${window.location.href}$`, 'gi');
           if (regex.test(this.contentWindow.location)) {
@@ -141,7 +140,6 @@ import './style.css';
             const appendHeaderDeferred = $.Deferred();
             const addStylesDeferred = $.Deferred();
             const addIframeTrackingDeferred = $.Deferred();
-
             $.when(
               hideHeaderBarDeferred,
               appendHeaderDeferred,
@@ -356,6 +354,9 @@ import './style.css';
     }));
     test.loadCoupons().then(
       () => {
+        const returnUrl = encodeURIComponent(window.location.href);
+        const iframeContainer = $(`<div class="cro-iframe-container"><span class="loader"></span><iframe src="//www.ica.se/logga-in/?returnurl=${returnUrl}" frameborder="0"></iframe></div>`);
+        $('body').append(iframeContainer);
         test.manipulateDom();
         // if (hj) hj('trigger', 'variant6');
       },

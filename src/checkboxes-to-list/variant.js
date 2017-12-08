@@ -10,6 +10,7 @@
 'use strict';
 
 import { CROUTIL, ELM } from '../util/main';
+import { ajax } from '../util/utils';
 
 import './style.css';
 
@@ -52,11 +53,14 @@ function init() {
           return formData;
         });
 
-      this.ajax('https://www.ica.se/Templates/ShoppingListTemplate/Handlers/ShoppingListHandler.ashx', {
-        method: 'POST',
-        body: formData,
-      });
-      // console.log(id, secureid, checkedItems);
+
+      return Promise.all(checkedItems.map((formData) => {
+        console.log(formData);
+        return this.ajax('https://www.ica.se/Templates/ShoppingListTemplate/Handlers/ShoppingListHandler.ashx', {
+          method: 'POST',
+          body: formData,
+        });
+      }));
     },
     modal(element) {
       const lists = element.children('.shoppinglists__item');
@@ -82,18 +86,11 @@ function init() {
     appendCheckboxes() {
       const items = ELM.get('.recipe-content').children('.ingredients__list__item');
       items.forEach((item) => {
-        // const ckeckbox = ELM.create('input', {
-        //   type: 'checkbox',
-        //   checked: true,
-        // });
-        // console.log(this.checkbox());
         item.appendFirst(this.checkbox());
       });
     },
     async manipulateDom() {
-      // ELM.get('.recipe-action-buttons').func.hide();
       this.appendCheckboxes();
-
       ELM.get('.js-open-shoppinglist-modal').click(() => {
         isWindowModalOpen((element) => {
           this.modal(element);
@@ -101,7 +98,9 @@ function init() {
       });
     },
   };
-  Object.assign(test, CROUTIL());
+  Object.assign(test, CROUTIL({
+    ajax,
+  }));
   test.manipulateDom();
 }
 

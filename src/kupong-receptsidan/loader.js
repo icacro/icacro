@@ -7,14 +7,10 @@
 // @grant        none
 // ==/UserScript==
 
-(function ($) {
-  'use strict';
-  const loadJS = (callback) => {
-    const project = 'kupong-receptsidan';
-    const script = document.createElement('script');
-    script.setAttribute('async', '');
-    script.setAttribute('src', `https://cdn.rawgit.com/Banzaci/ica/master/src/${project}/variant.min.js`);
-    document.querySelector('head').appendChild(script);
-  };
-  $(document).ready(loadJS);
-})(jQuery);
+
+'use strict';
+
+var script = document.createElement('script');
+script.setAttribute('async', '');
+script.setAttribute('src', 'https://cdn.rawgit.com/Banzaci/ica/master/src/kupong-receptsidan/variant.min.js');
+document.querySelector('head').appendChild(script);
