@@ -9,7 +9,7 @@
 
 'use strict';
 
-import { ICACRO, $ELM } from '../util/main';
+import { CROUTIL, ELM } from '../util/main';
 
 import './style.css';
 
@@ -18,13 +18,13 @@ import './style.css';
 function init() {
   const test = {
     manipulateDom() {
-      const container = $ELM.create('add-to-list');
-      $ELM.get('#ingredients-section h2').insertAfter(container);
-      container.append($ELM.get('.coachmark-arrow--left-up'));
-      container.append($ELM.get('.js-open-shoppinglist-modal'));
+      const container = ELM.create('add-to-list');
+      ELM.get('#ingredients-section h2').insertAfter(container);
+      container.append(ELM.get('.coachmark-arrow--left-up'));
+      container.append(ELM.get('.js-open-shoppinglist-modal'));
     },
   };
-  Object.assign(test, ICACRO());
+  Object.assign(test, CROUTIL());
   test.manipulateDom();
 }
 
