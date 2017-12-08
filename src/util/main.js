@@ -117,13 +117,14 @@ function $ELM_ELEMENT(element) {
       throw new Error(`${args} Element does not exist! Function 'get'`);
     },
     children(arg) {
-      if (arg) {
-        const func = reservedElements.some(elm => elm === arg) ? ['getElementsByTagName'] : ['querySelectorAll'];
-        const list = Array.from(element[func](arg));
-        return list.map(child => new $ELM_ELEMENT(child));
+      if (element) {
+        if (arg) {
+          const func = reservedElements.some(elm => elm === arg) ? ['getElementsByTagName'] : ['querySelectorAll'];
+          const list = Array.from(element[func](arg));
+          return list.map(child => new $ELM_ELEMENT(child));
+        }
       }
-      const list = Array.from(element.childNodes);
-      return list.map(child => new $ELM_ELEMENT(child));
+      return [];
     },
     style(stl) {
       if (element) {
