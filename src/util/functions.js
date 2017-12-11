@@ -6,6 +6,8 @@ const GetElement = (selector) => {
   return document.querySelector(selector);
 };
 
+const GetElements = selector => document.querySelectorAll(selector);
+
 export function get(...args) {
   if (args.length === 1) {
     const key = Number.isInteger(parseInt(args[0], 10)) ? parseInt(args[0], 10) : args[0];
@@ -15,6 +17,10 @@ export function get(...args) {
     const key = Number.isInteger(parseInt(arg, 10)) ? parseInt(arg, 10) : arg;
     return new Element(GetElement(key));
   });
+}
+
+export function elements(arg) {
+  return Array.from(GetElements(arg)).map(elm => new Element(elm));
 }
 
 export function create(args, options) {

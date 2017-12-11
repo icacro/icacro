@@ -9,7 +9,7 @@
 
 import { CROUTIL, ELM } from '../util/main';
 import { isLoggedIn, storage, ajax } from '../util/utils';
-import { removeElements } from '../util/functions';
+import { removeElements, elements } from '../util/functions';
 
 import './style.css';
 
@@ -34,8 +34,7 @@ import './style.css';
         fade: true,
         slidesToShow: 1,
       });
-
-      ELM.get('.js-loggin-btn').click(this.onClick.bind(this));
+      this.elements('.js-loggin-btn').forEach(element => element.click(this.onClick.bind(this)));
     },
     createCoupons() {
       const container = ELM.create('coupon-list');
@@ -47,8 +46,10 @@ import './style.css';
     },
     onClick(e) {
       e.preventDefault();
+
       const target = ELM.get(e.currentTarget);
       const id = target.data('id');
+
       const {
         PageName,
         CampaignId,
@@ -115,7 +116,7 @@ import './style.css';
     },
     createModal(action = LOGIN_ACTION.SAVE_RECIPE) {
       const self = this;
-      const modal = new coreComponents.modal({
+      new coreComponents.modal({
         tpl: $('.cro-iframe-container').get(0),
         size: 'md',
         container: $('.modal-container').get(0),
@@ -351,13 +352,14 @@ import './style.css';
       ajax,
       isLoggedIn,
       storage,
+      elements,
     }));
     test.loadCoupons().then(
       () => {
         const returnUrl = encodeURIComponent(window.location.href);
         const iframeContainer = $(`<div class="cro-iframe-container"><span class="loader"></span><iframe src="//www.ica.se/logga-in/?returnurl=${returnUrl}" frameborder="0"></iframe></div>`);
         $('body').append(iframeContainer);
-        test.manipulateDom();
+        test.manipulateDom({});
         // if (hj) hj('trigger', 'variant6');
       },
       () => {}, // couldn't find coupons
