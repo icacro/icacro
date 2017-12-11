@@ -16,10 +16,37 @@
     addStyles: function () {
       var styles = '<style type="text/css">' +
           '.cro .controls .sort { margin-top: 56px !important; }' +
-          '.cro .controls .searchfield { height: 41px !important; background-position: 100% -45px !important; }' +
-          '.cro .searchfield input { font-size: 14px !important; height: 41px !important; background-position: 0 -45px !important; padding-left: 15px !important; }' +
-          '.cro .searchfield button { top: 12px !important; background-position: -68px -761px !important; right: 13px !important; }' +
-          '.cro .searchfield .autocomplete { top: 51px !important; }' +
+          '.cro .controls .searchfield {' +
+          '  height: 41px !important;' +
+          '  margin: 0 !important;' +
+          '  background-image: none;' +
+          '}' +
+          '.cro .searchfield input {' +
+          '  height: 41px !important;' +
+          '  padding-left: 15px !important;' +
+          '  margin: 0 !important;' +
+          '  background-image: none;' +
+          '  font-size: 16px !important;' +
+          '  border-bottom: solid 1px #eee !important;' +
+          '  font-weight: bold !important;' +
+          '}' +
+          '.cro .dashboard .controls .searchfield input::-moz-placeholder {' +
+          '  color: #BDBDBB !important;' +
+          '}' +
+          '.cro .dashboard .controls .searchfield input::-webkit-input-placeholder {' +
+          '  color: #BDBDBB !important;' +
+          '}' +
+          '.cro .searchfield button {' +
+          '  top: 12px !important;' +
+          '  background-position: -198px -2117px !important;' +
+          '  right: 13px !important;' +
+          '  opacity: 0.7 !important;' +
+          '}' +
+          '.cro .searchfield .autocomplete.popover {' +
+          '  top: 41px !important;' +
+          '  right: 0;' +
+          '  left: 0;' +
+          '}' +
           '.cro .peakHours { margin: 10px 0px 20px; display: flex; align-items: flex-end; min-height: 30px; }' +
           '.cro .peakHours .bar { color:#696969; border-bottom: 1px solid #696969; position: relative; flex-grow: 1; margin: 0 1px; }' +
           '.cro .loader { position: relative; margin: 0 auto; position: relative; margin: 20px auto 0; left: 0;}' +
@@ -66,8 +93,8 @@
         var selectedSortText = $('<span class="text"></span>').text(sortList.find('.active').text());
         var selectedSort = $('<div class="selectedSort"></div>').append(selectedSortText)
         .append(`<svg class="arrow" viewBox="0 0 32 32" width="15px" height="15px">
-  <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/Assets/icons/sprite.svg#arrow-up"></use>
-</svg>`)
+            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/Assets/icons/sprite.svg#arrow-up"></use>
+          </svg>`)
         .click(function () {
           $(this).parent().toggleClass('open');
         });
@@ -84,6 +111,27 @@
         } else {
           $('.sort').css('display', 'block');
         }
+
+        if (!$('.cto-to-online-modal').length) {
+          $('body').append(`
+            <div class="cto-to-online-modal">
+              Skriv in din e-postadress för att bli meddelad när denna funktion är släppt!
+              <input type="email" placeholder="namn@epost.se" />
+              <button class="button">
+                Skicka
+              </button>
+            </div>`);
+        }
+        var onlineCta = $('<a href="#">Klicka här för att köpa varorna i listan</a>');
+        onlineCta.click(function () {
+          // const modal = new coreComponents.modal({
+          //   tpl: $('.cto-to-online-modal').get(0),
+          //   size: 'md',
+          //   container: $('.modal-container').get(0),
+          // });
+          window.triggerAsModal(onlineCta, '.cto-to-online-modal-content');
+        });
+        $('.shoppinglist_choose').before(onlineCta);
       });
 
       $(document).ajaxComplete(function (event, xhr, settings) {
@@ -169,14 +217,14 @@
       item = item.replace ? item.replace(/"/g, '') : item;
 
       var $newItem = $(`
-<li class="item" data-categoryid="7">
-  <span class="text">
-    <span class="name">${$.trim(item)}</span>
-    <span class="amount">
-  </span>
-  <span class="unit"></span></span><span class="checkbox"></span>
-</li>
-`);
+        <li class="item" data-categoryid="7">
+          <span class="text">
+            <span class="name">${$.trim(item)}</span>
+            <span class="amount">
+          </span>
+          <span class="unit"></span></span><span class="checkbox"></span>
+        </li>
+        `);
       var $shoppingList = $('#inkopslistor');
       var $items = $('.list .shopping-items', $shoppingList);
       var $insertionPoint;
