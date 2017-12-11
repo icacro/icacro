@@ -144,7 +144,7 @@ class Element {
       const list = Array.from(this.element.childNodes);
       return list.map(child => new Element(child));
     }
-    throw new Error(`${arg} Element does not exist! Function 'children'`);
+    return [];
   }
   find(classname) {
     return new Element(this.element.querySelector(classname));

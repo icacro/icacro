@@ -9,6 +9,8 @@
 
 'use strict';
 
+import Guid from 'Guid';
+
 import { CROUTIL, ELM } from '../util/main';
 import { ajax } from '../util/utils';
 
@@ -36,38 +38,78 @@ function init() {
       container.append(step);
       return container;
     },
-    sendList(checkedItems) {
+    sendList(checkedItems, url) {
       return Promise.all(checkedItems.map((formData) => {
-        return this.ajax('https://www.ica.se/Templates/ShoppingListTemplate/Handlers/ShoppingListHandler.ashx', {
-          method: 'POST',
-          body: formData,
-        });
+        return ICA.ajax.post(url, formData);
       }));
     },
     click(e) {
+      const {
+        listName,
+        items,
+        id,
+        secureId,
+      } = this.getProps(e);
+      const addItemsUrl = '/Templates/ShoppingListTemplate/Handlers/ShoppingListHandler.ashx';
+      const recipes = items
+        .filter(item => item.find('.checkbox__input').element.checked)
+        .map(item => ({
+          CommandName: 'AddRow',
+          productName: item.text(),
+          shoppingListId: id,
+          shoppingListSecureId: secureId,
+          shoppingListName: listName,
+        }));
+      this.sendList(recipes, addItemsUrl);
+
+      this.closeListModal();
+    },
+    getProps(e) {
       const element = ELM.create(e);
       const id = element.data('id');
-      const secureid = element.data('secureid');
+      const secureId = element.data('secureid');
       const items = ELM.get('.recipe-content').children('.ingredients__list__item');
-      const listElement = ELM.get('.add-shoppinglist__input');
-      const listName = listElement.element && (listElement.value() || listElement.placeholder());
-      const checkedItems = items
-        .filter(item => item.find('.checkbox__input').element.checked)
-        .map((item) => {
-          const formData = new FormData();
-          formData.append('CommandName', 'AddRow');
-          formData.append('productName', item.text());
-          formData.append('shoppingListId', id);
-          formData.append('shoppingListSecureId', secureid);
-          formData.append('shoppingListName', listName);
-          return formData;
-        });
+      const recipeid = ELM.get('.rating-stars').data('recipeid');
 
-      this.sendList(checkedItems);
-      this.closeListModal();
+      return {
+        id,
+        secureId,
+        items,
+        recipeid,
+      };
     },
     closeListModal() {
       ELM.get('.modal-container').html(' ');
+    },
+    onAddNewList(e) {
+      const listElement = ELM.get('.add-shoppinglist__input');
+      const listName = listElement.element && (listElement.value() || listElement.placeholder());
+      const { recipeid, items } = this.getProps(e);
+      ICA.ajax.post('/Templates/ShoppingListTemplate/Handlers/ShoppingListHandler.ashx', {
+        CommandName: 'CreateShoppingList',
+        newShoppingListName: listName,
+      }).then((response) => {
+        const { message } = response;
+        const url = `/templates/ajaxresponse.aspx?ajaxFunction=AddToShoppingListView&type=recipe&GetAsJson=true&recipeId=${recipeid}&_=1512996023834`;
+        ICA.ajax.get(url)
+          .then((response1) => {
+            const res = JSON.parse(response1);
+            const listObj = res.customerShoppingLists.find(list => list.id === parseInt(message, 10));
+            const { secureId } = listObj;
+            const addItemsUrl = '/Templates/ShoppingListTemplate/Handlers/ShoppingListHandler.ashx';
+            const recipes = items
+              .filter(item => item.find('.checkbox__input').element.checked)
+              .map(item => ({
+                CommandName: 'AddRow',
+                productName: item.text(),
+                shoppingListId: message,
+                shoppingListSecureId: secureId,
+                shoppingListName: listName,
+              }));
+            this.sendList(recipes, addItemsUrl);
+          });
+      });
+      this.closeListModal();
     },
     modal(element) {
       const lists = element.children('.shoppinglists__item');
@@ -89,7 +131,7 @@ function init() {
       const newBtnAdd = btnGroup.copy('.js-add-to-new-shoppinglist');
       if (newBtnAdd) {
         ELM.get('.js-add-to-new-shoppinglist').remove();
-        btnGroup.click(this.click.bind(this, newBtnAdd.element))
+        btnGroup.click(this.onAddNewList.bind(this, newBtnAdd.element));
         btnGroup.appendFirst(newBtnAdd);
       }
     },
