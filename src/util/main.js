@@ -7,11 +7,13 @@ eslint no-param-reassign: [
 /* eslint-env es6 */
 
 import { create, get, copy } from './functions';
+import { push } from './utils';
 
 export const ELM = {
   create,
   get,
   copy,
+  push,
 };
 
 export const CROUTIL = (funcs) => {

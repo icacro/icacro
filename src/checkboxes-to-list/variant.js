@@ -9,7 +9,7 @@
 
 'use strict';
 
-import Guid from 'Guid';
+import { placeholder, text, find, html, value, hide, get, children, appendFirst, appendAll, click, copy, data, remove } from '../util/element-functions';
 
 import { CROUTIL, ELM } from '../util/main';
 import { ajax } from '../util/utils';
@@ -39,9 +39,7 @@ function init() {
       return container;
     },
     sendList(checkedItems, url) {
-      return Promise.all(checkedItems.map((formData) => {
-        return ICA.ajax.post(url, formData);
-      }));
+      return Promise.all(checkedItems.map(formData => ICA.ajax.post(url, formData)));
     },
     click(e) {
       const {
@@ -141,7 +139,23 @@ function init() {
         item.appendFirst(this.checkbox());
       });
     },
-    async manipulateDom() {
+    manipulateDom() {
+      ELM.push(
+        text,
+        find,
+        html,
+        value,
+        hide,
+        get,
+        children,
+        appendFirst,
+        appendAll,
+        click,
+        copy,
+        data,
+        remove,
+        placeholder,
+      );
       this.appendCheckboxes();
       ELM.get('.js-open-shoppinglist-modal').click(() => {
         isWindowModalOpen((element) => {

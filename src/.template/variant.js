@@ -9,7 +9,31 @@
 
 'use strict';
 
-import { ICACRO, $ELM } from '../util/main';
+import { CROUTIL, ELM } from '../util/main';
+import {
+  // rect,
+  // removeClass,
+  // href,
+  // image,
+  // insertAfter,
+  // placeholder,
+  // attr,
+  // view,
+  // text,
+  // find,
+  // html,
+  // value,
+  // hide,
+  // get,
+  // children,
+  // appendFirst,
+  // appendAll,
+  // click,
+  // copy,
+  // data,
+  // remove,
+  // toggle,
+} from '../util/element-functions';
 
 import './style.css';
 
@@ -20,6 +44,30 @@ function init() {
     manipulateDom() {},
   };
   Object.assign(test, ICACRO());
+  ELM.push(
+    // rect,
+    // removeClass,
+    // href,
+    // image,
+    // insertAfter,
+    // placeholder,
+    // attr,
+    // view,
+    // text,
+    // find,
+    // html,
+    // value,
+    // hide,
+    // get,
+    // children,
+    // appendFirst,
+    // appendAll,
+    // click,
+    // copy,
+    // data,
+    // remove,
+    // toggle,
+  );
   test.manipulateDom();
 }
 

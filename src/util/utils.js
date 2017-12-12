@@ -1,16 +1,21 @@
 import Storage from './modules/storage';
 import { get } from './functions';
-import { hide, view } from './element-functions';
 
 export const ReservedElements = ['label', 'div', 'body', 'head', 'img', 'style', 'span', 'ul', 'li', 'input', 'button', 'h1', 'h2', 'h3', 'h4', 'a', 'p', 'strong', 'svg'];
+
+const funcs = [];
 
 export function toArray(list) {
   return Array.prototype.slice.call(list);
 }
 
-export function proxyTest(element) {
+export function push(...args) {
+  funcs.push(...args);
+}
+
+export function functions(element) {
   const arr = {};
-  [hide, view].forEach((func) => {
+  funcs.forEach((func) => {
     arr[func.name] = func.bind(element);
   });
   return arr;
