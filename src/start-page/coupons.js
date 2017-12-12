@@ -1,4 +1,6 @@
-import { $ELM } from '../util/main';
+import { ELM } from '../util/main';
+import { getElementContentByTagAndAttr, save } from '../util/functions';
+import { ajax, storage } from '../util/utils';
 import './coupons-style.css';
 
 const coupons = {
@@ -26,7 +28,7 @@ const coupons = {
       imgHolder,
       readMore,
       downLoad,
-    ] = $ELM.create(
+    ] = ELM.create([
       `banner`,
       'banner-row',
       'banner-column',
@@ -39,7 +41,7 @@ const coupons = {
       `img`,
       'a',
       `button .button download ${isUsedClass}`,
-    );
+    ]);
     const buttonText = isUsed ? 'Kupong laddad' : 'Ladda kupong';
 
     imgHolder.image(img);
@@ -61,7 +63,7 @@ const coupons = {
     content.append(bannerElement);
 
     downLoad.click(event => this.onClick(event, data));
-    $ELM.save(id, bannerElement);
+    this.save(id, bannerElement);
 
     icadatalayer.add('HSE', {
       HSE: {
@@ -72,7 +74,7 @@ const coupons = {
     });
   },
   async loadCouponOnCard(data) {
-    await this.load(`/api/jsonhse/Claimoffer`, {
+    await this.ajax(`/api/jsonhse/Claimoffer`, {
       credentials: 'same-origin',
       method: 'POST',
       headers: {
@@ -90,7 +92,7 @@ const coupons = {
     }
   },
   deactivateCoupon(id) {
-    $ELM.get(id).get('button').css('is-used');
+    ELM.get(id).get('button').css('is-used');
   },
   async onClick(event, data) {
     event.preventDefault();
@@ -119,7 +121,7 @@ const coupons = {
   },
   loadBanners(ids, content) {
     ids.forEach((id) => {
-      this.load(`https://www.ica.se/api/jsonhse/${id}`, { credentials: 'same-origin' })
+      this.ajax(`https://www.ica.se/api/jsonhse/${id}`, { credentials: 'same-origin' })
         .then((response) => {
           const {
             PageName,
@@ -155,21 +157,27 @@ const coupons = {
             discount: OfferCondition.Conditions[0],
             preamble: `${Brand} ${SizeOrQuantity.Text}`,
             url: '',
-            img: Offer.Image.ImageUrl,
+            img: Offer.Image.ImageUrl.replace('http:', 'https:'),
           });
         });
     });
   },
   addIframe() {
     const returnUrl = encodeURIComponent(window.location.href);
-    const iframe = $ELM.create('cro-iframe-container');
+    const iframe = ELM.create('cro-iframe-container');
     const iframeContainer = `<span class="loader"></span><iframe src="//www.ica.se/logga-in/?returnurl=${returnUrl}" frameborder="0"></iframe>`;
     iframe.html(iframeContainer);
-    $ELM.get('body').append(iframe);
+    ELM.get('body').append(iframe);
   },
   manipulateDom(ICACRO, createModal) {
-    Object.assign(this, ICACRO, { createModal });
-    const content = $ELM.get('#content');
+    Object.assign(this, ICACRO, {
+      createModal,
+      getElementContentByTagAndAttr,
+      ajax,
+      save,
+      storage,
+    });
+    const content = ELM.get('#content');
     const regexp = /www.ica.se\/kampanj\/hse/g;
     const banners = this.getElementContentByTagAndAttr(regexp, 'a', 'href');
     const ids = banners.map(banner => banner.match(/\d+$/)[0]);
