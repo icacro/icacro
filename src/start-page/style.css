@@ -16,6 +16,19 @@ background-position: -438px -1885px;
 .slick-slide, .slick-track:focus {
   outline: none;
 }
+
+.cro .slick-dots li.slick-active button:before {
+  color: #EB1F07;
+}
+.cro .slick-dots li button:before {
+  color: #d5d7da;
+  opacity: 1;
+  font-size: 12px;
+}
+.cro .slick-dots button:hover {
+  background: none;
+}
+
 .start-page-icase #header {
   height: 100%;
 }
