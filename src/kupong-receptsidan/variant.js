@@ -60,6 +60,7 @@ import './style.css';
       const { OfferId, ProductName } = Offer;
 
       const dataObj = {
+        id,
         CampaignId,
         ProductName,
         PageName,
@@ -67,7 +68,7 @@ import './style.css';
         StoreId,
         StoreGroupId,
       };
-console.log(dataObj);
+
       if (this.isLoggedIn()) {
         this.deactivateCoupon(target);
         this.loadCouponOnCard(dataObj);
@@ -76,7 +77,7 @@ console.log(dataObj);
             action: 'coupon-loaded',
             name: PageName,
             offer: ProductName,
-            hseurl: `/kampanj/hse/${CampaignId}`,
+            hseurl: `/kampanj/hse/${id}`,
           },
         });
       } else {
@@ -84,7 +85,7 @@ console.log(dataObj);
           HSE: {
             action: 'login-mousedown',
             name: PageName,
-            hseurl: `/kampanj/hse/${CampaignId}`,
+            hseurl: `/kampanj/hse/${id}`,
           },
         });
         this.createModal(LOGIN_ACTION.LOAD_COUPON);
@@ -310,7 +311,6 @@ console.log(dataObj);
       return Promise.all(ids.map(this.loadCouponData));
     },
     loadCouponData(id) {
-      console.log(id);
       return loadedCupons[id]
         ? Promise.resolve(loadedCupons[id])
         : window.fetch(`/api/jsonhse/${id}`, { credentials: 'same-origin' })
@@ -320,28 +320,37 @@ console.log(dataObj);
             return json;
           });
     },
-    async loadCouponOnCard(dataObj) {
-      console.log('loadCouponOnCard: ', dataObj);
-      await this.ajax(`/api/jsonhse/Claimoffer`, {
+    loadCouponOnCard(dataObj) {
+      if (!dataObj) return Promise.reject();
+      const opts = {
+        OfferId: parseInt(dataObj.Offer.OfferId, 10),
+        CampaignId: parseInt(dataObj.CampaignId, 10),
+        StoreId: parseInt(dataObj.StoreId, 10),
+        StoreGroupId: parseInt(dataObj.StoreGroupId, 10),
+      };
+      return this.ajax(`/api/jsonhse/Claimoffer`, {
         credentials: 'same-origin',
         method: 'POST',
         headers: {
           Accept: 'application/json',
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(dataObj),
+        body: JSON.stringify(opts),
       });
     },
     checkActionCookie() {
-      const id = this.getActionCookie();
+      const id = this.storage.get('cro_personalOffer_actionCookie_loadCoupon');
       if (id && this.isLoggedIn()) {
-        this.loadCouponOnCard().then(this.changeOfferStatus);
+        this.loadCouponOnCard(loadedCupons[id]).then(this.changeOfferStatus.bind(this));
       }
     },
     changeOfferStatus(response) {
       if (response.ok) {
-        ELM.get('.hse-recipe-list').css('offer-loaded');
-        ELM.get('.button--load-coupon').text('Kupong laddad');
+        const id = this.storage.get('cro_personalOffer_actionCookie_loadCoupon');
+        const btn = ELM.get(`[data-id='${id}']`);
+        btn.css('is-used');
+        btn.text('Kupong laddad');
+        this.storage.remove('cro_personalOffer_actionCookie_loadCoupon');
       }
     },
   };
@@ -356,10 +365,11 @@ console.log(dataObj);
     }));
 
     test.loadCoupons().then(
-      (response) => {
+      () => {
         const returnUrl = encodeURIComponent(window.location.href);
         const iframeContainer = $(`<div class="cro-iframe-container"><span class="loader"></span><iframe src="//www.ica.se/logga-in/?returnurl=${returnUrl}" frameborder="0"></iframe></div>`);
         $('body').append(iframeContainer);
+        test.checkActionCookie();
         test.manipulateDom({});
         if (hj) hj('trigger', 'variant6');
       },
