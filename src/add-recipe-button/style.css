@@ -26,3 +26,7 @@
 .cro .js-open-shoppinglist-modal {
   margin-right: 30px;
 }
+
+.cro .servings-picker--dynamic {
+  float: none;
+}
