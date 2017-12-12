@@ -112,9 +112,9 @@
           $('.sort').css('display', 'block');
         }
 
-        if (!$('.cto-to-online-modal').length) {
+        if (!$('.cto-to-online-modal-content').length) {
           $('body').append(`
-            <div class="cto-to-online-modal">
+            <div class="cto-to-online-modal-content">
               Skriv in din e-postadress för att bli meddelad när denna funktion är släppt!
               <input type="email" placeholder="namn@epost.se" />
               <button class="button">
@@ -124,12 +124,7 @@
         }
         var onlineCta = $('<a href="#">Klicka här för att köpa varorna i listan</a>');
         onlineCta.click(function () {
-          // const modal = new coreComponents.modal({
-          //   tpl: $('.cto-to-online-modal').get(0),
-          //   size: 'md',
-          //   container: $('.modal-container').get(0),
-          // });
-          window.triggerAsModal(onlineCta, '.cto-to-online-modal-content');
+          $('<div></div').triggerAsModal($('.cto-to-online-modal-content'), 'cto-to-online-modal pl');
         });
         $('.shoppinglist_choose').before(onlineCta);
       });
