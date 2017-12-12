@@ -49,7 +49,6 @@ import './style.css';
 
       const target = ELM.get(e.currentTarget);
       const id = target.data('id');
-
       const {
         PageName,
         CampaignId,
@@ -60,7 +59,7 @@ import './style.css';
 
       const { OfferId, ProductName } = Offer;
 
-      const data = {
+      const dataObj = {
         CampaignId,
         ProductName,
         PageName,
@@ -68,10 +67,10 @@ import './style.css';
         StoreId,
         StoreGroupId,
       };
-
+console.log(dataObj);
       if (this.isLoggedIn()) {
         this.deactivateCoupon(target);
-        this.loadCouponOnCard(data);
+        this.loadCouponOnCard(dataObj);
         icadatalayer.add('HSE', {
           HSE: {
             action: 'coupon-loaded',
@@ -89,7 +88,7 @@ import './style.css';
           },
         });
         this.createModal(LOGIN_ACTION.LOAD_COUPON);
-        this.storage.set('cro_personalOffer_actionCookie_loadCoupon', CampaignId);
+        this.storage.set('cro_personalOffer_actionCookie_loadCoupon', id);
       }
     },
     getIframeStyles() {
@@ -196,8 +195,8 @@ import './style.css';
               const e = $('.cro-iframe-container iframe').contents();
               if (e.length) {
                 const eventAction = (action === LOGIN_ACTION.SAVE_RECIPE)
-                  ? 'Spara recept från startsidan'
-                  : 'Ladda kupong från startsida';
+                  ? 'Spara recept från receptsidan'
+                  : 'Ladda kupong från receptsidan';
 
                 // Fortsätt (Mobilt BankId)
                 e.find('#submit-login-mobile-bank-id').on('click', () => {
@@ -308,10 +307,10 @@ import './style.css';
       if (oldCoupons.length === 0) {
         return Promise.reject();
       }
-
       return Promise.all(ids.map(this.loadCouponData));
     },
     loadCouponData(id) {
+      console.log(id);
       return loadedCupons[id]
         ? Promise.resolve(loadedCupons[id])
         : window.fetch(`/api/jsonhse/${id}`, { credentials: 'same-origin' })
@@ -321,7 +320,8 @@ import './style.css';
             return json;
           });
     },
-    async loadCouponOnCard(data) {
+    async loadCouponOnCard(dataObj) {
+      console.log('loadCouponOnCard: ', dataObj);
       await this.ajax(`/api/jsonhse/Claimoffer`, {
         credentials: 'same-origin',
         method: 'POST',
@@ -329,7 +329,7 @@ import './style.css';
           Accept: 'application/json',
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(data),
+        body: JSON.stringify(dataObj),
       });
     },
     checkActionCookie() {
@@ -354,13 +354,14 @@ import './style.css';
       storage,
       elements,
     }));
+
     test.loadCoupons().then(
-      () => {
+      (response) => {
         const returnUrl = encodeURIComponent(window.location.href);
         const iframeContainer = $(`<div class="cro-iframe-container"><span class="loader"></span><iframe src="//www.ica.se/logga-in/?returnurl=${returnUrl}" frameborder="0"></iframe></div>`);
         $('body').append(iframeContainer);
         test.manipulateDom({});
-        // if (hj) hj('trigger', 'variant6');
+        if (hj) hj('trigger', 'variant6');
       },
       () => {}, // couldn't find coupons
     );
