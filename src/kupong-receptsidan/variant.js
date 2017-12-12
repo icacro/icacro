@@ -57,6 +57,7 @@ import './style.css';
         StoreGroupId,
       } = loadedCupons[id];
 
+
       const { OfferId, ProductName } = Offer;
 
       const dataObj = {
@@ -64,7 +65,9 @@ import './style.css';
         CampaignId,
         ProductName,
         PageName,
-        OfferId,
+        Offer: {
+          OfferId,
+        },
         StoreId,
         StoreGroupId,
       };
