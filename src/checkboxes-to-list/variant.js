@@ -9,8 +9,6 @@
 
 'use strict';
 
-import { placeholder, text, find, html, value, hide, get, children, appendFirst, appendAll, click, copy, data, remove } from '../util/element-functions';
-
 import { CROUTIL, ELM } from '../util/main';
 import { ajax } from '../util/utils';
 
@@ -140,22 +138,6 @@ function init() {
       });
     },
     manipulateDom() {
-      ELM.push(
-        text,
-        find,
-        html,
-        value,
-        hide,
-        get,
-        children,
-        appendFirst,
-        appendAll,
-        click,
-        copy,
-        data,
-        remove,
-        placeholder,
-      );
       this.appendCheckboxes();
       ELM.get('.js-open-shoppinglist-modal').click(() => {
         isWindowModalOpen((element) => {
