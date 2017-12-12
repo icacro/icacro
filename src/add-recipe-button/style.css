@@ -1,9 +1,12 @@
+.coachmark-arrow, .js-open-shoppinglist-modal {
+  visibility: visible;
+}
 .cro .add-to-list {
   display: flex;
   flex-direction: column;
   align-items: flex-end;
   position: absolute;
-  top: -40px;
+  top: -150px;
   right: 0;
 }
 

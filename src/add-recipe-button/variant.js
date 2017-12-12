@@ -31,12 +31,11 @@ function init() {
       }
     },
     manipulateDom() {
-      this.moveDDL();
       this.moveButton();
+      this.moveDDL();
     },
   };
   Object.assign(test, CROUTIL());
   test.manipulateDom();
 }
-
 init();

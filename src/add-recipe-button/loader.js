@@ -9,7 +9,24 @@
 
 'use strict';
 
-var script = document.createElement('script');
-script.setAttribute('async', '');
-script.setAttribute('src', 'https://cdn.rawgit.com/Banzaci/ica/v1.0.23/src/add-recipe-button/variant.min.js');
-document.querySelector('head').appendChild(script);
+function init() {
+  var css = '.coachmark-arrow, .js-open-shoppinglist-modal { visibility: hidden; }';
+  var style = document.createElement('style');
+  var script = document.createElement('script');
+
+  style.appendChild(document.createTextNode(css))
+  document.querySelector('head').appendChild(style);  
+  script.setAttribute('async', '');
+  script.setAttribute('src', 'https://cdn.rawgit.com/Banzaci/ica/v1.0.26/src/add-recipe-button/variant.min.js');
+
+  document.querySelector('head').appendChild(script);
+}
+
+init();
+
+
+// Object.assign(document.querySelector('body').style, {
+//   display: 'none',
+// });
+// coachmark-arrow
+// js-open-shoppinglist-modal
