@@ -10,7 +10,6 @@
 'use strict';
 
 import { CROUTIL, ELM } from '../util/main';
-import { insertAfter } from '../util/element-functions';
 
 import './style.css';
 
@@ -26,11 +25,12 @@ function init() {
     },
     moveDDL() {
       const ddl = ELM.get('.servings-picker--dynamic');
-      const container = ELM.get('.ingredients__content');
-      container.append(ddl);
+      if (ddl.element) {
+        const container = ELM.get('.ingredients__content');
+        container.append(ddl);
+      }
     },
     manipulateDom() {
-      ELM.push(insertAfter);
       this.moveDDL();
       this.moveButton();
     },
