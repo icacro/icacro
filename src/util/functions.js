@@ -8,6 +8,8 @@ const GetElement = (selector) => {
 
 const GetElements = selector => document.querySelectorAll(selector);
 
+const elementStore = [];
+
 export function get(...args) {
   if (args.length === 1) {
     const key = Number.isInteger(parseInt(args[0], 10)) ? parseInt(args[0], 10) : args[0];
@@ -51,4 +53,9 @@ export function removeElements(classNames) {
     const elm = document.querySelector(className);
     if (elm instanceof HTMLElement) elm.parentNode.removeChild(elm);
   });
+}
+
+export function save(id, element) {
+  elementStore[id] = elementStore[id] || {};
+  elementStore[id] = element;
 }
