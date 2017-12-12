@@ -7,10 +7,13 @@ class Element {
     Object.assign(this, functions(this));
   }
   css(...cn) {
-    if (cn) {
-      cn.forEach(c => c && this.element && this.element.classList.add(c.replace(/\./g, '').trim()));
+    if (this.element) {
+      if (cn) {
+        cn.forEach(c => this.element.classList.add(c.replace(/\./g, '').trim()));
+      }
+      return this;
     }
-    return this;
+    throw new Error(`Element does not exist! Function 'css'`);
   }
   append(child) {
     const c = child.nodeType ? child : child.element;
