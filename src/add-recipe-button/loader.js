@@ -11,5 +11,5 @@
 
 var script = document.createElement('script');
 script.setAttribute('async', '');
-script.setAttribute('src', 'https://cdn.rawgit.com/Banzaci/ica/master/src/add-recipe-button/variant.min.js');
+script.setAttribute('src', 'https://cdn.rawgit.com/Banzaci/ica/v1.0.23/src/add-recipe-button/variant.min.js');
 document.querySelector('head').appendChild(script);
