@@ -3,3 +3,4 @@ icacro
 node_modules
 ./npm-debug.log
 $Recycle.Bin
+npm-debug.log
