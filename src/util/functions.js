@@ -38,7 +38,7 @@ export function copy(selector) {
 
 export function getElementContentByTagAndAttr(regexp, tag, attr) {
   const qsa = document.querySelectorAll(tag);
-  return this.toArray(qsa).reduce((acc, element) => {
+  return Array.from(qsa).reduce((acc, element) => {
     if (new RegExp(regexp).test(element[attr])) {
       acc.push(element[attr]);
     }
