@@ -10,7 +10,8 @@
 // @grant        none
 // ==/UserScript==
 
-import { ICACRO, $ELM } from '../util/main';
+import { CROUTIL, ELM } from '../util/main';
+import { removeElements, elements } from '../util/functions';
 import Ratings from '../util/modules/ratings';
 import banners from './banners';
 import coupons from './coupons';
@@ -45,15 +46,15 @@ import './style.css';
       return div;
     },
     addCoupon(coupon) {
-      const couponItem = $ELM.create('coupons-container__item');
-      const img = $ELM.create('img');
-      const wrapper = $ELM.create('coupons-container__item-wrapper');
-      const imageWrapper = $ELM.create('coupons-container__item-image-wrapper');
-      const title = $ELM.create('h3');
-      const discount = $ELM.create('h1');
-      const subtitle = $ELM.create('h4');
-      const moreInfo = $ELM.create('a');
-      const button = $ELM.create('button .button coupon-button');
+      const couponItem = ELM.create('coupons-container__item');
+      const img = ELM.create('img');
+      const wrapper = ELM.create('coupons-container__item-wrapper');
+      const imageWrapper = ELM.create('coupons-container__item-image-wrapper');
+      const title = ELM.create('h3');
+      const discount = ELM.create('h1');
+      const subtitle = ELM.create('h4');
+      const moreInfo = ELM.create('a');
+      const button = ELM.create('button .button coupon-button');
 
       title.text(coupon.title);
       discount.text(coupon.discount);
@@ -121,7 +122,7 @@ import './style.css';
         ratings,
         difficulty,
         couponsWrapper,
-      ] = $ELM.create(
+      ] = ELM.create([
         'li banner-container',
         'banner-container__img',
         'img',
@@ -131,7 +132,7 @@ import './style.css';
         'text-container__ratings',
         'h4 text-container__difficulty',
         'coupons-container',
-      );
+      ]);
 
       const saveButton = this.createSaveRecipeCTA(banner);
 
@@ -157,8 +158,8 @@ import './style.css';
       Object.assign(element.style, stl);
     },
     addBanners() {
-      const header = $ELM.get('.header');
-      const ul = $ELM.create('ul cro-slider');
+      const header = ELM.get('.header');
+      const ul = ELM.create('ul cro-slider');
       header.html(' ');
       banners.forEach((banner) => {
         ul.append(this.addBanner(banner));
@@ -166,6 +167,7 @@ import './style.css';
       header.append(ul);
       $('.cro-slider').slick({
         adaptiveHeight: true,
+        dots: true,
       });
     },
     addIcaCard() {
@@ -184,8 +186,9 @@ import './style.css';
       document.querySelector('.main').appendChild(icaImageContainer);
     },
     dinnerTonight() {
-      const container = $ELM.get('.search-recipe-container');
+      const container = ELM.get('.search-recipe-container');
       this.removeElements(['.recipe-trending-list h2']);
+      console.log(container);
       container.get('h1').text('Vad är du sugen på?');
     },
     manipulateDom() {
@@ -210,32 +213,32 @@ import './style.css';
       $('body').append(iframeContainer);
     },
     createSaveRecipeCTA(banner) {
-      const container = $ELM.create('button-wrapper');
-      const cta = $ELM.create('a .button banner-button');
+      const container = ELM.create('button-wrapper');
+      const cta = ELM.create('a .button banner-button');
       cta.html('<div class="layer"><svg viewBox="0 0 32 32" width="15px" height="15px"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/Assets/icons/sprite.svg#check"></use></svg></div>Lägg recept i inköpslistan');
       cta.href(`#`);
       cta.data('recipeId', banner.recipeId);
       cta.data('tracking', `{ "name": "${banner.title}", "URL": "${banner.url}" }`);
-      cta.css(`js-add-to-new-shoppinglist banner-button-${banner.recipeId}`);
+      cta.css('js-add-to-new-shoppinglist', `banner-button-${banner.recipeId}`);
 
       cta.click((e) => {
         e.preventDefault();
         this.addRecipeToShoppingList(banner.recipeId);
         cta.toggle('added');
-        $ELM.get('#js-toggle-avatar').css('cro-startpage-shoppinglist-coachmark');
+        ELM.get('#js-toggle-avatar').css('cro-startpage-shoppinglist-coachmark');
         setTimeout(() => cta.toggle('added'), 1500);
       });
       container.append(cta);
       return container;
     },
     createOffers() {
-      const main = $ELM.get('.main');
-      const container = $ELM.create('div coupon-banner');
+      const main = ELM.get('.main');
+      const container = ELM.create('div coupon-banner');
       container.click(() => {
         window.location.href = '/erbjudanden/butikserbjudanden/alla-digitala-kuponger/';
       });
-      const offerButton = $ELM.create('a .button offers-button').text('Gå till ICAs kuponger').href('/erbjudanden/butikserbjudanden/alla-digitala-kuponger/');
-      const img = $ELM.create('img').image('https://raw.githubusercontent.com/Banzaci/ica/master/src/start-page/Coupons_image.png');
+      const offerButton = ELM.create('a .button offers-button').text('Gå till ICAs kuponger').href('/erbjudanden/butikserbjudanden/alla-digitala-kuponger/');
+      const img = ELM.create('img').image('https://raw.githubusercontent.com/Banzaci/ica/master/src/start-page/Coupons_image.png');
       container.appendAll(img, offerButton);
       main.append(container);
     },
@@ -290,8 +293,8 @@ import './style.css';
     },
     changeOfferStatus(response, coupon) {
       if (response.ok) {
-        $ELM.get(`#coupon-${coupon.OfferId}-${coupon.recipeId}`).css('offer-loaded');
-        $ELM.get(`#coupon-${coupon.OfferId}-${coupon.recipeId} .coupon-button`).text('Kupong laddad');
+        ELM.get(`#coupon-${coupon.OfferId}-${coupon.recipeId}`).css('offer-loaded');
+        ELM.get(`#coupon-${coupon.OfferId}-${coupon.recipeId} .coupon-button`).text('Kupong laddad');
       }
     },
     // hotjarTriggered: false,
@@ -553,7 +556,7 @@ import './style.css';
   };
 
   $(document).ready(() => {
-    const IC = ICACRO();
+    const IC = CROUTIL({ removeElements, elements });
     if (/^https:\/\/www.ica.se\/$/.test(window.location)) {
       Object.assign(test, IC);
       test.checkActionCookies();

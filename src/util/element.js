@@ -163,8 +163,8 @@ class Element {
 
   get(...args) {
     if (this.element) {
-      if (args.length === 1) return Element(this.element.querySelector(args[0]));
-      return args.map(arg => Element(this.element.querySelector(arg)));
+      if (args.length === 1) return new Element(this.element.querySelector(args[0]));
+      return args.map(arg => new Element(this.element.querySelector(arg)));
     }
     throw new Error(`${args} Element does not exist! Function 'get'`);
   }
