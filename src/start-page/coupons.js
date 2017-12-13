@@ -14,7 +14,7 @@ const coupons = {
     id,
     data,
   }) {
-    const isUsedClass = isUsed ? ' is-used' : '';
+    const isUsedClass = isUsed ? 'is-used' : '';
     const [
       bannerElement,
       bannerRow,
