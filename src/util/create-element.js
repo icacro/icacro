@@ -12,7 +12,7 @@ function getType(arr) {
 
 export default function CreateElement(arg, options) {
   if (arg instanceof HTMLElement) return new Element(arg);
-  const arr = arg.split(' ');
+  const arr = arg.split(' ').filter(a => a.length > 0);
   const { type, classes } = getType(arr);
   const element = document.createElement(type);
   if (options) {
