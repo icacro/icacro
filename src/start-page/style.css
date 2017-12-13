@@ -270,7 +270,6 @@ button:focus, button:active {outline:0;}
 }
 
 .cro .banner-button {
-  width: 60%;
   display: block;
   overflow: hidden;
 }

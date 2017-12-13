@@ -173,7 +173,7 @@ import './style.css';
     addIcaCard() {
       const self = this;
       const icaImageContainer = self.create('ica-card-container');
-      self.create('', icaImageContainer, 'Få rabatt med ICA-Kort', 'h1');
+      self.create('', icaImageContainer, 'Få rabatt med ICA-kort', 'h1');
       const usps = self.create('usp-list', icaImageContainer, null, 'ul');
       usps.innerHTML = `
       <li><svg viewBox="0 0 32 32" width="15px" height="15px"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/Assets/icons/sprite.svg#check"></use></svg> ICA-kort med bonus</li>
@@ -181,7 +181,7 @@ import './style.css';
       <li><svg viewBox="0 0 32 32" width="15px" height="15px"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/Assets/icons/sprite.svg#check"></use></svg> Kortpriser varje vecka</li>
       `;
       self.create('', icaImageContainer, 'https://www.ica.se/ImageVaultFiles/id_78649/cf_3/ICA_Kort_och_Bank.png', 'img');
-      self.create('button', icaImageContainer, 'Skapa konto och bli medlem', 'a')
+      self.create('button', icaImageContainer, 'Skaffa ICA-kort', 'a')
         .href = '/ansokan/?step=6369766963666f726d';
       document.querySelector('.main').appendChild(icaImageContainer);
     },
