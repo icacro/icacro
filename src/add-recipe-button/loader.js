@@ -12,7 +12,7 @@
 'use strict';
 
 function init() {
-  var css = '.coachmark-arrow, .js-open-shoppinglist-modal { visibility: hidden; }';
+  var css = '.servings-picker--dynamic, .coachmark-arrow, .js-open-shoppinglist-modal { visibility: hidden; }';
 
   var style = document.createElement('style');
   var script = document.createElement('script');
@@ -22,7 +22,7 @@ function init() {
   style.appendChild(document.createTextNode(css))
   head.appendChild(style);
   script.setAttribute('async', '');
-  script.setAttribute('src', 'https://cdn.rawgit.com/Banzaci/ica/v1.0.27/src/add-recipe-button/variant.min.js');
+  script.setAttribute('src', 'https://cdn.rawgit.com/Banzaci/ica/v1.0.28/src/add-recipe-button/variant.min.js');
 
   head.appendChild(script);
 }
