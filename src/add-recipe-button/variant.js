@@ -10,6 +10,7 @@
 'use strict';
 
 import { CROUTIL, ELM } from '../util/main';
+import { triggerHotJar } from '../util/utils';
 import './style.css';
 
 const test = {
@@ -35,5 +36,5 @@ const test = {
 $(document).ready(() => {
   Object.assign(test, CROUTIL());
   test.manipulateDom();
-  hj('trigger','variant6');// eslint-disable-line
+  triggerHotJar('addRecipeButtonVariant');
 });
