@@ -10,7 +10,13 @@
 
 'use strict';
 
+var head = document.querySelector('head');
+
+var style = document.createElement('style');
+style.appendChild(document.createTextNode('.recipe-ad { visibility: hidden; }'));
+head.appendChild(style);
+
 var script = document.createElement('script');
 script.setAttribute('async', '');
-script.setAttribute('src', 'https://cdn.rawgit.com/Banzaci/ica/v1.0.20/src/kupong-receptsidan/variant.min.js');
-document.querySelector('head').appendChild(script);
+script.setAttribute('src', 'https://cdn.rawgit.com/Banzaci/ica/v1.0.35/src/kupong-receptsidan/variant.min.js');
+head.appendChild(script);
