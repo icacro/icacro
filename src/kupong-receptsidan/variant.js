@@ -8,7 +8,7 @@
 // ==/UserScript==
 
 import { CROUTIL, ELM } from '../util/main';
-import { isLoggedIn, storage, ajax } from '../util/utils';
+import { isLoggedIn, storage, ajax, triggerHotJar } from '../util/utils';
 import { removeElements, elements } from '../util/functions';
 
 import './style.css';
@@ -339,21 +339,35 @@ import './style.css';
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(opts),
+      }).then((response) => {
+        if (response.ok) {
+          icadatalayer.add('HSE', {
+            HSE: {
+              action: 'coupon-loaded',
+              name: dataObj.PageName,
+              offer: dataObj.Offer.ProductName,
+              hseurl: `/kampanj/hse/${dataObj.id}`,
+            },
+          });
+        }
+        return response;
       });
     },
     checkActionCookie() {
       const id = this.storage.get('cro_personalOffer_actionCookie_loadCoupon');
+
       if (id && this.isLoggedIn()) {
-        this.loadCouponOnCard(loadedCupons[id]).then(this.changeOfferStatus.bind(this));
+        this.loadCouponOnCard(loadedCupons[id]).then((response) => {
+          this.changeOfferStatus(response, id);
+        });
+        this.storage.remove('cro_personalOffer_actionCookie_loadCoupon');
       }
     },
-    changeOfferStatus(response) {
+    changeOfferStatus(response, id) {
       if (response.ok) {
-        const id = this.storage.get('cro_personalOffer_actionCookie_loadCoupon');
         const btn = ELM.get(`[data-id='${id}']`);
         btn.css('is-used');
         btn.text('Kupong laddad');
-        this.storage.remove('cro_personalOffer_actionCookie_loadCoupon');
       }
     },
   };
@@ -374,7 +388,7 @@ import './style.css';
         $('body').append(iframeContainer);
         test.checkActionCookie();
         test.manipulateDom({});
-        if (hj) hj('trigger', 'variant6');
+        triggerHotJar('kupongReceptsidanVariant');
       },
       () => {}, // couldn't find coupons
     );

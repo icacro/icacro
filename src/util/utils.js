@@ -114,3 +114,11 @@ export const storage = {
 export function isLoggedIn() {
   return get('#hdnIcaState').attr('value').length > 1;
 }
+
+export function triggerHotJar(triggerName) {
+  // Handle if hj is not yet loaded, taken from
+  // https://help.hotjar.com/hc/en-us/articles/115015712548-Using-JavaScript-Triggers-to-Start-Recordings)
+  window.hj = window.hj || function () { (hj.q = hj.q || []).push(arguments); }; // eslint-disable-line
+
+  hj('trigger', triggerName);
+}

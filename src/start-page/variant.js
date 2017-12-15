@@ -12,6 +12,7 @@
 
 import { CROUTIL, ELM } from '../util/main';
 import { removeElements, elements } from '../util/functions';
+import { isLoggedIn } from '../util/utils';
 import Ratings from '../util/modules/ratings';
 import banners from './banners';
 import coupons from './coupons';
@@ -31,7 +32,6 @@ import './style.css';
   };
   const loadedCoupons = [];
 
-  // if (hj) hj('trigger','variant5');// eslint-disable-line
   const test = {
     create(className, parent, text, type) {
       const t = type || 'div';
@@ -83,7 +83,7 @@ import './style.css';
             recipeId: coupon.recipeId,
             title: coupon.PageName,
             url: coupon.PageName,
-            OfferId: coupon.Offer,
+            OfferId: coupon.OfferId,
             CampaignId: coupon.PageName,
           };
 
@@ -173,7 +173,7 @@ import './style.css';
     addIcaCard() {
       const self = this;
       const icaImageContainer = self.create('ica-card-container');
-      self.create('', icaImageContainer, 'Få rabatt med ICA-Kort', 'h1');
+      self.create('', icaImageContainer, 'Få rabatt med ICA-kort', 'h1');
       const usps = self.create('usp-list', icaImageContainer, null, 'ul');
       usps.innerHTML = `
       <li><svg viewBox="0 0 32 32" width="15px" height="15px"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/Assets/icons/sprite.svg#check"></use></svg> ICA-kort med bonus</li>
@@ -181,14 +181,13 @@ import './style.css';
       <li><svg viewBox="0 0 32 32" width="15px" height="15px"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/Assets/icons/sprite.svg#check"></use></svg> Kortpriser varje vecka</li>
       `;
       self.create('', icaImageContainer, 'https://www.ica.se/ImageVaultFiles/id_78649/cf_3/ICA_Kort_och_Bank.png', 'img');
-      self.create('button', icaImageContainer, 'Skapa konto och bli medlem', 'a')
+      self.create('button', icaImageContainer, 'Skaffa ICA-kort', 'a')
         .href = '/ansokan/?step=6369766963666f726d';
       document.querySelector('.main').appendChild(icaImageContainer);
     },
     dinnerTonight() {
       const container = ELM.get('.search-recipe-container');
       this.removeElements(['.recipe-trending-list h2']);
-      console.log(container);
       container.get('h1').text('Vad är du sugen på?');
     },
     manipulateDom() {
@@ -297,7 +296,6 @@ import './style.css';
         ELM.get(`#coupon-${coupon.OfferId}-${coupon.recipeId} .coupon-button`).text('Kupong laddad');
       }
     },
-    // hotjarTriggered: false,
     loaderIsActive: false,
     buttonHandlerPollTimeout: null,
     showLoader() {
@@ -500,11 +498,6 @@ import './style.css';
             });
         });
 
-        // trigga hotjar heatmap första gången modalen öppnats
-        // if (typeof hj === 'function' && !self.hotjarTriggered) {
-        //     hj('trigger', 'variant');
-        //     self.hotjarTriggered = true;
-        // }
       }, 50);
     },
     loadCouponData(coupon) {
@@ -553,21 +546,34 @@ import './style.css';
     resetParallaxScrolling() {
       ICA.icaCallbacks.$parallaxContainers = $('.parallax');
     },
+    triggerHotJar() {
+      const name = 'variant5';
+      if (hj) {
+        hj('trigger', name);
+      }
+    },
+    setBackLinkOnCreateAccount() {
+      ELM.get('.easy-signup-header .login_back').href('javascript:history.back();'); // eslint-disable-line
+    },
   };
 
   $(document).ready(() => {
-    const IC = CROUTIL({ removeElements, elements });
+    const IC = CROUTIL({ removeElements, elements, isLoggedIn });
+    Object.assign(test, IC);
     if (/^https:\/\/www.ica.se\/$/.test(window.location)) {
-      Object.assign(test, IC);
       test.checkActionCookies();
       test.manipulateDom();
       test.addEventListeners();
       test.resetParallaxScrolling();
+      test.triggerHotJar();
     }
     if (/^https:\/\/www.ica.se\/erbjudanden\/butikserbjudanden\/alla-digitala-kuponger\/$/.test(window.location)) {
       coupons.manipulateDom(IC, () => {
         test.createModal(LOGIN_ACTION.LOAD_COUPON);
       });
+    }
+    if (/^https:\/\/www.ica.se\/ansokan\/\?step=6369766963666f726d$/.test(window.location)) {
+      test.setBackLinkOnCreateAccount();
     }
   });
 })(jQuery);

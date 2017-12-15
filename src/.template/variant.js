@@ -10,16 +10,15 @@
 'use strict';
 
 import { CROUTIL, ELM } from '../util/main';
+import { triggerHotJar } from '../util/utils';
 import './style.css';
 
-if (hj) hjf;// eslint-disable-line
+const test = {
+  manipulateDom() {},
+};
 
-function init() {
-  const test = {
-    manipulateDom() {},
-  };
+$(document).ready(() => {
   Object.assign(test, CROUTIL());
   test.manipulateDom();
-}
-
-init();
+  triggerHotJar(hjf);
+});
