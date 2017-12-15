@@ -24,10 +24,10 @@ export function get(...args) {
   });
 }
 
-export function svg(icon, symbol = '/v2-symbols.svg') {
-  return `<svg>
-    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/Assets/icons/${symbol}#${icon}"></use>
-  </svg>`;
+export function svg(icon, classname = '', symbol = '/v2-symbols.svg') {
+  const element = CreateElement(`div ${classname}`);
+  element.html(`<svg><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/Assets/icons/${symbol}#${icon}"></use></svg>`);
+  return element;
 }
 
 export function elements(arg) {

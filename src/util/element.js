@@ -2,7 +2,10 @@ import { ReservedElements } from './utils';
 
 const childElement = (element, child) => {
   if (child instanceof HTMLElement) return element.appendChild(child);
-  if (typeof child === 'string') return element.innerHTML = child;
+  if (typeof child === 'string') {
+    element.innerHTML = child;
+    return element;
+  }
   return element.appendChild(child.element);
 };
 
@@ -113,7 +116,7 @@ class Element {
       const target = (targetName.name === this.name) ?
         targetName :
         new Element(document.querySelector(targetName));
-      this.element.parentNode.insertBefore(target.element, this.element.nextSibling);
+      target.element.parentNode.insertBefore(this.element, target.element.nextSibling);
       return this;
     }
     throw new Error(`${targetName} Element does not exist! Function 'insertAfter'`);
