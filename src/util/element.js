@@ -1,29 +1,55 @@
-import { functions, ReservedElements } from './utils';
+import { ReservedElements } from './utils';
+
+const childElement = (element, child) => {
+  if (child instanceof HTMLElement) return element.appendChild(child);
+  if (typeof child === 'string') return element.innerHTML = child;
+  return element.appendChild(child.element);
+};
 
 class Element {
   constructor(element) {
     this.name = 'ELEMENT';
     this.element = element;
-    Object.assign(this, functions(this));
+  }
+  removeClass(cn) {
+    if (this.element) {
+      if (cn) {
+        cn.forEach((classname) => {
+          if (classname.length > 0) {
+            this.element.classList.remove(classname.replace(/\./g, '').trim());
+          }
+        });
+      }
+      return this;
+    }
+    throw new Error(`Element does not exist! Function 'removeClass'`);
+  }
+  parent() {
+    if (this.element) {
+      return new Element(this.element.parentNode);
+    }
+    throw new Error(`Element does not exist! Function 'parent'`);
   }
   css(...cn) {
     if (this.element) {
       if (cn) {
-        cn.forEach(c => this.element.classList.add(c.replace(/\./g, '').trim()));
+        cn.forEach((classname) => {
+          if (classname.length > 0) {
+            this.element.classList.add(classname.replace(/\./g, '').trim());
+          }
+        });
       }
       return this;
     }
     throw new Error(`Element does not exist! Function 'css'`);
   }
   append(child) {
-    const c = child.nodeType ? child : child.element;
     if (this.element) {
-      this.element.appendChild(c);
+      childElement(this.element, child);
       return this;
     }
     throw new Error(`${child} Element does not exist! Function 'append'`);
   }
-
   hide() {
     if (this.element) {
       Object.assign(this.element.style, {
@@ -33,7 +59,6 @@ class Element {
     }
     throw new Error(`Element does not exist! Function 'style'`);
   }
-
   view() {
     if (this.element) {
       Object.assign(this.element.style, {
@@ -43,7 +68,6 @@ class Element {
     }
     throw new Error(`Element does not exist! Function 'style'`);
   }
-
   attr(...args) {
     if (this.element) {
       const [key, val] = args.length === 2 ? [...args] : args[0].split(':');
@@ -55,7 +79,6 @@ class Element {
     }
     throw new Error(`${args} Element does not exist! Function 'attr'`);
   }
-
   remove() {
     if (this.element) {
       this.element.parentNode.removeChild(this.element);
@@ -63,7 +86,6 @@ class Element {
     }
     throw new Error(`Element does not exist! Function 'remove'`);
   }
-
   click(callback) {
     if (this.element) {
       this.element.addEventListener('click', callback);
@@ -71,15 +93,12 @@ class Element {
     }
     throw new Error(`${callback} Element does not exist! Function 'click'`);
   }
-
   value() {
     return this.element.value;
   }
-
   placeholder() {
     return this.element.placeholder;
   }
-
   copy(selector) {
     if (this.element) {
       const child = this.element.querySelector(selector);
@@ -89,7 +108,6 @@ class Element {
     }
     throw new Error(`${selector} Element does not exist! Function 'copy'`);
   }
-
   insertAfter(targetName) {
     if (this.element) {
       const target = (targetName.name === this.name) ?
@@ -100,7 +118,6 @@ class Element {
     }
     throw new Error(`${targetName} Element does not exist! Function 'insertAfter'`);
   }
-
   html(str) {
     if (this.element) {
       if (!str) return this.element.innerHTML;
@@ -109,7 +126,6 @@ class Element {
     }
     throw new Error(`${str} Element does not exist! Function 'html'`);
   }
-
   text(str) {
     if (this.element) {
       if (!str) return this.element.innerText || this.element.textContent;
@@ -119,7 +135,6 @@ class Element {
     }
     throw new Error(`${str} Element does not exist! Function 'text'`);
   }
-
   image(src) {
     if (this.element) {
       this.element.src = src;
@@ -127,7 +142,6 @@ class Element {
     }
     throw new Error(`${src} Element does not exist! Function 'image'`);
   }
-
   href(url) {
     if (this.element) {
       this.element.href = url;
@@ -135,7 +149,6 @@ class Element {
     }
     throw new Error(`${url} Element does not exist! Function 'href'`);
   }
-
   removeClass(className) {
     if (this.element) {
       this.element.classList.remove(className);
@@ -143,7 +156,6 @@ class Element {
     }
     throw new Error(`${className} Element does not exist! Function 'removeClass'`);
   }
-
   appendFirst(child) {
     const c = child.nodeType ? child : child.element;
     if (this.element) {
@@ -152,18 +164,15 @@ class Element {
     }
     throw new Error(`${child} Element does not exist! Function 'append'`);
   }
-
   appendAll(...childs) {
     return childs.map(this.append.bind(this));
   }
-
   toggle(cn) {
     if (cn) {
       this.element.classList.toggle(cn);
     }
     return this;
   }
-
   get(...args) {
     if (this.element) {
       if (args.length === 1) return new Element(this.element.querySelector(args[0]));
@@ -171,7 +180,6 @@ class Element {
     }
     throw new Error(`${args} Element does not exist! Function 'get'`);
   }
-
   children(arg) {
     if (this.element) {
       if (arg) {
@@ -184,11 +192,9 @@ class Element {
     }
     return [];
   }
-
   find(classname) {
     return new Element(this.element.querySelector(classname));
   }
-
   style(stl) {
     if (this.element) {
       Object.assign(this.element.style, stl);
@@ -196,20 +202,26 @@ class Element {
     }
     throw new Error(`${stl} Element does not exist! Function 'style'`);
   }
-
-  data(key, val) {
+  exist() {
+    return this.element !== null;
+  }
+  data(arg, val) {
     if (this.element) {
-      if (!val) return this.element.dataset[key];
-      this.element.dataset[key] = val;
+      if (typeof arg === 'object') {
+        Object.keys(arg).forEach((key) => {
+          this.element.dataset[key] = arg[key];
+        });
+      } else {
+        if (!val) return this.element.dataset[arg];
+        this.element.dataset[arg] = val;
+      }
       return this;
     }
-    throw new Error(`${key} ${val} Element does not exist! Function 'data'`);
+    throw new Error(`Element does not exist! Function 'data'`);
   }
-
   rect(arg) {
     return this.element.getBoundingClientRect()[arg];
   }
-
 }
 
 export default Element;

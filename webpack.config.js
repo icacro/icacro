@@ -1,22 +1,30 @@
 const path = require('path');
-const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 const LiveReloadPlugin = require('webpack-livereload-plugin');
 const fs = require('fs');
+const webpack = require('webpack');
 
-module.exports = function(env) {
+module.exports = (env) => {
   try {
     if (!env || !env.project) throw new Error('Missing path "npm run build --env.project ...."');
     const fullPath = `./src/${env.project}`;
-    if (!fs.existsSync(fullPath))  throw new Error('No path exist.');
+    if (!fs.existsSync(fullPath)) throw new Error('No path exist.');
     return {
       entry: path.join(path.resolve(__dirname, fullPath), 'variant.js'),
       output: {
         path: path.resolve(__dirname, `src/${env.project}`),
-        filename: 'variant.min.js'
+        filename: 'variant.min.js',
       },
-      devtool: 'inline-source-map',
       plugins: [
-        new UglifyJSPlugin({}),
+        new webpack.DefinePlugin({
+          'process.env': {
+            NODE_ENV: JSON.stringify('production'),
+          },
+        }),
+        new webpack.optimize.UglifyJsPlugin({
+          compressor: {
+            warnings: false,
+          },
+        }),
         new LiveReloadPlugin(),
       ],
       module: {
@@ -31,12 +39,12 @@ module.exports = function(env) {
           {
             test: /\.css$/,
             exclude: /node_modules/,
-            use: ['style-loader', 'css-loader']
+            use: ['style-loader', 'css-loader'],
           },
         ],
-      }
-    }
+      },
+    };
   } catch (e) {
-    console.log(e.name + ': ' + e.message);
+    throw new Error(e.message);
   }
 };

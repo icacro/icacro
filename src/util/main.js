@@ -6,14 +6,13 @@ eslint no-param-reassign: [
 /* eslint no-use-before-define: ["error", { "functions": false }] */
 /* eslint-env es6 */
 
-import { create, get, copy } from './functions';
-import { push } from './utils';
+import { create, get, copy, svg } from './utils';
 
 export const ELM = {
   create,
   get,
   copy,
-  push,
+  svg,
 };
 
 export const CROUTIL = (funcs) => {
