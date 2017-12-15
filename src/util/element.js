@@ -89,6 +89,13 @@ class Element {
     }
     throw new Error(`Element does not exist! Function 'remove'`);
   }
+  change(callback) {
+    if (this.element) {
+      this.element.addEventListener('change', callback);
+      return this;
+    }
+    throw new Error(`Element does not exist! Function 'change'`);
+  }
   click(callback) {
     if (this.element) {
       this.element.addEventListener('click', callback);

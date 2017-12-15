@@ -10,7 +10,7 @@
 'use strict';
 
 import { CROUTIL, ELM } from '../util/main';
-import { ajax } from '../util/utils';
+import { ajax, gaPush } from '../util/utils';
 
 import './style.css';
 
@@ -27,11 +27,14 @@ function init() {
   const test = {
     checkbox() {
       const [container, step, circle, label] = ELM.create(['cooking-step cooking-step-list', '.cooking-step__check', 'label .checkbox .checkbox--circle', 'span .checkbox__label']);
-      const cb = ELM.create('input .checkbox__input', {
+      const checkbox = ELM.create('input .checkbox__input', {
         type: 'checkbox',
         checked: true,
       });
-      circle.appendAll(cb, label);
+      checkbox.change(() => {
+        gaPush({ eventAction: 'Interagerat med ingrediens, lägg till i inköpslista' });
+      });
+      circle.appendAll(checkbox, label);
       step.append(circle);
       container.append(step);
       return container;
@@ -75,6 +78,8 @@ function init() {
       };
     },
     closeListModal() {
+      gaPush({ eventAction: 'Lägg till i inköpslista' });
+      ELM.get('html').removeClass('force-no-scroll');
       ELM.get('.modal-container').html(' ');
     },
     onAddNewList(e) {
@@ -123,12 +128,16 @@ function init() {
         div.click(this.click.bind(this, div.element));
         ul.append(div);
       });
-      const btnGroup = ELM.get('.button-group');
-      const newBtnAdd = btnGroup.copy('.js-add-to-new-shoppinglist');
-      if (newBtnAdd) {
-        ELM.get('.js-add-to-new-shoppinglist').remove();
-        btnGroup.click(this.onAddNewList.bind(this, newBtnAdd.element));
-        btnGroup.appendFirst(newBtnAdd);
+      const jsAddToList = ELM.get('.js-add-to-new-shoppinglist');
+
+      if (jsAddToList.exist()) {
+        const btnGroup = ELM.get('.button-group');
+        const newBtnAdd = btnGroup.copy('.js-add-to-new-shoppinglist');
+        if (newBtnAdd) {
+          jsAddToList.remove();
+          btnGroup.click(this.onAddNewList.bind(this, newBtnAdd.element));
+          btnGroup.appendFirst(newBtnAdd);
+        }
       }
     },
     appendCheckboxes() {
