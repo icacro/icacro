@@ -77,9 +77,6 @@ function init() {
         recipeid,
       };
     },
-    hasBeenAdded() {
-
-    },
     closeListModal() {
       gaPush({ eventAction: 'Lägg till i inköpslista' });
       ELM.get('html').removeClass('force-no-scroll');
