@@ -1,6 +1,5 @@
 import { ELM } from '../util/main';
-import { getElementContentByTagAndAttr, save } from '../util/functions';
-import { ajax, storage } from '../util/utils';
+import { ajax, storage, getElementContentByTagAndAttr, save } from '../util/utils';
 import './coupons-style.css';
 
 const coupons = {
@@ -43,6 +42,7 @@ const coupons = {
       `button .button download ${isUsedClass}`,
     ]);
     const buttonText = isUsed ? 'Kupong laddad' : 'Ladda kupong';
+    bannerElement.attr('id', `banner-${id}`);
 
     imgHolder.image(img);
     imgElement.append(imgHolder);
@@ -63,7 +63,7 @@ const coupons = {
     content.append(bannerElement);
 
     downLoad.click(event => this.onClick(event, data));
-    this.save(id, bannerElement);
+    // this.save(id, bannerElement);
 
     icadatalayer.add('HSE', {
       HSE: {
@@ -92,7 +92,7 @@ const coupons = {
     }
   },
   deactivateCoupon(id) {
-    ELM.get(id).get('button').css('is-used');
+    ELM.get(`#banner-${id}`).get('button').css('is-used');
   },
   async onClick(event, data) {
     event.preventDefault();

@@ -11,8 +11,7 @@
 // ==/UserScript==
 
 import { CROUTIL, ELM } from '../util/main';
-import { removeElements, elements } from '../util/functions';
-import { isLoggedIn } from '../util/utils';
+import { isLoggedIn, removeElements, elements } from '../util/utils';
 import Ratings from '../util/modules/ratings';
 import banners from './banners';
 import coupons from './coupons';
