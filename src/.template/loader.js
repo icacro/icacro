@@ -18,7 +18,7 @@ function init() {
   var head = document.querySelector('head');
 
   script.setAttribute('async', '');
-  script.setAttribute('src', 'https://cdn.rawgit.com/Banzaci/ica/master/src/#project/variant.min.js');
+  script.setAttribute('src', 'https://cdn.rawgit.com/Banzaci/ica/vx.x.xx/src/kupong-receptsidan/variant.min.js');
 
   style.appendChild(document.createTextNode(css));
 
