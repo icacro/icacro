@@ -10,7 +10,7 @@
 'use strict';
 
 import { CROUTIL, ELM } from '../util/main';
-import { triggerHotJar } from '../util/utils';
+import { triggerHotJar, gaPush } from '../util/utils';
 import './style.css';
 
 const test = {
@@ -18,6 +18,7 @@ const test = {
     const profile = ELM.get('#js-toggle-avatar');
     const svg = ELM.svg('purchase-list', 'purchase-list');
     svg.click(() => {
+      gaPush({ eventAction: 'Inköpslista i menyn, gå till inköpslista' });
       window.location.href = 'https://www.ica.se/mittica/#:mittica=inkopslistor';
     });
     svg.insertAfter(profile);
