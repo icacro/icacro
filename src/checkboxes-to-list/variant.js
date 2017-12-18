@@ -77,10 +77,17 @@ function init() {
         recipeid,
       };
     },
+    hasBeenAdded() {
+
+    },
     closeListModal() {
       gaPush({ eventAction: 'Lägg till i inköpslista' });
       ELM.get('html').removeClass('force-no-scroll');
-      ELM.get('.modal-container').html(' ');
+      const container = ELM.get('.modal-container .pl-modal__window');
+      container.html('<span style="font-weight:600; display: block; text-align: center;">Recept lades till i din inköpslista</span>');
+      setTimeout(() => {
+        ELM.get('.modal-container').html(' ');
+      }, 2500);
     },
     onAddNewList(e) {
       const listElement = ELM.get('.add-shoppinglist__input');
