@@ -35,7 +35,7 @@ const test = {
   cardStartpage() {
     const croImagebox = '<a class="block image-loaded" href="/ansokan/"><div class="cro-imagebox">' +
     '<img data-original="//icase.azureedge.net/imagevaultfiles/id_165015/cf_13071/ansok-ny-160x136.jpg" width="160" height="135" alt="ansok-ny-160x136" src="//icase.azureedge.net/imagevaultfiles/id_165015/cf_13071/ansok-ny-160x136.jpg">' +
-    '<h1>Skaffa ICA-kort idag</h1><p>Med ICA-kort kan du få bonus, erbjudanden och kan handla maten på nätet. Smart va!</p><p><span class="button" title="Börja här" href="/ansokan/">Börja här</span></p>' +
+    '<h1>Skaffa bonuskonto idag</h1><p>Med ICA-kort kan du få bonus, erbjudanden och kan handla maten på nätet. Smart va!</p><p><span class="button" title="Börja här" href="/ansokan/">Börja här</span></p>' +
     '</div></a>';
     ELM.get('.imagebox').html(croImagebox);
 
@@ -55,7 +55,7 @@ const test = {
 
   manipulateDom() {
 
-    const copyAccount       = 'SKAFFA ICA-KORT OCH KONTO';
+    const copyAccount       = 'SKAFFA BONUSKONTO';
 
     //ALLA SIDOR / ANVÄNDARMENYN
     test.updateCopy(copyAccount,'#dropdown-avatar .quick-login a[href=\'/ansokan/\'].button');
@@ -63,7 +63,7 @@ const test = {
     // SPECIFIKA SIDOR
     if (/^https:\/\/www.ica.se\/$/.test(window.location)) { //STARTSIDAN
 
-      const copyStartpageBtn  = 'Skaffa ICA-kort';
+      const copyStartpageBtn  = 'Skaffa bonuskonto';
       const hrefStartpageBtn  = 'http://www.ica.se/ica-kort/';
 
       test.updateCopy(copyStartpageBtn,'.quicklink-list a[href=\'http://www.ica.se/ica-kort/\'].button');
@@ -75,8 +75,8 @@ const test = {
 
     } else if (/^https:\/\/www.ica.se\/ansokan/.test(window.location)) { //ANSÖKNINGSFLÖDET
 
-      const copyFormBtn       = 'Skaffa ICA-kort nu';
-      const copyFormHeader    = 'Skaffa ICA-kort';
+      const copyFormBtn       = 'Skaffa bonuskonto nu';
+      const copyFormHeader    = 'Skaffa bonuskonto';
 
       test.updateInput(copyFormBtn,'.easy-signup-page .proceed input');
 
