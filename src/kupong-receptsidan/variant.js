@@ -8,8 +8,7 @@
 // ==/UserScript==
 
 import { CROUTIL, ELM } from '../util/main';
-import { isLoggedIn, storage, ajax, triggerHotJar } from '../util/utils';
-import { removeElements, elements } from '../util/functions';
+import { isLoggedIn, storage, ajax, triggerHotJar, removeElements, elements } from '../util/utils';
 
 import './style.css';
 
@@ -26,14 +25,16 @@ import './style.css';
       const section = ELM.get('#ingredients-section');
       section.append(this.createCoupons());
 
-      $('.coupon-list').slick({
-        dots: true,
-        arrows: false,
-        autoplay: true,
-        autoplaySpeed: 5000,
-        fade: true,
-        slidesToShow: 1,
-      });
+      if ($('.personal-offer__coupon').length > 1) {
+        $('.coupon-list').slick({
+          dots: true,
+          arrows: false,
+          autoplay: true,
+          autoplaySpeed: 5000,
+          fade: true,
+          slidesToShow: 1,
+        });
+      }
       this.elements('.js-loggin-btn').forEach(element => element.click(this.onClick.bind(this)));
     },
     createCoupons() {
@@ -305,6 +306,10 @@ import './style.css';
     },
     loadCoupons() {
       const oldCoupons = ELM.get('.slick-track').children();
+      if (oldCoupons.length === 0 && $('.recipe-ad a').length) {
+        oldCoupons.push(ELM.get('.recipe-ad a'));
+      }
+
       const ids = oldCoupons.map(c => /kampanj\/hse\/(\d+)/.exec(c.attr('href'))[1]);
       this.removeElements(['.recipe-ad']);
 

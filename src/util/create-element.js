@@ -21,5 +21,6 @@ export default function CreateElement(arg, options) {
       element[option] = value;
     });
   }
+  // console.log(...classes);
   return new Element(element).css(...classes);
 }

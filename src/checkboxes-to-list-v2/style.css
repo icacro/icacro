@@ -1,0 +1,26 @@
+.cro .ingredients__list__item {
+  padding-left:36px;
+}
+.cro .cooking-step-list { margin-bottom: 0; margin-left: -36px;}
+.cro .pl .checkbox__input:checked+.checkbox__label::after {
+  border: .2rem solid rgba(141,20,94,1);
+  border-right: 0;
+  border-top: 0;
+}
+
+.cro .cooking-step .checkbox:hover .checkbox__label::before, .cooking-step .checkbox:focus .checkbox__label::before {
+  border-color:#CCC;
+}
+
+.cro .cooking-step-list .checkbox:focus .checkbox__label::before {
+  border:none;
+}
+.cro .cooking-step.cooking-step-list .checkbox__input:checked+.checkbox__label::before {
+  background: rgba(245,233,240,1);
+  border:none;
+}
+
+
+@media only screen and (max-width: 780px) {
+  .cro { }
+}
