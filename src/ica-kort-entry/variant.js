@@ -84,16 +84,6 @@ const test = {
         test.updateCopy(copyFormHeader,'.easy-signup-page .container-steps .step-header h1');
       }
 
-    } else if (/^https:\/\/www.ica.se\/erbjudanden\/nojeserbjudanden/.test(window.location)) { //NÖJESERBJUDANDEN
-
-      const copyOfferHeader   = 'Saknar du ICA-kort?';
-      const copyOfferBody     = 'Med ICA-kortet får du ta del av våra rabatter och erbjudanden';
-      const copyOfferBtn      = 'Skaffa ICA-kort';
-
-      test.updateCopy(copyOfferHeader,'.ica-card-module .text-card .heading-icatext');
-      test.updateCopy(copyOfferBody,'.ica-card-module .text-card p');
-      test.updateCopy(copyOfferBtn,'.ica-card-module .text-card a');
-
     } else if (/^https:\/\/www.ica.se\/ica-kort/.test(window.location)) { //ICA-KORT-SIDORNA
 
       const copySubMenu       = 'Skaffa ICA-kort';
@@ -106,31 +96,7 @@ const test = {
 
         $('body').addClass('cro-cardstart');
         test.cardStartpage();
-
-      } else if (/^https:\/\/www.ica.se\/ica-kort\/ansok-om-ica-kort/.test(window.location)) {
-
-        const copyApplyHeader   = 'Skaffa ICA-kort';
-
-        $('.primary .content .clearfix > strong').html(copySubpageExtra).css('visibility','visible');
-        test.updateCopy(copyApplyHeader,'header h1');
-        test.updateCopy(copySubpageBtn,'.content a[href=\'/ansokan/\']');
-
-      } else if (/^https:\/\/www.ica.se\/ica-kort\/samla-och-fa-tillbaka/.test(window.location)) {
-
-        test.updateCopy(copySubpageBtn,'.lead a[href=\'http://www.ica.se/ica-kort/ansok-om-ica-kort/\'].button');
-        test.updateCopy(copySubpageBtn,'.content a[href=\'/ica-kort/ansok-om-ica-kort/\'].button');
-
-        $('.lead a[href=\'http://www.ica.se/ica-kort/ansok-om-ica-kort/\'].button').attr('href','/ansokan/');;
-        $('.content a[href=\'/ica-kort/ansok-om-ica-kort/\'].button').attr('href','/ansokan/');;
-
-      } else if (/^https:\/\/www.ica.se\/ica-kort\/icas-olika-kort/.test(window.location)) {
-
-        const copyCardpageBtn1  = 'Skaffa ICA-kort för bonus';
-        const copyCardpageBtn2  = 'Skaffa ICA-kort med betalfunktion';
-
-        test.updateCopy(copyCardpageBtn1,'.content a[href=\'/ansokan/\'].button');
-        test.updateCopy(copyCardpageBtn2,'.content a[href=\'https://www.icabanken.se/kort-och-konto/vara-kort/valj-kort\'].button');
-
+        
       }
     }
 
