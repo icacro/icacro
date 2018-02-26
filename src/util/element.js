@@ -159,13 +159,6 @@ class Element {
     }
     throw new Error(`${url} Element does not exist! Function 'href'`);
   }
-  removeClass(className) {
-    if (this.element) {
-      this.element.classList.remove(className);
-      return this;
-    }
-    throw new Error(`${className} Element does not exist! Function 'removeClass'`);
-  }
   appendFirst(child) {
     const c = child.nodeType ? child : child.element;
     if (this.element) {
