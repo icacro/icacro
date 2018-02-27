@@ -23,7 +23,7 @@ head.appendChild(style);
 
 var script = document.createElement('script');
 script.setAttribute('async', '');
-script.setAttribute('src', 'https://cdn.rawgit.com/Banzaci/ica/v1.0.96/src/desktop-nav/variant.centered.min.js');
+script.setAttribute('src', 'https://cdn.rawgit.com/icacro/icacro/v1.0.103/src/desktop-nav/variant.centered.min.js');
 head.appendChild(script);
 
 
@@ -40,7 +40,7 @@ head.appendChild(style);
 
 var script = document.createElement('script');
 script.setAttribute('async', '');
-script.setAttribute('src', 'https://cdn.rawgit.com/Banzaci/ica/v1.0.96/src/desktop-nav/variant.3dots.min.js');
+script.setAttribute('src', 'https://cdn.rawgit.com/icacro/icacro/v1.0.103/src/desktop-nav/variant.3dots.min.js');
 head.appendChild(script);
 
 
@@ -57,5 +57,5 @@ head.appendChild(style);
 
 var script = document.createElement('script');
 script.setAttribute('async', '');
-script.setAttribute('src', 'https://cdn.rawgit.com/Banzaci/ica/v1.0.96/src/desktop-nav/variant.search.min.js');
+script.setAttribute('src', 'https://cdn.rawgit.com/icacro/icacro/v1.0.103/src/desktop-nav/variant.search.min.js');
 head.appendChild(script);

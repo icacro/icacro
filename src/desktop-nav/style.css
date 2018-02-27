@@ -1,6 +1,16 @@
 /*.cro .top-bar__wrapper, .cro .offcanvas,
 .cro .top-bar__left, .cro .top-bar__middle, .cro .top-bar__right, .cro .top-bar__sub-menu { visibility: visible; }*/
 
+.cro .top-bar__wrapper.menu-loaded,
+.cro .offcanvas.menu-loaded,
+.cro .top-bar__left.menu-loaded,
+.cro .top-bar__middle.menu-loaded,
+.cro .top-bar__right.menu-loaded,
+.cro .top-bar__sub-menu.menu-loaded,
+#js-toggle-dropdown-search.menu-loaded { 
+  visibility: visible;
+}
+
 @media only screen and (min-width: 1024px) {
 
   .cro .js-track-nav-menu-open,
@@ -324,6 +334,8 @@
   .top-bar__sub-menu-trunc {
     display: none;
   }
+  .top-bar__wrapper, .offcanvas,
+  .top-bar__left, .top-bar__middle, .top-bar__right, .top-bar__sub-menu,
   #js-toggle-dropdown-search {
     visibility: visible;
   }

@@ -10,7 +10,7 @@ const common = {
     const morewidth = $('.cro .top-bar__wrapper nav > .navigation__inner li.trunc__nav').outerWidth(true);
     const morewidthSub = $('.top-bar__sub-menu-trunc li.trunc__nav').outerWidth(true) + 40;
     if(elementVisible === true && isDesktop === 0) {
-      searchLink.insertAfter($('#js-toggle-avatar')).css('visibility','visible');
+      searchLink.insertAfter($('#js-toggle-avatar'));
       isDesktop = 1;
     } else if (elementVisible !== true && isDesktop === 1) {
       searchLink.insertAfter($('#js-open-toggle-offcanvas-left'));
@@ -52,6 +52,7 @@ const common = {
     navInner.find('li a[href=\''+ pagebase +'\']').addClass('active');
 
     commonf.createSubmenu();
+    commonf.showMenus();
   },
 
   manipulateDom() {
@@ -84,8 +85,6 @@ const common = {
         $('#dropdown-subnav').removeClass('dropdown--active');
       }
     });
-
-    $('body').addClass('cro');
 
   },
 };

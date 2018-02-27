@@ -69,6 +69,7 @@ import commonf from './commonfunctions.js';
       $('.top-bar__left .navigation__inner').find('a[href=\''+ pagebase +'\'], a[href=\''+ pageurl +'\']').parent().addClass('active');
       const closeOffcanvas = '<svg id="close-offcanvas"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/Assets/icons/v2-symbols.svg#close"></use></svg>';
       $('#js-open-toggle-offcanvas-left').append(closeOffcanvas);
+      commonf.showMenus();
     },
 
     manipulateDom() {
@@ -115,14 +116,12 @@ import commonf from './commonfunctions.js';
         $('.offcanvas-typeahead').hide();
       });
 
-      $('body').addClass('cro');
-
     },
 
   };
 
   $(document).ready(() => {
-    //Object.assign(test, CROUTIL());
+    Object.assign(test, CROUTIL());
     if($('header.top-bar').length) {
       test.createTopmenu();
       commonf.createSubmenu();
