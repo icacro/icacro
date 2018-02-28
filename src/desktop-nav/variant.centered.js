@@ -16,7 +16,7 @@ import common from './common.js';
   'use strict';
 
   $(document).ready(() => {
-    //Object.assign(common, CROUTIL());
+    Object.assign(common, CROUTIL());
     if($('header.top-bar').length) {
       $('body').addClass('cro-centered');
       if(isLoggedIn()) {

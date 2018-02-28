@@ -1,12 +1,12 @@
-.cro .listed-articles,
-.cro .quick-links,
-.cro article header {
+.cro-cardstart .listed-articles,
+.cro-cardstart .quick-links,
+.cro-cardstart article header {
   display:none;
 }
-.cro .imagebox {
+.cro-cardstart .imagebox {
   visibility: visible;
 }
-.cro .primary {
+.cro-cardstart .primary {
   width:100%;
 }
 
@@ -88,8 +88,6 @@
   height: 24px;
   fill:#DC428C;
 }
-
-
 
 .cro-imagebox {
   display:block;

@@ -7,7 +7,8 @@
 // @grant        none
 // ==/UserScript==
 
-//import { CROUTIL, ELM } from '../util/main';
+import { CROUTIL, ELM } from '../util/main';
+
 import './style.css';
 import common from './common.js';
 
@@ -15,7 +16,7 @@ import common from './common.js';
   'use strict';
 
   $(document).ready(() => {
-    //Object.assign(common, CROUTIL());
+    Object.assign(common, CROUTIL());
     if($('header.top-bar').length) {
       $('body').addClass('cro-3dots');
       common.createMenus();

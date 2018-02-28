@@ -1,3 +1,5 @@
+import { CROUTIL, ELM } from '../util/main';
+import { isLoggedIn, storage, ajax, triggerHotJar, removeElements, elements } from '../util/utils';
 'use strict';
 const commonf = {
 
@@ -25,6 +27,10 @@ const commonf = {
       }
       $(truncLi).nextAll().addClass('hidden');
     }
+  },
+
+  showMenus() {
+    $('.top-bar__wrapper, .offcanvas, .top-bar__left, .top-bar__middle, .top-bar__right, #js-toggle-dropdown-search, .top-bar__sub-menu').addClass('menu-loaded');
   },
 
   createSubmenu() {
