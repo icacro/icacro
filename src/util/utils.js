@@ -35,7 +35,7 @@ export function elements(arg) {
 }
 
 export function create(args, options) {
-  if (Array.isArray(args)) return args.map(arg => CreateElement(arg));
+  if (Array.isArray(args)) return args.map(arg => CreateElement(arg, options));
   return CreateElement(args, options);
 }
 

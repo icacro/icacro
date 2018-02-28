@@ -1,4 +1,14 @@
-.cro { }
+.cro .easy-signup-page .form-wrapper {
+  text-align: left;
+}
+.cro .ssn-container {
+  display: flex;
+  margin-bottom: 10px;
+}
+.cro .input__field {
+  margin-bottom: 10px;
+}
+
 @media only screen and (max-width: 780px) {
   .cro { }
 }
