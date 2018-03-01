@@ -232,6 +232,10 @@ class Element {
   rect(arg) {
     return this.element.getBoundingClientRect()[arg];
   }
+  listenTo(type, cb) {
+    this.element.addEventListener(type, cb);
+    return this;
+  }
 }
 
 export default Element;
