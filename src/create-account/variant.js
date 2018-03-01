@@ -53,7 +53,7 @@ const test = {
       pattern: '[0-9]',
     });
     const ssnBtn = ELM.create('button ssn');
-    // formWrapper.html(' ');
+    formWrapper.html(' ');
     ssnContainer.appendAll([ssnInput, ssnBtn]);
     formWrapper.appendAll([labelSSN, ssnContainer]);
     ssnBtn.click(this.sendSSN.bind(this));
