@@ -71,6 +71,13 @@ class Element {
     }
     throw new Error(`Element does not exist! Function 'style'`);
   }
+  removeAttr(attr) {
+    if (this.element) {
+      this.element.removeAttribute(attr);
+      return this;
+    }
+    throw new Error(`${attr} Element does not exist! Function 'removeAttr'`);
+  }
   attr(...args) {
     if (this.element) {
       const [key, val] = args.length === 2 ? [...args] : args[0].split(':');
@@ -103,7 +110,11 @@ class Element {
     }
     throw new Error(`${callback} Element does not exist! Function 'click'`);
   }
-  value() {
+  value(str) {
+    if (str) {
+      this.element.value = str;
+      return this;
+    }
     return this.element.value;
   }
   placeholder() {
