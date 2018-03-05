@@ -94,7 +94,14 @@ import commonf from './commonfunctions.js';
       });
 
       $('.main-search-bar__input').focus(function() {
+        if(!$('#dropdown-search').hasClass('dropdown--active')) {
+          $('#js-toggle-dropdown-search').click();
+        }
         $('#js-toggle-dropdown-search .offcanvas-typeahead, .search-zero-case').show();
+      });
+
+      $('form').submit(function() {
+        $('.main-search-bar__input').blur();
       });
 
       $('.top-bar__sub-menu-trunc').on('click','#js-toggle-subnav', function(e){
@@ -138,6 +145,7 @@ import commonf from './commonfunctions.js';
         }, 250);
       });
     }
+    //$('#dropdown-search').addClass('dropdown--active');
   });
 
 })(jQuery);
