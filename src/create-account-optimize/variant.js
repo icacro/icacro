@@ -38,13 +38,6 @@ const test = {
   validateField(pattern, value, len) {
     return (pattern.test(value.replace(/\s/g, '')) && value.length > 0 && value.length === len);
   },
-  toggleError(box, pattern, value, len) {
-    if (this.validateField(pattern, value, len)) {
-      box.removeClass(['validation-error']).css('validation-ok');
-    } else {
-      box.removeClass(['validation-ok']).css('validation-error');
-    }
-  },
   generateSteps(step) {
     const accountSteps = ELM.get('.account-steps');
     const steps = ELM.create('ul');
@@ -59,24 +52,42 @@ const test = {
     ]);
     accountSteps.append(steps);
   },
+  createRow(classname, txt, id, type = 'text') {
+    const li = ELM.create(`li form-row ${classname}`);
+    const label = ELM.create('label');
+    const input = ELM.create(`input ${classname}`);
+    input.attr('id', id);
+    input.attr('type', type);
+    label.html(txt);
+    li.append(label);
+    li.append(input);
+    return li;
+  },
   stepTwo() {
     removeElements(['.verify-email-field']);
+
     const hiddenSSN = ELM.get('#CivicRegistrationNumberDisabled');
-    const passwordConfirm = ELM.get('#LoyaltyNewCustomerForm\\.ConfirmPassword').attr('type', 'text');
-    const password = ELM.get('#LoyaltyNewCustomerForm\\.Password');
     const ssn = hiddenSSN.value();
     const newSSN = `${ssn.substr(0, 7)}-${ssn.substr(8)}`;
-    const ssnConfirmed = ELM.create('li ssn-confirmed light').text(newSSN);
-    passwordConfirm.parent().parent().parent().hide();
-    password.listenTo('keyup', (e) => {
-      passwordConfirm.value(e.currentTarget.value);
+    const form = ELM.get('.form');
+
+    form.html(' ');
+
+    const ssnCopy = ELM.create('li ssn-confirmed light').text(newSSN);
+    const firstname = this.createRow('firstname', 'Förnamn', 'LoyaltyNewCustomerForm.FirstName');
+    const lastname = this.createRow('lastname', 'Efternamn', 'LoyaltyNewCustomerForm.LastName');
+    const email = this.createRow('email', 'E-postadress', 'LoyaltyNewCustomerForm.Email');
+    const cellphone = this.createRow('cellphone', 'Mobiltelefon <span class="light">(frivillig uppgift)</span>', 'LoyaltyNewCustomerForm.CellPhone');
+    const password = this.createRow('password', 'Lösenord <span class="light">(6 siffror)</span>', 'LoyaltyNewCustomerForm.Password', 'password');
+    const passwordConfirm = this.createRow('password-confirm', '', 'LoyaltyNewCustomerForm.ConfirmPassword');
+    form.appendAll([ssnCopy, firstname, lastname, email, cellphone, password, passwordConfirm]);
+    const inputCellPhone = cellphone.find('#LoyaltyNewCustomerForm\\.CellPhone');
+    const inputPassword = password.find('#LoyaltyNewCustomerForm\\.Password');
+    inputPassword.attr('maxlength', 6);
+    inputCellPhone.attr('maxlength', 10);
+    inputPassword.listenTo('keyup', (e) => {
+      passwordConfirm.find('#LoyaltyNewCustomerForm\\.ConfirmPassword').value(e.currentTarget.value);
     }).listenTo('blur', () => {});
-    ELM.get('.form').appendFirst(ssnConfirmed);
-    ELM.get('#CivicRegistrationNumberDisabled').parent().parent().hide();
-    this.removeStar('#LoyaltyNewCustomerForm\\.FirstName', 'Förnamn');
-    this.removeStar('#LoyaltyNewCustomerForm\\.LastName', 'Efternamn');
-    this.removeStar('#LoyaltyNewCustomerForm\\.CellPhone', 'Mobiltelefon <span class="light">(frivillig uppgift)</span>');
-    this.removeStar('#LoyaltyNewCustomerForm\\.Password', 'Lösenord <span class="light">(6 siffror)</span>');
   },
   removeStar(selector, txt) {
     const org = ELM.get(selector);
@@ -86,32 +97,38 @@ const test = {
     parent.append(copy);
   },
   stepOne() {
-    removeElements(['.icon.icon-tooltip.sprite1', '.civic-registration-format', '.error']);
-    const ssn = ELM.get('#CivicForm\\.CivicRegistrationNumber');
-    const wrapper = ELM.get('.tooltip-wrapper');
-    const box = ELM.create('div validate-box');
-    const ssnCopy = ELM.create('input ssn-copy');
-    ssn.removeAttr('autofocus');
-    ssn.hide();
-    wrapper.append(ssnCopy);
-    box.insertAfter(ssnCopy);
-    ssnCopy.attr('placeholder', 'ÅÅÅÅ MM DD NNNN');
-    ssnCopy.attr('maxlength', '15');
-    ssnCopy.attr('autofocus', 'autofocus');
-
-    ssnCopy.removeClass(['required', 'dont-validate-as-tel', '_useCheckmarkOnValidate']);
-    ssnCopy.css('masking', 'masking__crn');
-    ssnCopy.listenTo('keyup', (e) => {
-      const { value } = e.currentTarget;
-      if (value.length) {
-        e.currentTarget.value = this.space(value, e);
-        ssn.value(e.currentTarget.value.replace(/\s/g, ''));
-      }
-    }).listenTo('blur', (e) => {
-      removeElements(['p.error']);
-      ssnCopy.removeClass(['error']);
-      this.toggleError(box, /^\d+$/, e.currentTarget.value, 15);
-    });
+    const form = ELM.get('.form');
+    const li = form.find('li');
+    const ssn = ELM.copy('#CivicForm\\.CivicRegistrationNumber');
+    const label = ELM.create('label');
+    li.html(' ');
+    label.html('Personnummer');
+    li.append(label);
+    li.append(ssn);
+    // const ssn = this.createRow('ssn', 'Personnummer', 'CivicForm.CivicRegistrationNumber');
+    // ssn.attr('name', )
+    // removeElements(['.icon.icon-tooltip.sprite1', '.civic-registration-format', '.error']);
+    // const ssn = ELM.get('#CivicForm\\.CivicRegistrationNumber');
+    // const wrapper = ELM.get('.tooltip-wrapper');
+    // const ssnCopy = ELM.create('input ssn-copy');
+    // ssn.removeAttr('autofocus');
+    // ssn.hide();
+    // wrapper.append(ssnCopy);
+    // ssnCopy.attr('maxlength', '15');
+    // ssnCopy.attr('autofocus', 'autofocus');
+    //
+    // ssnCopy.removeClass(['required', 'dont-validate-as-tel', '_useCheckmarkOnValidate']);
+    // ssnCopy.css('masking', 'masking__crn');
+    // ssnCopy.listenTo('keyup', (e) => {
+    //   const { value } = e.currentTarget;
+    //   if (value.length) {
+    //     e.currentTarget.value = this.space(value, e);
+    //     ssn.value(e.currentTarget.value.replace(/\s/g, ''));
+    //   }
+    // }).listenTo('blur', () => {
+    //   removeElements(['p.error']);
+    //   ssnCopy.removeClass(['error']);
+    // });
   },
   manipulateDom() {
     const stepTwo = ELM.get('#CivicRegistrationNumberDisabled').exist();
