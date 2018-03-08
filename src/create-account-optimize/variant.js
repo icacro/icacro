@@ -85,10 +85,36 @@ const test = {
     const password = this.createRow('password', 'Lösenord <span class="light">(6 siffror)</span>', 'LoyaltyNewCustomerForm.Password', 'password');
     const passwordConfirm = this.createRow('password-confirm', '', 'LoyaltyNewCustomerForm.ConfirmPassword');
     form.appendAll([ssnCopy, firstname, lastname, email, cellphone, password, passwordConfirm]);
+
+    const inputFirstname = firstname.find('#LoyaltyNewCustomerForm\\.FirstName');
+    const inputLasstname = lastname.find('#LoyaltyNewCustomerForm\\.LastName');
     const inputCellPhone = cellphone.find('#LoyaltyNewCustomerForm\\.CellPhone');
+    const inputEmail = email.find('#LoyaltyNewCustomerForm\\.Email');
     const inputPassword = password.find('#LoyaltyNewCustomerForm\\.Password');
+
     inputPassword.attr('maxlength', 6);
     inputCellPhone.attr('maxlength', 10);
+
+    inputFirstname.listenTo('blur', (e) => {
+      if (e.currentTarget.value.length < 2) {
+        inputFirstname.css('ssn-error');
+        inputFirstname.removeClass('ssn-ok');
+      } else {
+        inputFirstname.removeClass('ssn-error');
+        inputFirstname.css('ssn-ok');
+      }
+    });
+
+    inputLasstname.listenTo('blur', (e) => {
+      if (e.currentTarget.value.length < 2) {
+        inputLasstname.css('ssn-error');
+        inputLasstname.removeClass('ssn-ok');
+      } else {
+        inputLasstname.removeClass('ssn-error');
+        inputLasstname.css('ssn-ok');
+      }
+    });
+
     inputPassword.listenTo('keyup', (e) => {
       passwordConfirm.find('#LoyaltyNewCustomerForm\\.ConfirmPassword').value(e.currentTarget.value);
     }).listenTo('blur', (e) => {
@@ -100,8 +126,6 @@ const test = {
         inputPassword.css('ssn-ok');
       }
     });
-
-    const inputEmail = email.find('input');
 
     inputEmail.listenTo('blur', (e) => {
       if (!isEmail(e.currentTarget.value)) {
