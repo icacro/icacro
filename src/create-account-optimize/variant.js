@@ -62,6 +62,7 @@ const test = {
     const input = ELM.create(`input ${classname}`);
     input.attr('id', id);
     input.attr('type', type);
+    input.attr('name', id);
     label.html(txt);
     li.append(label);
     li.append(input);
