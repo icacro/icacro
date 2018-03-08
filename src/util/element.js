@@ -9,6 +9,10 @@ const childElement = (element, child) => {
   return element.appendChild(child.element);
 };
 
+function removeClassFromElement(element, classname) {
+  element.classList.remove(classname.replace(/\./g, '').trim());
+}
+
 class Element {
   constructor(element) {
     this.name = 'ELEMENT';
@@ -16,16 +20,21 @@ class Element {
   }
   removeClass(cn) {
     if (this.element) {
-      if (cn) {
+      if (Array.isArray(cn)) {
         cn.forEach((classname) => {
           if (classname.length > 0) {
-            this.element.classList.remove(classname.replace(/\./g, '').trim());
+            removeClassFromElement(this.element, classname);
           }
         });
+      } else {
+        removeClassFromElement(this.element, cn);
       }
       return this;
     }
     throw new Error(`Element does not exist! Function 'removeClass'`);
+  }
+  hasClass(classname) {
+    return this.element.classList.contains(classname);
   }
   parent() {
     if (this.element) {

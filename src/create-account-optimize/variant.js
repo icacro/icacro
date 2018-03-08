@@ -11,8 +11,9 @@
 
 import { CROUTIL, ELM } from '../util/main';
 import { triggerHotJar, removeElements } from '../util/utils';
+import SSNValidater from './ssn';
 import './style.css';
-
+// <span class="icon icon-checkmark sprite1" style="display: inline;"></span>
 const test = {
   space(str, e) {
     const key = e.keyCode || e.charCode;
@@ -44,7 +45,7 @@ const test = {
     accountSteps.html(' ');
     removeElements(['.icon.icon-tooltip.sprite1']);
     steps.appendAll([
-      ELM.create(`li circle ${(step === 1) ? 'active' : ''}`).append('<label>1</label>'),
+      ELM.create(`li circle ${(step === 1) ? 'active' : ''}`).append(`${(step === 2) ? '<div class="icon icon-checkmark sprite1" style="display: inline;"></div>' : '<label>1</label>'}`),
       ELM.create('li line'),
       ELM.create(`li circle ${(step === 2) ? 'active' : ''}`).append('<label>2</label>'),
       ELM.create('li line'),
@@ -105,30 +106,32 @@ const test = {
     label.html('Personnummer');
     li.append(label);
     li.append(ssn);
-    // const ssn = this.createRow('ssn', 'Personnummer', 'CivicForm.CivicRegistrationNumber');
-    // ssn.attr('name', )
-    // removeElements(['.icon.icon-tooltip.sprite1', '.civic-registration-format', '.error']);
-    // const ssn = ELM.get('#CivicForm\\.CivicRegistrationNumber');
-    // const wrapper = ELM.get('.tooltip-wrapper');
-    // const ssnCopy = ELM.create('input ssn-copy');
-    // ssn.removeAttr('autofocus');
-    // ssn.hide();
-    // wrapper.append(ssnCopy);
-    // ssnCopy.attr('maxlength', '15');
-    // ssnCopy.attr('autofocus', 'autofocus');
-    //
-    // ssnCopy.removeClass(['required', 'dont-validate-as-tel', '_useCheckmarkOnValidate']);
-    // ssnCopy.css('masking', 'masking__crn');
-    // ssnCopy.listenTo('keyup', (e) => {
-    //   const { value } = e.currentTarget;
-    //   if (value.length) {
-    //     e.currentTarget.value = this.space(value, e);
-    //     ssn.value(e.currentTarget.value.replace(/\s/g, ''));
-    //   }
-    // }).listenTo('blur', () => {
-    //   removeElements(['p.error']);
-    //   ssnCopy.removeClass(['error']);
-    // });
+
+    ssn.listenTo('keyup', () => {
+      if (!ssn.hasClass('ssn-ok')) {
+        ssn.css('ssn-ok');
+      } else if (ssn.hasClass('ssn-error')) {
+        ssn.removeClass('ssn-error');
+      }
+    }).listenTo('focus', () => {
+      if (ssn.hasClass('ssn-error')) {
+        ssn.removeClass('ssn-error');
+      }
+    }).listenTo('blur', (e) => {
+      removeElements(['p.error']);
+      const { value } = e.currentTarget;
+      if (value.length === 0) {
+        ssn.removeClass(['ssn-ok', 'ssn-error']);
+        return;
+      }
+      if (!SSNValidater(value)) {
+        ssn.css('ssn-error');
+        ssn.removeClass('ssn-ok');
+      } else {
+        ssn.removeClass('ssn-error');
+        ssn.css('ssn-ok');
+      }
+    });
   },
   manipulateDom() {
     const stepTwo = ELM.get('#CivicRegistrationNumberDisabled').exist();
