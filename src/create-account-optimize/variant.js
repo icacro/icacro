@@ -13,7 +13,10 @@ import { CROUTIL, ELM } from '../util/main';
 import { triggerHotJar, removeElements } from '../util/utils';
 import SSNValidater from './ssn';
 import './style.css';
-// <span class="icon icon-checkmark sprite1" style="display: inline;"></span>
+
+function isEmail(email) {
+  return /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/.test(email);
+}
 const test = {
   space(str, e) {
     const key = e.keyCode || e.charCode;
@@ -88,7 +91,27 @@ const test = {
     inputCellPhone.attr('maxlength', 10);
     inputPassword.listenTo('keyup', (e) => {
       passwordConfirm.find('#LoyaltyNewCustomerForm\\.ConfirmPassword').value(e.currentTarget.value);
-    }).listenTo('blur', () => {});
+    }).listenTo('blur', (e) => {
+      if (e.currentTarget.value.length !== 6) {
+        inputPassword.css('ssn-error');
+        inputPassword.removeClass('ssn-ok');
+      } else {
+        inputPassword.removeClass('ssn-error');
+        inputPassword.css('ssn-ok');
+      }
+    });
+
+    const inputEmail = email.find('input');
+
+    inputEmail.listenTo('blur', (e) => {
+      if (!isEmail(e.currentTarget.value)) {
+        inputEmail.css('ssn-error');
+        inputEmail.removeClass('ssn-ok');
+      } else {
+        inputEmail.removeClass('ssn-error');
+        inputEmail.css('ssn-ok');
+      }
+    });
   },
   removeStar(selector, txt) {
     const org = ELM.get(selector);
