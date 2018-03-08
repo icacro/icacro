@@ -74,6 +74,7 @@ const test = {
     const ssn = hiddenSSN.value();
     const newSSN = `${ssn.substr(0, 7)}-${ssn.substr(8)}`;
     const form = ELM.get('.form');
+    const confirm = ELM.copy('.confirm-policy');
 
     form.html(' ');
 
@@ -84,7 +85,7 @@ const test = {
     const cellphone = this.createRow('cellphone', 'Mobiltelefon <span class="light">(frivillig uppgift)</span>', 'LoyaltyNewCustomerForm.CellPhone');
     const password = this.createRow('password', 'Lösenord <span class="light">(6 siffror)</span>', 'LoyaltyNewCustomerForm.Password', 'password');
     const passwordConfirm = this.createRow('password-confirm', '', 'LoyaltyNewCustomerForm.ConfirmPassword');
-    form.appendAll([ssnCopy, firstname, lastname, email, cellphone, password, passwordConfirm]);
+    form.appendAll([ssnCopy, firstname, lastname, email, cellphone, password, passwordConfirm, confirm]);
 
     const inputFirstname = firstname.find('#LoyaltyNewCustomerForm\\.FirstName');
     const inputLasstname = lastname.find('#LoyaltyNewCustomerForm\\.LastName');
