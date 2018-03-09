@@ -16,13 +16,28 @@ left: 0;
 width: 100%;
 height: 100%;
 }
+.cro .cro-step2-container {
+  position: relative;
+}
+
+.pl .cro-iframe-container .loader,
+.cro .cro-step2-container.pl .loader {
+  margin: -2.5rem;
+}
+.cro .cro-step2-container.pl .loader {
+  display: none;
+  margin-top:5rem;
+}
+
 .cro-modal .account-steps,
 .cro-modal .easy-signup-header,
 .cro-modal .container-steps .step .form-wrapper > p,
 .cro-modal .container-steps .step2 ol.form li:first-child,
-.cro-modal .step-header,
-.cro-modal fieldset.loading label span {
+.cro-modal .step-header {
   display: none;
+}
+.cro-modal .container-steps .step .form-wrapper > p.lead {
+  display: block;
 }
 .cro-modal .container-steps {height:1000px;}
 
@@ -31,16 +46,32 @@ height: 100%;
 .cro-modal .container-steps .step .form-wrapper {padding-top:3px;}
 
 #step2 {width: 300px; max-width: 100%; height: 0; padding:0; margin: 0 auto; top:-34px; opacity: 0; position: relative; z-index: 2;}
-#step2.loaded {height:1300px; overflow: hidden; opacity: 1;}
+#step2.loaded {height:1400px; overflow: hidden; opacity: 1;}
 
 .cro-modal .container-steps .step2 {margin: 0 -10px; position: relative;}
 
 .cro-modal fieldset.loading {
   opacity: 1;
 }
+
+.cro-modal fieldset .icon-checkmark,
+.cro-modal fieldset label span,
+.cro-modal fieldset input {
+  transition: opacity 0.25s ease-in-out;
+}
+
+.cro-modal fieldset.loading .icon-checkmark,
+.cro-modal fieldset.loading label span {
+  opacity: 0;
+}
+
 .cro-modal fieldset.loading input {
   opacity: 0.5;
+  background: #f2f2f2;
+  border-color: #f2f2f2;
+  box-shadow: none;
 }
+
 .cro-modal .easy-signup-page .step2 .form-wrapper .filled {
   padding-top: 0;
 }
