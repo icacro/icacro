@@ -10,19 +10,20 @@
 /*eslint-disable */
 
 'use strict';
+var style = document.createElement('style');
+style.setAttribute('type', 'text/css');
+style.innerHTML = '.async-hide{opacity:0;}';
+document.querySelector('head').appendChild(style);
+document.documentElement.className += ' async-hide';
 
-function init() {
-  var css = '.classname { visibility: hidden; }';
-  var style = document.createElement('style');
-  var script = document.createElement('script');
-  var head = document.querySelector('head');
+var script = document.createElement('script');
+script.setAttribute('async', '');
+script.setAttribute('src', 'https://cdn.rawgit.com/icacro/icacro/util/src/create-account/variant.form.min.js');
+document.querySelector('head').appendChild(script);
 
-  script.setAttribute('async', '');
-  script.setAttribute('src', './variant.min.js');
-
-  style.appendChild(document.createTextNode(css));
-
-  head.appendChild(style);
-  head.appendChild(script);
+script.onload = function () {
+  var d = document.documentElement;
+  setTimeout(function(){
+    d.className = d.className.replace(RegExp(' ?async-hide'), '');
+  },40);
 }
-init();

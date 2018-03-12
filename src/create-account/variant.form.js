@@ -16,12 +16,12 @@ import './style.css';
 const test = {
 
   showLoader(container) {
-    container.find('.loader').show();
+    container.find('.loader').css('display','block');
     container.find('iframe').css('opacity','0');
   },
 
   hideLoader(container) {
-    container.find('.loader').hide();
+    container.find('.loader').css('display','none');
     container.find('iframe').css('opacity','1');
   },
 
@@ -58,7 +58,7 @@ const test = {
           test.hideLoader($('.cro-iframe-container iframe').contents().find('.cro-step2-container'));
 
           $('.cro-iframe-container iframe').contents().find('html,body').animate({
-            scrollTop: $('.cro-iframe-container iframe').contents().find('#step2').offset().top - 10
+            scrollTop: $('.cro-iframe-container iframe').contents().find('#step2').offset().top - 90
           }, 500);
 
         } else if (step2 === 'https://www.ica.se/ansokan/?step=6578697374696e67637573746f6d657261726561') {
@@ -76,6 +76,7 @@ const test = {
         iframeInner.find('a[href="#terms"]').attr('href','https://www.ica.se/PageFiles/80195/VILLKOR_ICABanken_REKPCX2064_ICA_bonus_formanskund_A4.pdf?epslanguage=sv');
         iframeInner.find('a[href="#create-pultext-modal"]').attr('href','https://www.ica.se/policies/behandling-av-personuppgifter/');
         iframeInner.find('form').attr('target','cro-reg');
+        $('.cro-iframe-container iframe').contents().find('.payWithCard, .form-wrapper .form li:first-child label span').html('<a href="//www.ica.se/ansokan/?step=6369766963666f726d" target="cro-reg" class="backToStep1 small">Ändra</a>').addClass('backactive');
       } else {
         headerBarTimeout = window.setTimeout(hideHeaderBarStep2, 0);
       }
@@ -96,28 +97,29 @@ const test = {
     const iframeContent = '<span class="loader"></span><iframe id="cro-reg" name="cro-reg" src="//www.ica.se/ansokan/?step=6369766963666f726d" frameborder="0"></iframe>';
     iframeContainer.append(iframeContent);
     const iframe = $('.cro-iframe-container iframe');
-    iframe.on('load', function () {
+    iframe.load(function () {
       const iframeInner = iframe.contents();
       if(this.contentWindow.location.href.indexOf('ansokan') !== -1) {
         test.iframeStep1();
         const step2container = $('<div class="cro-step2-container pl"><span class="loader"></span><iframe id="step2" name="step2" src="" frameborder="0"></iframe></div>');
         step2container.insertAfter(iframeInner.find('.step1 .form-wrapper'));
       }
-      test.addEventListeners(iframeInner);
+      test.addEventListeners();
     });
   },
 
-  addEventListeners(iframeInner) {
+  addEventListeners() {
+    const iframeInner = $('.cro-iframe-container iframe').contents();
     iframeInner.find('form').on('submit', function(e) {
       if(iframeInner.find('.icon-checkmark:visible').length) {
         iframeInner.find('.payWithCard, .form-wrapper .form li:last-child').hide();
-        test.showLoader(iframeInner.contents().find('.cro-step2-container'));
+        test.showLoader(iframeInner.find('.cro-step2-container'));
         test.iframeStep2();
       }
     });
-    iframeInner.contents().find('#step2').contents().find('form').on('submit', function(e) {
-      //???
-    });
+    //iframeInner.contents().find('#step2').contents().find('form').on('submit', function(e) {
+    //  //???
+    //});
   },
 
   createModal() {
@@ -128,7 +130,7 @@ const test = {
       container: $('.modal-container').get(0)
     });
     setTimeout(function () {
-      test.showLoader(container);
+      test.showLoader($('.cro-iframe-container'));
       test.loadModal();
     }, 50);
   },
@@ -143,8 +145,9 @@ const test = {
 $(document).ready(() => {
 
   if (window.self === window.top) {
-    const createAccount = $('.top-bar .top-bar__right .quick-login a[href="/ansokan/"]');
-    if (createAccount.length) {
+    const createAccount = ELM.get('.top-bar .top-bar__right .quick-login a[href="/ansokan/"]');
+    const createAccountExist = createAccount.exist();
+    if (createAccount.exist()) {
       Object.assign(test, CROUTIL());
       test.manipulateDom();
       createAccount.click((e) => {
@@ -153,6 +156,10 @@ $(document).ready(() => {
       });
     }
     //fler länkar?
+
+  } else if (window.frameElement.getAttribute('name') === 'cro-reg' || window.frameElement.getAttribute('name') === 'step2') {
+    //hantera omladdning av frame - fixa ev flicker i loader.js
+    $('body').addClass('cro-modal');
   }
 
 });
