@@ -40,9 +40,12 @@ height: 100%;
 .cro-modal .easy-signup-header,
 .cro-modal .container-steps .step .form-wrapper > p,
 .cro-modal .container-steps .step2 ol.form li:first-child,
-.cro-modal .step-header {
+.cro-modal .step-header,
+.cro-modal .easy-signup-page .form-wrapper .payWithCardLinkInfo,
+.cro-modal.cro-step1 .container-steps .step .form-wrapper > p.lead {
   display: none;
 }
+.cro-step1 .step-header,
 .cro-modal .container-steps .step .form-wrapper > p.lead {
   display: block;
 }
