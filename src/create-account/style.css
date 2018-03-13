@@ -38,15 +38,16 @@ height: 100%;
 
 .cro-modal .account-steps,
 .cro-modal .easy-signup-header,
+.cro-modal header.header_bar,
 .cro-modal .container-steps .step .form-wrapper > p,
 .cro-modal .container-steps .step2 ol.form li:first-child,
-.cro-modal .step-header,
+.cro-step2 .step-header,
 .cro-modal .easy-signup-page .form-wrapper .payWithCardLinkInfo,
 .cro-modal.cro-step1 .container-steps .step .form-wrapper > p.lead {
   display: none;
 }
-.cro-step1 .step-header,
-.cro-modal .container-steps .step .form-wrapper > p.lead {
+.cro-modal .container-steps .step .form-wrapper > p.lead,
+.cro-modal .already_customer_choice .step-header {
   display: block;
 }
 .cro-modal .container-steps {height:1100px;}
@@ -142,4 +143,8 @@ span.usp-check {
 .cro-modal .easy-signup-page .confirmation .grid_fluid .column {
   padding: 0 10px;
   text-align: center;
+}
+
+.cro-modal .easy-signup-page .confirmation a.backButton {
+  display: none;
 }
