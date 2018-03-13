@@ -20,6 +20,11 @@ height: 100%;
   position: relative;
 }
 
+.cro-modal .easy-signup-header .login_back {
+  display: none;
+}
+
+
 .pl .cro-iframe-container .loader,
 .cro-modal .cro-step2-container.pl .loader {
   margin: -2.5rem;
@@ -72,16 +77,24 @@ height: 100%;
   opacity: 1;
   z-index:110;
   left:0;
-  top:57px;
+  top:47px;
   width: 100%;
   text-align: right;
 }
 a.backToStep1 {
-  margin-right: 30px;
+  margin-right: 20px;
+  padding:12px 12px 8px;
   cursor: pointer;
   color:#999;
   font-weight: 100;
   text-decoration: underline;
+}
+a.backToStep1 svg {
+  width:15px;
+  fill: #A02971;
+}
+a.backToStep1:hover svg {
+  fill: #DC438C;
 }
 
 .cro-modal fieldset.loading input {
@@ -93,4 +106,37 @@ a.backToStep1 {
 
 .cro-modal .easy-signup-page .step2 .form-wrapper .filled {
   padding-top: 0;
+}
+
+span.usp-check {
+    display: inline-block;
+    background-image: url(/Templates/General/Views/Images/RWD/sprites/general_sprite1.png?1);
+    background-repeat: no-repeat;
+    background-size: 500px 2433px;
+    background-position: -317px -2172px;
+    width: 17px;
+    height: 15px;
+    margin-right: 10px;
+    margin-top: 2px;
+    margin-bottom: -2px;
+}
+
+.cro-modal .step>.lead {
+  line-height: 1.55em;
+}
+
+.cro-modal .easy-signup-page .confirmation.bg-faded {
+  background: transparent;
+}
+.cro-modal .easy-signup-page .confirmation h2 {
+  padding-top:0;
+}
+.cro-modal .easy-signup-page .confirmation .grid_fluid {
+  display: flex;
+  text-align: center;
+  margin: 30px -10px 0;
+}
+.cro-modal .easy-signup-page .confirmation .grid_fluid .column {
+  padding: 0 10px;
+  text-align: center;
 }
