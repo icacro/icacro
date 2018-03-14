@@ -23,7 +23,9 @@ height: 100%;
 .cro-modal .easy-signup-header .login_back {
   display: none;
 }
-
+.cro-modal {
+  background: #fff;
+}
 
 .pl .cro-iframe-container .loader,
 .cro-modal .cro-step2-container.pl .loader {
@@ -126,7 +128,7 @@ span.usp-check {
 }
 
 .cro-modal .step>.lead {
-  line-height: 1.55em;
+  margin-bottom: 0;
 }
 
 .cro-modal .easy-signup-page .confirmation.bg-faded {
@@ -147,4 +149,30 @@ span.usp-check {
 
 .cro-modal .easy-signup-page .confirmation a.backButton {
   display: none;
+}
+
+.cro-modal .js-linkinner,
+.cro-modal .js-linkinner:hover {
+  color: #3F3F40;
+}
+
+.cro-modal .easy-signup-page .form-wrapper .payWithCard {
+  padding:0;
+}
+
+@media only screen and (max-width: 479px) {
+  .cro-modal .easy-signup-page .step-header {
+    margin-bottom: 0;
+  }
+  .cro-iframe-container {
+    margin:-1em;
+  }
+}
+
+.pl-modal-cover {
+  position: absolute;
+  top:0;
+  left:0;
+  width:100%;
+  height: 100%;
 }

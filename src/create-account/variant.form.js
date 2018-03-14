@@ -30,7 +30,7 @@ const test = {
 
     if(iframeType === 'step1') {
       //OBS! Bort med länken!!!!
-      const leadNew = '<p class="lead">Skaffa ICA-kort och få:<br><span class="usp-check"></span>Bonus på dina inköp<br><span class="usp-check"></span>Personliga erbjudanden<br><span class="usp-check"></span>Rabatt på resor och <a href="/ansokan/tacksida/">nöjen</a></p>';
+      const leadNew = '<p class="lead">Skaffa ICA-kort och få personliga <a href="/ansokan/tacksida/">erbjudanden!</a></p>';
       iframeInner.find('body').addClass('cro-step1');
       iframeInner.find('a.payWithCardLink').attr('target','_blank');
       iframeInner.find('form').attr('target','step2');
@@ -50,7 +50,7 @@ const test = {
         setTimeout(function() {
           $('.cro-iframe-container iframe').contents().find('#step2').addClass('loaded');
           $('.cro-iframe-container iframe').contents().find('html,body').animate({
-            scrollTop: $('.cro-iframe-container iframe').contents().find('#step2').offset().top - 90
+            scrollTop: $('.cro-iframe-container iframe').contents().find('#step2').offset().top - 92
           }, 500).delay(250);
         },50);
       } else if (step2 === 'https://www.ica.se/ansokan/?step=6578697374696e67637573746f6d657261726561') {
@@ -94,16 +94,19 @@ const test = {
   },
 
   loadModal() {
+    const modalCover = $('<div></div>').addClass('pl-modal-cover');
+    modalCover.insertBefore($('.pl .pl-modal .pl-modal__window'));
     const iframeContainer = ELM.get('.cro-iframe-container');
-    const iframeContent = '<span class="loader"></span><iframe id="cro-reg" name="cro-reg" src="//www.ica.se/ansokan/?step=6369766963666f726d" frameborder="0"></iframe>';
-    iframeContainer.append(iframeContent);
+    const iframeContent = '<span class="loader"></span><iframe id="cro-reg" name="cro-reg" src="" frameborder="0"></iframe>';
+    iframeContainer.html(iframeContent);
     const iframe = $('.cro-iframe-container iframe');
+    iframe.attr('src','https://www.ica.se/ansokan/?step=6369766963666f726d');
     iframe.load(function () {
-      const iframeInner = iframe.contents();
       if(this.contentWindow.location.href.indexOf('ansokan/?step=636') !== -1) {
         //load step1
         test.loadIframe('step1');
         const step2container = $('<div class="cro-step2-container pl"><span class="loader"></span><iframe id="step2" name="step2" src="" frameborder="0"></iframe></div>');
+        const iframeInner = iframe.contents();
         step2container.insertAfter(iframeInner.find('.step1 .form-wrapper'));
       }
       test.addEventListeners();
@@ -185,9 +188,15 @@ $(document).ready(() => {
     //hantera omladdning av iframe - fixa ev flicker i loader.js
     $('body').addClass('cro-modal');
 
+    if($('.is-skt').length) {
+      $('.is-skt').find('.step-header').show().html('<h1>Nu är det fixat!</h1>');
+      $('.is-skt').find('.step-header').show().html('<h1>Nu är det fixat!</h1>');
+      $('.is-skt').find('.grid_fluid .column').wrap('<a href="#" class="js-linkinner"></a>');
+      $('.is-skt').find('.grid_fluid .column a').html('');
+      $('.is-skt').removeClass('is-skt');
+    }
+
     //endast på dessa sidor
-    $('.is-skt').find('.step-header').show().html('<h1>Nu är det fixat!</h1>');
-    $('.is-skt').removeClass('is-skt');
     $('ul.choices .has_card a').attr('href','/inloggning/jag-vet-inte-vad-jag-har-for-losenord/')
     $('.faq a').attr('target','_blank');
   }
