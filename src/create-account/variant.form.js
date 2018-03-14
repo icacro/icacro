@@ -35,7 +35,6 @@ const test = {
       iframeInner.find('a.payWithCardLink').attr('target','_blank');
       iframeInner.find('form').attr('target','step2');
       iframeInner.find('.step1').prepend(leadNew);
-
     } else if(iframeType === 'step2') {
       iframeInner.find('body').addClass('cro-step2');
       const step1=document.getElementById("cro-reg").contentWindow.document;
@@ -54,6 +53,8 @@ const test = {
           }, 500).delay(250);
         },50);
       } else if (step2 === 'https://www.ica.se/ansokan/?step=6578697374696e67637573746f6d657261726561') {
+        step1.location = step2;
+      } else if (step2 === 'https://www.ica.se/ansokan/?step=6369766963666f726d') {
         step1.location = step2;
       } else {
         top.location = step2;
@@ -141,9 +142,8 @@ const test = {
 };
 
 $(document).ready(() => {
-
+  $('body').addClass('cro');
   if (window.self === window.top) {
-
     const createAccount = ELM.get('.top-bar .top-bar__right .quick-login a[href="/ansokan/"]');
 
     if(createAccount.exist()) {
@@ -185,7 +185,9 @@ $(document).ready(() => {
     }
 
   } else if (window.frameElement.getAttribute('name') === 'cro-reg' || window.frameElement.getAttribute('name') === 'step2') {
-    //hantera omladdning av iframe - fixa ev flicker i loader.js
+
+    //hantera omladdning av iframe - fixa ev flicker i loader.js?
+
     $('body').addClass('cro-modal');
 
     if($('.is-skt').length) {

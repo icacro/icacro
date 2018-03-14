@@ -12,7 +12,7 @@
 'use strict';
 var style = document.createElement('style');
 style.setAttribute('type', 'text/css');
-style.innerHTML = '.async-hide{opacity:0;}';
+style.innerHTML = '.async-hide, .easy-signup-header, .easy-signup-page {opacity:0;}';
 document.querySelector('head').appendChild(style);
 document.documentElement.className += ' async-hide';
 

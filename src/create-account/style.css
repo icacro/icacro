@@ -20,6 +20,13 @@ height: 100%;
   position: relative;
 }
 
+.cro .easy-signup-header,
+.cro .easy-signup-page,
+.cro-modal .easy-signup-header,
+.cro-modal .easy-signup-page {
+  display: block;
+}
+
 .cro-modal .easy-signup-header .login_back {
   display: none;
 }
@@ -104,9 +111,10 @@ a.backToStep1:hover svg {
 }
 
 .cro-modal fieldset.loading input {
-  opacity: 0.5;
-  background: #f2f2f2;
-  border-color: #f2f2f2;
+  color: #999;
+  font-weight: 100;
+  background: #f7f7f7;
+  border-color: #f7f7f7;
   box-shadow: none;
 }
 
@@ -158,6 +166,10 @@ span.usp-check {
 
 .cro-modal .easy-signup-page .form-wrapper .payWithCard {
   padding:0;
+}
+
+.cro-modal .easy-signup-page .already_customer_choice .choices a {
+  background: #f7f7f7;
 }
 
 @media only screen and (max-width: 479px) {
