@@ -24,7 +24,7 @@ height: 100%;
 .cro .easy-signup-page,
 .cro-modal .easy-signup-header,
 .cro-modal .easy-signup-page {
-  display: block;
+  opacity: 1;
 }
 
 .cro-modal .easy-signup-header .login_back {
