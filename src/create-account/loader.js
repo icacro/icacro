@@ -18,7 +18,7 @@ document.documentElement.className += ' async-hide';
 
 var script = document.createElement('script');
 script.setAttribute('async', '');
-script.setAttribute('src', 'https://cdn.rawgit.com/icacro/icacro/util/src/create-account/variant.form.min.js');
+script.setAttribute('src', 'https://cdn.rawgit.com/icacro/icacro/util/src/create-account/variant.min.js');
 document.querySelector('head').appendChild(script);
 
 script.onload = function () {

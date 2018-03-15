@@ -11,6 +11,7 @@
 
 import { CROUTIL, ELM } from '../util/main';
 import { waitForContent, elements, triggerHotJar } from '../util/utils';
+import Element from '../util/element';
 import './style.css';
 
 const test = {
@@ -26,11 +27,11 @@ const test = {
   },
 
   iframeDone(iframeType) {
-    let iframeInner = test.getIframeInner(iframeType);
+    const iframeInner = test.getIframeInner(iframeType);
 
     if(iframeType === 'step1') {
       //OBS! Bort med länken!!!!
-      const leadNew = '<p class="lead">Skaffa ICA-kort och få personliga <a href="/ansokan/tacksida/">erbjudanden!</a></p>';
+      const leadNew = '<p class="lead">Skaffa ICA-kort och få personliga erbjudanden<a href="/ansokan/tacksida/" style="color:inherit;">!</a></p>';
       iframeInner.find('body').addClass('cro-step1');
       iframeInner.find('a.payWithCardLink').attr('target','_blank');
       iframeInner.find('form').attr('target','step2');
@@ -43,8 +44,8 @@ const test = {
         $('.cro-iframe-container iframe').contents().find('.payWithCard, .form-wrapper .form li:first-child label span').html('<a href="//www.ica.se/ansokan/?step=6369766963666f726d" target="cro-reg" class="backToStep1 small"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0.014599280431866646 -0.01454699132591486 31.977949142456055 31.999547958374023" id="edit" width="100%" height="100%"><path d="M31.878 30.051c.215.573.129 1.06-.272 1.461-.315.315-.644.473-1.002.473-.172 0-.358-.029-.53-.1a462.04 462.04 0 0 0-11.328-3.795 2.423 2.423 0 0 1-.63-.401L.501 9.974c-.272-.243-.415-.559-.473-.931a1.537 1.537 0 0 1 .229-1.031c1.017-1.647 2.162-3.065 3.437-4.268C4.897 2.541 6.401 1.381 8.219.25c.73-.415 1.389-.344 1.962.229l17.615 17.715c.2.158.329.372.401.63 2.205 6.717 3.423 10.454 3.68 11.228m-7.489-3.366l2.363-2.363a151.483 151.483 0 0 1-1.461-4.397L8.835 3.271c-.2.158-.501.401-.888.745s-.659.587-.816.716l15.925 15.925c.286.315.43.673.415 1.06a1.497 1.497 0 0 1-.487 1.06c-.315.315-.644.473-1.002.473-.473 0-.845-.143-1.131-.43L4.869 6.795A15.324 15.324 0 0 0 3.365 8.7L19.82 25.226c.286.086.988.301 2.077.644 1.117.344 1.933.616 2.492.816"></path></svg></a>').addClass('backactive');
         test.hideLoader($('.cro-iframe-container iframe').contents().find('.cro-step2-container'));
         iframeInner.find('a').attr('target','_blank').removeClass('modal modal-loaded');
-        iframeInner.find('a[href="#terms"]').attr('href','https://www.ica.se/PageFiles/80195/VILLKOR_ICABanken_REKPCX2064_ICA_bonus_formanskund_A4.pdf?epslanguage=sv');
-        iframeInner.find('a[href="#create-pultext-modal"]').attr('href','https://www.ica.se/policies/behandling-av-personuppgifter/');
+        iframeInner.find('.confirm-policy label').html('<span class="icon icon-checkbox checked sprite1"></span> Jag godkänner <a href="https://www.ica.se/PageFiles/80195/VILLKOR_ICABanken_REKPCX2064_ICA_bonus_formanskund_A4.pdf?epslanguage=sv" target="blank" tabindex="0">ICAs kundvillkor</a>');
+        iframeInner.find('.small-centerlink-wrapper').html('<a href="https://www.ica.se/policies/behandling-av-personuppgifter/" class="small" tabindex="0" target="_blank">Så behandlar ICA dina personuppgifter</a>');
         iframeInner.find('form').attr('target','cro-reg');
         setTimeout(function() {
           $('.cro-iframe-container iframe').contents().find('#step2').addClass('loaded');
@@ -65,14 +66,14 @@ const test = {
   },
 
   loadIframe(iframeType) {
-    let iframeInner = test.getIframeInner(iframeType);
+    const iframeInner = test.getIframeInner(iframeType);
     let headerBarTimeout = window.setTimeout(hideHeaderBar, 10);
     let hideHeaderBarDeferred = $.Deferred();
     $.when(hideHeaderBarDeferred).done(function() {
       test.iframeDone(iframeType);
     });
     function hideHeaderBar() {
-      let iframeInner=test.getIframeInner(iframeType);
+      const iframeInner=test.getIframeInner(iframeType);
       const e = iframeInner.find('.easy-signup-header');
       if (e.length) {
         window.clearTimeout(headerBarTimeout);
@@ -95,13 +96,13 @@ const test = {
   },
 
   loadModal() {
-    const modalCover = $('<div></div>').addClass('pl-modal-cover');
-    modalCover.insertBefore($('.pl .pl-modal .pl-modal__window'));
+    const modalCover = ELM.create('div pl-modal-cover');
     const iframeContainer = ELM.get('.cro-iframe-container');
     const iframeContent = '<span class="loader"></span><iframe id="cro-reg" name="cro-reg" src="" frameborder="0"></iframe>';
+    modalCover.insertAfter(ELM.get('.pl .pl-modal .pl-modal__window'));
     iframeContainer.html(iframeContent);
-    const iframe = $('.cro-iframe-container iframe');
-    iframe.attr('src','https://www.ica.se/ansokan/?step=6369766963666f726d');
+
+    const iframe = $('.cro-iframe-container iframe').attr('src','https://www.ica.se/ansokan/?step=6369766963666f726d');
     iframe.load(function () {
       if(this.contentWindow.location.href.indexOf('ansokan/?step=636') !== -1) {
         //load step1
@@ -172,7 +173,7 @@ $(document).ready(() => {
       checkAccount.css('modal-application');
     }
 
-    let modalApplication = $('.modal-application');
+    const modalApplication = $('.modal-application');
 
     if (modalApplication.length) {
       Object.assign(test, CROUTIL());
@@ -186,21 +187,37 @@ $(document).ready(() => {
 
   } else if (window.frameElement.getAttribute('name') === 'cro-reg' || window.frameElement.getAttribute('name') === 'step2') {
 
-    //hantera omladdning av iframe - fixa ev flicker i loader.js?
+    ELM.get('html').css('cro-modal');
+    ELM.get('body').css('cro-modal');
+    const currentPage=window.location.href;
 
-    $('body').addClass('cro-modal');
+    if (currentPage !== 'https://www.ica.se/ansokan/?step=6c6f79616c74796e6577637573746f6d6572666f726d'
+    && currentPage !== 'https://www.ica.se/ansokan/?step=6578697374696e67637573746f6d657261726561'
+    && currentPage !== 'https://www.ica.se/ansokan/?step=6369766963666f726d'
+    && currentPage !== 'https://www.ica.se/ansokan/bankkund/'
+    && currentPage !== 'https://www.ica.se/ansokan/passar-inte-alternativen/'
+    && currentPage !== 'https://www.ica.se/inloggning/jag-vet-inte-vad-jag-har-for-losenord/'
+    && currentPage !== 'https://www.ica.se/inloggning/behover-du-hjalp/mer-information-om-inloggningen/') {
 
-    if($('.is-skt').length) {
-      $('.is-skt').find('.step-header').show().html('<h1>Nu är det fixat!</h1>');
-      $('.is-skt').find('.step-header').show().html('<h1>Nu är det fixat!</h1>');
-      $('.is-skt').find('.grid_fluid .column').wrap('<a href="#" class="js-linkinner"></a>');
-      $('.is-skt').find('.grid_fluid .column a').html('');
-      $('.is-skt').removeClass('is-skt');
+      if (currentPage === 'https://www.ica.se/ansokan/tacksida/') {
+        if(ELM.get('.is-skt').exist()) {
+          const newTeasers = '<div class="grid_fluid grid_align_center text-align-center sm_fullwidth">'
+          +'<a href="https://www.ica.se/logga-in/?returnurl=%2frecept-och-mat%2f" target="_blank"><div class="column size20of20 lg_size1of3"><span class="sprite1 icon icon-fork-big"></span><h3>Spara recept</h3><p>Favoritrecepten på ett och samma ställe förenklar matlivet</p></div></a>'
+          +'<a href="https://www.ica.se/logga-in/?returnurl=http%3a%2f%2fwww.ica.se%2f%23%3amittica%3dinkopslistor" target="_blank"><div class="column size20of20 lg_size1of3"><span class="sprite1 icon icon-shoppinglist-big"></span><h3>Skapa inköpslistor</h3><p>Skapa inköpslistor, ha dem i mobilen och låt alla i familjen fylla på!</p></div></a>'
+          +'<a href="https://www.ica.se/logga-in/?returnurl=%2fbank-forsakring%2f" target="_blank"><div class="column size20of20 lg_size1of3"><span class="sprite1 icon icon-offers-big"></span><h3>Erbjudanden</h3><p>Missa inga personliga erbjudanden! Nya förmåner varje vecka.</p></div></a>';
+          +'</div>'
+          ELM.get('.is-skt .step-header').view().html('<h1>Nu är det fixat!</h1>');
+          ELM.get('.is-skt .grid_fluid').html(newTeasers);
+          ELM.get('.is-skt').removeClass('is-skt');
+        }
+      } else if (currentPage === 'https://www.ica.se/ansokan/?step=6578697374696e67637573746f6d657261726561') {
+        ELM.get('ul.choices .has_card a').attr('href','/inloggning/jag-vet-inte-vad-jag-har-for-losenord/');
+      } else {
+        top.location = currentPage;
+      }
+
     }
 
-    //endast på dessa sidor
-    $('ul.choices .has_card a').attr('href','/inloggning/jag-vet-inte-vad-jag-har-for-losenord/')
-    $('.faq a').attr('target','_blank');
   }
 
 });

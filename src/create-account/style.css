@@ -30,8 +30,9 @@ height: 100%;
 .cro-modal .easy-signup-header .login_back {
   display: none;
 }
-.cro-modal {
+html.cro-modal, body.cro-modal {
   background: #fff;
+  background-image: none;
 }
 
 .pl .cro-iframe-container .loader,
@@ -154,6 +155,12 @@ span.usp-check {
   padding: 0 10px;
   text-align: center;
 }
+.cro-modal .easy-signup-page .confirmation .grid_fluid .column a.sprite1-p {
+  display: none;
+}
+.cro-modal .easy-signup-page .confirmation .grid_fluid a {
+  color: inherit;
+}
 
 .cro-modal .easy-signup-page .confirmation a.backButton {
   display: none;
@@ -181,10 +188,14 @@ span.usp-check {
   }
 }
 
+.cro .pl .pl-modal .pl-modal__window--md {
+  z-index: 1;
+}
 .pl-modal-cover {
   position: absolute;
   top:0;
   left:0;
   width:100%;
   height: 100%;
+  z-index: 0;
 }
