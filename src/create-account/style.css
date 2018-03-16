@@ -115,6 +115,8 @@ a.backToStep1 svg {
   width:15px;
   height:15px;
   fill: #A02971;
+  display: inline-block;
+  transform: scaleX(-1);
 }
 a.backToStep1:hover svg {
   fill: #DC438C;
@@ -139,6 +141,10 @@ span.usp-check {
 
 .cro-modal .step>.lead {
   margin-bottom: 0;
+}
+
+.cro-modal .step1 .lead {
+  line-height: 1.55em;
 }
 
 .cro-modal .easy-signup-page .confirmation.bg-faded {
@@ -201,5 +207,8 @@ span.usp-check {
   }
   .cro-iframe-container {
     margin:-1em;
+  }
+  header h1:last-child {
+    margin: 0 20px;
   }
 }
