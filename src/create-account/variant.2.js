@@ -41,7 +41,7 @@ const test = {
       const step1=document.getElementById("cro-reg").contentWindow.document;
       const step2=step1.getElementById("step2").contentWindow.location.href;
       if (step2 === 'https://www.ica.se/ansokan/?step=6c6f79616c74796e6577637573746f6d6572666f726d') {
-        $('.cro-iframe-container iframe').contents().find('.payWithCard, .form-wrapper .form li:first-child label span').html('<a href="//www.ica.se/ansokan/?step=6369766963666f726d" target="cro-reg" class="backToStep1 small"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0.014599280431866646 -0.01454699132591486 31.977949142456055 31.999547958374023" id="edit" width="100%" height="100%"><path d="M31.878 30.051c.215.573.129 1.06-.272 1.461-.315.315-.644.473-1.002.473-.172 0-.358-.029-.53-.1a462.04 462.04 0 0 0-11.328-3.795 2.423 2.423 0 0 1-.63-.401L.501 9.974c-.272-.243-.415-.559-.473-.931a1.537 1.537 0 0 1 .229-1.031c1.017-1.647 2.162-3.065 3.437-4.268C4.897 2.541 6.401 1.381 8.219.25c.73-.415 1.389-.344 1.962.229l17.615 17.715c.2.158.329.372.401.63 2.205 6.717 3.423 10.454 3.68 11.228m-7.489-3.366l2.363-2.363a151.483 151.483 0 0 1-1.461-4.397L8.835 3.271c-.2.158-.501.401-.888.745s-.659.587-.816.716l15.925 15.925c.286.315.43.673.415 1.06a1.497 1.497 0 0 1-.487 1.06c-.315.315-.644.473-1.002.473-.473 0-.845-.143-1.131-.43L4.869 6.795A15.324 15.324 0 0 0 3.365 8.7L19.82 25.226c.286.086.988.301 2.077.644 1.117.344 1.933.616 2.492.816"></path></svg></a>').addClass('backactive');
+        $('.cro-iframe-container iframe').contents().find('.payWithCard, .form-wrapper .form li:first-child label span').html('<a href="#" class="backToStep1 small"><svg><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/Assets/icons/symbols.svg#edit"></use></svg></a>').addClass('backactive');
         test.hideLoader($('.cro-iframe-container iframe').contents().find('.cro-step2-container'));
         iframeInner.find('a').attr('target','_blank').removeClass('modal modal-loaded');
         iframeInner.find('.confirm-policy label').html('<span class="icon icon-checkbox checked sprite1"></span> Jag godkänner <a href="https://www.ica.se/PageFiles/80195/VILLKOR_ICABanken_REKPCX2064_ICA_bonus_formanskund_A4.pdf?epslanguage=sv" target="blank" tabindex="0">ICAs kundvillkor</a>');
@@ -53,6 +53,11 @@ const test = {
             scrollTop: $('.cro-iframe-container iframe').contents().find('#step2').offset().top - 92
           }, 500).delay(250);
         },50);
+        //Temp
+        iframeInner.on('click', '.server-button', function(e) {
+          step1.location = 'https://www.ica.se/ansokan/tacksida/';
+          test.loadIframe('confirmation');
+        });
       } else if (step2 === 'https://www.ica.se/ansokan/?step=6578697374696e67637573746f6d657261726561') {
         step1.location = step2;
       } else if (step2 === 'https://www.ica.se/ansokan/?step=6369766963666f726d') {
@@ -60,6 +65,7 @@ const test = {
       } else {
         top.location = step2;
       }
+    //} else if(iframeType === 'confirmation') {
     }
 
     test.hideLoader($('.cro-iframe-container'));
@@ -124,6 +130,9 @@ const test = {
         //load step2
         test.loadIframe('step2');
       }
+    });
+    iframeInner.on('click', '.backToStep1', function(e) {
+      test.loadModal();
     });
   },
 

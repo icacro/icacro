@@ -105,6 +105,7 @@ a.backToStep1 {
 }
 a.backToStep1 svg {
   width:15px;
+  height:15px;
   fill: #A02971;
 }
 a.backToStep1:hover svg {
