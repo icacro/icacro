@@ -28,7 +28,6 @@ const test = {
 
   iframeDone(iframeType) {
     const iframeInner = test.getIframeInner(iframeType);
-
     if(iframeType === 'step1') {
       //OBS! Bort med länken!!!!
       const leadNew = '<p class="lead">Skaffa ICA-kort och få personliga erbjudanden<a href="/ansokan/tacksida/" style="color:inherit;">!</a></p>';
@@ -36,6 +35,7 @@ const test = {
       iframeInner.find('a.payWithCardLink').attr('target','_blank');
       iframeInner.find('form').attr('target','step2');
       iframeInner.find('.step1').prepend(leadNew);
+      test.hideLoader($('.cro-iframe-container'));
     } else if(iframeType === 'step2') {
       iframeInner.find('body').addClass('cro-step2');
       const step1=document.getElementById("cro-reg").contentWindow.document;
@@ -56,7 +56,6 @@ const test = {
         //Temp
         iframeInner.on('click', '.server-button', function(e) {
           step1.location = 'https://www.ica.se/ansokan/tacksida/';
-          test.loadIframe('confirmation');
         });
       } else if (step2 === 'https://www.ica.se/ansokan/?step=6578697374696e67637573746f6d657261726561') {
         step1.location = step2;
@@ -65,10 +64,19 @@ const test = {
       } else {
         top.location = step2;
       }
-    //} else if(iframeType === 'confirmation') {
+    } else if(iframeType === 'step3') {
+      if(iframeInner.find('.is-skt').length) {
+        const newTeasers = '<div class="grid_fluid grid_align_center text-align-center sm_fullwidth">'
+        +'<a href="https://www.ica.se/logga-in/?returnurl=%2frecept-och-mat%2f" target="_blank"><div class="column size20of20 lg_size1of3"><span class="sprite1 icon icon-fork-big"></span><h3>Spara recept</h3><p>Favoritrecepten på ett och samma ställe förenklar matlivet</p></div></a>'
+        +'<a href="https://www.ica.se/logga-in/?returnurl=http%3a%2f%2fwww.ica.se%2f%23%3amittica%3dinkopslistor" target="_blank"><div class="column size20of20 lg_size1of3"><span class="sprite1 icon icon-shoppinglist-big"></span><h3>Skapa inköpslistor</h3><p>Skapa inköpslistor, ha dem i mobilen och låt alla i familjen fylla på!</p></div></a>'
+        +'<a href="https://www.ica.se/logga-in/?returnurl=%2fbank-forsakring%2f" target="_blank"><div class="column size20of20 lg_size1of3"><span class="sprite1 icon icon-offers-big"></span><h3>Erbjudanden</h3><p>Missa inga personliga erbjudanden! Nya förmåner varje vecka.</p></div></a>';
+        +'</div>'
+        iframeInner.find('.is-skt .step-header').show().html('<h1>Nu är det fixat!</h1>');
+        iframeInner.find('.is-skt .grid_fluid').html(newTeasers);
+        iframeInner.find('.is-skt').removeClass('is-skt');
+      }
+      test.hideLoader($('.cro-iframe-container', window.parent.document));
     }
-
-    test.hideLoader($('.cro-iframe-container'));
   },
 
   loadIframe(iframeType) {
@@ -95,6 +103,8 @@ const test = {
     let iframeInner;
     if(iframeType === 'step2') {
       iframeInner = $('.cro-iframe-container iframe').contents().find('#step2').contents();
+    } else if (iframeType === 'step3') {
+      iframeInner = $('.cro-iframe-container iframe', window.parent.document).contents();
     } else {
       iframeInner = $('.cro-iframe-container iframe').contents();
     }
@@ -209,16 +219,8 @@ $(document).ready(() => {
     && currentPage !== 'https://www.ica.se/inloggning/behover-du-hjalp/mer-information-om-inloggningen/') {
 
       if (currentPage === 'https://www.ica.se/ansokan/tacksida/') {
-        if(ELM.get('.is-skt').exist()) {
-          const newTeasers = '<div class="grid_fluid grid_align_center text-align-center sm_fullwidth">'
-          +'<a href="https://www.ica.se/logga-in/?returnurl=%2frecept-och-mat%2f" target="_blank"><div class="column size20of20 lg_size1of3"><span class="sprite1 icon icon-fork-big"></span><h3>Spara recept</h3><p>Favoritrecepten på ett och samma ställe förenklar matlivet</p></div></a>'
-          +'<a href="https://www.ica.se/logga-in/?returnurl=http%3a%2f%2fwww.ica.se%2f%23%3amittica%3dinkopslistor" target="_blank"><div class="column size20of20 lg_size1of3"><span class="sprite1 icon icon-shoppinglist-big"></span><h3>Skapa inköpslistor</h3><p>Skapa inköpslistor, ha dem i mobilen och låt alla i familjen fylla på!</p></div></a>'
-          +'<a href="https://www.ica.se/logga-in/?returnurl=%2fbank-forsakring%2f" target="_blank"><div class="column size20of20 lg_size1of3"><span class="sprite1 icon icon-offers-big"></span><h3>Erbjudanden</h3><p>Missa inga personliga erbjudanden! Nya förmåner varje vecka.</p></div></a>';
-          +'</div>'
-          ELM.get('.is-skt .step-header').view().html('<h1>Nu är det fixat!</h1>');
-          ELM.get('.is-skt .grid_fluid').html(newTeasers);
-          ELM.get('.is-skt').removeClass('is-skt');
-        }
+        test.showLoader($('.cro-iframe-container', window.parent.document));
+        test.loadIframe('step3');
       } else if (currentPage === 'https://www.ica.se/ansokan/?step=6578697374696e67637573746f6d657261726561') {
         ELM.get('ul.choices .has_card a').attr('href','/inloggning/jag-vet-inte-vad-jag-har-for-losenord/');
       } else {
