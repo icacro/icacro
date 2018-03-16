@@ -30,7 +30,7 @@ const test = {
     const iframeInner = test.getIframeInner(iframeType);
     if(iframeType === 'step1') {
       //OBS! Bort med länken!!!!
-      const leadNew = '<p class="lead">Skaffa ICA-kort och få personliga erbjudanden<a href="/ansokan/tacksida/" style="color:inherit;">!</a></p>';
+      const leadNew = '<p class="lead">Skaffa ICA-kort och få personliga erbjudanden<a href="/ansokan/tacksida/" class="step3Link" style="color:inherit;">!</a></p>';
       iframeInner.find('body').addClass('cro-step1');
       iframeInner.find('a.payWithCardLink').attr('target','_blank');
       iframeInner.find('form').attr('target','step2');
@@ -53,10 +53,6 @@ const test = {
             scrollTop: $('.cro-iframe-container iframe').contents().find('#step2').offset().top - 92
           }, 500).delay(250);
         },50);
-        //Temp
-        iframeInner.on('click', '.server-button', function(e) {
-          step1.location = 'https://www.ica.se/ansokan/tacksida/';
-        });
       } else if (step2 === 'https://www.ica.se/ansokan/?step=6578697374696e67637573746f6d657261726561') {
         step1.location = step2;
       } else if (step2 === 'https://www.ica.se/ansokan/?step=6369766963666f726d') {
@@ -77,6 +73,7 @@ const test = {
       }
       test.hideLoader($('.cro-iframe-container', window.parent.document));
     }
+    test.addEventListeners();
   },
 
   loadIframe(iframeType) {
@@ -117,7 +114,6 @@ const test = {
     const iframeContent = '<span class="loader"></span><iframe id="cro-reg" name="cro-reg" src="" frameborder="0"></iframe>';
     modalCover.insertAfter(ELM.get('.pl .pl-modal .pl-modal__window'));
     iframeContainer.html(iframeContent);
-
     const iframe = $('.cro-iframe-container iframe').attr('src','https://www.ica.se/ansokan/?step=6369766963666f726d');
     iframe.load(function () {
       if(this.contentWindow.location.href.indexOf('ansokan/?step=636') !== -1) {
@@ -127,11 +123,11 @@ const test = {
         const iframeInner = iframe.contents();
         step2container.insertAfter(iframeInner.find('.step1 .form-wrapper'));
       }
-      test.addEventListeners();
     });
   },
 
   addEventListeners() {
+
     const iframeInner = $('.cro-iframe-container iframe').contents();
     iframeInner.find('form').on('submit', function(e) {
       if(iframeInner.find('.icon-checkmark:visible').length) {
@@ -141,9 +137,27 @@ const test = {
         test.loadIframe('step2');
       }
     });
+
     iframeInner.on('click', '.backToStep1', function(e) {
       test.loadModal();
     });
+
+    iframeInner.on('click', '.step3Link', function(e) {
+      test.showLoader($('.cro-iframe-container', window.parent.document));
+      const iframe = $('.cro-iframe-container iframe');
+      iframe.load(function () {
+        test.loadIframe('step3');
+      });
+    });
+
+    iframeInner.find('#step2').contents().on('click', '.step2 .server-button', function(e) {
+      test.showLoader($('.cro-iframe-container', window.parent.document));
+      const iframe = $('.cro-iframe-container iframe').attr('src','https://www.ica.se/ansokan/tacksida/');
+      iframe.load(function () {
+        test.loadIframe('step3');
+      });
+    });
+
   },
 
   createModal() {
@@ -162,8 +176,11 @@ const test = {
 };
 
 $(document).ready(() => {
+
   $('body').addClass('cro');
+
   if (window.self === window.top) {
+
     const createAccount = ELM.get('.top-bar .top-bar__right .quick-login a[href="/ansokan/"]');
 
     if(createAccount.exist()) {
@@ -211,18 +228,27 @@ $(document).ready(() => {
     const currentPage=window.location.href;
 
     if (currentPage !== 'https://www.ica.se/ansokan/?step=6c6f79616c74796e6577637573746f6d6572666f726d'
-    && currentPage !== 'https://www.ica.se/ansokan/?step=6578697374696e67637573746f6d657261726561'
-    && currentPage !== 'https://www.ica.se/ansokan/?step=6369766963666f726d'
-    && currentPage !== 'https://www.ica.se/ansokan/bankkund/'
-    && currentPage !== 'https://www.ica.se/ansokan/passar-inte-alternativen/'
-    && currentPage !== 'https://www.ica.se/inloggning/jag-vet-inte-vad-jag-har-for-losenord/'
-    && currentPage !== 'https://www.ica.se/inloggning/behover-du-hjalp/mer-information-om-inloggningen/') {
+      && currentPage !== 'https://www.ica.se/ansokan/?step=6369766963666f726d'
+      && currentPage !== 'https://www.ica.se/ansokan/tacksida/'
+      && currentPage !== 'https://www.ica.se/ansokan/passar-inte-alternativen/') {
 
-      if (currentPage === 'https://www.ica.se/ansokan/tacksida/') {
-        test.showLoader($('.cro-iframe-container', window.parent.document));
-        test.loadIframe('step3');
-      } else if (currentPage === 'https://www.ica.se/ansokan/?step=6578697374696e67637573746f6d657261726561') {
+      if (currentPage === 'https://www.ica.se/ansokan/?step=6578697374696e67637573746f6d657261726561') {
+
         ELM.get('ul.choices .has_card a').attr('href','/inloggning/jag-vet-inte-vad-jag-har-for-losenord/');
+
+      } else if (currentPage === 'https://www.ica.se/ansokan/bankkund/'
+        || currentPage === 'https://www.ica.se/inloggning/jag-vet-inte-vad-jag-har-for-losenord/'
+        || currentPage === 'https://www.ica.se/inloggning/behover-du-hjalp/mer-information-om-inloggningen/') {
+
+        const backBtn = '<a href="javascript:history.back(-1)">Tillbaka</a>';
+        const container = ELM.create('div btn-container').append(backBtn);
+        if (currentPage === 'https://www.ica.se/ansokan/bankkund/') {
+          ELM.get('.loginbtn-wrapper').append(container);
+        } else if (currentPage === 'https://www.ica.se/inloggning/jag-vet-inte-vad-jag-har-for-losenord/') {
+          ELM.get('.faq').append(container);
+        } else {
+          ELM.get('.accordions').append(container);
+        }
       } else {
         top.location = currentPage;
       }

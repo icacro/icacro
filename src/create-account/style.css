@@ -60,10 +60,9 @@ html.cro-modal, body.cro-modal {
 .cro-modal .already_customer_choice .step-header {
   display: block;
 }
+
 .cro-modal .container-steps {height:1100px;}
-
 .cro-modal .container-steps .step {padding-top:0;}
-
 .cro-modal .container-steps .step .form-wrapper {padding-top:3px;}
 
 #step2 {width: 300px; max-width: 100%; height: 0; padding:0; margin: 0 auto; top:-34px; opacity: 0; position: relative; z-index: 2;}
@@ -71,19 +70,27 @@ html.cro-modal, body.cro-modal {
 
 .cro-modal .container-steps .step2 {margin: 0 -10px; position: relative;}
 
-.cro-modal fieldset.loading {
-  opacity: 1;
-}
-
 .cro-modal fieldset .icon-checkmark,
 .cro-modal fieldset label span,
 .cro-modal fieldset input {
   transition: opacity 0.25s ease-in-out;
 }
 
+.cro-modal fieldset.loading {
+  opacity: 1;
+}
+
 .cro-modal fieldset.loading .icon-checkmark,
 .cro-modal fieldset.loading label span {
   opacity: 0;
+}
+
+.cro-modal fieldset.loading input {
+  color: #999;
+  font-weight: 100;
+  background: #f7f7f7;
+  border-color: #f7f7f7;
+  box-shadow: none;
 }
 
 .cro-modal fieldset.loading label span.backactive {
@@ -95,6 +102,7 @@ html.cro-modal, body.cro-modal {
   width: 100%;
   text-align: right;
 }
+
 a.backToStep1 {
   margin-right: 20px;
   padding:12px 12px 8px;
@@ -110,14 +118,6 @@ a.backToStep1 svg {
 }
 a.backToStep1:hover svg {
   fill: #DC438C;
-}
-
-.cro-modal fieldset.loading input {
-  color: #999;
-  font-weight: 100;
-  background: #f7f7f7;
-  border-color: #f7f7f7;
-  box-shadow: none;
 }
 
 .cro-modal .easy-signup-page .step2 .form-wrapper .filled {
@@ -162,7 +162,6 @@ span.usp-check {
 .cro-modal .easy-signup-page .confirmation .grid_fluid a {
   color: inherit;
 }
-
 .cro-modal .easy-signup-page .confirmation a.backButton {
   display: none;
 }
@@ -171,22 +170,11 @@ span.usp-check {
 .cro-modal .js-linkinner:hover {
   color: #3F3F40;
 }
-
 .cro-modal .easy-signup-page .form-wrapper .payWithCard {
   padding:0;
 }
-
 .cro-modal .easy-signup-page .already_customer_choice .choices a {
   background: #f7f7f7;
-}
-
-@media only screen and (max-width: 479px) {
-  .cro-modal .easy-signup-page .step-header {
-    margin-bottom: 0;
-  }
-  .cro-iframe-container {
-    margin:-1em;
-  }
 }
 
 .cro .pl .pl-modal .pl-modal__window--md {
@@ -199,4 +187,19 @@ span.usp-check {
   width:100%;
   height: 100%;
   z-index: 0;
+}
+
+.cro-modal .btn-container {
+  text-align: center;
+  margin-top: 20px;
+}
+
+
+@media only screen and (max-width: 479px) {
+  .cro-modal .easy-signup-page .step-header {
+    margin-bottom: 0;
+  }
+  .cro-iframe-container {
+    margin:-1em;
+  }
 }
