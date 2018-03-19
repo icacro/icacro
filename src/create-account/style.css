@@ -61,12 +61,15 @@ html.cro-modal, body.cro-modal {
   display: block;
 }
 
-.cro-modal .container-steps {height:1100px;}
+.cro-modal .step-header {margin-top: 4em;}
+.cro-modal .step-header h1 {line-height: 1.1em;}
+
+/*.cro-modal .container-steps {height:1100px;}*/
 .cro-modal .container-steps .step {padding-top:0;}
 .cro-modal .container-steps .step .form-wrapper {padding-top:3px;}
 
 #step2 {width: 300px; max-width: 100%; height: 0; padding:0; margin: 0 auto; top:-34px; opacity: 0; position: relative; z-index: 2;}
-#step2.loaded {height:1500px; opacity: 1;}
+#step2.loaded {height:1000px; opacity: 1;}
 
 .cro-modal .container-steps .step2 {margin: 0 -10px; position: relative;}
 
@@ -127,24 +130,32 @@ a.backToStep1:hover svg {
 }
 
 span.usp-check {
-    display: inline-block;
-    background-image: url(/Templates/General/Views/Images/RWD/sprites/general_sprite1.png?1);
-    background-repeat: no-repeat;
-    background-size: 500px 2433px;
-    background-position: -317px -2172px;
-    width: 17px;
-    height: 15px;
-    margin-right: 10px;
-    margin-top: 2px;
-    margin-bottom: -2px;
+  display: inline-block;
+  font-family: icahand, Arial;
+  font-size: 1em;
+  margin-right: 2px;
+}
+
+span.usp-check::before {
+  content:' ';
+  display: inline-block;
+  background-image: url(/Templates/General/Views/Images/RWD/sprites/general_sprite1.png?1);
+  background-repeat: no-repeat;
+  background-size: 500px 2433px;
+  background-position: -317px -2172px;
+  width: 17px;
+  height: 15px;
+  margin: 2px 4px -2px 6px;
 }
 
 .cro-modal .step>.lead {
   margin-bottom: 0;
 }
 
-.cro-modal .step1 .lead {
-  line-height: 1.55em;
+.cro-modal .step1>.lead {
+  max-width: 100%;
+  padding:0;
+  margin:-0.5em 0 1em;
 }
 
 .cro-modal .easy-signup-page .confirmation.bg-faded {
@@ -200,15 +211,95 @@ span.usp-check {
   margin-top: 20px;
 }
 
+.cro-modal .required-wrapper span {
+  left:0;
+}
 
-@media only screen and (max-width: 479px) {
+
+@media only screen and (max-width: 479px){
+  span.usp-check {
+    display: block;
+    padding:0.5em 0 0;
+  }
+  .cro-modal .step1>.lead {
+    max-width: 270px;
+    margin:0.5em auto 0;
+    padding:0 20px;
+  }
+  .cro-modal .step-header {
+    margin-top: 20px;
+  }
+  .cro-modal .easy-signup-page .step1>.form-wrapper .filled {
+    width:300px;
+    max-width: 100%;
+    padding:20px 20px 12px;
+  }
   .cro-modal .easy-signup-page .step-header {
-    margin-bottom: 0;
+    width:100%;
+    max-width: 270px;
+    text-align: left;
+    margin: 1.5em auto 0;
+  }
+  .cro-modal .easy-signup-page h1 {
+    font-size: 2.05em;
+    padding-right: 30px;
   }
   .cro-iframe-container {
-    margin:-1em;
+    margin:-1.4em;
   }
-  header h1:last-child {
-    margin: 0 20px;
+  .cro-modal h1,
+  .cro-modal h2,
+  .cro-modal .lead,
+  .cro-modal .easy-signup-page .already_customer_choice p {
+    text-align: left;
+    padding: 0;
+  }
+  .cro-modal .easy-signup-page .confirmation h2 {
+    padding:10px 10px 0;
+  }
+  .cro-modal .easy-signup-page .confirmation .lead {
+    font-size: 1em;
+    padding: 0 10px;
+  }
+  .cro-modal .easy-signup-page .confirmation .grid_fluid {
+    margin: 20px 0 0;
+    display: block;
+  }
+  .cro-modal .easy-signup-page .confirmation .grid_fluid .column {
+    padding: 5px 0 0;
+  }
+  .cro-modal .easy-signup-page .confirmation .grid_fluid .column h3 {
+    display: block;
+    font-size: 1.1em;
+    font-family: icatext, Arial;
+    font-weight: normal;
+  }
+  .cro-modal .easy-signup-page .already_customer_choice ul.choices + p,
+  .cro-modal h1.bold-heading,
+  .cro-modal h1.bold-heading + .lead {
+    padding: 0 20px;
+  }
+  .cro-modal h1.bold-heading {
+    font-size: 2.05em;
+    line-height: 1.1em;
+    margin-bottom: 15px;
+  }
+  .cro-modal .single-column-textwrapper {
+    padding:20px;
+  }
+  .cro-modal .login .accordions .standard-padding {
+    padding-top:0;
+  }
+  .cro-modal .standard-padding p,
+  .cro-modal .login .accordions>.details .standard-padding h2 {
+    padding:0 10px;
+  }
+  .cro-modal .login .accordions>.details h2 {
+    padding-left: 20px;
+    padding-right: 50px;
+    font-size: 1em;
+  }
+  .cro-modal .login .accordions>.details.login-card h2 {
+    padding-left: 80px;
   }
 }

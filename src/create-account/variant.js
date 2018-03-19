@@ -30,7 +30,7 @@ const test = {
     const iframeInner = test.getIframeInner(iframeType);
     if(iframeType === 'step1') {
       //OBS! Bort med länken!!!!
-      const leadNew = '<p class="lead"><span class="usp-check"></span>Bonus på dina inköp<br><span class="usp-check"></span>Personliga erbjudanden<br><span class="usp-check"></span>Rabatt på resor och nöjen<a href="/ansokan/tacksida/" class="step3Link" style="color:inherit;">!</a></p>';
+      const leadNew = '<p class="lead"><span class="usp-check">Bonus på dina inköp</span><span class="usp-check">Personliga erbjudanden</span><span class="usp-check">Rabatt på resor och nöjen<a href="/ansokan/tacksida/" class="step3Link" style="color:inherit;">!</a></span></p>';
       iframeInner.find('h1').html('Välkommen som ICA-kortkund');
       iframeInner.find('body').addClass('cro-step1');
       iframeInner.find('a.payWithCardLink').attr('target','_blank');
@@ -151,14 +151,14 @@ const test = {
       });
     });
 
-    iframeInner.find('#step2').contents().on('click', '.step2 .server-button', function(e) {
-      test.showLoader($('.cro-iframe-container', window.parent.document));
-      //OBS! Bort med attr-länken!!!!
-      const iframe = $('.cro-iframe-container iframe').attr('src','https://www.ica.se/ansokan/tacksida/');
-      iframe.load(function () {
-        test.loadIframe('step3');
-      });
-    });
+    // iframeInner.find('#step2').contents().on('click', '.step2 .server-button', function(e) {
+    //   test.showLoader($('.cro-iframe-container', window.parent.document));
+    //   //OBS! Bort med attr-länken!!!!
+    //   const iframe = $('.cro-iframe-container iframe');//.attr('src','https://www.ica.se/ansokan/tacksida/');
+    //   iframe.load(function () {
+    //     test.loadIframe('step3');
+    //   });
+    // });
 
   },
 
@@ -260,6 +260,7 @@ $(document).ready(() => {
         } else if (currentPage === 'https://www.ica.se/inloggning/jag-vet-inte-vad-jag-har-for-losenord/') {
           ELM.get('.faq').append(container);
         } else if (currentPage === 'https://www.ica.se/inloggning/behover-du-hjalp/mer-information-om-inloggningen/') {
+          $('body').find('a').attr('target','_blank');
           ELM.get('.accordions').append(container);
         }
         test.helpPages(iframeInner);
