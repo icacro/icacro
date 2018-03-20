@@ -18,6 +18,7 @@ height: 100%;
 }
 .cro .cro-step2-container {
   position: relative;
+  min-height: 120px;
 }
 
 .cro .easy-signup-header,
@@ -89,8 +90,7 @@ html.cro-modal, body.cro-modal {
 }
 
 .cro-modal fieldset.loading input {
-  color: #999;
-  font-weight: 100;
+  color: #999 !important;
   background: #f7f7f7;
   border-color: #f7f7f7;
   box-shadow: none;
@@ -224,15 +224,15 @@ span.usp-check::before {
   .cro-modal .step1>.lead {
     max-width: 270px;
     margin:0.5em auto 0;
-    padding:0 20px;
+    padding:0;
   }
   .cro-modal .step-header {
     margin-top: 20px;
   }
   .cro-modal .easy-signup-page .step1>.form-wrapper .filled {
-    width:300px;
-    max-width: 100%;
-    padding:20px 20px 12px;
+    width:100%;
+    max-width: 270px;
+    padding:20px 0 12px;
   }
   .cro-modal .easy-signup-page .step-header {
     width:100%;
@@ -249,17 +249,19 @@ span.usp-check::before {
   }
   .cro-modal h1,
   .cro-modal h2,
-  .cro-modal .lead,
-  .cro-modal .easy-signup-page .already_customer_choice p {
+  .cro-modal .lead {
     text-align: left;
     padding: 0;
   }
-  .cro-modal .easy-signup-page .confirmation h2 {
-    padding:10px 10px 0;
+  .cro-modal .easy-signup-page .confirmation {
+    width:100%;
+    max-width: 270px;
+    padding: 0;
+    margin: 0 auto;
   }
-  .cro-modal .easy-signup-page .confirmation .lead {
-    font-size: 1em;
-    padding: 0 10px;
+  .cro-modal .easy-signup-page .confirmation .lead,
+  .cro-modal .easy-signup-page .confirmation h2 {
+    padding: 0;
   }
   .cro-modal .easy-signup-page .confirmation .grid_fluid {
     margin: 20px 0 0;
@@ -273,33 +275,5 @@ span.usp-check::before {
     font-size: 1.1em;
     font-family: icatext, Arial;
     font-weight: normal;
-  }
-  .cro-modal .easy-signup-page .already_customer_choice ul.choices + p,
-  .cro-modal h1.bold-heading,
-  .cro-modal h1.bold-heading + .lead {
-    padding: 0 20px;
-  }
-  .cro-modal h1.bold-heading {
-    font-size: 2.05em;
-    line-height: 1.1em;
-    margin-bottom: 15px;
-  }
-  .cro-modal .single-column-textwrapper {
-    padding:20px;
-  }
-  .cro-modal .login .accordions .standard-padding {
-    padding-top:0;
-  }
-  .cro-modal .standard-padding p,
-  .cro-modal .login .accordions>.details .standard-padding h2 {
-    padding:0 10px;
-  }
-  .cro-modal .login .accordions>.details h2 {
-    padding-left: 20px;
-    padding-right: 50px;
-    font-size: 1em;
-  }
-  .cro-modal .login .accordions>.details.login-card h2 {
-    padding-left: 80px;
   }
 }
