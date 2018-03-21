@@ -163,16 +163,23 @@ $(document).ready(() => {
 
     //länkar på startsida, Allt om ICA-kort, Ansök om ICA-kort och nöjeserbjudanden
     let checkAccount;
+    let testlink;
     if (/^https:\/\/www.ica.se\/$/.test(window.location)) {
       checkAccount = ELM.get('.quicklink-list a[href="http://www.ica.se/ica-kort/"]');
     } else if (/^https:\/\/www.ica.se\/ica-kort/.test(window.location)) {
       if (/^https:\/\/www.ica.se\/ica-kort\/$/.test(window.location)) {
-        checkAccount = ELM.get('.imagebox a');
+        testlink = ELM.get('.imagebox a');
       } else {
-        checkAccount = ELM.get('.page a[href="/ansokan/"]');
+        testlink = ELM.get('.page a[href="/ansokan/"]');
+      }
+      if(testlink.exist()) {
+        checkAccount = testlink;
       }
     } else if (/^https:\/\/www.ica.se\/erbjudanden\/nojeserbjudanden/.test(window.location)) {
-      checkAccount = ELM.get('.ica-card-module .text-card a');
+      testlink = ELM.get('.ica-card-module .text-card a');
+      if(testlink.exist()) {
+        checkAccount = testlink;
+      }
     }
     if(checkAccount) {
       checkAccount.css('modal-application');
