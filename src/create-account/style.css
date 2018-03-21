@@ -107,7 +107,6 @@ html.cro-modal, body.cro-modal {
 }
 
 a.backToStep1 {
-  margin-right: 20px;
   padding:12px 12px 8px;
   cursor: pointer;
   color:#999;
@@ -215,65 +214,26 @@ span.usp-check::before {
   left:0;
 }
 
+.cro-modal .easy-signup-page .form-wrapper .filled {
+  width:300px;
+  max-width: 100%;
+  padding: 22px 0px;
+}
 
 @media only screen and (max-width: 479px){
   span.usp-check {
     display: block;
     padding:0.5em 0 0;
   }
-  .cro-modal .step1>.lead {
-    max-width: 270px;
-    margin:0.5em auto 0;
-    padding:0;
-  }
   .cro-modal .step-header {
     margin-top: 20px;
   }
-  .cro-modal .easy-signup-page .step1>.form-wrapper .filled {
-    width:100%;
-    max-width: 270px;
-    padding:20px 0 12px;
-  }
-  .cro-modal .easy-signup-page .step-header {
-    width:100%;
-    max-width: 270px;
+  .cro-modal .easy-signup-page .step-header,
+  .cro-modal .step1>.lead {
+    width: 100%;
+    max-width: 300px;
     text-align: left;
     margin: 1.5em auto 0;
-  }
-  .cro-modal .easy-signup-page h1 {
-    font-size: 2.05em;
-    padding-right: 30px;
-  }
-  .cro-iframe-container {
-    margin:-1.4em;
-  }
-  .cro-modal h1,
-  .cro-modal h2,
-  .cro-modal .lead {
-    text-align: left;
     padding: 0;
-  }
-  .cro-modal .easy-signup-page .confirmation {
-    width:100%;
-    max-width: 270px;
-    padding: 0;
-    margin: 0 auto;
-  }
-  .cro-modal .easy-signup-page .confirmation .lead,
-  .cro-modal .easy-signup-page .confirmation h2 {
-    padding: 0;
-  }
-  .cro-modal .easy-signup-page .confirmation .grid_fluid {
-    margin: 20px 0 0;
-    display: block;
-  }
-  .cro-modal .easy-signup-page .confirmation .grid_fluid .column {
-    padding: 5px 0 0;
-  }
-  .cro-modal .easy-signup-page .confirmation .grid_fluid .column h3 {
-    display: block;
-    font-size: 1.1em;
-    font-family: icatext, Arial;
-    font-weight: normal;
   }
 }
