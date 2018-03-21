@@ -28,6 +28,7 @@ height: 100%;
 .cro-modal {
   width:280px;
   margin: 0 auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 .cro .easy-signup-header,
