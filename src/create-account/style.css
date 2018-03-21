@@ -28,6 +28,11 @@ height: 100%;
 .cro-modal {
   width:280px;
   margin: 0 auto;
+}
+
+.cro-modal.cro-step1 {
+  height:1200px;
+  overflow-y: auto;
   -webkit-overflow-scrolling: touch;
 }
 
