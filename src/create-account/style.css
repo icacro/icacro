@@ -236,6 +236,10 @@ span.usp-check::before {
 }
 
 @media only screen and (max-width: 479px){
+  .cro .pl .pl-modal .pl-modal__window--md {
+    margin: 1rem auto 0;
+    height: 90vh;
+  }
   .cro .cro-iframe-container {
     margin:-1em;
   }
