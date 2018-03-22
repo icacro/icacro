@@ -37,6 +37,7 @@ const test = {
   },
 
   createModal() {
+    $('body').addClass('modal-open');
     const container = $('.cro-iframe-container');
     const modal = new coreComponents.modal({
       tpl: container.get(0),
@@ -143,6 +144,12 @@ const test = {
     //backa/ändra pnr från steg 2 till steg 1
     iframeInner.on('click', '.backToStep1', function(e) {
       test.loadModal();
+    });
+
+    $(document).bind("DOMNodeRemoved", function(e) {
+      if(e.target.className === 'pl-modal') {
+        $('body').removeClass('modal-open');
+      }
     });
 
   }
