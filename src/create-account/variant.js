@@ -95,7 +95,7 @@ const test = {
       iframeInner.find('h1').html('Välkommen som ICA-kortkund');
       iframeInner.find('body').addClass('cro-step1');
       iframeInner.find('a.payWithCardLink').attr('target','_blank');
-      iframeInner.find('form').attr('target','step2');
+      //iframeInner.find('form').attr('target','step2');
       iframeInner.find('.step1').prepend(leadNew);
       test.hideLoader($('.cro-iframe-container'));
 
@@ -132,13 +132,13 @@ const test = {
     const iframeInner = $('.cro-iframe-container iframe').contents();
 
     //submit från steg 1
-    iframeInner.find('form').on('submit', function(e) {
-      if(iframeInner.find('.icon-checkmark:visible').length) {
-        iframeInner.find('.payWithCard, .form-wrapper .form li:last-child').hide();
-        test.showLoader(iframeInner.find('.cro-step2-container'));
-        test.loadIframe('step2');
-      }
-    });
+    // iframeInner.find('form').on('submit', function(e) {
+    //   if(iframeInner.find('.icon-checkmark:visible').length) {
+    //     iframeInner.find('.payWithCard, .form-wrapper .form li:last-child').hide();
+    //     test.showLoader(iframeInner.find('.cro-step2-container'));
+    //     test.loadIframe('step2');
+    //   }
+    // });
 
     //backa/ändra pnr från steg 2 till steg 1
     iframeInner.on('click', '.backToStep1', function(e) {
