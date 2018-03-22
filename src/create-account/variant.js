@@ -115,6 +115,7 @@ const test = {
           $('.cro-iframe-container iframe').contents().find('html,body').animate({
             scrollTop: $('.cro-iframe-container iframe').contents().find('#step2').offset().top - 92
           }, 500).delay(250);
+          iframeInner.find('#LoyaltyNewCustomerForm.FirstName').select();
         },50);
       } else {
         //om redan medlem, ev andra undantag
@@ -201,6 +202,10 @@ $(document).ready(() => {
   } else if (window.frameElement.getAttribute('name') === 'cro-reg' || window.frameElement.getAttribute('name') === 'step2') {
     ELM.get('html').css('cro-modal'); //pga bef bakgrundsstyling
     ELM.get('body').css('cro-modal');
+
+    // $('body').bind('focusin focus', function(e){
+    //   e.preventDefault();
+    // });
 
   }
 
