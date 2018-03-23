@@ -9,9 +9,6 @@
   background-color: #fff;
   -webkit-overflow-scrolling:touch;
 }
-.modal-open {
-  position: fixed;
-}
 .cro .cro-iframe-container iframe {
   opacity: 0;
   position: absolute;
@@ -29,6 +26,12 @@
   width:280px;
   margin: 0 auto;
 }
+
+.cro-modal input {
+  font-size: 16px;
+  height: auto;
+}
+
 
 .cro .easy-signup-header,
 .cro .easy-signup-page,
