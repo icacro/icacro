@@ -216,4 +216,11 @@ $(document).ready(() => {
 
   }
 
+  var isIos = /(iPhone|iPad|iPod)/.test(window.navigator.userAgent);
+  if (isIos) {
+    $('form').on('focus', 'input, select, textarea', function () {
+      this.scrollIntoView();
+    });
+  }
+
 });
