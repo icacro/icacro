@@ -210,16 +210,16 @@ $(document).ready(() => {
     ELM.get('html').css('cro-modal'); //pga bef bakgrundsstyling
     ELM.get('body').css('cro-modal');
 
-    $('body').bind('focusin focus', function(e){
-      e.preventDefault();
-    });
+    // $('body').bind('focusin focus', function(e){
+    //   e.preventDefault();
+    // });
 
   }
 
   var isIos = /(iPhone|iPad|iPod)/.test(window.navigator.userAgent);
   if (isIos) {
     $('form').on('focus', 'input, select, textarea', function () {
-      this.scrollIntoView({block: 'start'});
+      this.closest('li').scrollIntoView({block: 'start'});
     });
   }
 
