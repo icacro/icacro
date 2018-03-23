@@ -116,7 +116,6 @@ const test = {
           $('.cro-iframe-container iframe').contents().find('html,body').animate({
             scrollTop: $('.cro-iframe-container iframe').contents().find('#step2').offset().top - 92
           }, 500).delay(250);
-          iframeInner.find('#LoyaltyNewCustomerForm.FirstName').select();
         },50);
       } else {
         //om redan medlem, ev andra undantag
@@ -149,6 +148,7 @@ const test = {
     $(document).bind("DOMNodeRemoved", function(e) {
       if(e.target.className === 'pl-modal') {
         $('body').removeClass('modal-open');
+        document.activeElement.blur();
       }
     });
 
@@ -214,13 +214,25 @@ $(document).ready(() => {
     //   e.preventDefault();
     // });
 
-  }
+    //Testa om bara safari - chrome iphone beter sig skumt (kan ej stega fram, scrollas upp)
+    const ua = window.navigator.userAgent;
+    const iOS = !!ua.match(/iP(ad|hone)/i);
+    const webkit = !!ua.match(/WebKit/i);
+    const iOSSafari = iOS && webkit && !ua.match(/CriOS/i);
+    if (iOSSafari) {
+      //Löser till toppen vid klick???
+      $(window).keyup(function (e) {
+        var code = (e.keyCode ? e.keyCode : e.which);
+        if (code == 9 && $('input:focus').length) {
+          this.closest('li').scrollIntoView({block: 'start'});
+        }
+      });
+    }
 
-  const isIos = /(iPhone)/.test(window.navigator.userAgent);
-  if (isIos) {
-    $('form').on('focus', 'input, select, textarea', function () {
-      this.closest('li').scrollIntoView({block: 'start'});
-    });
+    //safari ipad portrait scrollar förbi label vid stegning, till toppen vid klick
+    //safari iphone portrait till toppen vid klick, vid fel
+    //chrome iphone inte stega framåt, till toppen vid klick
+
   }
 
 });
