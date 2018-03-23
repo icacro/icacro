@@ -217,8 +217,10 @@ $(document).ready(() => {
     const iOSSafari = iOS && webkit && !ua.match(/CriOS/i);
     if (iOSSafari) {
       $('.icon-tooltip').attr('tabindex','-1')
-      $('form').on('focusin focus keypress', 'input', function (e) {
+      $('form').on('focusin focus', 'input', function (e) {
         e.preventDefault();
+      });
+      $('form').on('focusin focus keypress', 'input', function (e) {
         this.closest('li').scrollIntoView({block: 'start'});
       });
     }
