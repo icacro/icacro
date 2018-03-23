@@ -210,10 +210,6 @@ $(document).ready(() => {
     ELM.get('html').css('cro-modal'); //pga bef bakgrundsstyling
     ELM.get('body').css('cro-modal');
 
-    // $('body').bind('focusin focus', function(e){
-    //   e.preventDefault();
-    // });
-
     //Testa om bara safari - chrome iphone beter sig skumt (kan ej stega fram, scrollas upp)
     const ua = window.navigator.userAgent;
     const iOS = !!ua.match(/iP(ad|hone)/i);
@@ -221,7 +217,8 @@ $(document).ready(() => {
     const iOSSafari = iOS && webkit && !ua.match(/CriOS/i);
     if (iOSSafari) {
       $('.icon-tooltip').attr('tabindex','-1')
-      $('form').on('focus, keypress', 'input', function () {
+      $('form').on('focusin focus keypress', 'input', function (e) {
+        e.preventDefault();
         this.closest('li').scrollIntoView({block: 'start'});
       });
     }
