@@ -27,6 +27,11 @@
   margin: 0 auto;
 }
 
+.modal-open {
+  position: fixed;
+  width: 100%;
+}
+
 .cro-modal input {
   font-size: 16px;
   height: auto;
@@ -215,6 +220,7 @@ span.usp-check::before {
 
 .cro .pl .pl-modal .pl-modal__window--md {
   z-index: 1;
+  overflow: hidden;
 }
 .pl-modal-cover {
   position: absolute;
