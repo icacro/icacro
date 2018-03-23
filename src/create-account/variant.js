@@ -220,12 +220,9 @@ $(document).ready(() => {
     const webkit = !!ua.match(/WebKit/i);
     const iOSSafari = iOS && webkit && !ua.match(/CriOS/i);
     if (iOSSafari) {
-      //Löser till toppen vid klick???
-      $(window).keyup(function (e) {
-        var code = (e.keyCode ? e.keyCode : e.which);
-        if (code == 9 && $('input:focus').length) {
-          this.closest('li').scrollIntoView({block: 'start'});
-        }
+      $('.icon-tooltip').attr('tabindex','-1')
+      $('form').on('focus, keypress', 'input', function () {
+        this.closest('li').scrollIntoView({block: 'start'});
       });
     }
 
