@@ -11,8 +11,8 @@
   width: 50vw;
   min-width: 300px;
   margin: 0 auto;
-  top: 10vh;
-  height: 80vh;
+  height: 100%;
+  top:0;
 }
 .cro .cro-iframe-container iframe {
   opacity: 0;
@@ -31,7 +31,8 @@
 }
 
 .modal-open .modal-wrapper {
-  height: 1400px;
+  top: 5vh;
+  height: 90vh;
 }
 .cro .cro-step2-container {
   position: relative;
@@ -248,13 +249,13 @@ span.usp-check::before {
 }
 
 
-.modal-cover {
+.modal-open .modal-cover {
   background: rgba(0,0,0,0.2);
-  position: absolute;
-  top:0;
+  position: fixed;
+  top:-5vh;
   left:0;
   width:100%;
-  height: 100%;
+  height: 105vh;
   z-index: 0;
 }
 
