@@ -24,12 +24,25 @@ html {
   margin-top: -18px !important;
   color:#8DB72C;
 }
-.ssn-error {
-  border-bottom: 2px solid red !important;
+.field-error {
+  /*red*/
+  border-bottom: 2px solid #EB1F07 !important;
 }
 
-.ssn-ok {
-  border-bottom: 2px solid green !important;
+.field-ok {
+  /*green*/
+  border-bottom: 2px solid #8DB72C !important;
+}
+
+.field-validated::after {
+  content: ' ';
+  display: block;
+  position: absolute;
+  top:-30px;
+  right:2px;
+  width:15px;
+  height:15px;
+  background: #8DB72C;
 }
 
 .ssn-confirmed .check {
@@ -100,7 +113,10 @@ input[type=text], input[type=password], input[type=tel]  {
 input[type=text]:focus, input[type=password]:focus, input[type=tel]:focus {
   padding-bottom: 10px;
   outline: none;
-  border-bottom: 2px solid green;
+}
+li.has-input input[type=text], li.has-input input[type=password], li.has-input input[type=tel] {
+  /*green*/
+  border-bottom: 2px solid #8DB72C;
 }
 
 .easy-signup-page .form-wrapper fieldset {
@@ -170,10 +186,13 @@ fieldset input[type="submit"] {
   font-size: 14px;
 }
 
-ol.form li input.button.inactive,
-fieldset input[type="submit"].inactive {
+ol.form.inactive li input.button,
+fieldset.inactive input[type="submit"],
+fieldset ol.form.inactive input[disabled],
+fieldset ol.form.inactive input[disabled]:hover {
   background: #f7f7f7;
   color: #808283;
+  pointer-events: none;
 }
 
 ol.form li:first-child label,
@@ -200,6 +219,13 @@ ol.form li.has-input label {
 .easy-signup-page .step.step2 ol.form li.confirm-policy label,
 .small {
   font-size: 14px;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus
+input:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0px 1000px #fff inset;
 }
 
 @media only screen and (max-width: 780px) {
