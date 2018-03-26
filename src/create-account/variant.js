@@ -209,16 +209,16 @@ const test = {
       ELM.get('body').css('cro-modal');
 
       //Testa om bara safari - chrome iphone beter sig skumt (kan ej stega fram, scrollas upp)
-      const ua = window.navigator.userAgent;
-      const iOS = !!ua.match(/iP(ad|hone)/i);
-      const webkit = !!ua.match(/WebKit/i);
-      const iOSSafari = iOS && webkit && !ua.match(/CriOS/i);
-      if (iOSSafari) {
-        $('.icon-tooltip').attr('tabindex','-1')
-        $('form').on('focus', 'input', function (e) {
-          this.closest('li').scrollIntoView({block: 'start'});
-        });
-      }
+      // const ua = window.navigator.userAgent;
+      // const iOS = !!ua.match(/iP(ad|hone)/i);
+      // const webkit = !!ua.match(/WebKit/i);
+      // const iOSSafari = iOS && webkit && !ua.match(/CriOS/i);
+      // if (iOSSafari) {
+      //   $('.icon-tooltip').attr('tabindex','-1')
+      //   $('form').on('focus', 'input', function (e) {
+      //     this.closest('li').scrollIntoView({block: 'start'});
+      //   });
+      // }
 
       //safari ipad portrait scrollar förbi label vid stegning, till toppen vid klick
       //safari iphone portrait till toppen vid klick, vid fel?
