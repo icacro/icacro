@@ -39,11 +39,11 @@ const test = {
   createModal() {
     $('body').addClass('modal-open');
     const container = $('.cro-iframe-container');
-    const modal = new coreComponents.modal({
-      tpl: container.get(0),
-      size: 'md',
-      container: $('.modal-container').get(0)
-    });
+    // const modal = new coreComponents.modal({
+    //   tpl: container.get(0),
+    //   size: 'md',
+    //   container: $('.modal-container').get(0)
+    // });
     setTimeout(function () {
       test.showLoader($('.cro-iframe-container'));
       test.loadModal();
@@ -51,8 +51,8 @@ const test = {
   },
 
   loadModal() {
-    const modalCover = ELM.create('div pl-modal-cover');
-    modalCover.insertAfter(ELM.get('.pl .pl-modal .pl-modal__window'));
+    // const modalCover = ELM.create('div pl-modal-cover');
+    // modalCover.insertAfter(ELM.get('.pl .pl-modal .pl-modal__window'));
 
     const iframeContainer = ELM.get('.cro-iframe-container');
     const iframeContent = '<span class="loader"></span><iframe id="cro-reg" name="cro-reg" src="" frameborder="0"></iframe>';
@@ -117,6 +117,7 @@ const test = {
             scrollTop: $('.cro-iframe-container iframe').contents().find('#step2').offset().top - 92
           }, 500).delay(250);
         },50);
+        newform.stepTwo();
       } else {
         //om redan medlem, ev andra undantag
         top.location = step2;
@@ -152,83 +153,86 @@ const test = {
       }
     });
 
+  },
+
+  manipulateDom() {
+
+    //inte iframe/i flödet
+    if (window.self === window.top) {
+
+      //länk i avatarmeny
+      const createAccount = ELM.get('.top-bar .top-bar__right .quick-login a[href="/ansokan/"]');
+      if(createAccount.exist()) {
+        createAccount.css('modal-application');
+      }
+
+      //länkar på startsida, Allt om ICA-kort, Ansök om ICA-kort och nöjeserbjudanden
+      let checkAccount;
+      let testlink;
+      if (/^https:\/\/www.ica.se\/$/.test(window.location)) {
+        checkAccount = ELM.get('.quicklink-list a[href="http://www.ica.se/ica-kort/"]');
+      } else if (/^https:\/\/www.ica.se\/ica-kort/.test(window.location)) {
+        if (/^https:\/\/www.ica.se\/ica-kort\/$/.test(window.location)) {
+          testlink = ELM.get('.imagebox a');
+        } else {
+          testlink = ELM.get('.page a[href="/ansokan/"]');
+        }
+        if(testlink.exist()) {
+          checkAccount = testlink;
+        }
+      } else if (/^https:\/\/www.ica.se\/erbjudanden\/nojeserbjudanden/.test(window.location)) {
+        testlink = ELM.get('.ica-card-module .text-card a');
+        if(testlink.exist()) {
+          checkAccount = testlink;
+        }
+      }
+      if(checkAccount) {
+        checkAccount.css('modal-application');
+      }
+
+      //Om ansökningslänkar finns
+      const modalApplication = $('.modal-application');
+      if (modalApplication.length) {
+        Object.assign(test, CROUTIL());
+        const iframeContainer = ELM.create('div cro-iframe-container');
+        const modalContainer = ELM.create('div modal-wrapper').append(iframeContainer);
+        ELM.get('body').append(modalContainer);
+        modalApplication.click((e) => {
+          e.preventDefault();
+          test.createModal();
+        });
+      }
+
+    //om inne i flödet (iframe)
+    } else if (window.frameElement.getAttribute('name') === 'cro-reg' || window.frameElement.getAttribute('name') === 'step2') {
+      ELM.get('html').css('cro-modal'); //pga bef bakgrundsstyling
+      ELM.get('body').css('cro-modal');
+
+      //Testa om bara safari - chrome iphone beter sig skumt (kan ej stega fram, scrollas upp)
+      const ua = window.navigator.userAgent;
+      const iOS = !!ua.match(/iP(ad|hone)/i);
+      const webkit = !!ua.match(/WebKit/i);
+      const iOSSafari = iOS && webkit && !ua.match(/CriOS/i);
+      if (iOSSafari) {
+        $('.icon-tooltip').attr('tabindex','-1')
+        $('form').on('focus', 'input', function (e) {
+          this.closest('li').scrollIntoView({block: 'start'});
+        });
+      }
+
+      //safari ipad portrait scrollar förbi label vid stegning, till toppen vid klick
+      //safari iphone portrait till toppen vid klick, vid fel?
+      //chrome iphone inte stega framåt, till toppen vid klick
+
+    }
   }
 
 };
 
 $(document).ready(() => {
 
-  $('body').addClass('cro');
-
-  //inte iframe/i flödet
-  if (window.self === window.top) {
-
-    //länk i avatarmeny
-    const createAccount = ELM.get('.top-bar .top-bar__right .quick-login a[href="/ansokan/"]');
-    if(createAccount.exist()) {
-      createAccount.css('modal-application');
-    }
-
-    //länkar på startsida, Allt om ICA-kort, Ansök om ICA-kort och nöjeserbjudanden
-    let checkAccount;
-    let testlink;
-    if (/^https:\/\/www.ica.se\/$/.test(window.location)) {
-      checkAccount = ELM.get('.quicklink-list a[href="http://www.ica.se/ica-kort/"]');
-    } else if (/^https:\/\/www.ica.se\/ica-kort/.test(window.location)) {
-      if (/^https:\/\/www.ica.se\/ica-kort\/$/.test(window.location)) {
-        testlink = ELM.get('.imagebox a');
-      } else {
-        testlink = ELM.get('.page a[href="/ansokan/"]');
-      }
-      if(testlink.exist()) {
-        checkAccount = testlink;
-      }
-    } else if (/^https:\/\/www.ica.se\/erbjudanden\/nojeserbjudanden/.test(window.location)) {
-      testlink = ELM.get('.ica-card-module .text-card a');
-      if(testlink.exist()) {
-        checkAccount = testlink;
-      }
-    }
-    if(checkAccount) {
-      checkAccount.css('modal-application');
-    }
-
-    //Om ansökningslänkar finns
-    const modalApplication = $('.modal-application');
-    if (modalApplication.length) {
-      Object.assign(test, CROUTIL());
-      const iframeContainer = ELM.create('div cro-iframe-container');
-      ELM.get('body').append(iframeContainer);
-      modalApplication.click((e) => {
-        e.preventDefault();
-        test.createModal();
-      });
-    }
-
-  //om inne i flödet (iframe)
-  } else if (window.frameElement.getAttribute('name') === 'cro-reg' || window.frameElement.getAttribute('name') === 'step2') {
-    ELM.get('html').css('cro-modal'); //pga bef bakgrundsstyling
-    ELM.get('body').css('cro-modal');
-
-    //Testa om bara safari - chrome iphone beter sig skumt (kan ej stega fram, scrollas upp)
-    const ua = window.navigator.userAgent;
-    const iOS = !!ua.match(/iP(ad|hone)/i);
-    const webkit = !!ua.match(/WebKit/i);
-    const iOSSafari = iOS && webkit && !ua.match(/CriOS/i);
-    if (iOSSafari) {
-      $('.icon-tooltip').attr('tabindex','-1')
-      $('form').on('focusin focus', 'input', function (e) {
-        e.preventDefault();
-      });
-      $('form').on('focusin focus keypress', 'input', function (e) {
-        this.closest('li').scrollIntoView({block: 'start'});
-      });
-    }
-
-    //safari ipad portrait scrollar förbi label vid stegning, till toppen vid klick
-    //safari iphone portrait till toppen vid klick, vid fel
-    //chrome iphone inte stega framåt, till toppen vid klick
-
-  }
+  Object.assign(test, CROUTIL());
+  test.manipulateDom();
+  triggerHotJar('createAccountVariant');
 
 });

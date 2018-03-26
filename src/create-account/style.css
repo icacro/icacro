@@ -1,13 +1,14 @@
-@media (max-width: 767px) { .cro .cro-iframe-container { padding-bottom: 135% !important; } }
+/*@media (max-width: 767px) { .cro .cro-iframe-container { padding-bottom: 135% !important; } }*/
 .cro > .cro-iframe-container { display: none; }
 .cro .modal-copntainer .cro-iframe-container { display: initial; }
 .cro .cro-iframe-container {
   position: relative;
-  height: 0;
+  /*height: 0;
   overflow: auto;
-  padding-bottom: 85%;
+  padding-bottom: 85%;*/
   background-color: #fff;
   -webkit-overflow-scrolling:touch;
+  height: 1400px;
 }
 .cro .cro-iframe-container iframe {
   opacity: 0;
@@ -15,7 +16,20 @@
   top: 0;
   left: 0;
   width: 100%;
-  height: 100%;
+  /*height: 100%;*/
+  height: 1400px;
+}
+.cro .modal-wrapper {
+  position: absolute;
+  top: 0;
+  z-index: 3000;
+  height: 0;
+  width: 100%;
+  overflow: hidden;
+}
+
+.modal-open .modal-wrapper {
+  height: 1400px;
 }
 .cro .cro-step2-container {
   position: relative;
@@ -27,10 +41,10 @@
   margin: 0 auto;
 }
 
-.modal-open {
+/*.modal-open {
   position: fixed;
   width: 100%;
-}
+}*/
 
 .cro-modal input {
   font-size: 16px;

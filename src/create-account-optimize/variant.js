@@ -48,7 +48,7 @@ const test = {
     accountSteps.html(' ');
     removeElements(['.icon.icon-tooltip.sprite1']);
     steps.appendAll([
-      ELM.create(`li circle ${(step === 1) ? 'active' : ''}`).append(`${(step === 2) ? '<div class="icon icon-checkmark sprite1" style="display: inline;"></div>' : '<label>1</label>'}`),
+      ELM.create(`li circle ${(step === 1) ? 'active' : ''} ${(step === 2) ? ' checked' : ''}`).append(`${(step === 2) ? '<div class="check"><svg xmlns="http://www.w3.org/2000/svg" viewBox="1.3568336963653564 3.796941041946411 21.142330169677734 18.591215133666992" id="check" width="100%" height="100%"><path d="M22.182 5.794q0.291 0.242 0.315 0.642t-0.218 0.739q-9.188 13.115-9.939 14.158-0.776 1.042-2 1.055t-2.024-1.055l-6.739-9.479q-0.242-0.339-0.218-0.752t0.315-0.655q1.236-1.067 2.764-1.915 0.315-0.17 0.703-0.049t0.63 0.461l4.558 6.4 7.782-11.055q0.242-0.339 0.618-0.449t0.715 0.061q1.6 0.873 2.739 1.891z"></path></svg></div>' : '<label>1</label>'}`),
       ELM.create('li line'),
       ELM.create(`li circle ${(step === 2) ? 'active' : ''}`).append('<label>2</label>'),
       ELM.create('li line'),
@@ -63,6 +63,7 @@ const test = {
     input.attr('id', id);
     input.attr('type', type);
     input.attr('name', id);
+    input.attr('placeholder', txt);
     label.html(txt);
     li.append(label);
     li.append(input);
@@ -74,17 +75,21 @@ const test = {
     const hiddenSSN = ELM.get('#CivicRegistrationNumberDisabled');
     const ssn = hiddenSSN.value();
     const newSSN = `${ssn.substr(0, 7)}-${ssn.substr(8)}`;
+    const check = ELM.create('div').css('check');
+    const svg = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="1.3568336963653564 3.796941041946411 21.142330169677734 18.591215133666992" id="check" width="100%" height="100%"><path d="M22.182 5.794q0.291 0.242 0.315 0.642t-0.218 0.739q-9.188 13.115-9.939 14.158-0.776 1.042-2 1.055t-2.024-1.055l-6.739-9.479q-0.242-0.339-0.218-0.752t0.315-0.655q1.236-1.067 2.764-1.915 0.315-0.17 0.703-0.049t0.63 0.461l4.558 6.4 7.782-11.055q0.242-0.339 0.618-0.449t0.715 0.061q1.6 0.873 2.739 1.891z"></path></svg>';
     const form = ELM.get('.form');
     const confirm = ELM.copy('.confirm-policy');
 
+    check.html(svg);
+
     form.html(' ');
 
-    const ssnCopy = ELM.create('li ssn-confirmed light').text(newSSN);
+    const ssnCopy = ELM.create('li ssn-confirmed light').text(newSSN).append(check);
     const firstname = this.createRow('firstname', 'Förnamn', 'LoyaltyNewCustomerForm.FirstName');
     const lastname = this.createRow('lastname', 'Efternamn', 'LoyaltyNewCustomerForm.LastName');
-    const email = this.createRow('email', 'E-postadress', 'LoyaltyNewCustomerForm.Email');
-    const cellphone = this.createRow('cellphone', 'Mobiltelefon <span class="light">(frivillig uppgift)</span>', 'LoyaltyNewCustomerForm.CellPhone');
-    const password = this.createRow('password', 'Lösenord <span class="light">(6 siffror)</span>', 'LoyaltyNewCustomerForm.Password', 'password');
+    const email = this.createRow('email', 'E-post', 'LoyaltyNewCustomerForm.Email');
+    const cellphone = this.createRow('cellphone', 'Mobilnummer', 'LoyaltyNewCustomerForm.CellPhone');
+    const password = this.createRow('password', '6-siffrig PIN-kod', 'LoyaltyNewCustomerForm.Password', 'password');
     const passwordConfirm = this.createRow('password-confirm', '', 'LoyaltyNewCustomerForm.ConfirmPassword');
     form.appendAll([ssnCopy, firstname, lastname, email, cellphone, password, passwordConfirm, confirm]);
 
@@ -97,6 +102,10 @@ const test = {
     inputPassword.attr('maxlength', 6);
     inputCellPhone.attr('maxlength', 10);
 
+    ELM.get('#ctl00_ctl00_Content_cphOutsidePageWrapper_LoyaltyNewCustomerForm_LoyaltyNewCustomerFormSubmit').attr('value','Slutför');
+
+    //ifyllda inputs?
+
     inputFirstname.listenTo('blur', (e) => {
       if (e.currentTarget.value.length < 2) {
         inputFirstname.css('ssn-error');
@@ -104,6 +113,9 @@ const test = {
       } else {
         inputFirstname.removeClass('ssn-error');
         inputFirstname.css('ssn-ok');
+      }
+      if (e.currentTarget.value.length !== 0) {
+        inputFirstname.parent().css('has-input');
       }
     });
 
@@ -114,6 +126,9 @@ const test = {
       } else {
         inputLasstname.removeClass('ssn-error');
         inputLasstname.css('ssn-ok');
+      }
+      if (e.currentTarget.value.length !== 0) {
+        inputLasstname.parent().css('has-input');
       }
     });
 
@@ -149,13 +164,16 @@ const test = {
   stepOne() {
     const form = ELM.get('.form');
     const li = form.find('li');
-    const ssn = ELM.copy('#CivicForm\\.CivicRegistrationNumber');
+    const ssn = ELM.copy('#CivicForm\\.CivicRegistrationNumber').attr('placeholder','Personnummer');
     const label = ELM.create('label');
     li.html(' ');
     label.html('Personnummer');
     li.append(label);
     li.append(ssn);
 
+    if (ssn.value.length !== 0) {
+      ssn.parent().css('has-input');
+    }
     ssn.listenTo('keyup', () => {
       if (!ssn.hasClass('ssn-ok')) {
         ssn.css('ssn-ok');
@@ -163,6 +181,7 @@ const test = {
         ssn.removeClass('ssn-error');
       }
     }).listenTo('focus', () => {
+      ssn.parent().css('has-input');
       if (ssn.hasClass('ssn-error')) {
         ssn.removeClass('ssn-error');
       }
@@ -171,6 +190,7 @@ const test = {
       const { value } = e.currentTarget;
       if (value.length === 0) {
         ssn.removeClass(['ssn-ok', 'ssn-error']);
+        ssn.parent().removeClass('has-input');
         return;
       }
       if (!SSNValidater(value)) {
@@ -190,6 +210,14 @@ const test = {
     } else {
       this.stepOne();
       this.generateSteps(1);
+    }
+    const paywithcard = ELM.get('.payWithCard');
+    if (paywithcard.exist()) {
+      paywithcard.hide();
+    }
+    const required = ELM.get('.required-wrapper');
+    if (required.exist()) {
+      required.hide();
     }
   },
 };
