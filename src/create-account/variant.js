@@ -47,6 +47,7 @@ const test = {
     setTimeout(function () {
       test.showLoader($('.cro-iframe-container'));
       test.loadModal();
+      document.body.scrollTop = document.documentElement.scrollTop = 0;
     }, 50);
   },
 
@@ -195,7 +196,8 @@ const test = {
       if (modalApplication.length) {
         Object.assign(test, CROUTIL());
         const iframeContainer = ELM.create('div cro-iframe-container');
-        const modalContainer = ELM.create('div modal-wrapper').append(iframeContainer);
+        const modalCover = ELM.create('div modal-cover');
+        const modalContainer = ELM.create('div modal-wrapper').append(modalCover).append(iframeContainer);
         ELM.get('body').append(modalContainer);
         modalApplication.click((e) => {
           e.preventDefault();

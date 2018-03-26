@@ -8,16 +8,18 @@
   padding-bottom: 85%;*/
   background-color: #fff;
   -webkit-overflow-scrolling:touch;
-  height: 1400px;
+  width: 50vw;
+  min-width: 300px;
+  margin: 0 auto;
+  top: 10vh;
+  height: 80vh;
 }
 .cro .cro-iframe-container iframe {
   opacity: 0;
   position: absolute;
-  top: 0;
   left: 0;
   width: 100%;
-  /*height: 100%;*/
-  height: 1400px;
+  height: 100%;
 }
 .cro .modal-wrapper {
   position: absolute;
@@ -41,10 +43,10 @@
   margin: 0 auto;
 }
 
-/*.modal-open {
-  position: fixed;
-  width: 100%;
-}*/
+.modal-open {
+  height:100%;
+  overflow: hidden;
+}
 
 .cro-modal input {
   font-size: 16px;
@@ -107,7 +109,7 @@ html.cro-modal, body.cro-modal {
 .cro-modal .container-steps .step .form-wrapper {padding-top:3px;}
 
 #step2 {width: 300px; max-width: 100%; height: 0; padding:0; margin: 0 auto; top:-34px; opacity: 0; position: relative; z-index: 2;}
-#step2.loaded {height:1000px; opacity: 1;}
+#step2.loaded {height:1000px; opacity: 1; overflow: hidden;}
 
 .cro-modal .container-steps .step2 {margin: 0 -10px; position: relative;}
 
@@ -245,6 +247,17 @@ span.usp-check::before {
   z-index: 0;
 }
 
+
+.modal-cover {
+  background: rgba(0,0,0,0.2);
+  position: absolute;
+  top:0;
+  left:0;
+  width:100%;
+  height: 100%;
+  z-index: 0;
+}
+
 .cro-modal .btn-container {
   text-align: center;
   margin-top: 20px;
@@ -262,9 +275,9 @@ span.usp-check::before {
 }
 
 @media only screen and (max-width: 479px){
-  .cro .cro-iframe-container {
+  /*.cro .cro-iframe-container {
     margin:-1em;
-  }
+  }*/
   span.usp-check {
     display: block;
     padding:0.5em 0 0;
