@@ -1,21 +1,21 @@
-html {
+html.cro-form {
   background: #fff;
 }
 
-.form-row {
+.cro-form .form-row {
   display: flex;
   flex-flow: column;
 }
 
-.form-row .div-row {
+.cro-form .form-row .div-row {
   display: flex;
 }
 
-.password-confirm {
+.cro-form .password-confirm {
   display: none;
 }
 
-.ssn-confirmed {
+.cro-form .ssn-confirmed {
   text-align: center !important;
   font-size: 20px;
   font-weight: 300;
@@ -24,44 +24,59 @@ html {
   margin-top: -18px !important;
   color:#8DB72C;
 }
-.field-error {
+.cro-form .field-error {
   /*red*/
   border-bottom: 2px solid #EB1F07 !important;
+  display: block;
 }
 
-.field-ok {
+.cro-form input + .errormsg {
+  display: none;
+}
+
+.cro-form .field-error + .errormsg {
+  display: block;
+  background: #fff;
+  width: 100%;
+  position: absolute;
+  color:#EB1F07;
+}
+
+.cro-form .field-ok input {
   /*green*/
   border-bottom: 2px solid #8DB72C !important;
 }
 
-.field-validated::after {
-  content: ' ';
+.cro-form .form li span.check {
+  display: none;
+}
+
+.cro-form form .field-validated span.check {
   display: block;
   position: absolute;
   top:-30px;
   right:2px;
   width:15px;
   height:15px;
-  background: #8DB72C;
 }
 
-.ssn-confirmed .check {
+.cro-form .ssn-confirmed .check {
   margin-left: 14px;
 }
 
-.account-steps ul {
+.cro-form .account-steps ul {
   width: 240px;
   margin: 0 auto;
   display: flex;
   justify-content: center;
 }
 
-.account-steps li {
+.cro-form .account-steps li {
   background-color: transparent;
   width: 25%;
 }
 
-.account-steps .circle {
+.cro-form .account-steps .circle {
   position: relative;
   background-color: #F7F7F7;
   border-radius: 50%;
@@ -70,38 +85,38 @@ html {
   margin: 10px;
   text-align: center;
 }
-.account-steps .circle:last-child label {
+.cro-form .account-steps .circle:last-child label {
   font-weight: bold;
 }
 
-.account-steps .circle.checked {
+.cro-form .account-steps .circle.checked {
   background-color: rgba(141,183,44,0.1);
 }
-.check {
+.cro-form .check {
   display: inline;
 }
-.check svg {
+.cro-form .check svg {
   fill: #8DB72C;
   width: 14px;
 }
 
-.account-steps .line {
+.cro-form .account-steps .line {
   width: 30px;
   height: 30px;
   border-bottom: 1px solid #DDD;
 }
 
-.account-steps li {
+.cro-form .account-steps li {
   color: #3F3F40;
 }
 
-.account-steps li label {
+.cro-form .account-steps li label {
   font-size: 14px;
   display: block;
   margin-top: 10px;
 }
 
-input[type=text], input[type=password], input[type=tel]  {
+.cro-form input[type=text], .cro-form input[type=password], .cro-form input[type=tel], .cro-form input[type=email]  {
   height: auto;
   border: none;
   box-shadow: none;
@@ -110,75 +125,76 @@ input[type=text], input[type=password], input[type=tel]  {
   padding-bottom: 10px;
   font-size: 20px;
 }
-input[type=text]:focus, input[type=password]:focus, input[type=tel]:focus {
+.cro-form input[type=text]:focus, .cro-form input[type=password]:focus, .cro-form input[type=tel]:focus, .cro-form input[type=email]:focus {
   padding-bottom: 10px;
   outline: none;
 }
-li.has-input input[type=text], li.has-input input[type=password], li.has-input input[type=tel] {
+.cro-form li.has-input input[type=text], .cro-form li.has-input input[type=password], .cro-form li.has-input input[type=tel], .cro-form li.has-input input[type=email] {
   /*green*/
   border-bottom: 2px solid #8DB72C;
 }
 
-.easy-signup-page .form-wrapper fieldset {
+.cro-form .easy-signup-page .form-wrapper fieldset {
   width: auto;
 }
 
-.easy-signup-page header h1 {
+.cro-form .easy-signup-page header h1 {
   font-size: 24px;
 }
-.easy-signup-header {
+.cro-form .easy-signup-header {
   border-bottom: 1px solid #D5D7DA;
 }
 
-ol.form li {
+.cro-form ol.form li {
   position: relative;
   padding-bottom: 16px;
 }
-ol.form li input {
+.cro-form ol.form li input {
   position: absolute;
   top:-35px;
   font-weight: 300;
 }
-ol.form li label {
+.cro-form ol.form li label,
+.cro-form ol.form li .field-error + .errormsg {
   margin-bottom: 35px;
   font-size: 12px;
 }
-.step1 ol.form li:first-child {
+.cro-form .step1 ol.form li:first-child {
   margin: 20px 0 30px;
 }
 
-::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+.cro-form ::-webkit-input-placeholder { /* Chrome/Opera/Safari */
   font-weight: 300;
   color: #808283;
 }
-::-moz-placeholder { /* Firefox 19+ */
+.cro-form ::-moz-placeholder { /* Firefox 19+ */
   font-weight: 300;
   color: #808283;
 }
-:-ms-input-placeholder { /* IE 10+ */
+.cro-form :-ms-input-placeholder { /* IE 10+ */
   font-weight: 300;
   color: #808283;
 }
-:-moz-placeholder { /* Firefox 18- */
+.cro-form :-moz-placeholder { /* Firefox 18- */
   font-weight: 300;
   color: #808283;
 }
 
-.has-input input::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+.cro-form .has-input input::-webkit-input-placeholder { /* Chrome/Opera/Safari */
   color:transparent;
 }
-.has-input input::-moz-placeholder { /* Firefox 19+ */
+.cro-form .has-input input::-moz-placeholder { /* Firefox 19+ */
   color:transparent;
 }
-.has-input input:-ms-input-placeholder { /* IE 10+ */
+.cro-form .has-input input:-ms-input-placeholder { /* IE 10+ */
   color:transparent;
 }
-.has-input input:-moz-placeholder { /* Firefox 18- */
+.cro-form .has-input input:-moz-placeholder { /* Firefox 18- */
   color:transparent;
 }
 
-ol.form li input.button,
-fieldset input[type="submit"] {
+.cro-form ol.form li input.button,
+.cro-form fieldset input[type="submit"] {
   border-radius: 100px;
   box-shadow: none;
   font-weight: normal;
@@ -186,48 +202,48 @@ fieldset input[type="submit"] {
   font-size: 14px;
 }
 
-ol.form.inactive li input.button,
-fieldset.inactive input[type="submit"],
-fieldset ol.form.inactive input[disabled],
-fieldset ol.form.inactive input[disabled]:hover {
+.cro-form ol.form.inactive li input.button,
+.cro-form fieldset.inactive input[type="submit"],
+.cro-form fieldset ol.form.inactive input[disabled],
+.cro-form fieldset ol.form.inactive input[disabled]:hover {
   background: #f7f7f7;
   color: #808283;
   pointer-events: none;
 }
 
-ol.form li:first-child label,
-ol.form li.form-row label {
+.cro-form ol.form li:first-child label,
+.cro-form ol.form li.form-row label {
   visibility: hidden;
 }
-ol.form li.has-input label {
+.cro-form ol.form li.has-input label {
   visibility: visible;
 }
 
-.form-wrapper > p {
+.cro-form .form-wrapper > p {
   display: none;
 }
 
-.easy-signup-page .step.step2 .confirm-policy {
+.cro-form .easy-signup-page .step.step2 .confirm-policy {
   margin:-10px 0 30px;
 }
 
-.easy-signup-page .step.step2 .confirm-policy p {
+.cro-form .easy-signup-page .step.step2 .confirm-policy p {
   text-align: left;
   padding: 0;
 }
 
-.easy-signup-page .step.step2 ol.form li.confirm-policy label,
-.small {
+.cro-form .easy-signup-page .step.step2 ol.form li.confirm-policy label,
+.cro-form .small {
   font-size: 14px;
 }
 
-input:-webkit-autofill,
-input:-webkit-autofill:hover,
-input:-webkit-autofill:focus
-input:-webkit-autofill {
+.cro-form input:-webkit-autofill,
+.cro-form input:-webkit-autofill:hover,
+.cro-form input:-webkit-autofill:focus
+.cro-form input:-webkit-autofill {
   -webkit-box-shadow: 0 0 0px 1000px #fff inset;
 }
 
 @media only screen and (max-width: 780px) {
-  .cro { }
+  .cro-form .cro { }
 }
