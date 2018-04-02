@@ -24,7 +24,8 @@ html.cro-form {
   margin-top: -18px !important;
   color:#8DB72C;
 }
-.cro-form .field-error {
+.cro-form .field-error,
+.cro-form .pwchar.error {
   /*red*/
   border-bottom: 2px solid #EB1F07 !important;
   display: block;
@@ -34,15 +35,20 @@ html.cro-form {
   display: none;
 }
 
-.cro-form .field-error + .errormsg {
+.cro-form .field-error + .errormsg,
+.cro-form .field-error + .infomsg {
   display: block;
   background: #fff;
   width: 100%;
   position: absolute;
+}
+
+.cro-form .field-error + .errormsg {
   color:#EB1F07;
 }
 
-.cro-form .field-ok input {
+.cro-form .field-ok input,
+.cro-form .pwchar.ok {
   /*green*/
   border-bottom: 2px solid #8DB72C !important;
 }
@@ -54,7 +60,7 @@ html.cro-form {
 .cro-form form .field-validated span.check {
   display: block;
   position: absolute;
-  top:-30px;
+  top:-35px;
   right:2px;
   width:15px;
   height:15px;
@@ -151,13 +157,48 @@ html.cro-form {
 }
 .cro-form ol.form li input {
   position: absolute;
-  top:-35px;
+  top:-40px;
   font-weight: 300;
 }
+
+.cro-form ol.form li.password input {
+  top:-10px;
+}
+
+.cro-form ol.form li.password #pwchars {
+  position: relative;
+  top:-60px;
+}
+.cro-form ol.form li.password input.pwchar {
+  position: relative;
+  width:34px;
+  top:0;
+  margin-right: 19px;
+  display: inline-block;
+  text-align: center;
+}
+
+.cro-form ol.form li.password #pwchar6 {
+  margin-right: 0;
+}
+
 .cro-form ol.form li label,
-.cro-form ol.form li .field-error + .errormsg {
+.cro-form ol.form li .field-error + .errormsg,
+.cro-form ol.form li .infomsg {
   margin-bottom: 35px;
   font-size: 12px;
+}
+.cro-form ol.form li.password {
+  display: block;
+  padding-bottom: 0;
+}
+.cro-form ol.form li.password label {
+  position: relative;
+  font-size: 14px;
+  top:-45px;
+}
+.cro-form ol.form li.password div {
+  top:30px;
 }
 .cro-form .step1 ol.form li:first-child {
   margin: 20px 0 30px;
@@ -215,7 +256,8 @@ html.cro-form {
 .cro-form ol.form li.form-row label {
   visibility: hidden;
 }
-.cro-form ol.form li.has-input label {
+.cro-form ol.form li.has-input label,
+.cro-form ol.form li.password label {
   visibility: visible;
 }
 

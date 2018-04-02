@@ -47,88 +47,16 @@ const test = {
       const errormsg = ELM.create('div errormsg').text(errortext);
       li.append(errormsg);
     }
+    if(classname === 'password') {
+      function createPWField(i) {
+        return ELM.create('input pwchar').attr('id','pwchar' + i).attr('type','tel').attr('maxlength','1').attr('data-char',i);
+      }
+      const pwchars = ELM.create('div').attr('id','pwchars');
+      pwchars.append(createPWField('1')).append(createPWField('2')).append(createPWField('3')).append(createPWField('4')).append(createPWField('5')).append(createPWField('6'));
+      li.append(pwchars);
+    }
     li.append(check);
     return li;
-  },
-  stepTwo() {
-    removeElements(['.verify-email-field']);
-
-    const hiddenSSN = ELM.get('#CivicRegistrationNumberDisabled');
-    const ssn = hiddenSSN.value();
-    const newSSN = `${ssn.substr(0, 8)}-${ssn.substr(8)}`;
-    const check = ELM.create('div').css('check');
-    const svg = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="1.3568336963653564 3.796941041946411 21.142330169677734 18.591215133666992" id="check" width="100%" height="100%"><path d="M22.182 5.794q0.291 0.242 0.315 0.642t-0.218 0.739q-9.188 13.115-9.939 14.158-0.776 1.042-2 1.055t-2.024-1.055l-6.739-9.479q-0.242-0.339-0.218-0.752t0.315-0.655q1.236-1.067 2.764-1.915 0.315-0.17 0.703-0.049t0.63 0.461l4.558 6.4 7.782-11.055q0.242-0.339 0.618-0.449t0.715 0.061q1.6 0.873 2.739 1.891z"></path></svg>';
-    const form = ELM.get('.form');
-    const confirm = ELM.copy('.confirm-policy');
-
-    check.html(svg);
-    form.parent().css('inactive');
-    const ssnCopy = ELM.create('li ssn-confirmed light').text(newSSN).append(check);
-
-    form.html(' ');
-
-    const firstname = this.createRow('firstname', 'Förnamn', 'LoyaltyNewCustomerForm.FirstName', '');
-    const lastname = this.createRow('lastname', 'Efternamn', 'LoyaltyNewCustomerForm.LastName', '');
-    const email = this.createRow('email', 'E-post', 'LoyaltyNewCustomerForm.Email', 'E-postadressen är felaktig');
-    const cellphone = this.createRow('cellphone', 'Mobilnummer', 'phone', 'Ange ett svenskt mobilnummer', 'tel');
-    const password = this.createRow('password', '6-siffrig PIN-kod', 'LoyaltyNewCustomerForm.Password', 'PIN-koden ska bestå av 6 siffror', 'tel');
-    const passwordConfirm = this.createRow('password-confirm', '', 'LoyaltyNewCustomerForm.ConfirmPassword', '');
-
-    const cellphoneMirror = ELM.create('input');
-    cellphoneMirror.attr('type','hidden');
-    cellphoneMirror.attr('id', 'LoyaltyNewCustomerForm.CellPhone');
-    cellphoneMirror.attr('name', 'LoyaltyNewCustomerForm.CellPhone');
-    cellphone.append(cellphoneMirror);
-
-    form.appendAll([ssnCopy, firstname, lastname, email, cellphone, password, passwordConfirm, confirm]);
-
-    const inputFirstname = firstname.find('#LoyaltyNewCustomerForm\\.FirstName');
-    const inputLastname = lastname.find('#LoyaltyNewCustomerForm\\.LastName');
-    const inputCellPhone = cellphone.find('#phone');
-    const inputEmail = email.find('#LoyaltyNewCustomerForm\\.Email');
-    const inputPassword = password.find('#LoyaltyNewCustomerForm\\.Password');
-
-    inputPassword.attr('maxlength', 6);
-    inputCellPhone.attr('maxlength', 15);
-
-
-    // Bättre skapa upp fält via copy???
-
-    // const items = ELM.get('ol.form').children('li');
-    // items.forEach((item,index) => {
-    //   item.css('form-row')
-    //   let tooltip = item.find('.tooltip-wrapper');
-    //   let checkmark = item.find('.checkmark-wrapper');
-    //   if (tooltip.exist() || checkmark.exist()) {
-    //     let moveelem;
-    //     const input = item.copy('input');
-    //     item.find('input').remove();
-    //     if (tooltip.exist()) {
-    //       moveelem = item.copy('.tooltip-wrapper');
-    //     } else if (checkmark.exist()) {
-    //       moveelem = item.copy('.checkmark-wrapper');
-    //     }
-    //     item.append(moveelem);
-    //     const movedinput = item.append(input);
-    //     if (item.find('label').attr('data-label')) {
-    //       item.find('label').text(item.find('label').attr('data-label'));
-    //       input.attr('placeholder',item.find('label').attr('data-label'));
-    //     } else if (item.find('label').attr('for') == 'LoyaltyNewCustomerForm.CellPhone') {
-    //       item.find('label').text('Mobilnummer').attr('data-label','Mobilnummer');
-    //       input.attr('placeholder','Mobilnummer');
-    //     }
-    //   } else {
-    //     //console.log(item);
-    //   }
-    // });
-
-    ELM.get('#ctl00_ctl00_Content_cphOutsidePageWrapper_LoyaltyNewCustomerForm_LoyaltyNewCustomerFormSubmit').attr('value','Slutför').attr('disabled','disabled');
-
-    test.checkInput(document.getElementById('LoyaltyNewCustomerForm.FirstName'),'text','');
-    test.checkInput(document.getElementById('LoyaltyNewCustomerForm.LastName'),'text','');
-    test.checkInput(document.getElementById('phone'),'tel',document.getElementById('LoyaltyNewCustomerForm.CellPhone'));
-    test.checkInput(document.getElementById('LoyaltyNewCustomerForm.Email'),'mail','');
-    test.checkInput(document.getElementById('LoyaltyNewCustomerForm.Password'),'pwd','');
   },
   checkInput(input,type,typedata) {
     if (input.value.length) {
@@ -138,7 +66,11 @@ const test = {
       }
     }
     input.addEventListener('keyup', (event) => {
-      test.hasInput(input,type,typedata,'keyup');
+      const tab = event.keyCode == 9;
+      const shift = event.keyCode == 16;
+      if (!tab && !shift) {
+        test.hasInput(input,type,typedata,'keyup');
+      }
     });
     input.addEventListener('blur', (event) => {
       test.hasInput(input,type,typedata,'blur');
@@ -160,17 +92,21 @@ const test = {
     } else if(type === 'mail') {
       if (evt === 'blur') {
         if (test.isEmail(input.value) === true) {
-          valStatus= 'done';
+          valStatus = 'done';
+        } else if (input.value === '') {
+          valStatus = 'done';
         }
       } else if (input.value.length) {
-        valStatus= 'ontrack';
+        valStatus = 'ontrack';
+      } else if (input.value === '') {
+        valStatus = 'done';
       }
     } else if(type === 'text') {
       if (input.value.length) {
         if (evt === 'blur') {
-          valStatus= 'done';
+          valStatus = 'done';
         } else {
-          valStatus= 'ontrack';
+          valStatus = 'ontrack';
         }
       }
     }
@@ -191,6 +127,7 @@ const test = {
       input.parentNode.classList.remove('field-validated');
       input.parentNode.classList.remove('field-ok');
     }
+    test.checkSubmitState();
   },
   isEmail(email) {
     return /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/.test(email);
@@ -205,14 +142,10 @@ const test = {
       ssnValue = ssnValue.replace('+', '');
       const submit = ELM.get('input[type="submit"]');
       if (!SSNValidator(ssnValue) && evt === 'keyup') {
-        input.classList.remove('field-ok');
-        input.parentNode.classList.remove('field-validated');
         mirror.setAttribute('value','');
         test.disableSubmit(submit);
         return 'ontrack';
       } else if (SSNValidator(ssnValue)) {
-        input.classList.add('field-ok');
-        input.parentNode.classList.add('field-validated');
         mirror.setAttribute('value',ssnValue);
         test.enableSubmit(submit);
         return 'done';
@@ -220,27 +153,57 @@ const test = {
     }
   },
   checkPIN(input,evt) {
+    function uniqueChar(pw) {
+      const unique = pw.split('').filter(function(item, i, ar){ return ar.indexOf(item) === i; }).join('').length;
+      return unique;
+    }
     if (/^[0-9]+$/.test(input.value)) {
       const pin = input.value;
-      //inte pnr, stegar
+      const ssn = document.getElementById('ssn-confirmed').innerText.replace('-', '');
       if (pin.length === 6) {
-        return 'done';
+        if ((pin !== '012345' && pin !== '123456' && pin !== '234567' && pin !== '345678' &&
+        pin !== '456789' && pin !== '567890' && pin !== '987654' && pin !== '876543' &&
+        pin !== '765432' && pin !== '654321' && pin !== '543210') &&
+        (uniqueChar(input.value) > 2) &&
+        (!ssn.includes(input.value))) {
+          return 'done';
+        }
       } else if (pin.length < 6 && evt === 'keyup') {
         return 'ontrack';
       }
     }
   },
   checkPhone(input,evt) {
-    const tel = input.value.replace('-', '');
+    let tel = input.value.replace('-', '');
     if (tel === '' || /^[0-9+-]+$/.test(input.value)) {
       if (tel === '' || (/^(7|07|00467|\+467|467)\d{8}$/.test(tel))) {
-        //justera om börjar på + el 4
+        if(tel.substring(0,1) === '+') {
+          tel.replace('+','00')
+        } else if (tel.substring(0,1) === '4') {
+          tel = '00' + tel;
+        } else if (tel.substring(0,1) === '7') {
+          tel = '0' + tel;
+        }
         document.getElementById('LoyaltyNewCustomerForm.CellPhone').value=tel;
         return 'done';
       } else if (evt === 'keyup' && (tel === '' || (/^[0|7|\+|4]{1}$/.test(tel)) || (/^(00|\+4|46){2}$/.test(tel)) || (/^(004|\+46){3}$/.test(tel)) || (/^(0046){4}$/.test(tel)) || (/^(07|00467|\+467|467)\d{0,8}$/.test(tel)))) {
         document.getElementById('LoyaltyNewCustomerForm.CellPhone').value='';
         return 'ontrack';
       }
+    }
+  },
+  checkSubmitState() {
+    const submit = ELM.get('#ctl00_ctl00_Content_cphOutsidePageWrapper_LoyaltyNewCustomerForm_LoyaltyNewCustomerFormSubmit');
+    //lösenkod, villkor
+    if(document.getElementById('LoyaltyNewCustomerForm\.FirstName').value !== '' &&
+      document.getElementById('LoyaltyNewCustomerForm\.LastName').value !== '' &&
+      document.getElementById('LoyaltyNewCustomerForm\.AgreeToTermsHtmlValue').checked &&
+      test.checkPIN(document.getElementById('LoyaltyNewCustomerForm.Password')) === 'done') {
+      submit.removeAttr('disabled');
+      submit.parent().removeClass('inactive');
+    } else {
+      submit.attr('disabled');
+      submit.parent().css('inactive');
     }
   },
   enableSubmit(submit) {
@@ -284,6 +247,110 @@ const test = {
     // ELM.get('.step1 .form-wrapper').append(errorcontainer);
 
     test.ssnCheck();
+  },
+  stepTwo() {
+    removeElements(['.verify-email-field']);
+
+    const hiddenSSN = ELM.get('#CivicRegistrationNumberDisabled');
+    const ssn = hiddenSSN.value();
+    const newSSN = `${ssn.substr(0, 8)}-${ssn.substr(8)}`;
+    const ssnConfirmed = ELM.create('span').attr('id','ssn-confirmed').text(newSSN);
+    const check = ELM.create('div').css('check');
+    const svg = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="1.3568336963653564 3.796941041946411 21.142330169677734 18.591215133666992" id="check" width="100%" height="100%"><path d="M22.182 5.794q0.291 0.242 0.315 0.642t-0.218 0.739q-9.188 13.115-9.939 14.158-0.776 1.042-2 1.055t-2.024-1.055l-6.739-9.479q-0.242-0.339-0.218-0.752t0.315-0.655q1.236-1.067 2.764-1.915 0.315-0.17 0.703-0.049t0.63 0.461l4.558 6.4 7.782-11.055q0.242-0.339 0.618-0.449t0.715 0.061q1.6 0.873 2.739 1.891z"></path></svg>';
+    const form = ELM.get('.form');
+    const confirm = ELM.copy('.confirm-policy');
+
+    check.html(svg);
+    form.parent().css('inactive');
+    const ssnCopy = ELM.create('li ssn-confirmed light').append(ssnConfirmed).append(check);
+
+    form.html(' ');
+
+    const firstname = this.createRow('firstname', 'Förnamn', 'LoyaltyNewCustomerForm.FirstName', '');
+    const lastname = this.createRow('lastname', 'Efternamn', 'LoyaltyNewCustomerForm.LastName', '');
+    const email = this.createRow('email', 'E-post', 'LoyaltyNewCustomerForm.Email', 'E-postadressen är felaktig');
+    const cellphone = this.createRow('cellphone', 'Mobilnummer', 'phone', 'Ange ett svenskt mobilnummer', 'tel');
+    const password = this.createRow('password', '6-siffrig PIN-kod', 'LoyaltyNewCustomerForm.Password', 'Minst 3 olika, ej stegar (123456) eller ditt personnummer.', 'hidden');
+    const passwordConfirm = this.createRow('password-confirm', '', 'LoyaltyNewCustomerForm.ConfirmPassword', '');
+
+    const cellphoneMirror = ELM.create('input');
+    cellphoneMirror.attr('type','hidden');
+    cellphoneMirror.attr('id', 'LoyaltyNewCustomerForm.CellPhone');
+    cellphoneMirror.attr('name', 'LoyaltyNewCustomerForm.CellPhone');
+    cellphone.append(cellphoneMirror);
+
+    form.appendAll([ssnCopy, firstname, lastname, email, cellphone, password, passwordConfirm, confirm]);
+
+    const inputFirstname = firstname.find('#LoyaltyNewCustomerForm\\.FirstName');
+    const inputLastname = lastname.find('#LoyaltyNewCustomerForm\\.LastName');
+    const inputCellPhone = cellphone.find('#phone');
+    const inputEmail = email.find('#LoyaltyNewCustomerForm\\.Email');
+    const inputPassword = password.find('#LoyaltyNewCustomerForm\\.Password');
+
+    inputPassword.attr('maxlength', 6);
+    inputCellPhone.attr('maxlength', 15);
+
+    ELM.get('#ctl00_ctl00_Content_cphOutsidePageWrapper_LoyaltyNewCustomerForm_LoyaltyNewCustomerFormSubmit').attr('value','Slutför').attr('disabled','disabled');
+
+    test.checkInput(document.getElementById('LoyaltyNewCustomerForm.FirstName'),'text','');
+    test.checkInput(document.getElementById('LoyaltyNewCustomerForm.LastName'),'text','');
+    test.checkInput(document.getElementById('phone'),'tel',document.getElementById('LoyaltyNewCustomerForm.CellPhone'));
+    test.checkInput(document.getElementById('LoyaltyNewCustomerForm.Email'),'mail','');
+    test.checkInput(document.getElementById('LoyaltyNewCustomerForm.Password'),'pwd','');
+
+    document.getElementById('LoyaltyNewCustomerForm\.AgreeToTermsHtmlValue').addEventListener('change', (event) => {
+      test.checkSubmitState();
+    });
+
+    const pwchar = document.getElementsByClassName('pwchar');
+    document.getElementById('pwchars').addEventListener('click', (event) => {
+      toFirstEmpty();
+    });
+    const focusChar = function() {
+      console.log(this.selectionStart);
+    }
+    const keyupChar = function() {
+      //om backspace före char > radera fg, flytta efterföljande
+      //om backspace efter char > radera bef, flytta efterföljande
+      //om delete efter char > radera efterföljande, flytta efterföljande
+      //om delete före char > radera bef, flytta efterföljande
+      //om sista - "done"
+
+      var key = event.keyCode || event.charCode;
+
+      if (key == 8) {
+        console.log('backspace');
+      } else if (key == 46) {
+        console.log('delete');
+      }
+
+      if (/^[0-9]+$/.test(this.value)) {
+        this.classList.add('ok');
+        if(this.id !== 'pwchar6') {
+          toFirstEmpty(this.id);
+        } else {
+          this.parentNode.classList.add('field-validated');
+        }
+      } else {
+        this.classList.add('error');
+        this.value = '';
+      }
+    }
+    for (var i = 0; i < pwchar.length; i++) {
+      pwchar[i].addEventListener('keyup', keyupChar, false);
+      pwchar[i].addEventListener('focus', focusChar, false);
+    }
+
+    function toFirstEmpty() {
+      //Todo: end till vänster om (lägre än) markerad
+      for (var i = 0; i < pwchar.length; i++) {
+        if(pwchar[i].value === '') {
+          pwchar[i].focus();
+          break;
+        }
+      }
+    }
+
   },
   manipulateDom() {
     const stepTwo = ELM.get('#CivicRegistrationNumberDisabled').exist();
