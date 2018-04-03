@@ -321,13 +321,18 @@ const test = {
     }
     const focusChar = function() {
       document.getElementById('LoyaltyNewCustomerForm.Password').nextSibling.classList.add('showinfo');
+      document.getElementById('LoyaltyNewCustomerForm.Password').classList.remove('field-error');
+      document.getElementById('pwchars').classList.remove('field-error');
       if (this.value !== '') {
         this.select();
       }
     }
     const blurChar = function() {
       document.getElementById('LoyaltyNewCustomerForm.Password').nextSibling.classList.remove('showinfo');
-      //om lämnat ofullständigt fält...
+      if (test.checkPIN(document.getElementById('LoyaltyNewCustomerForm.Password')) !== 'done') {
+        document.getElementById('LoyaltyNewCustomerForm.Password').classList.add('field-error');
+        document.getElementById('pwchars').classList.add('field-error');
+      }
     }
     const keyupChar = function() {
       const key = event.keyCode || event.charCode;
@@ -345,13 +350,13 @@ const test = {
         }
       } else if (key === 40) { //up arrow
         toFirstEmpty();
-      } else if (key !== 9) {
+      } else {
         if (/^[0-9]+$/.test(this.value)) {
           this.classList.add('ok');
           if(this.id !== 'pwchar6') {
             this.parentNode.nextSibling.querySelector('input').focus();
           }
-        } else {
+        } else if (key !== 9) {
           this.classList.remove('ok');
           this.value = '';
         }
@@ -400,6 +405,8 @@ const test = {
       for (let i = 0; i < pwchar.length; i++) {
         if(pwchar[i].value === '') {
           pwchar[i].focus();
+          document.getElementById('LoyaltyNewCustomerForm.Password').classList.remove('field-error');
+          document.getElementById('pwchars').classList.remove('field-error');
           break;
         }
       }
@@ -414,6 +421,7 @@ const test = {
       pwspans[i].addEventListener('click', clickSpan, false);
     }
     document.getElementById('pwtoggle').addEventListener('click', (event) => {
+      event.preventDefault();
       if (event.currentTarget.textContent === 'Visa') {
         event.currentTarget.textContent='Dölj';
         for (let i = 0; i < pwchar.length; i++) {
