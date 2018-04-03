@@ -17,7 +17,7 @@ html.cro-form {
 
 .cro-form .ssn-confirmed {
   text-align: center !important;
-  font-size: 20px;
+  font-size: 2rem;
   font-weight: 300;
   line-height: 40px;
   margin-bottom: 50px !important;
@@ -131,7 +131,7 @@ html.cro-form {
   border-bottom: 2px solid #DDD;
   padding: 0;
   padding-bottom: 10px;
-  font-size: 20px;
+  font-size: 2rem;
 }
 .cro-form input[type=text]:focus, .cro-form input[type=password]:focus, .cro-form input[type=tel]:focus, .cro-form input[type=email]:focus {
   padding-bottom: 10px;
@@ -307,4 +307,10 @@ html.cro-form {
 
 @media only screen and (max-width: 780px) {
   .cro-form .cro { }
+}
+
+@media only screen and (max-width: 340px) {
+  .cro-form ol.form li.password input.pwchar {
+    margin-right: 10px;
+  }
 }
