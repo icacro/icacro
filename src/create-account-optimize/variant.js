@@ -48,11 +48,16 @@ const test = {
       li.append(errormsg);
     }
     if(classname === 'password') {
+      let pwspan, pwinput;
       function createPWField(i) {
-        return ELM.create('input pwchar').attr('id','pwchar' + i).attr('type','tel').attr('maxlength','1').attr('data-char',i);
+        pwspan = ELM.create('span').attr('id','pwspan' + i);
+        pwinput = ELM.create('input pwchar').attr('id','pwchar' + i).attr('type','tel').attr('maxlength','1').attr('data-char',i).attr('pattern','[0-9]*');
+        return pwspan.append(pwinput);
       }
+      const pwtoggle = ELM.create('a').attr('href','#').attr('id','pwtoggle').text('Dölj');
       const pwchars = ELM.create('div').attr('id','pwchars');
       pwchars.append(createPWField('1')).append(createPWField('2')).append(createPWField('3')).append(createPWField('4')).append(createPWField('5')).append(createPWField('6'));
+      label.append(pwtoggle);
       li.append(pwchars);
     }
     li.append(check);
@@ -87,8 +92,8 @@ const test = {
       valStatus = test.checkSSN(input,typedata, evt);
     } else if(type === 'tel') {
       valStatus = test.checkPhone(input,evt);
-    } else if(type === 'pwd') {
-      valStatus = test.checkPIN(input,evt);
+    // } else if(type === 'pwd') {
+    //   valStatus = test.checkPIN(input,evt);
     } else if(type === 'mail') {
       if (evt === 'blur') {
         if (test.isEmail(input.value) === true) {
@@ -127,10 +132,12 @@ const test = {
       input.parentNode.classList.remove('field-validated');
       input.parentNode.classList.remove('field-ok');
     }
-    test.checkSubmitState();
+    if(type !== 'ssn') {
+      test.checkSubmitState();
+    }
   },
   isEmail(email) {
-    return /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/.test(email);
+    return /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(email);
   },
   checkSSN(input, mirror, evt) {
     if (/^[0-9-]+$/.test(input.value)) {
@@ -168,8 +175,8 @@ const test = {
         (!ssn.includes(input.value))) {
           return 'done';
         }
-      } else if (pin.length < 6 && evt === 'keyup') {
-        return 'ontrack';
+      // } else if (pin.length < 6 && evt === 'keyup') {
+      //   return 'ontrack';
       }
     }
   },
@@ -303,53 +310,122 @@ const test = {
     });
 
     const pwchar = document.getElementsByClassName('pwchar');
-    document.getElementById('pwchars').addEventListener('click', (event) => {
-      toFirstEmpty();
-    });
+    const pwspans = document.querySelectorAll('#pwchars span');
+
+    const clickSpan = function() {
+      const charid = this.id.substring(6);
+      document.getElementById('pwchar' + charid).focus();
+      if (document.getElementById('pwchar' + charid).value === '') {
+        toFirstEmpty();
+      }
+    }
     const focusChar = function() {
-      console.log(this.selectionStart);
+      document.getElementById('LoyaltyNewCustomerForm.Password').nextSibling.classList.add('showinfo');
+      if (this.value !== '') {
+        this.select();
+      }
+    }
+    const blurChar = function() {
+      document.getElementById('LoyaltyNewCustomerForm.Password').nextSibling.classList.remove('showinfo');
+      //om lämnat ofullständigt fält...
     }
     const keyupChar = function() {
-      //om backspace före char > radera fg, flytta efterföljande
-      //om backspace efter char > radera bef, flytta efterföljande
-      //om delete efter char > radera efterföljande, flytta efterföljande
-      //om delete före char > radera bef, flytta efterföljande
-      //om sista - "done"
-
-      var key = event.keyCode || event.charCode;
-
-      if (key == 8) {
-        console.log('backspace');
-      } else if (key == 46) {
-        console.log('delete');
-      }
-
-      if (/^[0-9]+$/.test(this.value)) {
-        this.classList.add('ok');
-        if(this.id !== 'pwchar6') {
-          toFirstEmpty(this.id);
-        } else {
-          this.parentNode.classList.add('field-validated');
+      const key = event.keyCode || event.charCode;
+      if (key === 8 || key == 46) { //backspace, delete
+        this.classList.remove('ok');
+        movePreviousPWChars(this);
+        if (this.id !== 'pwchar1') {
+          this.parentNode.previousSibling.querySelector('input').focus();
         }
-      } else {
-        this.classList.add('error');
-        this.value = '';
+      } else if (key === 37) { //left arrow
+        this.parentNode.previousSibling.querySelector('input').focus();
+      } else if (key === 39) { //right arrow
+        if (this.id !== 'pwchar6' && this.value !== '') {
+          this.parentNode.nextSibling.querySelector('input').focus();
+        }
+      } else if (key === 40) { //up arrow
+        toFirstEmpty();
+      } else if (key !== 9) {
+        if (/^[0-9]+$/.test(this.value)) {
+          this.classList.add('ok');
+          if(this.id !== 'pwchar6') {
+            this.parentNode.nextSibling.querySelector('input').focus();
+          }
+        } else {
+          this.classList.remove('ok');
+          this.value = '';
+        }
+      }
+      testPIN();
+    }
+    function testPIN() {
+      let PIN = '';
+      for (let c = 0; c < pwchar.length; c++) {
+        if (pwchar[c].value !== '') {
+          PIN += pwchar[c].value;
+        } else {
+          break;
+        }
+        document.getElementById('LoyaltyNewCustomerForm.Password').value=PIN;
+        if (test.checkPIN(document.getElementById('LoyaltyNewCustomerForm.Password')) === 'done') {
+          document.getElementById('pwchars').classList.add('field-validated');
+          document.getElementById('pwchars').classList.remove('field-error');
+          document.getElementById('LoyaltyNewCustomerForm.Password').nextSibling.classList.remove('showinfo');
+          document.getElementById('LoyaltyNewCustomerForm.Password').classList.remove('field-error');
+        } else if (PIN.length === 6) {
+          document.getElementById('pwchars').classList.remove('field-validated');
+          document.getElementById('LoyaltyNewCustomerForm.Password').classList.add('field-error');
+          document.getElementById('pwchars').classList.add('field-error');
+        } else {
+          document.getElementById('pwchars').classList.remove('field-validated');
+          document.getElementById('LoyaltyNewCustomerForm.Password').classList.remove('field-error');
+          document.getElementById('pwchars').classList.remove('field-error');
+        }
       }
     }
-    for (var i = 0; i < pwchar.length; i++) {
-      pwchar[i].addEventListener('keyup', keyupChar, false);
-      pwchar[i].addEventListener('focus', focusChar, false);
+    function movePreviousPWChars(startElem) {
+      if (startElem.value === '' && startElem.id !== 'pwchar6') {
+        const charid = startElem.id.substring(6);
+        for (let i = charid; i < pwchar.length; i++) {
+          if (pwchar[i].value !== '') {
+            pwchar[i-1].value = pwchar[i].value;
+            pwchar[i-1].classList.add('ok');
+            pwchar[i].value = '';
+            pwchar[i].classList.remove('ok');
+          }
+        }
+      }
     }
-
     function toFirstEmpty() {
-      //Todo: end till vänster om (lägre än) markerad
-      for (var i = 0; i < pwchar.length; i++) {
+      for (let i = 0; i < pwchar.length; i++) {
         if(pwchar[i].value === '') {
           pwchar[i].focus();
           break;
         }
       }
     }
+
+    for (let i = 0; i < pwchar.length; i++) {
+      pwchar[i].addEventListener('keyup', keyupChar, false);
+      pwchar[i].addEventListener('focus', focusChar, false);
+      pwchar[i].addEventListener('blur', blurChar, false);
+    }
+    for (let i = 0; i < pwspans.length; i++) {
+      pwspans[i].addEventListener('click', clickSpan, false);
+    }
+    document.getElementById('pwtoggle').addEventListener('click', (event) => {
+      if (event.currentTarget.textContent === 'Visa') {
+        event.currentTarget.textContent='Dölj';
+        for (let i = 0; i < pwchar.length; i++) {
+          pwchar[i].setAttribute('type','tel');
+        }
+      } else {
+        event.currentTarget.textContent='Visa';
+        for (let i = 0; i < pwchar.length; i++) {
+          pwchar[i].setAttribute('type','password');
+        }
+      }
+    });
 
   },
   manipulateDom() {

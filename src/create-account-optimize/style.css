@@ -36,11 +36,13 @@ html.cro-form {
 }
 
 .cro-form .field-error + .errormsg,
-.cro-form .field-error + .infomsg {
+.cro-form .field-error + .infomsg,
+.cro-form input + .errormsg.showinfo {
   display: block;
   background: #fff;
   width: 100%;
   position: absolute;
+  font-size: 12px;
 }
 
 .cro-form .field-error + .errormsg {
@@ -161,14 +163,23 @@ html.cro-form {
   font-weight: 300;
 }
 
-.cro-form ol.form li.password input {
+.cro-form ol.form li.password #pwchars span {
+  display: inline-block;
   top:-10px;
 }
 
 .cro-form ol.form li.password #pwchars {
   position: relative;
-  top:-60px;
+  top:-70px;
 }
+
+.cro-form ol.form li.password #pwchars.field-error {
+  border:none !important;
+}
+.cro-form ol.form li.password #pwchars.field-error span input {
+  border-color:#EB1F07 !important;
+}
+
 .cro-form ol.form li.password input.pwchar {
   position: relative;
   width:34px;
@@ -176,6 +187,9 @@ html.cro-form {
   margin-right: 19px;
   display: inline-block;
   text-align: center;
+}
+.cro-form ol.form li.password .field-validated input.pwchar {
+  color: #8DB72C;
 }
 
 .cro-form ol.form li.password #pwchar6 {
@@ -266,7 +280,7 @@ html.cro-form {
 }
 
 .cro-form .easy-signup-page .step.step2 .confirm-policy {
-  margin:-10px 0 30px;
+  margin:-20px 0 30px;
 }
 
 .cro-form .easy-signup-page .step.step2 .confirm-policy p {
@@ -284,6 +298,11 @@ html.cro-form {
 .cro-form input:-webkit-autofill:focus
 .cro-form input:-webkit-autofill {
   -webkit-box-shadow: 0 0 0px 1000px #fff inset;
+}
+
+.cro-form #pwtoggle {
+  display: inline-block;
+  float:right;
 }
 
 @media only screen and (max-width: 780px) {
