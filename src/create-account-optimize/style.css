@@ -17,13 +17,17 @@ html.cro-form {
 
 .cro-form .ssn-confirmed {
   text-align: center !important;
-  font-size: 1.5rem;
+  font-size: 2rem;
   font-weight: 300;
   line-height: 40px;
   margin-bottom: 50px !important;
   margin-top: -18px !important;
   color:#8DB72C;
 }
+.cro-form .ios .ssn-confirmed {
+  font-size: 16px;
+}
+
 .cro-form .field-error,
 .cro-form .pwchar.error {
   /*red*/
@@ -131,7 +135,15 @@ html.cro-form {
   border-bottom: 2px solid #DDD;
   padding: 0;
   padding-bottom: 10px;
-  font-size: 1.5em;
+  font-size: 2rem;
+}
+.cro-form .ios input[type=text], .cro-form .ios input[type=password], .cro-form .ios input[type=tel], .cro-form .ios input[type=email] {
+  font-size: 16px;
+}
+.cro-form input.password {
+  text-security: disc;
+  -webkit-text-security: disc;
+  -moz-text-security: disc;
 }
 .cro-form input[type=text]:focus, .cro-form input[type=password]:focus, .cro-form input[type=tel]:focus, .cro-form input[type=email]:focus {
   padding-bottom: 10px;

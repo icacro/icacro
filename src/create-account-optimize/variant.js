@@ -422,15 +422,25 @@ const test = {
     }
     document.getElementById('pwtoggle').addEventListener('click', (event) => {
       event.preventDefault();
+      let toggleClass = window.getComputedStyle(pwchar[1]);
+      toggleClass = toggleClass.webkitTextSecurity;
       if (event.currentTarget.textContent === 'Visa') {
         event.currentTarget.textContent='Dölj';
         for (let i = 0; i < pwchar.length; i++) {
-          pwchar[i].setAttribute('type','tel');
+          if (toggleClass) {
+            pwchar[i].classList.remove('password');
+          } else {
+            pwchar[i].setAttribute('type', 'tel');
+          }
         }
       } else {
         event.currentTarget.textContent='Visa';
         for (let i = 0; i < pwchar.length; i++) {
-          pwchar[i].setAttribute('type','password');
+          if (toggleClass) {
+            pwchar[i].classList.add('password');
+          } else {
+            pwchar[i].setAttribute('type', 'password');
+          }
         }
       }
     });
@@ -453,9 +463,13 @@ const test = {
     if (required.exist()) {
       required.hide();
     }
+    const ua = window.navigator.userAgent;
+    const iOS = !!ua.match(/iP(ad|hone)/i);
+    if (iOS) {
+      ELM.get('body').css('ios');
+    }
   },
 };
-
 
 $(document).ready(() => {
   //hantera URLar i optimize/targeting - end 6369766963666f726d och 6c6f79616c74796e6577637573746f6d6572666f726d - inte returnURL
