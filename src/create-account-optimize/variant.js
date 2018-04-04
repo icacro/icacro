@@ -49,13 +49,13 @@ const test = {
     }
     if(classname === 'password') {
       let pwspan, pwinput;
+      const pwtoggle = ELM.create('a').attr('href','#').attr('id','pwtoggle').text('Dölj');
+      const pwchars = ELM.create('div').attr('id','pwchars');
       function createPWField(i) {
         pwspan = ELM.create('span').attr('id','pwspan' + i);
         pwinput = ELM.create('input pwchar').attr('id','pwchar' + i).attr('type','tel').attr('maxlength','1').attr('data-char',i).attr('pattern','[0-9]*');
         return pwspan.append(pwinput);
       }
-      const pwtoggle = ELM.create('a').attr('href','#').attr('id','pwtoggle').text('Dölj');
-      const pwchars = ELM.create('div').attr('id','pwchars');
       pwchars.append(createPWField('1')).append(createPWField('2')).append(createPWField('3')).append(createPWField('4')).append(createPWField('5')).append(createPWField('6'));
       label.append(pwtoggle);
       li.append(pwchars);
@@ -63,56 +63,33 @@ const test = {
     li.append(check);
     return li;
   },
-  checkInput(input,type,typedata) {
-    if (input.value.length) {
-      input.parentNode.classList.add('has-input');
-      if(type === 'ssn') {
-        test.checkSSN(input,typedata);
-      }
-    }
-    input.addEventListener('keyup', (event) => {
-      const tab = event.keyCode == 9;
-      const shift = event.keyCode == 16;
-      if (!tab && !shift) {
-        test.hasInput(input,type,typedata,'keyup');
-      }
-    });
-    input.addEventListener('blur', (event) => {
-      test.hasInput(input,type,typedata,'blur');
-    });
-  },
-  hasInput(input,type,typedata,evt) {
+  validateInput(input,type,typedata,evt) {
     let valStatus;
     if (input.value.length) {
       input.parentNode.classList.add('has-input');
+      if(type === 'text') {
+        if (evt === 'blur') {
+          valStatus = 'done';
+        } else {
+          valStatus = 'ontrack';
+        }
+      }
     } else {
       input.parentNode.classList.remove('has-input');
     }
     if(type === 'ssn') {
-      valStatus = test.checkSSN(input,typedata, evt);
+      valStatus = test.validateSSN(input,typedata, evt);
     } else if(type === 'tel') {
-      valStatus = test.checkPhone(input,evt);
-    // } else if(type === 'pwd') {
-    //   valStatus = test.checkPIN(input,evt);
+      valStatus = test.validatePhone(input,evt);
     } else if(type === 'mail') {
       if (evt === 'blur') {
-        if (test.isEmail(input.value) === true) {
-          valStatus = 'done';
-        } else if (input.value === '') {
+        if (test.validateEmail(input.value) === true || input.value === '') {
           valStatus = 'done';
         }
       } else if (input.value.length) {
         valStatus = 'ontrack';
       } else if (input.value === '') {
         valStatus = 'done';
-      }
-    } else if(type === 'text') {
-      if (input.value.length) {
-        if (evt === 'blur') {
-          valStatus = 'done';
-        } else {
-          valStatus = 'ontrack';
-        }
       }
     }
     if (valStatus === 'done') {
@@ -136,30 +113,10 @@ const test = {
       test.checkSubmitState();
     }
   },
-  isEmail(email) {
+  validateEmail(email) {
     return /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(email);
   },
-  checkSSN(input, mirror, evt) {
-    if (/^[0-9-]+$/.test(input.value)) {
-      let ssnValue=input.value;
-      if(parseInt(ssnValue.substring(0, 2)) > 20) {
-        ssnValue='19' + ssnValue;
-      }
-      ssnValue = ssnValue.replace('-', '');
-      ssnValue = ssnValue.replace('+', '');
-      const submit = ELM.get('input[type="submit"]');
-      if (!SSNValidator(ssnValue) && evt === 'keyup') {
-        mirror.setAttribute('value','');
-        test.disableSubmit(submit);
-        return 'ontrack';
-      } else if (SSNValidator(ssnValue)) {
-        mirror.setAttribute('value',ssnValue);
-        test.enableSubmit(submit);
-        return 'done';
-      }
-    }
-  },
-  checkPIN(input,evt) {
+  validatePIN(input,evt) {
     function uniqueChar(pw) {
       const unique = pw.split('').filter(function(item, i, ar){ return ar.indexOf(item) === i; }).join('').length;
       return unique;
@@ -175,12 +132,13 @@ const test = {
         (!ssn.includes(input.value))) {
           return 'done';
         }
-      // } else if (pin.length < 6 && evt === 'keyup') {
-      //   return 'ontrack';
+      } else if (pin.length === 5 && uniqueChar(input.value) === 1) {
+         return 'error';
       }
     }
   },
-  checkPhone(input,evt) {
+  validatePhone(input,evt) {
+    const telEl = document.getElementById('LoyaltyNewCustomerForm.CellPhone');
     let tel = input.value.replace('-', '');
     if (tel === '' || /^[0-9+-]+$/.test(input.value)) {
       if (tel === '' || (/^(7|07|00467|\+467|467)\d{8}$/.test(tel))) {
@@ -191,21 +149,55 @@ const test = {
         } else if (tel.substring(0,1) === '7') {
           tel = '0' + tel;
         }
-        document.getElementById('LoyaltyNewCustomerForm.CellPhone').value=tel;
+        telEl.value=tel;
         return 'done';
       } else if (evt === 'keyup' && (tel === '' || (/^[0|7|\+|4]{1}$/.test(tel)) || (/^(00|\+4|46){2}$/.test(tel)) || (/^(004|\+46){3}$/.test(tel)) || (/^(0046){4}$/.test(tel)) || (/^(07|00467|\+467|467)\d{0,8}$/.test(tel)))) {
-        document.getElementById('LoyaltyNewCustomerForm.CellPhone').value='';
+        telEl.value='';
         return 'ontrack';
       }
     }
   },
+  validateSSN(input,mirror,evt) {
+    const submit = ELM.get('input[type="submit"]');
+    if (input.value === '') {
+      test.disableSSNSubmit(submit);
+    } else if (/^[0-9-]+$/.test(input.value)) {
+      let ssnValue=input.value;
+      if(parseInt(ssnValue.substring(0, 2)) > 20) {
+        ssnValue='19' + ssnValue;
+      }
+      ssnValue = ssnValue.replace('-', '');
+      ssnValue = ssnValue.replace('+', '');
+      if (!SSNValidator(ssnValue) && evt === 'keyup') {
+        mirror.setAttribute('value','');
+        test.disableSSNSubmit(submit);
+        return 'ontrack';
+      } else if (SSNValidator(ssnValue)) {
+        mirror.setAttribute('value',ssnValue);
+        submit.removeAttr('disabled');
+        submit.parent().parent().removeClass('inactive');
+        return 'done';
+      }
+    }
+  },
+  disableSSNSubmit(submit) {
+    submit.attr('disabled');
+    submit.parent().parent().css('inactive');
+  },
   checkSubmitState() {
     const submit = ELM.get('#ctl00_ctl00_Content_cphOutsidePageWrapper_LoyaltyNewCustomerForm_LoyaltyNewCustomerFormSubmit');
-    //lösenkod, villkor
-    if(document.getElementById('LoyaltyNewCustomerForm\.FirstName').value !== '' &&
-      document.getElementById('LoyaltyNewCustomerForm\.LastName').value !== '' &&
-      document.getElementById('LoyaltyNewCustomerForm\.AgreeToTermsHtmlValue').checked &&
-      test.checkPIN(document.getElementById('LoyaltyNewCustomerForm.Password')) === 'done') {
+    const email = document.getElementById('LoyaltyNewCustomerForm\.Email');
+    const phone = document.getElementById('phone');
+    const firstname = document.getElementById('LoyaltyNewCustomerForm\.FirstName');
+    const lastname = document.getElementById('LoyaltyNewCustomerForm\.LastName');
+    const terms = document.getElementById('LoyaltyNewCustomerForm\.AgreeToTermsHtmlValue');
+    const pw = document.getElementById('LoyaltyNewCustomerForm.Password');
+    if(firstname.value !== '' &&
+      lastname.value !== '' &&
+      terms.checked &&
+      !(email.classList.contains('field-error')) && !(email.parentNode.classList.contains('field-ok')) &&
+      !(phone.classList.contains('field-error')) && !(phone.parentNode.classList.contains('field-ok')) &&
+      test.validatePIN(pw) === 'done') {
       submit.removeAttr('disabled');
       submit.parent().removeClass('inactive');
     } else {
@@ -213,20 +205,35 @@ const test = {
       submit.parent().css('inactive');
     }
   },
-  enableSubmit(submit) {
-    submit.removeAttr('disabled');
-    submit.parent().parent().removeClass('inactive');
+  toFirstEmpty(pwchar) {
+    for (let i = 0; i < pwchar.length; i++) {
+      if(pwchar[i].value === '') {
+        pwchar[i].focus();
+        test.PINFeedback('ontrack');
+        break;
+      }
+    }
   },
-  disableSubmit(submit) {
-    submit.attr('disabled');
-    submit.parent().parent().css('inactive');
-  },
-  ssnCheck() {
-    const ssn = document.getElementById('ssn');
-    const ssnMirror = document.getElementById('CivicForm\.CivicRegistrationNumber');
-    ssn.focus();
-    test.disableSubmit(ELM.get('input[type="submit"]'));
-    test.checkInput(ssn,'ssn',ssnMirror);
+  PINFeedback(type) {
+    const pwCharsCL = document.getElementById('pwchars').classList;
+    const pwCL = document.getElementById('LoyaltyNewCustomerForm.Password').classList;
+    const pwNextCL = document.getElementById('LoyaltyNewCustomerForm.Password').nextSibling.classList;
+    if (type==='error') {
+      pwCharsCL.remove('field-validated');
+      pwCharsCL.add('field-error');
+      pwCL.add('field-error');
+      pwNextCL.remove('showinfo');
+    } else if (type==='done') {
+      pwCharsCL.add('field-validated');
+      pwCharsCL.remove('field-error');
+      pwCL.remove('field-error');
+      pwNextCL.remove('showinfo');
+    } else {
+      pwCharsCL.remove('field-validated');
+      pwCharsCL.remove('field-error');
+      pwCL.remove('field-error');
+      pwNextCL.add('showinfo');
+    }
   },
   stepOne() {
     const form = ELM.get('.form');
@@ -253,7 +260,15 @@ const test = {
     // errorcontainer = errorcontainer.append(errorlist);
     // ELM.get('.step1 .form-wrapper').append(errorcontainer);
 
-    test.ssnCheck();
+    const ssnEl = document.getElementById('ssn');
+    const ssnMirrorEl = document.getElementById('CivicForm\.CivicRegistrationNumber');
+    test.disableSSNSubmit(ELM.get('input[type="submit"]'));
+    if (ssnEl.value === '') {
+      ssnEl.focus();
+    } else {
+      test.validateInput(ssnEl,'ssn',ssnMirrorEl,'keyup');
+    }
+    test.addInputEventListeners(ssnEl,'ssn',ssnMirrorEl);
   },
   stepTwo() {
     removeElements(['.verify-email-field']);
@@ -299,46 +314,62 @@ const test = {
 
     ELM.get('#ctl00_ctl00_Content_cphOutsidePageWrapper_LoyaltyNewCustomerForm_LoyaltyNewCustomerFormSubmit').attr('value','Slutför').attr('disabled','disabled');
 
-    test.checkInput(document.getElementById('LoyaltyNewCustomerForm.FirstName'),'text','');
-    test.checkInput(document.getElementById('LoyaltyNewCustomerForm.LastName'),'text','');
-    test.checkInput(document.getElementById('phone'),'tel',document.getElementById('LoyaltyNewCustomerForm.CellPhone'));
-    test.checkInput(document.getElementById('LoyaltyNewCustomerForm.Email'),'mail','');
-    test.checkInput(document.getElementById('LoyaltyNewCustomerForm.Password'),'pwd','');
+    //om har värde???
+    test.addInputEventListeners(document.getElementById('LoyaltyNewCustomerForm.FirstName'),'text','');
+    test.addInputEventListeners(document.getElementById('LoyaltyNewCustomerForm.LastName'),'text','');
+    test.addInputEventListeners(document.getElementById('phone'),'tel',document.getElementById('LoyaltyNewCustomerForm.CellPhone'));
+    test.addInputEventListeners(document.getElementById('LoyaltyNewCustomerForm.Email'),'mail','');
+    test.addInputEventListeners(document.getElementById('LoyaltyNewCustomerForm.Password'),'pwd','');
 
-    document.getElementById('LoyaltyNewCustomerForm\.AgreeToTermsHtmlValue').addEventListener('change', (event) => {
+    const termsBtn = ELM.get('#LoyaltyNewCustomerForm\\.AgreeToTermsHtmlValue');
+    termsBtn.change((e) => {
       test.checkSubmitState();
     });
 
     const pwchar = document.getElementsByClassName('pwchar');
     const pwspans = document.querySelectorAll('#pwchars span');
 
+    test.addPINEventListeners(pwchar,pwspans);
+  },
+  addPINEventListeners(pwchar,pwspans) {
     const clickSpan = function() {
       const charid = this.id.substring(6);
-      document.getElementById('pwchar' + charid).focus();
-      if (document.getElementById('pwchar' + charid).value === '') {
-        toFirstEmpty();
+      const el = document.getElementById('pwchar' + charid);
+      el.focus();
+      if(el.value === '') {
+        test.toFirstEmpty(pwchar);
       }
     }
     const focusChar = function() {
-      document.getElementById('LoyaltyNewCustomerForm.Password').nextSibling.classList.add('showinfo');
-      document.getElementById('LoyaltyNewCustomerForm.Password').classList.remove('field-error');
-      document.getElementById('pwchars').classList.remove('field-error');
+      test.PINFeedback('ontrack');
       if (this.value !== '') {
         this.select();
       }
     }
     const blurChar = function() {
-      document.getElementById('LoyaltyNewCustomerForm.Password').nextSibling.classList.remove('showinfo');
-      if (test.checkPIN(document.getElementById('LoyaltyNewCustomerForm.Password')) !== 'done') {
-        document.getElementById('LoyaltyNewCustomerForm.Password').classList.add('field-error');
-        document.getElementById('pwchars').classList.add('field-error');
+      if (test.validatePIN(document.getElementById('LoyaltyNewCustomerForm.Password')) !== 'done') {
+        setTimeout(function () {
+          if(!document.activeElement.id.includes('pwchar')) {
+            test.PINFeedback('error');
+          }
+        }, 200);
       }
     }
     const keyupChar = function() {
       const key = event.keyCode || event.charCode;
       if (key === 8 || key == 46) { //backspace, delete
         this.classList.remove('ok');
-        movePreviousPWChars(this);
+        if (this.value === '' && this.id !== 'pwchar6') {
+          const charid = this.id.substring(6);
+          for (let i = charid; i < pwchar.length; i++) {
+            if (pwchar[i].value !== '') {
+              pwchar[i-1].value = pwchar[i].value;
+              pwchar[i-1].classList.add('ok');
+              pwchar[i].value = '';
+              pwchar[i].classList.remove('ok');
+            }
+          }
+        }
         if (this.id !== 'pwchar1') {
           this.parentNode.previousSibling.querySelector('input').focus();
         }
@@ -349,64 +380,37 @@ const test = {
           this.parentNode.nextSibling.querySelector('input').focus();
         }
       } else if (key === 40) { //up arrow
-        toFirstEmpty();
+        test.toFirstEmpty(pwchar);
       } else {
         if (/^[0-9]+$/.test(this.value)) {
           this.classList.add('ok');
           if(this.id !== 'pwchar6') {
             this.parentNode.nextSibling.querySelector('input').focus();
           }
-        } else if (key !== 9) {
+        } else if (key !== 9) { //tab
           this.classList.remove('ok');
           this.value = '';
         }
       }
-      testPIN();
-    }
-    function testPIN() {
+
       let PIN = '';
-      for (let c = 0; c < pwchar.length; c++) {
-        if (pwchar[c].value !== '') {
-          PIN += pwchar[c].value;
-        } else {
-          break;
-        }
-        document.getElementById('LoyaltyNewCustomerForm.Password').value=PIN;
-        if (test.checkPIN(document.getElementById('LoyaltyNewCustomerForm.Password')) === 'done') {
-          document.getElementById('pwchars').classList.add('field-validated');
-          document.getElementById('pwchars').classList.remove('field-error');
-          document.getElementById('LoyaltyNewCustomerForm.Password').nextSibling.classList.remove('showinfo');
-          document.getElementById('LoyaltyNewCustomerForm.Password').classList.remove('field-error');
-        } else if (PIN.length === 6) {
-          document.getElementById('pwchars').classList.remove('field-validated');
-          document.getElementById('LoyaltyNewCustomerForm.Password').classList.add('field-error');
-          document.getElementById('pwchars').classList.add('field-error');
-        } else {
-          document.getElementById('pwchars').classList.remove('field-validated');
-          document.getElementById('LoyaltyNewCustomerForm.Password').classList.remove('field-error');
-          document.getElementById('pwchars').classList.remove('field-error');
-        }
-      }
-    }
-    function movePreviousPWChars(startElem) {
-      if (startElem.value === '' && startElem.id !== 'pwchar6') {
-        const charid = startElem.id.substring(6);
-        for (let i = charid; i < pwchar.length; i++) {
-          if (pwchar[i].value !== '') {
-            pwchar[i-1].value = pwchar[i].value;
-            pwchar[i-1].classList.add('ok');
-            pwchar[i].value = '';
-            pwchar[i].classList.remove('ok');
-          }
-        }
-      }
-    }
-    function toFirstEmpty() {
+      const pwElem = document.getElementById('LoyaltyNewCustomerForm.Password');
       for (let i = 0; i < pwchar.length; i++) {
-        if(pwchar[i].value === '') {
-          pwchar[i].focus();
-          document.getElementById('LoyaltyNewCustomerForm.Password').classList.remove('field-error');
-          document.getElementById('pwchars').classList.remove('field-error');
+        if (pwchar[i].value !== '') {
+          PIN += pwchar[i].value;
+          pwElem.value=PIN;
+          if (i === 5) {
+            if (test.validatePIN(pwElem) === 'done') {
+              test.PINFeedback('done');
+            } else {
+              test.PINFeedback('error');
+            }
+          } else if (test.validatePIN(pwElem) === 'error'){
+            test.PINFeedback('error');
+          } else {
+            test.PINFeedback('ontrack');
+          }
+        } else {
           break;
         }
       }
@@ -420,12 +424,14 @@ const test = {
     for (let i = 0; i < pwspans.length; i++) {
       pwspans[i].addEventListener('click', clickSpan, false);
     }
-    document.getElementById('pwtoggle').addEventListener('click', (event) => {
-      event.preventDefault();
+
+    const toggleBtn = ELM.get('#pwtoggle');
+    toggleBtn.click((e) => {
+      e.preventDefault();
       let toggleClass = window.getComputedStyle(pwchar[1]);
       toggleClass = toggleClass.webkitTextSecurity;
-      if (event.currentTarget.textContent === 'Visa') {
-        event.currentTarget.textContent='Dölj';
+      if (this.textContent === 'Visa') {
+        this.textContent='Dölj';
         for (let i = 0; i < pwchar.length; i++) {
           if (toggleClass) {
             pwchar[i].classList.remove('password');
@@ -434,7 +440,7 @@ const test = {
           }
         }
       } else {
-        event.currentTarget.textContent='Visa';
+        this.textContent='Visa';
         for (let i = 0; i < pwchar.length; i++) {
           if (toggleClass) {
             pwchar[i].classList.add('password');
@@ -443,8 +449,21 @@ const test = {
           }
         }
       }
+      test.toFirstEmpty(pwchar);
     });
 
+  },
+  addInputEventListeners(input,type,typedata) {
+    input.addEventListener('keyup', (event) => {
+      if (input.value.length) {
+        test.validateInput(input,type,typedata,'keyup');
+      } else {
+        test.checkSubmitState();
+      }
+    });
+    input.addEventListener('blur', (event) => {
+      test.validateInput(input,type,typedata,'blur');
+    });
   },
   manipulateDom() {
     const stepTwo = ELM.get('#CivicRegistrationNumberDisabled').exist();
