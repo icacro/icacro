@@ -134,12 +134,11 @@ html.cro-form {
   padding-bottom: 10px;
   font-size: 2rem;
 }
-.cro-form ios.body {
-  font-size: 16px;
+
+.cro-form .ios input[type=text], .cro-form .ios input[type=password], .cro-form .ios input[type=tel], .cro-form .ios input[type=email],
+.cro-form .ios input[type=text]:focus, .cro-form .ios input[type=password]:focus, .cro-form .ios input[type=tel]:focus, .cro-form .ios input[type=email]:focus {
+  font-size: 2rem !important;
 }
-/*.cro-form .ios input[type=text], .cro-form .ios input[type=password], .cro-form .ios input[type=tel], .cro-form .ios input[type=email] {
-  font-size: 16px;
-}*/
 .cro-form input.password {
   text-security: disc;
   -webkit-text-security: disc;
