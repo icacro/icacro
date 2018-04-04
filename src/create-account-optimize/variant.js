@@ -290,7 +290,7 @@ const test = {
 
     const firstname = this.createRow('firstname', 'Förnamn', 'LoyaltyNewCustomerForm.FirstName', '');
     const lastname = this.createRow('lastname', 'Efternamn', 'LoyaltyNewCustomerForm.LastName', '');
-    const email = this.createRow('email', 'E-post', 'LoyaltyNewCustomerForm.Email', 'E-postadressen är felaktig');
+    const email = this.createRow('email', 'E-post', 'LoyaltyNewCustomerForm.Email', 'E-postadressen är felaktig', 'email');
     const cellphone = this.createRow('cellphone', 'Mobilnummer', 'phone', 'Ange ett svenskt mobilnummer', 'tel');
     const password = this.createRow('password', '6-siffrig PIN-kod', 'LoyaltyNewCustomerForm.Password', 'Minst 3 olika, ej stegar (123456) eller ditt personnummer.', 'hidden');
     const passwordConfirm = this.createRow('password-confirm', '', 'LoyaltyNewCustomerForm.ConfirmPassword', '');
@@ -392,7 +392,6 @@ const test = {
           this.value = '';
         }
       }
-
       let PIN = '';
       const pwElem = document.getElementById('LoyaltyNewCustomerForm.Password');
       for (let i = 0; i < pwchar.length; i++) {
@@ -414,6 +413,7 @@ const test = {
           break;
         }
       }
+      test.checkSubmitState();
     }
 
     for (let i = 0; i < pwchar.length; i++) {
