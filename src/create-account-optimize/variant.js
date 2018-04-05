@@ -53,7 +53,7 @@ const test = {
       const pwchars = ELM.create('div').attr('id','pwchars');
       function createPWField(i) {
         pwspan = ELM.create('span').attr('id','pwspan' + i);
-        pwinput = ELM.create('input pwchar').attr('id','pwchar' + i).attr('type','tel').attr('maxlength','2').attr('data-char',i).attr('pattern','[0-9]*');
+        pwinput = ELM.create('input pwchar').attr('id','pwchar' + i).attr('type','tel').attr('maxlength','2').attr('data-char',i).attr('pattern','[0-9]*').attr('autocomplete','off');
         return pwspan.append(pwinput);
       }
       pwchars.append(createPWField('1')).append(createPWField('2')).append(createPWField('3')).append(createPWField('4')).append(createPWField('5')).append(createPWField('6'));
@@ -142,16 +142,18 @@ const test = {
     let tel = input.value.replace('-', '');
     if (tel === '' || /^[0-9+-]+$/.test(input.value)) {
       if (tel === '' || (/^(7|07|00467|\+467|467)\d{8}$/.test(tel))) {
-        if(tel.substring(0,1) === '+') {
-          tel.replace('+','00')
-        } else if (tel.substring(0,1) === '4') {
-          tel = '00' + tel;
+        if(tel.substring(0,4) === '0046') {
+          tel = tel.replace('+46','0')
+        } else if(tel.substring(0,3) === '+46') {
+          tel = tel.replace('+46','0')
+        } else if (tel.substring(0,2) === '46') {
+          tel = tel.replace('46','0')
         } else if (tel.substring(0,1) === '7') {
           tel = '0' + tel;
         }
         telEl.value=tel;
         return 'done';
-      } else if (evt === 'keyup' && (tel === '' || (/^[0|7|\+|4]{1}$/.test(tel)) || (/^(00|\+4|46){2}$/.test(tel)) || (/^(004|\+46){3}$/.test(tel)) || (/^(0046){4}$/.test(tel)) || (/^(07|00467|\+467|467)\d{0,8}$/.test(tel)))) {
+      } else if (evt === 'keyup' && (tel === '' || (tel.length === 1 && (/^(0|7|\+|4)\d{0,1}$/.test(tel))) || (tel.length === 2 && (/^(00|\+4|46)\d{0,2}$/.test(tel))) || (tel.length === 3 && (/^(004|\+46)\d{0,3}$/.test(tel))) || (tel.length === 4 && (/^(0046)\d{0,4}$/.test(tel))) || (/^(7|07|00467|\+467|467)\d{0,8}$/.test(tel)))) {
         telEl.value='';
         return 'ontrack';
       }
@@ -347,7 +349,7 @@ const test = {
     test.addPINEventListeners(pwchar,pwspans);
   },
   addPINEventListeners(pwchar,pwspans) {
-    const clickSpan = function() {
+    const clickSpan = function(event) {
       const charid = this.id.substring(6);
       const el = document.getElementById('pwchar' + charid);
       el.focus();
@@ -355,13 +357,10 @@ const test = {
         test.toFirstEmpty(pwchar);
       }
     }
-    const focusChar = function() {
+    const focusChar = function(event) {
       test.PINFeedback('ontrack');
-      if (this.value !== '') {
-        //this.select();
-      }
     }
-    const blurChar = function() {
+    const blurChar = function(event) {
       if (test.validatePIN(document.getElementById('LoyaltyNewCustomerForm.Password')) !== 'done') {
         setTimeout(function () {
           if(!document.activeElement.id.includes('pwchar')) {
@@ -370,12 +369,18 @@ const test = {
         }, 200);
       }
     }
-    const keydownChar = function() {
+    const keydownChar = function(event) {
       if(isFinite(event.key)) {
-        test.toFirstEmpty(pwchar);
+        const charid = parseInt(this.id.charAt(pwchar.length));
+        for (let i = 0; i < charid; i++) {
+          if (pwchar[i].value === '') {
+            test.toFirstEmpty(pwchar);
+            break;
+          }
+        }
       }
     }
-    const keyupChar = function() {
+    const keyupChar = function(event) {
       const key = event.keyCode || event.charCode;
       const charid = parseInt(this.id.charAt(pwchar.length));
       if (key === 8 || key == 46) { //backspace, delete

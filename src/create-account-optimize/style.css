@@ -203,6 +203,7 @@ html.cro-form {
 .cro-form ol.form li.password input.pwchar {
   position: relative;
   width:34px;
+  height:35px;
   top:0;
   margin-right: 19px;
   display: inline-block;
