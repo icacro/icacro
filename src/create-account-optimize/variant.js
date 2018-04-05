@@ -53,7 +53,7 @@ const test = {
       const pwchars = ELM.create('div').attr('id','pwchars');
       function createPWField(i) {
         pwspan = ELM.create('span').attr('id','pwspan' + i);
-        pwinput = ELM.create('input pwchar').attr('id','pwchar' + i).attr('type','tel').attr('maxlength','1').attr('data-char',i).attr('pattern','[0-9]*');
+        pwinput = ELM.create('input pwchar').attr('id','pwchar' + i).attr('type','tel').attr('maxlength','2').attr('data-char',i).attr('pattern','[0-9]*');
         return pwspan.append(pwinput);
       }
       pwchars.append(createPWField('1')).append(createPWField('2')).append(createPWField('3')).append(createPWField('4')).append(createPWField('5')).append(createPWField('6'));
@@ -235,6 +235,16 @@ const test = {
       pwNextCL.add('showinfo');
     }
   },
+  PINFocusNext(el) {
+    if (el.id !== 'pwchar6') {
+      el.parentNode.nextSibling.querySelector('input').focus();
+    }
+  },
+  PINFocusPrev(el) {
+    if (el.id !== 'pwchar1') {
+      el.parentNode.previousSibling.querySelector('input').focus();
+    }
+  },
   stepOne() {
     const form = ELM.get('.form');
     const li = form.find('li');
@@ -286,7 +296,10 @@ const test = {
     form.parent().css('inactive');
     const ssnCopy = ELM.create('li ssn-confirmed light').append(ssnConfirmed).append(check);
 
-    form.html(' ');
+    const replace = document.querySelectorAll('ol.form li:not(.confirm-policy)');
+    for (let i = 0; i < replace.length; i++) {
+      replace[i].remove();
+    }
 
     const firstname = this.createRow('firstname', 'Förnamn', 'LoyaltyNewCustomerForm.FirstName', '');
     const lastname = this.createRow('lastname', 'Efternamn', 'LoyaltyNewCustomerForm.LastName', '');
@@ -301,7 +314,9 @@ const test = {
     cellphoneMirror.attr('name', 'LoyaltyNewCustomerForm.CellPhone');
     cellphone.append(cellphoneMirror);
 
-    form.appendAll([ssnCopy, firstname, lastname, email, cellphone, password, passwordConfirm, confirm]);
+    const confirmPolicy = ELM.get('.confirm-policy');
+
+    form.appendAll([ssnCopy, firstname, lastname, email, cellphone, password, passwordConfirm, confirmPolicy]);
 
     const inputFirstname = firstname.find('#LoyaltyNewCustomerForm\\.FirstName');
     const inputLastname = lastname.find('#LoyaltyNewCustomerForm\\.LastName');
@@ -343,7 +358,7 @@ const test = {
     const focusChar = function() {
       test.PINFeedback('ontrack');
       if (this.value !== '') {
-        this.select();
+        //this.select();
       }
     }
     const blurChar = function() {
@@ -355,40 +370,62 @@ const test = {
         }, 200);
       }
     }
+    const keydownChar = function() {
+      if(isFinite(event.key)) {
+        test.toFirstEmpty(pwchar);
+      }
+    }
     const keyupChar = function() {
       const key = event.keyCode || event.charCode;
+      const charid = parseInt(this.id.charAt(pwchar.length));
       if (key === 8 || key == 46) { //backspace, delete
-        this.classList.remove('ok');
         if (this.value === '' && this.id !== 'pwchar6') {
-          const charid = this.id.substring(6);
           for (let i = charid; i < pwchar.length; i++) {
             if (pwchar[i].value !== '') {
               pwchar[i-1].value = pwchar[i].value;
-              pwchar[i-1].classList.add('ok');
               pwchar[i].value = '';
-              pwchar[i].classList.remove('ok');
             }
           }
         }
-        if (this.id !== 'pwchar1') {
-          this.parentNode.previousSibling.querySelector('input').focus();
-        }
+        test.PINFocusPrev(this);
       } else if (key === 37) { //left arrow
-        this.parentNode.previousSibling.querySelector('input').focus();
+        test.PINFocusPrev(this);
       } else if (key === 39) { //right arrow
-        if (this.id !== 'pwchar6' && this.value !== '') {
-          this.parentNode.nextSibling.querySelector('input').focus();
-        }
+        test.PINFocusNext(this);
       } else if (key === 40) { //up arrow
         test.toFirstEmpty(pwchar);
       } else {
         if (/^[0-9]+$/.test(this.value)) {
-          this.classList.add('ok');
-          if(this.id !== 'pwchar6') {
-            this.parentNode.nextSibling.querySelector('input').focus();
+          if (this.value.length === 2) {
+            if (this.selectionStart === 2) {
+              test.PINFocusNext(this);
+            }
+            const double = this.value;
+            this.value = double.charAt(0);
+            if (charid !== pwchar.length) {
+              let savePIN = double.charAt(1);
+              let tempPIN;
+              for (let i = charid; i < (pwchar.length); i++) {
+                if (savePIN !== '') {
+                  tempPIN = savePIN;
+                  savePIN = pwchar[i].value;
+                  pwchar[i].value = tempPIN;
+                } else {
+                  break;
+                }
+              }
+            }
+          } else {
+            test.PINFocusNext(this);
+          }
+        } else if (this.value.length === 2) {
+          if (/^[0-9]+$/.test(this.value.charAt(0))) {
+            this.value = this.value.charAt(0);
+          }
+          if (/^[0-9]+$/.test(this.value.charAt(1))) {
+            this.value = this.value.charAt(1);
           }
         } else if (key !== 9) { //tab
-          this.classList.remove('ok');
           this.value = '';
         }
       }
@@ -413,11 +450,19 @@ const test = {
           break;
         }
       }
+      for (let i = 0; i < pwchar.length; i++) {
+        if (pwchar[i].value !== '') {
+          pwchar[i].classList.add('ok');
+        } else {
+          pwchar[i].classList.remove('ok');
+        }
+      }
       test.checkSubmitState();
     }
 
     for (let i = 0; i < pwchar.length; i++) {
       pwchar[i].addEventListener('keyup', keyupChar, false);
+      pwchar[i].addEventListener('keydown', keydownChar, false);
       pwchar[i].addEventListener('focus', focusChar, false);
       pwchar[i].addEventListener('blur', blurChar, false);
     }

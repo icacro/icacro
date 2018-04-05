@@ -23,9 +23,6 @@ html.cro-form {
   margin-bottom: 24px !important;
   color:#8DB72C;
 }
-.cro-form .ios .ssn-confirmed {
-  font-size: 16px;
-}
 .cro-form ol.form li.ssn-confirmed {
   height:auto;
 }
@@ -309,6 +306,7 @@ html.cro-form {
 
 .cro-form .easy-signup-page .step.step2 .confirm-policy {
   margin:70px 0 -30px;
+  border: none !important;
 }
 
 .cro-form .easy-signup-page .step.step2 .confirm-policy p {
