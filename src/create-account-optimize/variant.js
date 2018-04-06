@@ -172,7 +172,7 @@ const test = {
     const firstname = document.getElementById('LoyaltyNewCustomerForm\.FirstName');
     const lastname = document.getElementById('LoyaltyNewCustomerForm\.LastName');
     const terms = document.getElementById('LoyaltyNewCustomerForm\.AgreeToTermsHtmlValue');
-    const pw = document.getElementById('LoyaltyNewCustomerForm.Password');
+    const pw = document.getElementById('LoyaltyNewCustomerForm\.Password');
 
     const validForm = (firstname.value !== '' && lastname.value !== '' && terms.checked && !(email.classList.contains('field-error')) &&
       !(email.parentNode.classList.contains('field-ok')) && !(phone.classList.contains('field-error')) &&
@@ -277,7 +277,7 @@ const test = {
     const email = this.createRow('email', 'E-post', 'LoyaltyNewCustomerForm.Email', 'E-postadressen är felaktig', 'email', 'email');
     const cellphone = this.createRow('cellphone', 'Mobilnummer', 'phone', 'Ange ett svenskt mobilnummer', 'tel', 'mobile');
     const password = this.createRow('password', '6-siffrig PIN-kod', 'LoyaltyNewCustomerForm.Password', 'Minst 3 olika, ej stegar (123456) eller ditt personnummer.', 'hidden');
-    const passwordConfirm = this.createRow('password-confirm', '', 'LoyaltyNewCustomerForm.ConfirmPassword', '', '');
+    const passwordConfirm = this.createRow('password-confirm', '', 'LoyaltyNewCustomerForm.ConfirmPassword', '', 'hidden');
 
     const cellphoneMirror = ELM.create('input');
     cellphoneMirror.attr('type','hidden');
@@ -374,10 +374,12 @@ const test = {
         checkPINinput(this)
       )
       let PIN = '';
+      const pwElemConfirm = document.getElementById('LoyaltyNewCustomerForm.ConfirmPassword');
       const pwElem = document.getElementById('LoyaltyNewCustomerForm.Password');
       for (let i = 0; i < pwchar.length; i++) {
         if (pwchar[i].value !== '') {
           PIN += pwchar[i].value;
+          pwElemConfirm.value=PIN;
           pwElem.value=PIN;
           i === 5 ? (
             test.validatePIN(pwElem.value) === 'done' ?  test.PINFeedback('done') : test.PINFeedback('error')
