@@ -14,6 +14,9 @@ html.cro-form {
 .cro-form .password-confirm {
   display: none;
 }
+.cro-form .step2 ol.form li:first-child {
+  display: none;
+}
 
 .cro-form .ssn-confirmed {
   text-align: center !important;

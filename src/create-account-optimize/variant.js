@@ -29,7 +29,7 @@ const test = {
     ]);
     accountSteps.append(steps);
   },
-  createRow(classname, txt, id, errortext, type = 'text') {
+  createRow(classname, txt, id, errortext, type, autocomplete) {
     const li = ELM.create(`li form-row ${classname}`);
     const label = ELM.create('label');
     const input = ELM.create(`input ${classname}`);
@@ -40,6 +40,9 @@ const test = {
     input.attr('type', type);
     input.attr('name', id);
     input.attr('placeholder', txt);
+    if(autocomplete) {
+      input.attr('autocomplete',autocomplete);
+    }
     label.html(txt);
     li.append(label);
     li.append(input);
@@ -265,16 +268,16 @@ const test = {
     const ssnCopy = ELM.create('li ssn-confirmed light').append(ssnConfirmed).append(check);
 
     const replace = document.querySelectorAll('ol.form li:not(.confirm-policy)');
-    for (let i = 0; i < replace.length; i++) {
+    for (let i = 1; i < replace.length; i++) {
       replace[i].remove();
     }
 
-    const firstname = this.createRow('firstname', 'Förnamn', 'LoyaltyNewCustomerForm.FirstName', '');
-    const lastname = this.createRow('lastname', 'Efternamn', 'LoyaltyNewCustomerForm.LastName', '');
-    const email = this.createRow('email', 'E-post', 'LoyaltyNewCustomerForm.Email', 'E-postadressen är felaktig', 'email');
-    const cellphone = this.createRow('cellphone', 'Mobilnummer', 'phone', 'Ange ett svenskt mobilnummer', 'tel');
+    const firstname = this.createRow('firstname', 'Förnamn', 'LoyaltyNewCustomerForm.FirstName', '', 'text', 'fname');
+    const lastname = this.createRow('lastname', 'Efternamn', 'LoyaltyNewCustomerForm.LastName', '', 'text', 'lname');
+    const email = this.createRow('email', 'E-post', 'LoyaltyNewCustomerForm.Email', 'E-postadressen är felaktig', 'email', 'email');
+    const cellphone = this.createRow('cellphone', 'Mobilnummer', 'phone', 'Ange ett svenskt mobilnummer', 'tel', 'mobile');
     const password = this.createRow('password', '6-siffrig PIN-kod', 'LoyaltyNewCustomerForm.Password', 'Minst 3 olika, ej stegar (123456) eller ditt personnummer.', 'hidden');
-    const passwordConfirm = this.createRow('password-confirm', '', 'LoyaltyNewCustomerForm.ConfirmPassword', '');
+    const passwordConfirm = this.createRow('password-confirm', '', 'LoyaltyNewCustomerForm.ConfirmPassword', '', '');
 
     const cellphoneMirror = ELM.create('input');
     cellphoneMirror.attr('type','hidden');
