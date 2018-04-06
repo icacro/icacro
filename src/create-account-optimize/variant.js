@@ -64,97 +64,72 @@ const test = {
     return li;
   },
   validateInput(input,type,typedata,evt) {
-    let valStatus;
-    if (input.value.length) {
-      input.parentNode.classList.add('has-input');
-      if(type === 'text') {
-        if (evt === 'blur') {
-          valStatus = 'done';
-        } else {
-          valStatus = 'ontrack';
-        }
-      }
-    } else {
-      input.parentNode.classList.remove('has-input');
+    const parentCL = input.parentNode.classList;
+    const valStatusCheck = function() {
+      return type === 'ssn' ? test.validateSSN(input,typedata,evt)
+       : type === 'tel' ? test.validatePhone(input,evt)
+       : type === 'mail' ? test.validateEmail(input,evt)
+       : type === 'text' && evt === 'blur' && input.value.length ? 'done'
+       : type === 'text' && input.value.length ? 'ontrack'
+       : 'error'
     }
-    if(type === 'ssn') {
-      valStatus = test.validateSSN(input,typedata, evt);
-    } else if(type === 'tel') {
-      valStatus = test.validatePhone(input,evt);
-    } else if(type === 'mail') {
-      if (evt === 'blur') {
-        if (test.validateEmail(input.value) === true || input.value === '') {
-          valStatus = 'done';
-        }
-      } else if (input.value.length) {
-        valStatus = 'ontrack';
-      } else if (input.value === '') {
-        valStatus = 'done';
-      }
-    }
-    if (valStatus === 'done') {
-      input.classList.remove('field-error');
-      input.parentNode.classList.remove('field-ok');
-      if (input.value.length > 0) {
-        input.parentNode.classList.add('field-validated');
-      } else {
-        input.parentNode.classList.remove('field-validated');
-      }
-    } else if (valStatus === 'ontrack') {
-      input.classList.remove('field-error');
-      input.parentNode.classList.remove('field-validated');
-      input.parentNode.classList.add('field-ok');
-    } else {
-      input.classList.add('field-error');
-      input.parentNode.classList.remove('field-validated');
-      input.parentNode.classList.remove('field-ok');
-    }
-    if(type !== 'ssn') {
-      test.checkSubmitState();
-    }
+    const valStatus = valStatusCheck();
+    input.value.length ? parentCL.add('has-input') : parentCL.remove('has-input');
+    valStatus === 'done' ? (
+      input.classList.remove('field-error'),
+      parentCL.remove('field-ok'),
+      input.value.length > 0 ? parentCL.add('field-validated') : parentCL.remove('field-validated')
+    ) : valStatus === 'ontrack' ? (
+      input.classList.remove('field-error'),
+      parentCL.remove('field-validated'),
+      parentCL.add('field-ok')
+    ) : (
+      input.classList.add('field-error'),
+      parentCL.remove('field-validated'),
+      parentCL.remove('field-ok')
+    )
+    if(type !== 'ssn') test.checkSubmitState();
   },
-  validateEmail(email) {
-    return /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(email);
-  },
-  validatePIN(input,evt) {
-    function uniqueChar(pw) {
-      const unique = pw.split('').filter(function(item, i, ar){ return ar.indexOf(item) === i; }).join('').length;
-      return unique;
+  validateEmail(input,evt) {
+    const validEmail = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(input.value);
+    const testInput = function() {
+      return evt === 'blur' && validEmail ? 'done'
+       : evt !== 'blur' && input.value.length && /^[A-Za-z0-9_@\.\-]+$/.test(input.value) ? 'ontrack'
+       : input.value === '' ? 'done'
+       : 'error'
     }
-    if (/^[0-9]+$/.test(input.value)) {
-      const pin = input.value;
+    return testInput();
+  },
+  validatePIN(pin,evt) {
+    if (/^[0-9]+$/.test(pin)) {
       const ssn = document.getElementById('ssn-confirmed').innerText.replace('-', '');
-      if (pin.length === 6) {
-        if ((pin !== '012345' && pin !== '123456' && pin !== '234567' && pin !== '345678' &&
-        pin !== '456789' && pin !== '567890' && pin !== '987654' && pin !== '876543' &&
-        pin !== '765432' && pin !== '654321' && pin !== '543210') &&
-        (uniqueChar(input.value) > 2) &&
-        (!ssn.includes(input.value))) {
-          return 'done';
-        }
-      } else if (pin.length === 5 && uniqueChar(input.value) === 1) {
-         return 'error';
+      const uniqueChar = function(pw) {
+        return pw.split('').filter(function(item, i, ar){ return ar.indexOf(item) === i; }).join('').length;
       }
+      const validPIN = (pin !== '012345' && pin !== '123456' && pin !== '234567' && pin !== '345678' &&
+      pin !== '456789' && pin !== '567890' && pin !== '987654' && pin !== '876543' &&
+      pin !== '765432' && pin !== '654321' && pin !== '543210') && (uniqueChar(pin) > 2) && (!ssn.includes(pin));
+      const testInput = function() {
+        return pin.length === 6 && validPIN ? 'done' : pin.length === 5 && uniqueChar(pin) === 1 ? 'error' : 'ontrack'
+      }
+      return testInput();
     }
   },
   validatePhone(input,evt) {
-    const telEl = document.getElementById('LoyaltyNewCustomerForm.CellPhone');
+    const telEl = ELM.get('#LoyaltyNewCustomerForm\\.CellPhone');
     let tel = input.value.replace('-', '');
     if (tel === '' || /^[0-9+-]+$/.test(input.value)) {
       if (tel === '' || (/^(7|07|00467|\+467|467)\d{8}$/.test(tel))) {
-        if(tel.substring(0,4) === '0046') {
-          tel = tel.replace('+46','0')
-        } else if(tel.substring(0,3) === '+46') {
-          tel = tel.replace('+46','0')
-        } else if (tel.substring(0,2) === '46') {
-          tel = tel.replace('46','0')
-        } else if (tel.substring(0,1) === '7') {
-          tel = '0' + tel;
-        }
-        telEl.value=tel;
+
+        if(tel.substring(0,4) === '0046') tel = tel.replace('0046','0');
+        else if(tel.substring(0,3) === '+46') tel = tel.replace('+46','0');
+        else if (tel.substring(0,2) === '46') tel = tel.replace('46','0');
+        else if (tel.substring(0,1) === '7') tel = '0' + tel;
+
+        telEl.attr('value',tel);
         return 'done';
       } else if (evt === 'keyup' && (tel === '' || (tel.length === 1 && (/^(0|7|\+|4)\d{0,1}$/.test(tel))) || (tel.length === 2 && (/^(00|\+4|46)\d{0,2}$/.test(tel))) || (tel.length === 3 && (/^(004|\+46)\d{0,3}$/.test(tel))) || (tel.length === 4 && (/^(0046)\d{0,4}$/.test(tel))) || (/^(7|07|00467|\+467|467)\d{0,8}$/.test(tel)))) {
-        telEl.value='';
+        telEl.attr('value','');
         return 'ontrack';
       }
     }
@@ -162,17 +137,17 @@ const test = {
   validateSSN(input,mirror,evt) {
     const submit = ELM.get('input[type="submit"]');
     if (input.value === '') {
-      test.disableSSNSubmit(submit);
+      test.disableSSNSubmit();
     } else if (/^[0-9-]+$/.test(input.value)) {
       let ssnValue=input.value;
-      if(parseInt(ssnValue.substring(0, 2)) > 20) {
-        ssnValue='19' + ssnValue;
-      }
+      // 200201192788
+      // Utgår från att personen är född efter 1920
+      if(parseInt(ssnValue.substring(0, 2)) > 20) ssnValue='19' + ssnValue;
       ssnValue = ssnValue.replace('-', '');
       ssnValue = ssnValue.replace('+', '');
-      if (!SSNValidator(ssnValue) && evt === 'keyup') {
+      if (!SSNValidator(ssnValue) && evt === 'keyup' && ssnValue.length !== 12) {
         mirror.setAttribute('value','');
-        test.disableSSNSubmit(submit);
+        test.disableSSNSubmit();
         return 'ontrack';
       } else if (SSNValidator(ssnValue)) {
         mirror.setAttribute('value',ssnValue);
@@ -182,7 +157,8 @@ const test = {
       }
     }
   },
-  disableSSNSubmit(submit) {
+  disableSSNSubmit() {
+    const submit = ELM.get('input[type="submit"]');
     submit.attr('disabled');
     submit.parent().parent().css('inactive');
   },
@@ -194,18 +170,18 @@ const test = {
     const lastname = document.getElementById('LoyaltyNewCustomerForm\.LastName');
     const terms = document.getElementById('LoyaltyNewCustomerForm\.AgreeToTermsHtmlValue');
     const pw = document.getElementById('LoyaltyNewCustomerForm.Password');
-    if(firstname.value !== '' &&
-      lastname.value !== '' &&
-      terms.checked &&
-      !(email.classList.contains('field-error')) && !(email.parentNode.classList.contains('field-ok')) &&
-      !(phone.classList.contains('field-error')) && !(phone.parentNode.classList.contains('field-ok')) &&
-      test.validatePIN(pw) === 'done') {
-      submit.removeAttr('disabled');
-      submit.parent().removeClass('inactive');
-    } else {
-      submit.attr('disabled');
-      submit.parent().css('inactive');
-    }
+
+    const validForm = (firstname.value !== '' && lastname.value !== '' && terms.checked && !(email.classList.contains('field-error')) &&
+      !(email.parentNode.classList.contains('field-ok')) && !(phone.classList.contains('field-error')) &&
+      !(phone.parentNode.classList.contains('field-ok')) && test.validatePIN(pw.value) === 'done');
+
+    validForm ? (
+      submit.removeAttr('disabled'),
+      submit.parent().removeClass('inactive')
+    ) : (
+      submit.attr('disabled'),
+      submit.parent().css('inactive')
+    )
   },
   toFirstEmpty(pwchar) {
     for (let i = 0; i < pwchar.length; i++) {
@@ -217,35 +193,35 @@ const test = {
     }
   },
   PINFeedback(type) {
-    const pwCharsCL = document.getElementById('pwchars').classList;
-    const pwCL = document.getElementById('LoyaltyNewCustomerForm.Password').classList;
+    const pwChars = ELM.get('#pwchars');
+    const pw = ELM.get('#LoyaltyNewCustomerForm\\.Password');
     const pwNextCL = document.getElementById('LoyaltyNewCustomerForm.Password').nextSibling.classList;
-    if (type==='error') {
-      pwCharsCL.remove('field-validated');
-      pwCharsCL.add('field-error');
-      pwCL.add('field-error');
-      pwNextCL.remove('showinfo');
-    } else if (type==='done') {
-      pwCharsCL.add('field-validated');
-      pwCharsCL.remove('field-error');
-      pwCL.remove('field-error');
-      pwNextCL.remove('showinfo');
-    } else {
-      pwCharsCL.remove('field-validated');
-      pwCharsCL.remove('field-error');
-      pwCL.remove('field-error');
-      pwNextCL.add('showinfo');
-    }
+    type==='error' ? (
+      pwChars.removeClass('field-validated'),
+      pwChars.css('field-error'),
+      pw.css('field-error'),
+      pwNextCL.remove('showinfo')
+    ) : type==='done' ? (
+      pwChars.css('field-validated'),
+      pwChars.removeClass('field-error'),
+      pw.removeClass('field-error'),
+      pwNextCL.remove('showinfo')
+    ) : (
+      pwChars.removeClass('field-validated'),
+      pwChars.removeClass('field-error'),
+      pw.removeClass('field-error'),
+      pwNextCL.add('showinfo')
+    )
   },
-  PINFocusNext(el) {
+  PINFocusNext(el,checkTwo) {
     if (el.id !== 'pwchar6') {
-      el.parentNode.nextSibling.querySelector('input').focus();
+      const nextEl = el.parentNode.nextSibling.querySelector('input');
+      const checkSteps = el.id !== 'pwchar5' && (checkTwo && nextEl.value === '');
+      checkSteps ? el.parentNode.nextSibling.nextSibling.querySelector('input').focus() :  nextEl.focus();
     }
   },
   PINFocusPrev(el) {
-    if (el.id !== 'pwchar1') {
-      el.parentNode.previousSibling.querySelector('input').focus();
-    }
+    if (el.id !== 'pwchar1') el.parentNode.previousSibling.querySelector('input').focus();
   },
   stepOne() {
     const form = ELM.get('.form');
@@ -256,30 +232,20 @@ const test = {
     const ssnMirror = ELM.create('input').attr('id','CivicForm\.CivicRegistrationNumber').attr('name','CivicForm\.CivicRegistrationNumber').attr('type','hidden');
     const check = ELM.create('span check');
     const svg = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="1.3568336963653564 3.796941041946411 21.142330169677734 18.591215133666992" id="check" width="100%" height="100%"><path d="M22.182 5.794q0.291 0.242 0.315 0.642t-0.218 0.739q-9.188 13.115-9.939 14.158-0.776 1.042-2 1.055t-2.024-1.055l-6.739-9.479q-0.242-0.339-0.218-0.752t0.315-0.655q1.236-1.067 2.764-1.915 0.315-0.17 0.703-0.049t0.63 0.461l4.558 6.4 7.782-11.055q0.242-0.339 0.618-0.449t0.715 0.061q1.6 0.873 2.739 1.891z"></path></svg>';
+    const errormsg = ELM.create('div errormsg').text('Du måste ange ett giltigt svenskt personnummer och vara över 18 år');
     check.html(svg);
     li.html(' ');
     label.html('Personnummer');
     li.append(label);
     li.append(ssn);
+    li.append(errormsg);
     li.append(check);
     li.append(ssnMirror);
-
-    // let errorcontainer=ELM.create('p');
-    // let errorlist=ELM.create('ul simple-list');
-    // const erroritem1=ELM.create('li').text('Fel 1');
-    // const erroritem2=ELM.create('li').text('Fel 2');
-    // errorlist = errorlist.append(erroritem1).append(erroritem2);
-    // errorcontainer = errorcontainer.append(errorlist);
-    // ELM.get('.step1 .form-wrapper').append(errorcontainer);
 
     const ssnEl = document.getElementById('ssn');
     const ssnMirrorEl = document.getElementById('CivicForm\.CivicRegistrationNumber');
     test.disableSSNSubmit(ELM.get('input[type="submit"]'));
-    if (ssnEl.value === '') {
-      ssnEl.focus();
-    } else {
-      test.validateInput(ssnEl,'ssn',ssnMirrorEl,'keyup');
-    }
+    ssnEl.value === '' ? (ssnEl.focus()) : (test.validateInput(ssnEl,'ssn',ssnMirrorEl,'keyup'));
     test.addInputEventListeners(ssnEl,'ssn',ssnMirrorEl);
   },
   stepTwo() {
@@ -353,24 +319,22 @@ const test = {
       const charid = this.id.substring(6);
       const el = document.getElementById('pwchar' + charid);
       el.focus();
-      if(el.value === '') {
-        test.toFirstEmpty(pwchar);
-      }
+      if(el.value === '') test.toFirstEmpty(pwchar);
     }
     const focusChar = function(event) {
       test.PINFeedback('ontrack');
     }
     const blurChar = function(event) {
-      if (test.validatePIN(document.getElementById('LoyaltyNewCustomerForm.Password')) !== 'done') {
+      if (test.validatePIN(document.getElementById('LoyaltyNewCustomerForm.Password').value) !== 'done') {
         setTimeout(function () {
-          if(!document.activeElement.id.includes('pwchar')) {
-            test.PINFeedback('error');
-          }
+          if(!document.activeElement.id.includes('pwchar')) test.PINFeedback('error');
         }, 200);
       }
     }
     const keydownChar = function(event) {
-      if(isFinite(event.key)) {
+      const key = event.keyCode || event.charCode;
+      if(isFinite(key)) {
+        //om bokstav i samma fält efter siffra
         const charid = parseInt(this.id.charAt(pwchar.length));
         for (let i = 0; i < charid; i++) {
           if (pwchar[i].value === '') {
@@ -378,13 +342,58 @@ const test = {
             break;
           }
         }
+        if (key === 8 && this.value === '')
+          test.PINFocusPrev(this);
       }
     }
     const keyupChar = function(event) {
       const key = event.keyCode || event.charCode;
       const charid = parseInt(this.id.charAt(pwchar.length));
-      if (key === 8 || key == 46) { //backspace, delete
-        if (this.value === '' && this.id !== 'pwchar6') {
+      let testEl;
+      (key === 8 || key == 46) ? ( //backspace, delete
+        test.PINFocusPrev(this),
+        checkDelete(this)
+      ) : key === 37 ? ( //left arrow
+        test.PINFocusPrev(this)
+      ) : key === 38 ? ( //up arrow
+        testEl = document.getElementById('pwchar1'),
+        testEl.focus(),
+        testEl.selectionStart=0,
+        testEl.selectionEnd=0
+      ) : key === 39 ? ( //right arrow
+        test.PINFocusNext(this)
+      ) : key === 40 ? ( //down arrow
+        testEl = document.getElementById('pwchar6'),
+        testEl.focus(),
+        testEl.selectionStart=1,
+        test.toFirstEmpty(pwchar)
+      ) : (
+        checkPINinput(this)
+      )
+      let PIN = '';
+      const pwElem = document.getElementById('LoyaltyNewCustomerForm.Password');
+      for (let i = 0; i < pwchar.length; i++) {
+        if (pwchar[i].value !== '') {
+          PIN += pwchar[i].value;
+          pwElem.value=PIN;
+          i === 5 ? (
+            test.validatePIN(pwElem.value) === 'done' ?  test.PINFeedback('done') : test.PINFeedback('error')
+          ) : test.validatePIN(pwElem.value) === 'error' ? (
+            test.PINFeedback('error')
+          ) : (
+            test.PINFeedback('ontrack')
+          );
+        } else {
+          break;
+        }
+      }
+      for (let i = 0; i < pwchar.length; i++) {
+        pwchar[i].value !== '' ? pwchar[i].classList.add('ok') : pwchar[i].classList.remove('ok');
+      }
+      test.checkSubmitState();
+
+      function checkDelete(el) {
+        if (el.value === '' && el.id !== 'pwchar6') {
           for (let i = charid; i < pwchar.length; i++) {
             if (pwchar[i].value !== '') {
               pwchar[i-1].value = pwchar[i].value;
@@ -392,21 +401,14 @@ const test = {
             }
           }
         }
-        test.PINFocusPrev(this);
-      } else if (key === 37) { //left arrow
-        test.PINFocusPrev(this);
-      } else if (key === 39) { //right arrow
-        test.PINFocusNext(this);
-      } else if (key === 40) { //up arrow
-        test.toFirstEmpty(pwchar);
-      } else {
-        if (/^[0-9]+$/.test(this.value)) {
-          if (this.value.length === 2) {
-            if (this.selectionStart === 2) {
-              test.PINFocusNext(this);
-            }
-            const double = this.value;
-            this.value = double.charAt(0);
+      }
+
+      function checkPINinput(el) {
+        if (/^[0-9]+$/.test(el.value)) {
+          if (el.value.length === 2) {
+            if (el.selectionStart === 2) test.PINFocusNext(el,1);
+            const double = el.value;
+            el.value = double.charAt(0);
             if (charid !== pwchar.length) {
               let savePIN = double.charAt(1);
               let tempPIN;
@@ -421,48 +423,16 @@ const test = {
               }
             }
           } else {
-            test.PINFocusNext(this);
+            test.PINFocusNext(el);
           }
-        } else if (this.value.length === 2) {
-          if (/^[0-9]+$/.test(this.value.charAt(0))) {
-            this.value = this.value.charAt(0);
-          }
-          if (/^[0-9]+$/.test(this.value.charAt(1))) {
-            this.value = this.value.charAt(1);
-          }
+        } else if (el.value.length === 2) {
+          if (/^[0-9]+$/.test(el.value.charAt(0))) el.value = this.el.charAt(0);
+          if (/^[0-9]+$/.test(el.value.charAt(1))) el.value = el.value.charAt(1);
         } else if (key !== 9) { //tab
-          this.value = '';
+          el.value = '';
         }
       }
-      let PIN = '';
-      const pwElem = document.getElementById('LoyaltyNewCustomerForm.Password');
-      for (let i = 0; i < pwchar.length; i++) {
-        if (pwchar[i].value !== '') {
-          PIN += pwchar[i].value;
-          pwElem.value=PIN;
-          if (i === 5) {
-            if (test.validatePIN(pwElem) === 'done') {
-              test.PINFeedback('done');
-            } else {
-              test.PINFeedback('error');
-            }
-          } else if (test.validatePIN(pwElem) === 'error'){
-            test.PINFeedback('error');
-          } else {
-            test.PINFeedback('ontrack');
-          }
-        } else {
-          break;
-        }
-      }
-      for (let i = 0; i < pwchar.length; i++) {
-        if (pwchar[i].value !== '') {
-          pwchar[i].classList.add('ok');
-        } else {
-          pwchar[i].classList.remove('ok');
-        }
-      }
-      test.checkSubmitState();
+
     }
 
     for (let i = 0; i < pwchar.length; i++) {
@@ -471,83 +441,86 @@ const test = {
       pwchar[i].addEventListener('focus', focusChar, false);
       pwchar[i].addEventListener('blur', blurChar, false);
     }
+
     for (let i = 0; i < pwspans.length; i++) {
       pwspans[i].addEventListener('click', clickSpan, false);
     }
 
     const toggleBtn = ELM.get('#pwtoggle');
+
     toggleBtn.click((e) => {
       e.preventDefault();
+      let attrType, classAction;
       let toggleClass = window.getComputedStyle(pwchar[1]);
       toggleClass = toggleClass.webkitTextSecurity;
-      if (this.textContent === 'Visa') {
-        this.textContent='Dölj';
-        for (let i = 0; i < pwchar.length; i++) {
-          if (toggleClass) {
-            pwchar[i].classList.remove('password');
-          } else {
-            pwchar[i].setAttribute('type', 'tel');
-          }
-        }
-      } else {
-        this.textContent='Visa';
-        for (let i = 0; i < pwchar.length; i++) {
-          if (toggleClass) {
-            pwchar[i].classList.add('password');
-          } else {
-            pwchar[i].setAttribute('type', 'password');
-          }
-        }
+
+      toggleBtn.text() === 'Visa' ? (
+        toggleBtn.text('Dölj'),
+        attrType = 'tel',
+        classAction = 'remove'
+      ) : (
+        toggleBtn.text('Visa'),
+        attrType = 'password',
+        classAction = 'add'
+      )
+
+      for (let i = 0; i < pwchar.length; i++) {
+        toggleClass ? (
+          classAction === 'remove' ? pwchar[i].classList.remove('password') : pwchar[i].classList.add('password')
+        ) : (
+          pwchar[i].setAttribute('type', attrType)
+        )
       }
+
       test.toFirstEmpty(pwchar);
     });
 
   },
+
   addInputEventListeners(input,type,typedata) {
     input.addEventListener('keyup', (event) => {
-      if (input.value.length) {
-        test.validateInput(input,type,typedata,'keyup');
-      } else {
-        test.checkSubmitState();
-      }
+      input.value.length ? (
+        test.validateInput(input,type,typedata,'keyup')
+      ) : (type !== 'ssn') ? (
+        test.checkSubmitState()
+      ) : (
+        test.disableSSNSubmit(),
+        test.validateInput(input,type,typedata,'keyup')
+      )
     });
     input.addEventListener('blur', (event) => {
       test.validateInput(input,type,typedata,'blur');
     });
   },
+
   manipulateDom() {
     const stepTwo = ELM.get('#CivicRegistrationNumberDisabled').exist();
-    if (stepTwo) {
-      this.stepTwo();
-      this.generateSteps(2);
-    } else {
-      this.stepOne();
-      this.generateSteps(1);
-    }
+    stepTwo ? (
+      this.stepTwo(),
+      this.generateSteps(2)
+    ) : (
+      this.stepOne(),
+      this.generateSteps(1)
+    );
     const paywithcard = ELM.get('.payWithCard');
-    if (paywithcard.exist()) {
-      paywithcard.hide();
-    }
+    if (paywithcard.exist()) paywithcard.hide();
     const required = ELM.get('.required-wrapper');
-    if (required.exist()) {
-      required.hide();
-    }
+    if (required.exist()) required.hide();
     const ua = window.navigator.userAgent;
     const iOS = !!ua.match(/iP(ad|hone)/i);
-    if (iOS) {
+    if (iOS)
       ELM.get('body').css('ios');
-    }
-  },
+  }
 };
 
 $(document).ready(() => {
   //hantera URLar i optimize/targeting - end 6369766963666f726d och 6c6f79616c74796e6577637573746f6d6572666f726d - inte returnURL
   //is-skt = stamkundsterminal
   const skt = ELM.get('.is-skt');
-  if(!skt.exist()) {
-    ELM.get('html').css('cro-form');
-    Object.assign(test, CROUTIL());
-    test.manipulateDom();
+  if (!skt.exist())
+    ELM.get('html').css('cro-form'),
+    Object.assign(test, CROUTIL()),
+    test.manipulateDom(),
     triggerHotJar('createAccountOptimizeVariant');
-  }
+
 });

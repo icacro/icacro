@@ -105,6 +105,15 @@ class Element {
     }
     throw new Error(`Element does not exist! Function 'remove'`);
   }
+  focus() {
+    if (this.element) {
+      Object.assign(this.element.style, {
+        display: 'none',
+      });
+      return this;
+    }
+    throw new Error(`Element does not exist! Function 'focus'`);
+  }
   change(callback) {
     if (this.element) {
       this.element.addEventListener('change', callback);
