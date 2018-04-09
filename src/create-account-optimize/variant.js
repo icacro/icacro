@@ -10,7 +10,7 @@
 'use strict';
 
 import { CROUTIL, ELM } from '../util/main';
-import { triggerHotJar, removeElements } from '../util/utils';
+import { triggerHotJar, removeElements, gaPush } from '../util/utils';
 import SSNValidator from './ssn';
 import './style.css';
 
@@ -29,7 +29,7 @@ const test = {
     ]);
     accountSteps.append(steps);
   },
-  createRow(classname, txt, id, errortext, type, autocomplete) {
+  createRow(classname, txt, id, errortext, type, autocomplete, inputvalue) {
     const li = ELM.create(`li form-row ${classname}`);
     const label = ELM.create('label');
     const input = ELM.create(`input ${classname}`);
@@ -40,6 +40,7 @@ const test = {
     input.attr('type', type);
     input.attr('name', id);
     input.attr('placeholder', txt);
+    input.attr('value', inputvalue);
     if(autocomplete) {
       input.attr('autocomplete',autocomplete);
     }
@@ -78,19 +79,29 @@ const test = {
     }
     const valStatus = valStatusCheck();
     input.value.length ? parentCL.add('has-input') : parentCL.remove('has-input');
-    valStatus === 'done' ? (
-      input.classList.remove('field-error'),
-      parentCL.remove('field-ok'),
-      input.value.length > 0 ? parentCL.add('field-validated') : parentCL.remove('field-validated')
-    ) : valStatus === 'ontrack' ? (
-      input.classList.remove('field-error'),
-      parentCL.remove('field-validated'),
-      parentCL.add('field-ok')
-    ) : (
-      input.classList.add('field-error'),
-      parentCL.remove('field-validated'),
-      parentCL.remove('field-ok')
-    )
+    if (valStatus === 'done') {
+      input.classList.remove('field-error');
+      parentCL.remove('field-ok');
+      input.value.length > 0 ? parentCL.add('field-validated') : parentCL.remove('field-validated');
+    } else if (valStatus === 'ontrack') {
+      input.classList.remove('field-error');
+      parentCL.remove('field-validated');
+      parentCL.add('field-ok');
+    } else {
+      input.classList.add('field-error');
+      parentCL.remove('field-validated');
+      parentCL.remove('field-ok');
+      if (type !== 'text') {
+        gaPush({ eventAction: "Fel i formulär", eventLabel: type, eventValue: undefined});
+        if (type === 'tel') {
+          gaPush({ eventCategory: "Lojalitetskonto", eventAction: "Fel i formulär", eventLabel: "Mobiltelefon\n                            Ange ditt mobilnummer i formatet: 0709999999. Du kan bara fylla i svenskt mobilnummer.Välj sex siffror, varav minst tre olika. Du får inte ange stegar som 123456 eller ditt personnummer som lösenord.Numret måste vara 8-10 siffror utan mellanslag: Numret måste vara 8-10 siffror utan mellanslag", eventValue: undefined});
+        } else if (type === 'mail') {
+          gaPush({ eventCategory: "Lojalitetskonto", eventAction: "Fel i formulär", eventLabel: "E-postadress\n                            Används vid behov för att återställa ditt lösenord, samt för att hjälpa dig som har digital bonuscheck att hålla reda på den.Ange ditt mobilnummer i formatet: 0709999999. Du kan bara fylla i svenskt mobilnummer.Välj sex siffror, varav minst tre olika. Du får inte ange stegar som 123456 eller ditt personnummer som lösenord.Felaktigt e-postformat: Felaktigt e-postformat", eventValue: undefined});
+        } else if (type === 'ssn') {
+          gaPush({ eventCategory: "Lojalitetskonto", eventAction: "Fel i formulär", eventLabel: "Personnummer (ÅÅÅÅMMDDNNNN): Felaktigt personnummer. Ange ÅÅÅÅMMDDNNNN.", eventValue: undefined});
+        }
+      }
+    }
     if(type !== 'ssn') test.checkSubmitState();
   },
   validateEmail(input,evt) {
@@ -155,17 +166,19 @@ const test = {
       } else if (SSNValidator(ssnValue)) {
         mirror.setAttribute('value',ssnValue);
         submit.removeAttr('disabled');
-        submit.parent().parent().removeClass('inactive');
+        ELM.get('fieldset.form-loaded').removeClass('inactive');
         return 'done';
       }
     }
   },
   disableSSNSubmit() {
+    const form = ELM.get('fieldset.form-loaded');
     const submit = ELM.get('input[type="submit"]');
     submit.attr('disabled');
-    submit.parent().parent().css('inactive');
+    form.css('inactive');
   },
   checkSubmitState() {
+    const form = ELM.get('fieldset.form-loaded');
     const submit = ELM.get('#ctl00_ctl00_Content_cphOutsidePageWrapper_LoyaltyNewCustomerForm_LoyaltyNewCustomerFormSubmit');
     const email = document.getElementById('LoyaltyNewCustomerForm\.Email');
     const phone = document.getElementById('phone');
@@ -180,10 +193,10 @@ const test = {
 
     validForm ? (
       submit.removeAttr('disabled'),
-      submit.parent().removeClass('inactive')
+      form.removeClass('inactive')
     ) : (
       submit.attr('disabled'),
-      submit.parent().css('inactive')
+      form.css('inactive')
     )
   },
   toFirstEmpty(pwchar) {
@@ -203,7 +216,9 @@ const test = {
       pwChars.removeClass('field-validated'),
       pwChars.css('field-error'),
       pw.css('field-error'),
-      pwNextCL.remove('showinfo')
+      pwNextCL.remove('showinfo'),
+      gaPush({ eventAction: "Fel i formulär", eventLabel: 'pin', eventValue: undefined}),
+      gaPush({ eventCategory: "Lojalitetskonto", eventAction: "Fel i formulär", eventLabel: "Lösenord * (6 siffror)\n                            Välj sex siffror, varav minst tre olika. Du får inte ange stegar som 123456 eller ditt personnummer som lösenord.Lösenordet måste vara exakt 6 siffror, varav minst tre olika. Du får inte ange stegar som 123456 eller ditt personnummer som lösenord.: Lösenordet måste vara exakt 6 siffror, varav minst tre olika. Du får inte ange stegar som 123456 eller ditt personnummer som lösenord.", eventValue: undefined})
     ) : type==='done' ? (
       pwChars.css('field-validated'),
       pwChars.removeClass('field-error'),
@@ -247,9 +262,16 @@ const test = {
 
     const ssnEl = document.getElementById('ssn');
     const ssnMirrorEl = document.getElementById('CivicForm\.CivicRegistrationNumber');
-    test.disableSSNSubmit(ELM.get('input[type="submit"]'));
+    test.disableSSNSubmit();
     ssnEl.value === '' ? (ssnEl.focus()) : (test.validateInput(ssnEl,'ssn',ssnMirrorEl,'keyup'));
     test.addInputEventListeners(ssnEl,'ssn',ssnMirrorEl);
+
+    const button = document.querySelector('input.server-button');
+    const wrapper = document.createElement('div');
+    button.parentNode.insertBefore(wrapper, button);
+    wrapper.appendChild(button);
+    wrapper.classList.add('submit-wrapper');
+    test.addButtonEventListener(wrapper);
   },
   stepTwo() {
     removeElements(['.verify-email-field']);
@@ -260,11 +282,26 @@ const test = {
     const ssnConfirmed = ELM.create('span').attr('id','ssn-confirmed').text(newSSN);
     const check = ELM.create('div').css('check');
     const svg = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="1.3568336963653564 3.796941041946411 21.142330169677734 18.591215133666992" id="check" width="100%" height="100%"><path d="M22.182 5.794q0.291 0.242 0.315 0.642t-0.218 0.739q-9.188 13.115-9.939 14.158-0.776 1.042-2 1.055t-2.024-1.055l-6.739-9.479q-0.242-0.339-0.218-0.752t0.315-0.655q1.236-1.067 2.764-1.915 0.315-0.17 0.703-0.049t0.63 0.461l4.558 6.4 7.782-11.055q0.242-0.339 0.618-0.449t0.715 0.061q1.6 0.873 2.739 1.891z"></path></svg>';
-    const form = ELM.get('.form');
+    const form = ELM.get('ol.form');
+    const submitparent = ELM.get('fieldset.form-loaded');
     const confirm = ELM.copy('.confirm-policy');
 
+    let firstnameValue, lastnameValue, emailValue, cellphoneValue;
+    if (ELM.get('#LoyaltyNewCustomerForm\\.FirstName').value()) {
+      firstnameValue = ELM.get('#LoyaltyNewCustomerForm\\.FirstName').value();
+    }
+    if (ELM.get('#LoyaltyNewCustomerForm\\.LastName').value()) {
+      lastnameValue = ELM.get('#LoyaltyNewCustomerForm\\.LastName').value();
+    }
+    if (ELM.get('#LoyaltyNewCustomerForm\\.Email').value()) {
+      emailValue = ELM.get('#LoyaltyNewCustomerForm\\.Email').value();
+    }
+    if (ELM.get('#LoyaltyNewCustomerForm\\.CellPhone').value()) {
+      cellphoneValue = ELM.get('#LoyaltyNewCustomerForm\\.CellPhone').value();
+    }
+
     check.html(svg);
-    form.parent().css('inactive');
+    submitparent.css('inactive');
     const ssnCopy = ELM.create('li ssn-confirmed light').append(ssnConfirmed).append(check);
 
     const replace = document.querySelectorAll('ol.form li:not(.confirm-policy)');
@@ -272,10 +309,10 @@ const test = {
       replace[i].remove();
     }
 
-    const firstname = this.createRow('firstname', 'Förnamn', 'LoyaltyNewCustomerForm.FirstName', '', 'text', 'fname');
-    const lastname = this.createRow('lastname', 'Efternamn', 'LoyaltyNewCustomerForm.LastName', '', 'text', 'lname');
-    const email = this.createRow('email', 'E-post', 'LoyaltyNewCustomerForm.Email', 'E-postadressen är felaktig', 'email', 'email');
-    const cellphone = this.createRow('cellphone', 'Mobilnummer', 'phone', 'Ange ett svenskt mobilnummer', 'tel', 'mobile');
+    const firstname = this.createRow('firstname', 'Förnamn', 'LoyaltyNewCustomerForm.FirstName', '', 'text', 'fname', firstnameValue);
+    const lastname = this.createRow('lastname', 'Efternamn', 'LoyaltyNewCustomerForm.LastName', '', 'text', 'lname', lastnameValue);
+    const email = this.createRow('email', 'E-post', 'LoyaltyNewCustomerForm.Email', 'E-postadressen är felaktig', 'email', 'email', emailValue);
+    const cellphone = this.createRow('cellphone', 'Mobilnummer', 'phone', 'Ange ett svenskt mobilnummer', 'tel', 'mobile', cellphoneValue);
     const password = this.createRow('password', '6-siffrig PIN-kod', 'LoyaltyNewCustomerForm.Password', 'Minst 3 olika, ej stegar (123456) eller ditt personnummer.', 'hidden');
     const passwordConfirm = this.createRow('password-confirm', '', 'LoyaltyNewCustomerForm.ConfirmPassword', '', 'hidden');
 
@@ -297,6 +334,7 @@ const test = {
 
     inputPassword.attr('maxlength', 6);
     inputCellPhone.attr('maxlength', 15);
+    inputFirstname.focus();
 
     ELM.get('#ctl00_ctl00_Content_cphOutsidePageWrapper_LoyaltyNewCustomerForm_LoyaltyNewCustomerFormSubmit').attr('value','Slutför').attr('disabled','disabled');
 
@@ -316,6 +354,13 @@ const test = {
     const pwspans = document.querySelectorAll('#pwchars span');
 
     test.addPINEventListeners(pwchar,pwspans);
+
+    const button = document.querySelector('input.server-button');
+    const wrapper = document.createElement('div');
+    button.parentNode.insertBefore(wrapper, button);
+    wrapper.appendChild(button);
+    wrapper.classList.add('submit-wrapper');
+    test.addButtonEventListener(wrapper);
   },
   addPINEventListeners(pwchar,pwspans) {
     const clickSpan = function(event) {
@@ -495,6 +540,13 @@ const test = {
     });
     input.addEventListener('blur', (event) => {
       test.validateInput(input,type,typedata,'blur');
+    });
+  },
+
+  addButtonEventListener(button) {
+    button.addEventListener('click', (event) => {
+      document.querySelectorAll('.form li input').classList.add('field-error');
+      gaPush({ eventAction: "Fel i formulär", eventLabel: 'inactive', eventValue: undefined})
     });
   },
 

@@ -107,9 +107,7 @@ class Element {
   }
   focus() {
     if (this.element) {
-      Object.assign(this.element.style, {
-        display: 'none',
-      });
+      this.element.focus();
       return this;
     }
     throw new Error(`Element does not exist! Function 'focus'`);

@@ -1,5 +1,5 @@
 html.cro-form {
-  background: #fff;
+  background: #F7F7F7;
 }
 
 .cro-form .form-row {
@@ -84,6 +84,31 @@ html.cro-form {
   width: 14px;
 }
 
+.cro-form .step-header,
+.cro-form .account-steps,
+.cro-form .form-wrapper {
+  background:#fff;
+  width: 500px;
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 0;
+  border-left: 1px solid #D5D7DA;
+  border-right: 1px solid #D5D7DA;
+}
+
+.cro-form .form-wrapper {
+  width: 380px;
+  padding: 0 60px;
+  margin-bottom: 40px;
+  border-bottom: 1px solid #D5D7DA;
+}
+
+.cro-form .step-header {
+  margin-top: 40px;
+  padding: 40px 0 20px;
+  border-top: 1px solid #D5D7DA;
+}
+
 .cro-form .account-steps ul {
   width: 240px;
   margin: 0 auto;
@@ -156,9 +181,6 @@ html.cro-form {
 .cro-form .easy-signup-page .step {
   padding-top: 0;
 }
-.cro-form .easy-signup-page .step2 {
-  padding-top: 10px;
-}
 
 .cro-form .easy-signup-page .form-wrapper fieldset {
   width: auto;
@@ -205,10 +227,10 @@ html.cro-form {
 
 .cro-form ol.form li.password input.pwchar {
   position: relative;
-  width:34px;
+  width:40px;
   height:35px;
   top:0;
-  margin-right: 19px;
+  margin-right: 20px;
   display: inline-block;
   text-align: center;
 }
@@ -221,6 +243,9 @@ html.cro-form {
 .cro-form #pwtoggle {
   display: inline-block;
   float:right;
+}
+.cro-form .ios #pwtoggle {
+  display: none;
 }
 
 .cro-form ol.form li label,
@@ -284,10 +309,10 @@ html.cro-form {
   font-size: 14px;
 }
 
-.cro-form ol.form.inactive li input.button,
+.cro-form fieldset.inactive li input.button,
 .cro-form fieldset.inactive input[type="submit"],
-.cro-form fieldset ol.form.inactive input[disabled],
-.cro-form fieldset ol.form.inactive input[disabled]:hover {
+.cro-form fieldset.inactive input[disabled],
+.cro-form fieldset.inactive input[disabled]:hover {
   background: #f7f7f7;
   color: #808283;
   pointer-events: none;
@@ -332,12 +357,30 @@ html.cro-form {
   -webkit-box-shadow: 0 0 0px 1000px #fff inset;
 }
 
-@media only screen and (max-width: 780px) {
-  .cro-form .cro { }
+.cro-form .submit-wrapper {
+  min-height:40px;
 }
 
-@media only screen and (max-width: 340px) {
+@media only screen and (max-width: 520px) {
+  html.cro-form {
+    background: #fff;
+  }
+  .cro-form .step-header,
+  .cro-form .account-steps,
+  .cro-form .form-wrapper {
+    border: 0;
+    margin-top: 0;
+    padding: 0;
+    width:100%;
+  }
+  .cro-form .step-header {
+    margin: 30px auto 20px;
+  }
+  .cro-form .form-wrapper {
+    max-width: 280px;
+  }
   .cro-form ol.form li.password input.pwchar {
-    margin-right: 10px;
+    width:30px;
+    margin-right: 12px;
   }
 }
