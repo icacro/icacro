@@ -336,8 +336,13 @@ html.cro-form {
 .cro-form .easy-signup-page .step.step2 .confirm-policy {
   margin:70px 0 -30px;
 }
+.cro-form .easy-signup-page .step.step2 .confirm-policy p {
+  border-width: 0 0 2px 0 !important;
+  border-color: #fff;
+  padding-bottom: 6px !important;
+}
 .cro-form .easy-signup-page .step.step2 .confirm-policy .error-wrapper {
-  border: none !important;
+  border-color: #EB1F07 !important;
 }
 
 .cro-form .easy-signup-page .step.step2 .confirm-policy p {

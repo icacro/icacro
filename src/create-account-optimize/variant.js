@@ -41,6 +41,9 @@ const test = {
     input.attr('name', id);
     input.attr('placeholder', txt);
     input.attr('value', inputvalue);
+    if (inputvalue) {
+      li.css('has-input');
+    }
     if(autocomplete) {
       input.attr('autocomplete',autocomplete);
     }
@@ -309,12 +312,12 @@ const test = {
       replace[i].remove();
     }
 
-    const firstname = this.createRow('firstname', 'Förnamn', 'LoyaltyNewCustomerForm.FirstName', '', 'text', 'fname', firstnameValue);
+    const firstname = this.createRow('firstname', 'Förnamn', 'LoyaltyNewCustomerForm.FirstName', '', 'text', 'fname', '');
     const lastname = this.createRow('lastname', 'Efternamn', 'LoyaltyNewCustomerForm.LastName', '', 'text', 'lname', lastnameValue);
     const email = this.createRow('email', 'E-post', 'LoyaltyNewCustomerForm.Email', 'E-postadressen är felaktig', 'email', 'email', emailValue);
     const cellphone = this.createRow('cellphone', 'Mobilnummer', 'phone', 'Ange ett svenskt mobilnummer', 'tel', 'mobile', cellphoneValue);
-    const password = this.createRow('password', '6-siffrig PIN-kod', 'LoyaltyNewCustomerForm.Password', 'Minst 3 olika, ej stegar (123456) eller ditt personnummer.', 'hidden');
-    const passwordConfirm = this.createRow('password-confirm', '', 'LoyaltyNewCustomerForm.ConfirmPassword', '', 'hidden');
+    const password = this.createRow('password', '6-siffrig PIN-kod', 'LoyaltyNewCustomerForm.Password', 'Minst 3 olika, ej stegar (123456) eller ditt personnummer.', 'hidden','');
+    const passwordConfirm = this.createRow('password-confirm', '', 'LoyaltyNewCustomerForm.ConfirmPassword', '', 'hidden','');
 
     const cellphoneMirror = ELM.create('input');
     cellphoneMirror.attr('type','hidden');
@@ -348,6 +351,9 @@ const test = {
     const termsBtn = ELM.get('#LoyaltyNewCustomerForm\\.AgreeToTermsHtmlValue');
     termsBtn.change((e) => {
       test.checkSubmitState();
+      if (termsBtn.checked) {
+        ELM.get('.confirm-policy > p').removeClass('error-wrapper');
+      }
     });
 
     const pwchar = document.getElementsByClassName('pwchar');
@@ -545,7 +551,16 @@ const test = {
 
   addButtonEventListener(button) {
     button.addEventListener('click', (event) => {
-      document.querySelectorAll('.form li input').classList.add('field-error');
+      if (document.getElementById('LoyaltyNewCustomerForm.FirstName')) {
+        test.validateInput(document.getElementById('LoyaltyNewCustomerForm.FirstName'),'text','','blur');
+        test.validateInput(document.getElementById('LoyaltyNewCustomerForm.LastName'),'text','','blur');
+        if (test.validatePIN(document.getElementById('LoyaltyNewCustomerForm.Password').value) !== 'done') {
+          if(!document.activeElement.id.includes('pwchar')) test.PINFeedback('error');
+        }
+        if (! document.getElementById('LoyaltyNewCustomerForm\.AgreeToTermsHtmlValue').checked) {
+          ELM.get('.confirm-policy > p').css('error-wrapper');
+        }
+      }
       gaPush({ eventAction: "Fel i formulär", eventLabel: 'inactive', eventValue: undefined})
     });
   },
@@ -554,10 +569,12 @@ const test = {
     const stepTwo = ELM.get('#CivicRegistrationNumberDisabled').exist();
     stepTwo ? (
       this.stepTwo(),
-      this.generateSteps(2)
+      this.generateSteps(2),
+      triggerHotJar('createAccountOptimizeStepTwoVariant')
     ) : (
       this.stepOne(),
-      this.generateSteps(1)
+      this.generateSteps(1),
+      triggerHotJar('createAccountOptimizeStepOneVariant')
     );
     const paywithcard = ELM.get('.payWithCard');
     if (paywithcard.exist()) paywithcard.hide();
@@ -577,7 +594,5 @@ $(document).ready(() => {
   if (!skt.exist())
     ELM.get('html').css('cro-form'),
     Object.assign(test, CROUTIL()),
-    test.manipulateDom(),
-    triggerHotJar('createAccountOptimizeVariant');
-
+    test.manipulateDom()
 });
