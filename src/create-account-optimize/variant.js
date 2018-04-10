@@ -480,8 +480,13 @@ const test = {
             test.PINFocusNext(el,0);
           }
         } else if (el.value.length === 2) {
-          if (/^[0-9]+$/.test(el.value.charAt(0))) el.value = el.value.charAt(0);
-          if (/^[0-9]+$/.test(el.value.charAt(1))) el.value = el.value.charAt(1);
+          if (/^[0-9]+$/.test(el.value.charAt(0))) {
+            el.value = el.value.charAt(0);
+          } else if (/^[0-9]+$/.test(el.value.charAt(1))) {
+            el.value = el.value.charAt(1);
+          } else {
+            el.value = '';
+          }
         } else if (key !== 9) { //tab
           el.value = '';
         }
