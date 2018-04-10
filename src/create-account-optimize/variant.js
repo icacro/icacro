@@ -175,7 +175,7 @@ const test = {
     }
   },
   disableSSNSubmit() {
-    const form = ELM.get('fieldset.form-loaded');
+    const form = ELM.get('.form-wrapper fieldset');
     const submit = ELM.get('input[type="submit"]');
     submit.attr('disabled');
     form.css('inactive');
@@ -237,7 +237,7 @@ const test = {
   PINFocusNext(el,checkTwo) {
     if (el.id !== 'pwchar6') {
       const nextEl = el.parentNode.nextSibling.querySelector('input');
-      const checkSteps = el.id !== 'pwchar5' && (checkTwo && nextEl.value === '');
+      const checkSteps = el.id !== 'pwchar5' && (checkTwo===1 && nextEl.value === '');
       checkSteps ? el.parentNode.nextSibling.nextSibling.querySelector('input').focus() :  nextEl.focus();
     }
   },
@@ -351,9 +351,7 @@ const test = {
     const termsBtn = ELM.get('#LoyaltyNewCustomerForm\\.AgreeToTermsHtmlValue');
     termsBtn.change((e) => {
       test.checkSubmitState();
-      if (termsBtn.checked) {
-        ELM.get('.confirm-policy > p').removeClass('error-wrapper');
-      }
+      document.querySelector('.confirm-policy > p').classList.remove('error-wrapper');
     });
 
     const pwchar = document.getElementsByClassName('pwchar');
@@ -415,7 +413,7 @@ const test = {
         testEl.selectionStart=0,
         testEl.selectionEnd=0
       ) : key === 39 ? ( //right arrow
-        test.PINFocusNext(this)
+        test.PINFocusNext(this,0)
       ) : key === 40 ? ( //down arrow
         testEl = document.getElementById('pwchar6'),
         testEl.focus(),
@@ -479,10 +477,10 @@ const test = {
               }
             }
           } else {
-            test.PINFocusNext(el);
+            test.PINFocusNext(el,0);
           }
         } else if (el.value.length === 2) {
-          if (/^[0-9]+$/.test(el.value.charAt(0))) el.value = this.el.charAt(0);
+          if (/^[0-9]+$/.test(el.value.charAt(0))) el.value = el.value.charAt(0);
           if (/^[0-9]+$/.test(el.value.charAt(1))) el.value = el.value.charAt(1);
         } else if (key !== 9) { //tab
           el.value = '';
@@ -558,7 +556,7 @@ const test = {
           if(!document.activeElement.id.includes('pwchar')) test.PINFeedback('error');
         }
         if (! document.getElementById('LoyaltyNewCustomerForm\.AgreeToTermsHtmlValue').checked) {
-          ELM.get('.confirm-policy > p').css('error-wrapper');
+          document.querySelector('.confirm-policy > p').classList.add('error-wrapper');
         }
       }
       gaPush({ eventAction: "Fel i formulär", eventLabel: 'inactive', eventValue: undefined})
