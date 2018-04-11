@@ -184,6 +184,14 @@ span.usp-check {
   background: #f7f7f7;
 }
 
+.cro-modal .easy-signup-page .content {
+  width: 280px;
+}
+.cro-modal .easy-signup-page .step-header {
+  padding-left: 0;
+  padding-right: 0;
+}
+
 @media only screen and (max-width: 479px) {
   .cro-modal .easy-signup-page .step-header {
     margin-bottom: 0;
