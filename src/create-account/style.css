@@ -209,3 +209,6 @@ span.usp-check {
   height:50px;
   background: none;
 }
+.cro-ios input {
+  font-size: 16px !important;
+}
