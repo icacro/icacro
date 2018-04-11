@@ -184,6 +184,11 @@ span.usp-check {
   background: #f7f7f7;
 }
 
+.cro-ios,
+.cro-ios .easy-signup-page .content {
+  width: 280px;
+  margin: 0 auto;
+}
 .cro-ios .easy-signup-page .content {
   width: 280px;
 }
