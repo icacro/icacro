@@ -148,7 +148,7 @@ $(document).ready(() => {
 
   const ua = window.navigator.userAgent;
   const iOS = !!ua.match(/iP(ad|hone)/i);
-  if (!iOS) $('body').addClass('cro-ios');
+  if (iOS) $('body').addClass('cro-ios');
 
   if (window.self === window.top) {
 
