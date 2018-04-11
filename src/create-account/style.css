@@ -1,4 +1,7 @@
-@media (max-width: 767px) { .cro .cro-iframe-container { padding-bottom: 135% !important; } }
+@media (max-width: 767px) {
+  .cro .cro-iframe-container { padding-bottom: 135% !important; }
+  .cro.cro-ios .cro-iframe-container { padding-bottom: 0 !important; height:290px;}
+}
 .cro > .cro-iframe-container { display: none; }
 .cro .modal-copntainer .cro-iframe-container { display: initial; }
 .cro .cro-iframe-container {
@@ -71,7 +74,7 @@ height: 100%;
   display: block;
 }
 .cro-modal .container-steps {height:1100px;}
-.cro-ios.cro-step1 .container-steps {height:290px;}
+.cro-ios.cro-step1 .container-steps {height:100%;}
 
 .cro-modal .container-steps .step {padding-top:0;}
 
@@ -194,6 +197,7 @@ span.usp-check {
 .cro-ios .easy-signup-page .step-header {
   padding-left: 0;
   padding-right: 0;
+  margin:20px 0 0;
 }
 
 @media only screen and (max-width: 479px) {
@@ -223,4 +227,14 @@ span.usp-check {
 }
 .cro-ios input {
   font-size: 16px !important;
+}
+.cro-ios.cro-step1 label,
+.cro-ios.cro-step1 .payWithCard {
+  font-size: 12px;
+}
+.cro-ios.cro-step1 .easy-signup-page .form-wrapper .filled {
+  padding:10px 20px 0;
+}
+.cro-ios.cro-step1 .cro-step2-container {
+  display: none;
 }

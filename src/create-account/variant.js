@@ -15,6 +15,10 @@ import './style.css';
 
 const test = {
 
+  //TODO
+  //-liggande iPhone????
+  //-tillbaka om redan medlem - history.back()
+
   showLoader(container) {
     container.find('.loader').css('display','block');
     container.find('iframe').css('opacity','0');
@@ -148,7 +152,7 @@ $(document).ready(() => {
 
   const ua = window.navigator.userAgent;
   const iOS = !!ua.match(/iP(ad|hone)/i);
-  if (iOS) $('body').addClass('cro-ios');
+  if (!iOS) $('body').addClass('cro-ios');
 
   if (window.self === window.top) {
 
