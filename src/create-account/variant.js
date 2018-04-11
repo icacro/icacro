@@ -34,9 +34,8 @@ const test = {
       iframeInner.find('a.payWithCardLink').attr('target','_blank');
 
       //Även koll av skärmbredd?
-      const ua = window.navigator.userAgent;
-      const iOS = !!ua.match(/iP(ad|hone)/i);
-      iOS ? iframeInner.find('form').attr('target','_parent') : iframeInner.find('form').attr('target','step2');
+
+      $('body').hasClass('cro-ios') ? iframeInner.find('form').attr('target','_parent') : iframeInner.find('form').attr('target','step2');
 
       iframeInner.find('.step1').prepend(leadNew);
     } else if(iframeType === 'step2') {
@@ -147,11 +146,11 @@ const test = {
 $(document).ready(() => {
   $('body').addClass('cro');
 
-  if (window.self === window.top) {
+  const ua = window.navigator.userAgent;
+  const iOS = !!ua.match(/iP(ad|hone)/i);
+  if (!iOS) $('body').addClass('cro-ios');
 
-    const ua = window.navigator.userAgent;
-    const iOS = !!ua.match(/iP(ad|hone)/i);
-    if (iOS) $('body').addClass('cro-ios');
+  if (window.self === window.top) {
 
     if(window.location.href.indexOf('ansokan/?step=6c6f79616c74796e6577637573746f6d6572666f726d') !== -1) {
 
