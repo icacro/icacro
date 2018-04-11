@@ -1,58 +1,24 @@
-/*@media (max-width: 767px) { .cro .cro-iframe-container { padding-bottom: 135% !important; } }*/
+@media (max-width: 767px) { .cro .cro-iframe-container { padding-bottom: 135% !important; } }
 .cro > .cro-iframe-container { display: none; }
 .cro .modal-copntainer .cro-iframe-container { display: initial; }
 .cro .cro-iframe-container {
-  position: relative;
-  /*height: 0;
-  overflow: auto;
-  padding-bottom: 85%;*/
-  /*background-color: #fff;*/
-  -webkit-overflow-scrolling:touch;
-  height: 1400px;
-  width: 50vw;
-  min-width: 300px;
-  margin: 0 auto;
+position: relative;
+height: 0;
+overflow: hidden;
+padding-bottom: 85%;
+background-color: #F3F0EB;
 }
 .cro .cro-iframe-container iframe {
-  opacity: 0;
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-}
-.cro .modal-wrapper {
-  position: absolute;
-  top: 0;
-  z-index: 3000;
-  height: 0;
-  width: 100%;
-  overflow: hidden;
-}
-
-.modal-open .modal-wrapper {
-  height: 1400px;
+opacity: 0;
+position: absolute;
+top: 0;
+left: 0;
+width: 100%;
+height: 100%;
 }
 .cro .cro-step2-container {
   position: relative;
-  min-height: 120px;
 }
-
-.cro-modal {
-  width:280px;
-  margin: 0 auto;
-}
-
-/*.modal-open {
-  height:100%;
-  overflow: hidden;
-}*/
-
-.cro-modal input {
-  font-size: 16px;
-  height: auto;
-}
-
 
 .cro .easy-signup-header,
 .cro .easy-signup-page,
@@ -64,9 +30,14 @@
 .cro-modal .easy-signup-header .login_back {
   display: none;
 }
-html.cro-modal, body.cro-modal {
+.cro-modal {
   background: #fff;
-  background-image: none;
+}
+.cro-ios.cro-step1 {
+  padding-top: 0;
+}
+.cro-ios {
+  padding-top: 40px;
 }
 
 .pl .cro-iframe-container .loader,
@@ -90,28 +61,30 @@ html.cro-modal, body.cro-modal {
 .cro-modal.cro-step1 .container-steps .step .form-wrapper > p.lead {
   display: none;
 }
+
+.cro-ios .container-steps .step2 ol.form li:first-child {
+  display: block;
+}
+
 .cro-modal .container-steps .step .form-wrapper > p.lead,
 .cro-modal .already_customer_choice .step-header {
   display: block;
 }
+.cro-modal .container-steps {height:1100px;}
+.cro-ios .container-steps {height:100%;}
 
-.cro-modal .step-header {margin-top: 4em; padding:0;}
-.cro-modal .step-header h1 {line-height: 1.1em;}
-
-
-.cro-modal .easy-signup-page .step-header,
-.cro-modal .step1>.lead {
-  text-align: left;
-}
-
-/*.cro-modal .container-steps {height:1100px;}*/
 .cro-modal .container-steps .step {padding-top:0;}
+
 .cro-modal .container-steps .step .form-wrapper {padding-top:3px;}
 
 #step2 {width: 300px; max-width: 100%; height: 0; padding:0; margin: 0 auto; top:-34px; opacity: 0; position: relative; z-index: 2;}
-#step2.loaded {height:1000px; opacity: 1; overflow: hidden;}
+#step2.loaded {height:1500px; opacity: 1;}
 
 .cro-modal .container-steps .step2 {margin: 0 -10px; position: relative;}
+
+.cro-modal fieldset.loading {
+  opacity: 1;
+}
 
 .cro-modal fieldset .icon-checkmark,
 .cro-modal fieldset label span,
@@ -119,20 +92,9 @@ html.cro-modal, body.cro-modal {
   transition: opacity 0.25s ease-in-out;
 }
 
-.cro-modal fieldset.loading {
-  opacity: 1;
-}
-
 .cro-modal fieldset.loading .icon-checkmark,
 .cro-modal fieldset.loading label span {
   opacity: 0;
-}
-
-.cro-modal fieldset.loading input {
-  color: #999 !important;
-  background: #f7f7f7;
-  border-color: #f7f7f7;
-  box-shadow: none;
 }
 
 .cro-modal fieldset.loading label span.backactive {
@@ -144,8 +106,8 @@ html.cro-modal, body.cro-modal {
   width: 100%;
   text-align: right;
 }
-
 a.backToStep1 {
+  margin-right: 20px;
   padding:12px 12px 8px;
   cursor: pointer;
   color:#999;
@@ -154,13 +116,18 @@ a.backToStep1 {
 }
 a.backToStep1 svg {
   width:15px;
-  height:15px;
   fill: #A02971;
-  display: inline-block;
-  transform: scaleX(-1);
 }
 a.backToStep1:hover svg {
   fill: #DC438C;
+}
+
+.cro-modal fieldset.loading input {
+  color: #999;
+  font-weight: 100;
+  background: #f7f7f7;
+  border-color: #f7f7f7;
+  box-shadow: none;
 }
 
 .cro-modal .easy-signup-page .step2 .form-wrapper .filled {
@@ -168,33 +135,20 @@ a.backToStep1:hover svg {
 }
 
 span.usp-check {
-  display: inline-block;
-  font-family: icahand, Arial;
-  font-size: 1em;
-  margin-right: 2px;
-}
-
-
-span.usp-check::before {
-  content:' ';
-  display: inline-block;
-  background-image: url(/Templates/General/Views/Images/RWD/sprites/general_sprite1.png?1);
-  background-repeat: no-repeat;
-  background-size: 500px 2433px;
-  background-position: -317px -2172px;
-  width: 17px;
-  height: 15px;
-  margin: 2px 4px -2px 6px;
+    display: inline-block;
+    background-image: url(/Templates/General/Views/Images/RWD/sprites/general_sprite1.png?1);
+    background-repeat: no-repeat;
+    background-size: 500px 2433px;
+    background-position: -317px -2172px;
+    width: 17px;
+    height: 15px;
+    margin-right: 10px;
+    margin-top: 2px;
+    margin-bottom: -2px;
 }
 
 .cro-modal .step>.lead {
   margin-bottom: 0;
-}
-
-.cro-modal .step1>.lead {
-  max-width: 100%;
-  padding:0;
-  margin:-0.5em 0 0;
 }
 
 .cro-modal .easy-signup-page .confirmation.bg-faded {
@@ -212,77 +166,46 @@ span.usp-check::before {
   padding: 0 10px;
   text-align: center;
 }
-.cro-modal .easy-signup-page .confirmation .grid_fluid .column a.sprite1-p {
-  display: none;
-}
-.cro-modal .easy-signup-page .confirmation .grid_fluid a {
-  color: inherit;
-}
+
 .cro-modal .easy-signup-page .confirmation a.backButton {
   display: none;
 }
 
-.cro-modal .js-linkinner,
-.cro-modal .js-linkinner:hover {
+.cro-modal .confpage-link,
+.cro-modal .confpage-link:hover {
   color: #3F3F40;
 }
+
 .cro-modal .easy-signup-page .form-wrapper .payWithCard {
   padding:0;
-  margin-top: -3px;
 }
+
 .cro-modal .easy-signup-page .already_customer_choice .choices a {
   background: #f7f7f7;
 }
 
-.cro .pl .pl-modal .pl-modal__window--md {
-  z-index: 1;
-  overflow: hidden;
+@media only screen and (max-width: 479px) {
+  .cro-modal .easy-signup-page .step-header {
+    margin-bottom: 0;
+  }
+  .cro-iframe-container {
+    margin:-1em;
+  }
+  .cro-modal .easy-signup-page .step1>.form-wrapper .filled {
+    width: 300px;
+  }
 }
+
 .pl-modal-cover {
   position: absolute;
   top:0;
   left:0;
   width:100%;
   height: 100%;
-  z-index: 0;
 }
 
 
-.modal-cover {
-  background: rgba(0,0,0,0.2);
-  position: absolute;
-  top:0;
-  left:0;
-  width:100%;
-  height: 100%;
-  z-index: 0;
-}
-
-.cro-modal .btn-container {
-  text-align: center;
-  margin-top: 20px;
-}
-
-.cro-modal .required-wrapper span {
-  left:0;
-}
-
-.cro-modal .easy-signup-page .form-wrapper .filled {
-  width:260px;
-  max-width: 100%;
-  padding: 22px 0px;
-  margin:0;
-}
-
-@media only screen and (max-width: 479px){
-  /*.cro .cro-iframe-container {
-    margin:-1em;
-  }*/
-  span.usp-check {
-    display: block;
-    padding:0.5em 0 0;
-  }
-  .cro-modal .step-header {
-    margin-top: 20px;
-  }
+.cro-ios.cro-modal .pl-modal {
+  height:50px;
+  background: none;
 }
