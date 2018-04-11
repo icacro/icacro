@@ -36,7 +36,7 @@ height: 100%;
 .cro-ios.cro-step1 {
   padding-top: 0;
 }
-.cro-ios {
+.cro-ios.cro-step2 {
   padding-top: 40px;
 }
 
@@ -71,7 +71,7 @@ height: 100%;
   display: block;
 }
 .cro-modal .container-steps {height:1100px;}
-.cro-ios .container-steps {height:100%; overflow: auto;}
+.cro-ios .container-steps {height:100%; min-height:400px;}
 
 .cro-modal .container-steps .step {padding-top:0;}
 
