@@ -137,6 +137,7 @@ const test = {
       size: 'md',
       container: $('.modal-container').get(0)
     });
+    $('.cro-iframe-container').parent().find('.button--icon').addClass('button--link');
     setTimeout(function () {
       test.showLoader($('.cro-iframe-container'));
       test.loadModal();
@@ -154,7 +155,7 @@ $(document).ready(() => {
     $('body').addClass('cro-ios');
     if(window.self === window.top && (window.location.href.indexOf('6c6f79616c74796e6577637573746f6d6572666f726d') !== -1 || window.location.href.indexOf('6578697374696e67637573746f6d657261726561') !== -1)) {
       $('body').addClass('cro-modal');
-      const closeButton = $('<div class="pl"><div class="pl-modal"><a onclick="history.back()" class="button button--icon pl-modal__close-button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="3.092778444290161 4.548774719238281 17.0854434967041 17.08416748046875"><path d="M15.224 13.091l4.582 4.606q.315.291.364.691t-.194.667q-1.042 1.333-2.376 2.376-.267.242-.667.194t-.715-.339l-4.582-4.606-4.606 4.606q-.291.291-.691.339t-.691-.194q-1.309-1.042-2.352-2.352-.242-.291-.194-.691t.339-.691l4.606-4.606-4.582-4.582q-.315-.315-.364-.715t.194-.667q1.018-1.309 2.352-2.376.291-.242.691-.194t.691.364l4.606 4.388 4.582-4.388q.315-.315.715-.364t.667.194q1.333 1.042 2.376 2.376.242.267.194.667t-.364.715z"></path></svg></a></div></div>');
+      const closeButton = $('<div class="pl"><div class="pl-modal"><a onclick="history.back()" class="button button--link button--icon pl-modal__close-button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="3.092778444290161 4.548774719238281 17.0854434967041 17.08416748046875"><path d="M15.224 13.091l4.582 4.606q.315.291.364.691t-.194.667q-1.042 1.333-2.376 2.376-.267.242-.667.194t-.715-.339l-4.582-4.606-4.606 4.606q-.291.291-.691.339t-.691-.194q-1.309-1.042-2.352-2.352-.242-.291-.194-.691t.339-.691l4.606-4.606-4.582-4.582q-.315-.315-.364-.715t.194-.667q1.018-1.309 2.352-2.376.291-.242.691-.194t.691.364l4.606 4.388 4.582-4.388q.315-.315.715-.364t.667.194q1.333 1.042 2.376 2.376.242.267.194.667t-.364.715z"></path></svg></a></div></div>');
       $('#page-wrapper').prepend(closeButton);
     }
 
@@ -203,7 +204,7 @@ $(document).ready(() => {
     }
 
   } else if (window.frameElement.getAttribute('name') === 'cro-reg' || window.frameElement.getAttribute('name') === 'step2') {
-
+    ELM.get('html').css('cro');
     ELM.get('body').css('cro-modal');
 
     if (/^https:\/\/www.ica.se\/ansokan\/tacksida/.test(window.location)) {
