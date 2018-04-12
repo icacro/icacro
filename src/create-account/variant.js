@@ -15,10 +15,6 @@ import './style.css';
 
 const test = {
 
-  //TODO
-  //-liggande iPhone????
-  //-tillbaka om redan medlem - history.back()
-
   showLoader(container) {
     container.find('.loader').css('display','block');
     container.find('iframe').css('opacity','0');
@@ -102,11 +98,13 @@ const test = {
   },
 
   loadModal() {
-    const modalCover = $('<div></div>').addClass('pl-modal-cover');
-    modalCover.insertBefore($('.pl .pl-modal .pl-modal__window'));
-    const iframeContainer = ELM.get('.cro-iframe-container');
-    const iframeContent = '<span class="loader"></span><iframe id="cro-reg" name="cro-reg" src="" frameborder="0"></iframe>';
-    iframeContainer.html(iframeContent);
+    if (!$('.pl-modal-cover').length) {
+      const modalCover = $('<div></div>').addClass('pl-modal-cover');
+      modalCover.insertBefore($('.pl .pl-modal .pl-modal__window'));
+      const iframeContainer = ELM.get('.cro-iframe-container');
+      const iframeContent = '<span class="loader"></span><iframe id="cro-reg" name="cro-reg" src="" frameborder="0"></iframe>';
+      iframeContainer.html(iframeContent);
+    }
     const iframe = $('.cro-iframe-container iframe');
     iframe.attr('src','https://www.ica.se/ansokan/?step=6369766963666f726d');
     iframe.load(function () {
@@ -152,58 +150,56 @@ $(document).ready(() => {
 
   const ua = window.navigator.userAgent;
   const iOS = !!ua.match(/iP(ad|hone)/i);
-  if (iOS) $('body').addClass('cro-ios');
-
-  if (window.self === window.top) {
-
-    if(window.location.href.indexOf('ansokan/?step=6c6f79616c74796e6577637573746f6d6572666f726d') !== -1) {
-
+  if (!iOS) {
+    $('body').addClass('cro-ios');
+    if(window.self === window.top && (window.location.href.indexOf('6c6f79616c74796e6577637573746f6d6572666f726d') !== -1 || window.location.href.indexOf('6578697374696e67637573746f6d657261726561') !== -1)) {
       $('body').addClass('cro-modal');
       const closeButton = $('<div class="pl"><div class="pl-modal"><a onclick="history.back()" class="button button--icon pl-modal__close-button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="3.092778444290161 4.548774719238281 17.0854434967041 17.08416748046875"><path d="M15.224 13.091l4.582 4.606q.315.291.364.691t-.194.667q-1.042 1.333-2.376 2.376-.267.242-.667.194t-.715-.339l-4.582-4.606-4.606 4.606q-.291.291-.691.339t-.691-.194q-1.309-1.042-2.352-2.352-.242-.291-.194-.691t.339-.691l4.606-4.606-4.582-4.582q-.315-.315-.364-.715t.194-.667q1.018-1.309 2.352-2.376.291-.242.691-.194t.691.364l4.606 4.388 4.582-4.388q.315-.315.715-.364t.667.194q1.333 1.042 2.376 2.376.242.267.194.667t-.364.715z"></path></svg></a></div></div>');
       $('#page-wrapper').prepend(closeButton);
+    }
 
-    } else {
+  }
 
-      const createAccount = ELM.get('.top-bar .top-bar__right .quick-login a[href="/ansokan/"]');
+  if (window.self === window.top) {
 
-      if(createAccount.exist()) {
-        createAccount.css('modal-application');
+    const createAccount = ELM.get('.top-bar .top-bar__right .quick-login a[href="/ansokan/"]');
+
+    if(createAccount.exist()) {
+      createAccount.css('modal-application');
+    }
+
+    let checkAccount;
+    if (/^https:\/\/www.ica.se\/$/.test(window.location)) {
+      checkAccount = ELM.get('.quicklink-list a[href="http://www.ica.se/ica-kort/"]');
+
+    // Skippar loginsidan?
+    //} else if (/^https:\/\/www.ica.se\/logga-in/.test(window.location)) {
+    //  checkAccount = ELM.get('.right-link a');
+
+    } else if (/^https:\/\/www.ica.se\/ica-kort/.test(window.location)) {
+      if (/^https:\/\/www.ica.se\/ica-kort\/$/.test(window.location)) {
+        checkAccount = ELM.get('.imagebox a');
+      } else {
+        checkAccount = ELM.get('.page a[href="/ansokan/"]');
       }
+    } else if (/^https:\/\/www.ica.se\/erbjudanden\/nojeserbjudanden/.test(window.location)) {
+      checkAccount = ELM.get('.ica-card-module .text-card a');
+    }
 
-      let checkAccount;
-      if (/^https:\/\/www.ica.se\/$/.test(window.location)) {
-        checkAccount = ELM.get('.quicklink-list a[href="http://www.ica.se/ica-kort/"]');
+    if(checkAccount) {
+      checkAccount.css('modal-application');
+    }
 
-      // Skippar loginsidan?
-      //} else if (/^https:\/\/www.ica.se\/logga-in/.test(window.location)) {
-      //  checkAccount = ELM.get('.right-link a');
+    let modalApplication = $('.modal-application');
 
-      } else if (/^https:\/\/www.ica.se\/ica-kort/.test(window.location)) {
-        if (/^https:\/\/www.ica.se\/ica-kort\/$/.test(window.location)) {
-          checkAccount = ELM.get('.imagebox a');
-        } else {
-          checkAccount = ELM.get('.page a[href="/ansokan/"]');
-        }
-      } else if (/^https:\/\/www.ica.se\/erbjudanden\/nojeserbjudanden/.test(window.location)) {
-        checkAccount = ELM.get('.ica-card-module .text-card a');
-      }
-
-      if(checkAccount) {
-        checkAccount.css('modal-application');
-      }
-
-      let modalApplication = $('.modal-application');
-
-      if (modalApplication.length) {
-        Object.assign(test, CROUTIL());
-        const iframeContainer = ELM.create('div cro-iframe-container');
-        ELM.get('body').append(iframeContainer);
-        modalApplication.click((e) => {
-          e.preventDefault();
-          test.createModal();
-        });
-      }
-
+    if (modalApplication.length) {
+      Object.assign(test, CROUTIL());
+      const iframeContainer = ELM.create('div cro-iframe-container');
+      ELM.get('body').append(iframeContainer);
+      modalApplication.click((e) => {
+        e.preventDefault();
+        test.createModal();
+      });
     }
 
   } else if (window.frameElement.getAttribute('name') === 'cro-reg' || window.frameElement.getAttribute('name') === 'step2') {
@@ -225,6 +221,7 @@ $(document).ready(() => {
 
     $('ul.choices .has_card a').attr('href','/inloggning/jag-vet-inte-vad-jag-har-for-losenord/')
     $('.faq a').attr('target','_blank');
+
   }
 
 });
