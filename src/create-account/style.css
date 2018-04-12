@@ -121,6 +121,7 @@ a.backToStep1 {
 a.backToStep1 svg {
   width:15px;
   fill: #A02971;
+  transform: scaleX(-1);
 }
 a.backToStep1:hover svg {
   fill: #DC438C;
