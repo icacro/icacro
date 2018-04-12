@@ -150,7 +150,7 @@ $(document).ready(() => {
 
   const ua = window.navigator.userAgent;
   const iOS = !!ua.match(/iP(ad|hone)/i);
-  if (!iOS) {
+  if (iOS) {
     $('body').addClass('cro-ios');
     if(window.self === window.top && (window.location.href.indexOf('6c6f79616c74796e6577637573746f6d6572666f726d') !== -1 || window.location.href.indexOf('6578697374696e67637573746f6d657261726561') !== -1)) {
       $('body').addClass('cro-modal');
