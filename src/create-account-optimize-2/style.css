@@ -20,7 +20,7 @@ html.cro-form {
 
 .cro-form .ssn-confirmed {
   text-align: center !important;
-  font-size: 2rem;
+  font-size: 16px;
   font-weight: 300;
   line-height: 40px;
   color:#8DB72C;
@@ -159,7 +159,7 @@ html.cro-form {
   border: 1px solid #d5d7da;
   margin-bottom: 1px;
   border-radius: 0.25rem;
-  font-size: 2rem;
+  font-size: 16px;
   line-height: 48px;
   height: 48px;
   padding-right: 35px;
@@ -171,7 +171,7 @@ html.cro-form {
 
 .cro-form .ios input[type=text], .cro-form .ios input[type=password], .cro-form .ios input[type=tel], .cro-form .ios input[type=email],
 .cro-form .ios input[type=text]:focus, .cro-form .ios input[type=password]:focus, .cro-form .ios input[type=tel]:focus, .cro-form .ios input[type=email]:focus {
-  font-size: 2rem !important;
+  font-size: 16px !important;
 }
 .cro-form input.password {
   text-security: disc;
@@ -245,7 +245,7 @@ html.cro-form {
   width:30px;
   height:35px;
   top:0;
-  margin: 0 4px;
+  margin: 0 25px 0 0;
   padding: 0;
   display: inline-block;
   text-align: center;
@@ -261,6 +261,7 @@ html.cro-form {
 .cro-form #pwtoggle {
   display: inline-block;
   float:right;
+  font-size: 14px;
 }
 .cro-form .ios #pwtoggle {
   display: none;
@@ -390,5 +391,8 @@ html.cro-form {
   }
   .cro-form .form-wrapper {
     max-width: 280px;
+  }
+  .cro-form ol.form li.password input.pwchar {
+    margin:0 8px 0 0;
   }
 }
