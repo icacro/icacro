@@ -29,7 +29,8 @@ const test = {
     let iframeInner = test.getIframeInner(iframeType);
 
     if(iframeType === 'step1') {
-      const leadNew = '<p class="lead">Skaffa ICA-kort och få personliga erbjudanden!</p>';
+      const leadNew = '<ul class="lead"><li><span class="usp-check"></span> ICA-kort med bonus</li><li><span class="usp-check"></span> Personliga erbjudanden</li><li><span class="usp-check"></span> Rabatt på resor och nöjen</li></ul>';
+      iframeInner.find('.step-header').remove();
       iframeInner.find('body').addClass('cro-step1');
       iframeInner.find('a.payWithCardLink').attr('target','_blank');
 
