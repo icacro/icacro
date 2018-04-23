@@ -23,7 +23,6 @@ html.cro-form {
   font-size: 2rem;
   font-weight: 300;
   line-height: 40px;
-  margin-bottom: 24px !important;
   color:#8DB72C;
 }
 .cro-form ol.form li.ssn-confirmed {
@@ -37,6 +36,7 @@ html.cro-form {
 .cro-form .pwchar.error {
   /*red*/
   border-bottom: 2px solid #EB1F07 !important;
+  margin-bottom: 0;
   display: block;
 }
 
@@ -50,8 +50,8 @@ html.cro-form {
   display: block;
   background: #fff;
   width: 100%;
-  position: relative;
   font-size: 12px;
+  margin-top: 5px;
 }
 
 .cro-form .field-error + .errormsg {
@@ -62,6 +62,7 @@ html.cro-form {
 .cro-form .pwchar.ok {
   /*green*/
   border-bottom: 2px solid #8DB72C !important;
+  margin-bottom: 0;
 }
 
 .cro-form .form li span.check {
@@ -70,8 +71,8 @@ html.cro-form {
 .cro-form form .field-validated span.check {
   display: block;
   position: absolute;
-  top:5px;
-  right:2px;
+  top:43px;
+  right:10px;
   width:15px;
   height:15px;
 }
@@ -149,13 +150,19 @@ html.cro-form {
   color:#fff;
 }
 
-.cro-form input[type=text], .cro-form input[type=password], .cro-form input[type=tel], .cro-form input[type=email]  {
+.cro-form input[type=text], .cro-form input[type=password], .cro-form input[type=tel], .cro-form input[type=email],
+.cro-form .easy-signup-page .form-wrapper fieldset input[type=text],
+.cro-form .easy-signup-page .form-wrapper fieldset input[type=text] {
   height: auto;
   border: none;
   box-shadow: none;
-  border: 1px solid #DDD;
-  border-bottom: 2px solid #DDD;
+  border: 1px solid #d5d7da;
+  margin-bottom: 1px;
+  border-radius: 0.25rem;
   font-size: 2rem;
+  line-height: 48px;
+  height: 48px;
+  padding-right: 35px;
 }
 
 .cro-form input.pwchar {
@@ -178,6 +185,8 @@ html.cro-form {
 .cro-form li.has-input input[type=text], .cro-form li.has-input input[type=password], .cro-form li.has-input input[type=tel], .cro-form li.has-input input[type=email] {
   /*green*/
   border-bottom: 2px solid #8DB72C;
+  margin-bottom: 0;
+  height: 48px;
 }
 
 .cro-form .easy-signup-page .step {
@@ -196,8 +205,7 @@ html.cro-form {
 
 .cro-form ol.form li {
   position: relative;
-  height:60px;
-  padding-bottom: 16px;
+  padding-bottom: 10px;
 }
 .cro-form ol.form li input {
   font-weight: 300;
@@ -208,33 +216,41 @@ html.cro-form {
 }
 
 .cro-form ol.form li.password #pwchars {
-  border: 1px solid #ddd;
+  border: 1px solid #d5d7da;
+  border-radius: 0.25rem;
   text-align: center;
+  height:46px;
+  position: relative;
 }
 .cro-form ol.form li.password #pwchars span {
   display: inline-block;
+  position: relative;
+  top:5px;
 }
 .cro-form ol.form li.password #pwchars.field-error {
-  border:none !important;
+  border: 1px solid #d5d7da !important;
+  margin-bottom: 0 !important;
 }
 .cro-form ol.form li.password #pwchars.field-error span input {
   border-color:#EB1F07 !important;
 }
 
 .cro-form ol.form li.password div.errormsg {
+  position: absolute;
   top:75px;
 }
 
 .cro-form ol.form li.password input.pwchar {
   position: relative;
-  width:40px;
+  width:30px;
   height:35px;
   top:0;
-  margin-right: 15px;
-  padding-right:0;
+  margin: 0 4px;
+  padding: 0;
   display: inline-block;
   text-align: center;
-  border-bottom: 2px solid #ddd;
+  border-bottom: 2px solid #d5d7da;
+  border-radius: 0;
 }
 .cro-form ol.form li.password .field-validated input.pwchar {
   color: #8DB72C;
@@ -252,19 +268,24 @@ html.cro-form {
 
 .cro-form ol.form li label,
 .cro-form ol.form li .field-error + .errormsg,
-.cro-form ol.form li .infomsg {
+.cro-form ol.form li .infomsg,
+.cro-form ol.form li .errormsg.showinfo {
   margin-bottom: 0;
   font-size: 12px;
+  line-height: 1.4em;
 }
+
+.cro-form ol.form li label {
+  font-size: 16px;
+  color: #808283;
+}
+
 .cro-form ol.form li.password {
   display: block;
   padding-bottom: 0;
 }
-.cro-form ol.form li.password div {
-  top:30px;
-}
 .cro-form .step1 ol.form li:first-child {
-  margin: 20px 0 30px;
+  margin: 0 0 30px;
 }
 
 .cro-form ::-webkit-input-placeholder { /* Chrome/Opera/Safari */
@@ -320,7 +341,7 @@ html.cro-form {
 }
 
 .cro-form .easy-signup-page .step.step2 .confirm-policy {
-  margin:70px 0 -30px;
+  margin:55px 0 0;
 }
 .cro-form .easy-signup-page .step.step2 .confirm-policy p {
   border-width: 0 0 2px 0 !important;
@@ -369,9 +390,5 @@ html.cro-form {
   }
   .cro-form .form-wrapper {
     max-width: 280px;
-  }
-  .cro-form ol.form li.password input.pwchar {
-    width:30px;
-    margin-right: 12px;
   }
 }
