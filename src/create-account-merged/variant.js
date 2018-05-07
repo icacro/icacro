@@ -30,7 +30,7 @@ const test = {
     let iframeInner = test.getIframeInner(iframeType);
 
     if(iframeType === 'step1') {
-      const leadNew = '<ul class="lead"><li><span class="usp-check"></span> ICA-kort med bonus</li><li><span class="usp-check"></span> Personliga erbjudanden</li><li><span class="usp-check"></span> Rabatt på resor och nöjen</li></ul>';
+      const leadNew = '<ul class="lead"><li><span class="usp-check"></span> ICA-kort med bonus</li><li><span class="usp-check"></span> Personliga erbjudanden</li><li><span class="usp-check"></span> Rabatt på resor &amp; nöjen</li></ul>';
       iframeInner.find('body').addClass('cro-step1');
       iframeInner.find('a.payWithCardLink').attr('target','_blank');
 
@@ -779,7 +779,7 @@ $(document).ready(() => {
 
   } else if (window.frameElement.getAttribute('name') === 'cro-reg' || window.frameElement.getAttribute('name') === 'step2') {
 
-    console.log(window.frameElement.getAttribute('name'));
+    //console.log(window.frameElement.getAttribute('name'));
 
     //const skt = ELM.get('.is-skt');
     //if (!skt.exist()) {

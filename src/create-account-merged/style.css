@@ -165,11 +165,11 @@ span.usp-check {
   list-style-type: none;
   font-size: 1.4em;
   text-align: left;
-  width: 290px;
+  width: 240px;
   margin: 4em auto 0.5em;
 }
 .cro-modal .step>ul.lead li {
-  margin-top: 0.25em;
+  margin: 0.25em 0 0;
 }
 
 .cro-modal .easy-signup-page .confirmation.bg-faded {
@@ -427,8 +427,9 @@ html.cro-form {
   border: none;
   box-shadow: none;
   border-bottom: 2px solid #DDD;
-  padding: 0 30px 10px 0;
+  padding: 0 30px 5px 0;
   font-size: 2rem;
+  line-height: 2.5rem !important;
 }
 
 .cro-form .ios input[type=text], .cro-form .ios input[type=password], .cro-form .ios input[type=tel], .cro-form .ios input[type=email],
@@ -441,7 +442,7 @@ html.cro-form {
   -moz-text-security: disc;
 }
 .cro-form input[type=text]:focus, .cro-form input[type=password]:focus, .cro-form input[type=tel]:focus, .cro-form input[type=email]:focus {
-  padding-bottom: 10px;
+  padding-bottom: 5px;
   outline: none;
 }
 .cro-form li.has-input input[type=text], .cro-form li.has-input input[type=password], .cro-form li.has-input input[type=tel], .cro-form li.has-input input[type=email] {
@@ -505,6 +506,7 @@ html.cro-form {
   padding-right:0;
   display: inline-block;
   text-align: center;
+  /*font-family: monospace;*/
 }
 .cro-form ol.form li.password .field-validated input.pwchar {
   color: #8DB72C;
@@ -594,7 +596,7 @@ html.cro-form {
 .cro-form ol.form li.form-row label {
   visibility: hidden;
   position: relative;
-  top:40px;
+  top:35px;
 }
 .cro-form .step1 ol.form li:first-child label,
 .cro-form ol.form li.has-input label,
