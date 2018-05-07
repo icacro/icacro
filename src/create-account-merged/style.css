@@ -1,0 +1,672 @@
+@media (max-width: 767px) {
+  .cro .cro-iframe-container { padding-bottom: 135% !important; }
+  .cro.cro-ios .cro-iframe-container { padding-bottom: 0 !important; height:290px;}
+}
+.cro > .cro-iframe-container { display: none; }
+.cro .modal-copntainer .cro-iframe-container { display: initial; }
+.cro .cro-iframe-container {
+position: relative;
+height: 0;
+overflow: hidden;
+padding-bottom: 85%;
+background-color: #ffffff;
+}
+.cro .cro-iframe-container iframe {
+opacity: 0;
+position: absolute;
+top: 0;
+left: 0;
+width: 100%;
+height: 100%;
+background-color: #ffffff;
+}
+.cro .cro-step2-container {
+  position: relative;
+  z-index: 100;
+}
+
+.cro .easy-signup-header,
+.cro .easy-signup-page,
+.cro-modal .easy-signup-header,
+.cro-modal .easy-signup-page {
+  opacity: 1;
+}
+
+.cro-modal .easy-signup-header .login_back {
+  display: none;
+}
+.cro-modal, html.cro {
+  background: #fff;
+}
+.cro-ios.cro-step1 {
+  padding-top: 0;
+}
+.cro-ios.cro-step2 {
+  padding-top: 40px;
+}
+
+.pl .cro-iframe-container .loader,
+.cro-modal .cro-step2-container.pl .loader {
+  margin: -2.5rem;
+}
+.cro-modal .cro-step2-container.pl .loader {
+  display: none;
+  position: relative;
+  top:0;
+  margin-top:2rem;
+}
+
+.cro-modal .account-steps,
+.cro-modal .easy-signup-header,
+.cro-modal header.header_bar,
+.cro-modal .container-steps .step .form-wrapper > p,
+.cro-modal .container-steps .step2 ol.form li:first-child,
+.cro-step2 .step-header,
+.cro-modal .easy-signup-page .form-wrapper .payWithCardLinkInfo,
+.cro-modal.cro-step1 .container-steps .step .form-wrapper > p.lead {
+  display: none;
+}
+
+.easy-signup-page .step-header {
+  margin-top: 15%;
+}
+
+.cro-ios .container-steps .step2 ol.form li:first-child {
+  display: block;
+}
+
+.cro-modal .container-steps .step .form-wrapper > p.lead,
+.cro-modal .already_customer_choice .step-header {
+  display: block;
+}
+.cro-modal .container-steps {height:1100px;}
+.cro-ios.cro-step1 .container-steps {height:100%;}
+
+.cro-modal .container-steps .step {padding-top:0;}
+
+.cro-modal .container-steps .step .form-wrapper {padding-top:3px;}
+
+#step2 {width: 100%; max-width: 100%; height: 0; padding:0; margin: 0 auto; top:-226px; opacity: 0; position: relative; z-index: 2;}
+#step2.loaded {height:1500px; opacity: 1;}
+
+.cro-modal .container-steps .step2 {margin: 0 -10px; position: relative;}
+
+.cro-modal fieldset.loading {
+  opacity: 1;
+}
+
+.cro-modal fieldset .icon-checkmark,
+.cro-modal fieldset label span,
+.cro-modal fieldset input {
+  transition: opacity 0.25s ease-in-out;
+}
+
+.cro-modal fieldset.loading .icon-checkmark,
+.cro-modal fieldset.loading label span {
+  opacity: 0;
+}
+
+.cro-modal fieldset.loading label span.backactive {
+  position: absolute;
+  opacity: 1;
+  z-index:110;
+  left:0;
+  top:47px;
+  width: 100%;
+  text-align: right;
+}
+a.backToStep1 {
+  margin-right: 20px;
+  padding:12px 12px 8px;
+  cursor: pointer;
+  color:#999;
+  font-weight: 100;
+  text-decoration: underline;
+}
+a.backToStep1 svg {
+  width:15px;
+  fill: #A02971;
+  transform: scaleX(-1);
+}
+a.backToStep1:hover svg {
+  fill: #DC438C;
+}
+
+.cro-modal fieldset.loading input {
+  color: #999;
+  font-weight: 100;
+  background: #fff;
+  border-color: #f7f7f7;
+  box-shadow: none;
+}
+
+.cro-modal .easy-signup-page .step2 .form-wrapper .filled {
+  padding-top: 0;
+}
+
+span.usp-check {
+    display: inline-block;
+    background-image: url(/Templates/General/Views/Images/RWD/sprites/general_sprite1.png?1);
+    background-repeat: no-repeat;
+    background-size: 500px 2433px;
+    background-position: -317px -2172px;
+    width: 17px;
+    height: 15px;
+    margin-right: 3px;
+    margin-top: 2px;
+    margin-bottom: -2px;
+}
+
+.cro-modal .step>.lead {
+  margin-bottom: 0;
+}
+
+.cro-modal .step>ul.lead {
+  list-style-type: none;
+  font-size: 1.4em;
+  text-align: left;
+  width: 290px;
+  margin: 4em auto 0.5em;
+}
+.cro-modal .step>ul.lead li {
+  margin-top: 0.25em;
+}
+
+.cro-modal .easy-signup-page .confirmation.bg-faded {
+  background: transparent;
+}
+.cro-modal .easy-signup-page .confirmation h2 {
+  padding-top:0;
+}
+.cro-modal .easy-signup-page .confirmation .grid_fluid {
+  display: flex;
+  text-align: center;
+  margin: 30px -10px 0;
+}
+.cro-modal .easy-signup-page .confirmation .grid_fluid .column {
+  padding: 0 10px;
+  text-align: center;
+}
+
+.cro-modal .easy-signup-page .confirmation a.backButton {
+  display: none;
+}
+
+.cro-modal .confpage-link,
+.cro-modal .confpage-link:hover {
+  color: #3F3F40;
+}
+
+.cro-modal .easy-signup-page .form-wrapper .payWithCard {
+  padding:0;
+}
+
+.cro-modal .easy-signup-page .already_customer_choice .choices a {
+  background: #f7f7f7;
+}
+
+.cro-ios.cro-modal .easy-signup-page .content {
+  width: 280px;
+  margin: 0 auto;
+}
+.cro-ios .easy-signup-page .content {
+  width: 280px;
+}
+.cro-ios.cro-modal .easy-signup-page .step-header {
+  padding-left: 0;
+  padding-right: 0;
+  margin:18px 0 0;
+}
+.cro-ios .step>ul.lead {
+  margin-top: 1.5em;
+  width: 250px;
+  font-size: 1em;
+}
+
+@media only screen and (max-width: 479px) {
+  .cro-modal .easy-signup-page .step-header {
+    margin-bottom: 0;
+  }
+  .cro-iframe-container {
+    margin:-1em;
+  }
+  .cro-modal .easy-signup-page .step1>.form-wrapper .filled {
+    width: 300px;
+  }
+  .cro-modal .easy-signup-page .step-header {
+    margin-top: 8px;
+  }
+  .cro-modal .step>ul.lead {
+    margin-top: 1.5em;
+    width: 250px;
+    font-size: 1em;
+  }
+}
+
+.pl-modal-cover {
+  position: absolute;
+  top:0;
+  left:0;
+  width:100%;
+  height: 100%;
+}
+
+.cro .pl-modal .pl-modal__close-button {
+  right: 0.8rem;
+  top: 0.8rem;
+}
+
+
+.cro-ios.cro-modal .pl-modal {
+  height:50px;
+  background: none;
+}
+.cro-ios input {
+  font-size: 16px !important;
+}
+.cro-ios.cro-step1 label,
+.cro-ios.cro-step1 .payWithCard {
+  font-size: 12px;
+}
+.cro-ios.cro-step1 .easy-signup-page .form-wrapper .filled {
+  padding:10px 20px 0;
+}
+.cro-ios.cro-step1 .cro-step2-container {
+  display: none;
+}
+
+html.cro-form {
+  background: #F7F7F7;
+}
+
+.cro-form .form-row {
+  display: flex;
+  flex-flow: column;
+}
+
+.cro-form .form-row .div-row {
+  display: flex;
+}
+
+.cro-form .password-confirm {
+  display: none;
+}
+.cro-form .step2 ol.form li:first-child {
+  display: none;
+}
+
+.cro-form .ssn-confirmed {
+  text-align: center !important;
+  font-size: 2rem;
+  font-weight: 300;
+  line-height: 40px;
+  margin-bottom: 24px !important;
+  color:#8DB72C;
+}
+.cro-form ol.form li.ssn-confirmed {
+  height:auto;
+}
+.cro-form .ssn-confirmed .check {
+  margin-left: 14px;
+}
+
+.cro-form .field-error,
+.cro-form .pwchar.error {
+  /*red*/
+  border-bottom: 2px solid #EB1F07 !important;
+  display: block;
+}
+
+.cro-form input + .errormsg {
+  display: none;
+}
+
+.cro-form .field-error + .errormsg,
+.cro-form .field-error + .infomsg,
+.cro-form input + .errormsg.showinfo {
+  display: block;
+  background: #fff;
+  width: 100%;
+  position: absolute;
+  font-size: 12px;
+  top:40px;
+}
+
+.cro-form .field-error + .errormsg {
+  color:#EB1F07;
+}
+
+.cro-form .field-ok input,
+.cro-form .pwchar.ok {
+  /*green*/
+  border-bottom: 2px solid #8DB72C !important;
+}
+
+.cro-form .form li span.check {
+  display: none;
+}
+.cro-form form .field-validated span.check {
+  display: block;
+  position: absolute;
+  top:5px;
+  right:2px;
+  width:15px;
+  height:15px;
+}
+.cro-form .check {
+  display: inline;
+}
+.cro-form .check svg {
+  fill: #8DB72C;
+  width: 14px;
+}
+
+.cro-form .step-header,
+.cro-form .account-steps,
+.cro-form .form-wrapper {
+  background:#fff;
+  width: 500px;
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 0;
+}
+
+.cro-form .form-wrapper {
+  width: 380px;
+  padding: 0 60px;
+  margin-bottom: -10px;
+}
+
+.cro-form .step-header {
+  display: none;
+}
+
+.cro-form .account-steps ul {
+  width: 240px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+}
+.cro-form .account-steps li {
+  background-color: transparent;
+  width: 25%;
+  color: #3F3F40;
+}
+.cro-form .account-steps li label {
+  font-size: 14px;
+  display: block;
+  margin-top: 10px;
+}
+.cro-form .account-steps .line {
+  width: 30px;
+  height: 30px;
+  border-bottom: 1px solid #DDD;
+}
+.cro-form .account-steps .circle {
+  position: relative;
+  background-color: #F7F7F7;
+  border-radius: 50%;
+	width: 40px;
+	height: 40px;
+  margin: 10px;
+  text-align: center;
+}
+.cro-form .account-steps .circle:last-child label {
+  font-weight: bold;
+}
+.cro-form .account-steps .circle.checked {
+  background-color: rgba(141,183,44,0.1);
+}
+.cro-form .account-steps .circle.active {
+  background-color: #EB1F07;
+  color:#fff;
+}
+
+.cro-form input[type=text], .cro-form input[type=password], .cro-form input[type=tel], .cro-form input[type=email]  {
+  height: auto;
+  border: none;
+  box-shadow: none;
+  border-bottom: 2px solid #DDD;
+  padding: 0 30px 10px 0;
+  font-size: 2rem;
+}
+
+.cro-form .ios input[type=text], .cro-form .ios input[type=password], .cro-form .ios input[type=tel], .cro-form .ios input[type=email],
+.cro-form .ios input[type=text]:focus, .cro-form .ios input[type=password]:focus, .cro-form .ios input[type=tel]:focus, .cro-form .ios input[type=email]:focus {
+  font-size: 2rem !important;
+}
+.cro-form input.password {
+  text-security: disc;
+  -webkit-text-security: disc;
+  -moz-text-security: disc;
+}
+.cro-form input[type=text]:focus, .cro-form input[type=password]:focus, .cro-form input[type=tel]:focus, .cro-form input[type=email]:focus {
+  padding-bottom: 10px;
+  outline: none;
+}
+.cro-form li.has-input input[type=text], .cro-form li.has-input input[type=password], .cro-form li.has-input input[type=tel], .cro-form li.has-input input[type=email] {
+  /*green*/
+  border-bottom: 2px solid #8DB72C;
+}
+
+.cro-form .easy-signup-page .step {
+  padding-top: 0;
+}
+
+.cro-form .easy-signup-page .form-wrapper fieldset {
+  width: auto;
+}
+.cro-form .easy-signup-page header h1 {
+  font-size: 24px;
+}
+.cro-form .easy-signup-header {
+  border-bottom: 1px solid #D5D7DA;
+}
+
+.cro-form ol.form li {
+  position: relative;
+  height:60px;
+  padding-bottom: 16px;
+}
+.cro-form ol.form li input {
+  position: absolute;
+  top:0;
+  font-weight: 300;
+}
+
+.cro-form ol.form li.form-row.password label {
+  top:0;
+}
+.cro-form ol.form li.password #pwchars span {
+  display: inline-block;
+  top:-10px;
+}
+.cro-form ol.form li.password #pwchars {
+  position: relative;
+  top:-26px;
+}
+.cro-form ol.form li.password #pwchars.field-error {
+  border:none !important;
+}
+.cro-form ol.form li.password #pwchars.field-error span input {
+  border-color:#EB1F07 !important;
+}
+
+.cro-form ol.form li.password div.errormsg {
+  top:75px;
+}
+
+.cro-form ol.form li.password input.pwchar {
+  position: relative;
+  width:40px;
+  height:35px;
+  top:0;
+  margin-right: 20px;
+  padding-right:0;
+  display: inline-block;
+  text-align: center;
+}
+.cro-form ol.form li.password .field-validated input.pwchar {
+  color: #8DB72C;
+}
+.cro-form ol.form li.password #pwchar6 {
+  margin-right: 0;
+}
+.cro-form #pwtoggle {
+  display: inline-block;
+  float:right;
+}
+.cro-form .ios #pwtoggle {
+  display: none;
+}
+
+.cro-form ol.form li label,
+.cro-form ol.form li .field-error + .errormsg,
+.cro-form ol.form li .infomsg {
+  margin-bottom: 35px;
+  font-size: 12px;
+}
+.cro-form ol.form li.password {
+  display: block;
+  padding-bottom: 0;
+}
+.cro-form ol.form li.password label {
+  position: relative;
+  font-size: 14px;
+  top:-45px;
+}
+.cro-form ol.form li.password div {
+  top:30px;
+}
+.cro-form .step1 ol.form li:first-child {
+  margin: 15px 0;
+}
+
+.cro-form ::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+  font-weight: 300;
+  color: #808283;
+}
+.cro-form ::-moz-placeholder { /* Firefox 19+ */
+  font-weight: 300;
+  color: #808283;
+}
+.cro-form :-ms-input-placeholder { /* IE 10+ */
+  font-weight: 300;
+  color: #808283;
+}
+.cro-form :-moz-placeholder { /* Firefox 18- */
+  font-weight: 300;
+  color: #808283;
+}
+
+.cro-form .has-input input::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+  color:transparent;
+}
+.cro-form .has-input input::-moz-placeholder { /* Firefox 19+ */
+  color:transparent;
+}
+.cro-form .has-input input:-ms-input-placeholder { /* IE 10+ */
+  color:transparent;
+}
+.cro-form .has-input input:-moz-placeholder { /* Firefox 18- */
+  color:transparent;
+}
+
+.cro-form ol.form li input.button,
+.cro-form fieldset input[type="submit"] {
+  border-radius: 100px;
+  box-shadow: none;
+  font-weight: normal;
+  margin-bottom: 10px;
+  font-size: 14px;
+}
+
+.cro-form fieldset.inactive li input.button,
+.cro-form fieldset.inactive input[type="submit"],
+.cro-form fieldset.inactive input[disabled],
+.cro-form fieldset.inactive input[disabled]:hover {
+  background: #f7f7f7;
+  color: #d5d7da;
+  pointer-events: none;
+}
+
+.cro-form ol.form li:first-child label,
+.cro-form ol.form li.form-row label {
+  visibility: hidden;
+  position: relative;
+  top:40px;
+}
+.cro-form .step1 ol.form li:first-child label,
+.cro-form ol.form li.has-input label,
+.cro-form ol.form li.password label {
+  visibility: visible;
+}
+
+.cro-form .form-wrapper > p {
+  display: none;
+}
+
+.cro-form .easy-signup-page .step.step2 .confirm-policy {
+  margin:70px 0 -30px;
+}
+.cro-form .easy-signup-page .step.step2 .confirm-policy p {
+  border-width: 0 0 2px 0 !important;
+  border-color: #fff;
+  padding-bottom: 6px !important;
+}
+.cro-form .easy-signup-page .step.step2 .confirm-policy .error-wrapper {
+  border-color: #EB1F07 !important;
+}
+
+.cro-form .easy-signup-page .step.step2 .confirm-policy p {
+  text-align: left;
+  padding: 0;
+}
+
+.cro-form .easy-signup-page .step.step2 ol.form li.confirm-policy label,
+.cro-form .small {
+  font-size: 14px;
+}
+
+.cro-form input:-webkit-autofill,
+.cro-form input:-webkit-autofill:hover,
+.cro-form input:-webkit-autofill:focus
+.cro-form input:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0px 1000px #fff inset;
+}
+
+.cro-form .submit-wrapper {
+  min-height:40px;
+}
+
+.cro-form fieldset > .error {
+  display: none;
+  text-align: left;
+}
+.cro-form .clicked + .error {
+  display: block;
+}
+
+@media only screen and (max-width: 620px) {
+  html.cro-form {
+    background: #fff;
+  }
+  .cro-form .step-header,
+  .cro-form .account-steps,
+  .cro-form .form-wrapper {
+    border: 0;
+    margin-top: 0;
+    padding: 0;
+    width:100%;
+  }
+  .cro-form .step-header {
+    margin: 30px auto 20px;
+  }
+  .cro-form .form-wrapper {
+    max-width: 280px;
+  }
+  .cro-form ol.form li.password input.pwchar {
+    width:30px;
+    margin-right: 12px;
+  }
+}
