@@ -329,7 +329,7 @@ html.cro-form {
   width: 100%;
   position: absolute;
   font-size: 12px;
-  top:40px;
+  top:35px;
 }
 
 .cro-form .field-error + .errormsg {
