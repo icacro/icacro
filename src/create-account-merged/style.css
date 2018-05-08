@@ -598,7 +598,7 @@ html.cro-form {
   position: relative;
   top:35px;
 }
-.cro-form .step1 ol.form li:first-child label,
+/*.cro-form .step1 ol.form li:first-child label,*/
 .cro-form ol.form li.has-input label,
 .cro-form ol.form li.password label {
   visibility: visible;
