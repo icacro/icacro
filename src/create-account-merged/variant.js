@@ -707,11 +707,11 @@ const test = {
       if (frame==='step2') {
         this.stepTwo();
         //this.generateSteps(2);
-        //triggerHotJar('createAccountOptimizeStepTwoVariant');
+        triggerHotJar('createAccountOptimizeStepTwoVariant');
       } else {
         this.stepOne();
         //this.generateSteps(1);
-        //triggerHotJar('createAccountOptimizeStepOneVariant');
+        triggerHotJar('createAccountOptimizeStepOneVariant');
         const paywithcard = ELM.get('.payWithCard');
         if (paywithcard.exist()) paywithcard.hide();
         const required = ELM.get('.required-wrapper');
