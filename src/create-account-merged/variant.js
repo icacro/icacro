@@ -33,11 +33,7 @@ const test = {
       const leadNew = '<ul class="lead"><li><span class="usp-check"></span> ICA-kort med bonus</li><li><span class="usp-check"></span> Personliga erbjudanden</li><li><span class="usp-check"></span> Rabatt på resor &amp; nöjen</li></ul>';
       iframeInner.find('body').addClass('cro-step1');
       iframeInner.find('a.payWithCardLink').attr('target','_blank');
-
-      //Även koll av skärmbredd?
-
-      $('body').hasClass('cro-ios') ? iframeInner.find('form').attr('target','_parent') : iframeInner.find('form').attr('target','step2');
-
+      $('body').hasClass('cro-ios') ? iframeInner.find('form').attr('target','_parent') : iframeInner.find('form').attr('target','step2').attr('onsubmit','return false;');
       iframeInner.find('.step1').prepend(leadNew);
     } else if(iframeType === 'step2') {
       iframeInner.find('body').addClass('cro-step2');
@@ -122,12 +118,7 @@ const test = {
   addModalEventListeners() {
     const iframeInner = $('.cro-iframe-container iframe').contents();
     iframeInner.find('form').on('submit', function(e) {
-      // if(iframeInner.find('.icon-checkmark:visible').length) {
-      //   iframeInner.find('.payWithCard, .form-wrapper .form li:last-child').hide();
-      //   test.showLoader(iframeInner.find('.cro-step2-container'));
-        //load step2
-        test.loadIframe('step2');
-      // }
+      test.loadIframe('step2');
     });
   },
 
@@ -145,21 +136,6 @@ const test = {
     }, 50);
   },
 
-
-    // generateSteps(step) {
-    //   const accountSteps = ELM.get('.account-steps');
-    //   const steps = ELM.create('ul');
-    //   accountSteps.html(' ');
-    //   removeElements(['.icon.icon-tooltip.sprite1']);
-    //   steps.appendAll([
-    //     ELM.create(`li circle ${(step === 1) ? 'active' : ''} ${(step === 2) ? ' checked' : ''}`).append(`${(step === 2) ? '<div class="check"><svg xmlns="http://www.w3.org/2000/svg" viewBox="1.3568336963653564 3.796941041946411 21.142330169677734 18.591215133666992" id="check" width="100%" height="100%"><path d="M22.182 5.794q0.291 0.242 0.315 0.642t-0.218 0.739q-9.188 13.115-9.939 14.158-0.776 1.042-2 1.055t-2.024-1.055l-6.739-9.479q-0.242-0.339-0.218-0.752t0.315-0.655q1.236-1.067 2.764-1.915 0.315-0.17 0.703-0.049t0.63 0.461l4.558 6.4 7.782-11.055q0.242-0.339 0.618-0.449t0.715 0.061q1.6 0.873 2.739 1.891z"></path></svg></div>' : '<label>1</label>'}`),
-    //     ELM.create('li line'),
-    //     ELM.create(`li circle ${(step === 2) ? 'active' : ''}`).append('<label>2</label>'),
-    //     ELM.create('li line'),
-    //     ELM.create(`li circle ${(step === 3) ? 'active' : ''}`).append('<label>Klar</label>'),
-    //   ]);
-    //   accountSteps.append(steps);
-    // },
     createRow(classname, txt, id, errortext, type, autocomplete, inputvalue) {
       const li = ELM.create(`li form-row ${classname}`);
       const label = ELM.create('label');
@@ -399,8 +375,9 @@ const test = {
       test.disableSSNSubmit();
       ssnEl.value === '' ? (ssnEl.focus()) : (test.validateInput(ssnEl,'ssn',ssnMirrorEl,'keyup'));
       test.addInputEventListeners(ssnEl,'ssn',ssnMirrorEl);
+      test.addEnterListener(ssnEl);
 
-      const button = document.querySelector('input.server-button');
+      const button = document.getElementById('ctl00_ctl00_Content_cphOutsidePageWrapper_CivicForm_CivicFormSubmit');
       const wrapper = document.createElement('div');
       button.parentNode.insertBefore(wrapper, button);
       wrapper.appendChild(button);
@@ -686,6 +663,35 @@ const test = {
       });
     },
 
+    checkSSNSubmit() {
+      //Fixa till 19
+      let ssnValue = $(document).find('#ssn').val();
+      const mirror = document.getElementById('CivicForm\.CivicRegistrationNumber');
+      if(parseInt(ssnValue.substring(0, 2)) > 20) ssnValue='19' + ssnValue;
+      ssnValue = ssnValue.replace('-', '');
+      ssnValue = ssnValue.replace('+', '');
+
+      if (SSNValidator(ssnValue)) {
+        $(document).find('form').attr('onsubmit','return true;');
+        $(document).find('fieldset.form-loaded input.button').click();
+        mirror.setAttribute('value',ssnValue);
+      } else {
+        mirror.setAttribute('value','');
+        setTimeout(function() {
+          $(document).find('fieldset.form-loaded').removeClass('loading').find('input#ssn').focus();
+        },250);
+      }
+    },
+
+    addEnterListener(input) {
+      input.addEventListener('keyup', (event) => {
+        const key = event.keyCode || event.charCode;
+        if(key === 13) {
+          test.checkSSNSubmit();
+        }
+      });
+    },
+
     addButtonEventListener(button) {
       button.addEventListener('click', (event) => {
         if (document.getElementById('LoyaltyNewCustomerForm.FirstName')) {
@@ -697,6 +703,8 @@ const test = {
           if (! document.getElementById('LoyaltyNewCustomerForm\.AgreeToTermsHtmlValue').checked) {
             document.querySelector('.confirm-policy > p').classList.add('error-wrapper');
           }
+        } else {
+          test.checkSSNSubmit();
         }
         button.classList.add('clicked');
         gaPush({ eventAction: "Fel i formulär", eventLabel: 'inactive', eventValue: undefined})
@@ -705,12 +713,12 @@ const test = {
 
     manipulateDom(frame) {
       if (frame==='step2') {
-        this.stepTwo();
-        //this.generateSteps(2);
-        triggerHotJar('createAccountOptimizeStepTwoVariant');
+        if ($('#CivicRegistrationNumberDisabled').length) {
+          this.stepTwo();
+          triggerHotJar('createAccountOptimizeStepTwoVariant');
+        }
       } else {
         this.stepOne();
-        //this.generateSteps(1);
         triggerHotJar('createAccountOptimizeStepOneVariant');
         const paywithcard = ELM.get('.payWithCard');
         if (paywithcard.exist()) paywithcard.hide();
@@ -788,7 +796,10 @@ $(document).ready(() => {
       ELM.get('body').css('cro-modal');
       ELM.get('html').css('cro-form');
       Object.assign(test, CROUTIL());
-      test.manipulateDom(window.frameElement.getAttribute('name'));
+
+      if(window.location.href.indexOf('6578697374696e67637573746f6d657261726561') === -1) {
+        test.manipulateDom(window.frameElement.getAttribute('name'));
+      }
 
       if (/^https:\/\/www.ica.se\/ansokan\/tacksida/.test(window.location)) {
         const column = $('.grid_fluid .column');
