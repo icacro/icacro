@@ -28,7 +28,6 @@ const test = {
 
   iframeDone(iframeType) {
     let iframeInner = test.getIframeInner(iframeType);
-
     if(iframeType === 'step1') {
       const leadNew = '<ul class="lead"><li><span class="usp-check"></span> ICA-kort med bonus</li><li><span class="usp-check"></span> Personliga erbjudanden</li><li><span class="usp-check"></span> Rabatt på resor &amp; nöjen</li></ul>';
       iframeInner.find('body').addClass('cro-step1');
@@ -815,7 +814,7 @@ $(document).ready(() => {
       }
 
       $('ul.choices .has_card a').attr('href','/inloggning/jag-vet-inte-vad-jag-har-for-losenord/')
-      $('.faq a').attr('target','_blank');
+      $('.already_customer_choice a').attr('target','_top');
     //}
   }
 });
