@@ -18,7 +18,7 @@ function init() {
   var head = document.querySelector('head');
 
   script.setAttribute('async', '');
-  script.setAttribute('src', 'https://cdn.rawgit.com/icacro/icacro/v1.0.1XX/src/recipe-toggle-ingredients/variant.min.js');
+  script.setAttribute('src', 'https://cdn.rawgit.com/icacro/icacro/v1.0.176/src/recipe-toggle-ingredients/variant.min.js');
 
   style.appendChild(document.createTextNode(css));
 

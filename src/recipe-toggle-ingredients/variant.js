@@ -49,11 +49,14 @@ const test = {
     }
 
     const elPosition = document.getElementById(elem).offsetTop + diff;
-    window.scroll({
-      top: elPosition,
-      left: 0,
-      behavior: 'smooth'
-    });
+    // window.scroll({
+    //   top: elPosition,
+    //   left: 0,
+    //   behavior: 'smooth'
+    // });
+    $('html,body').animate({
+			 scrollTop: elPosition
+		}, 1000);
   },
 
 };
