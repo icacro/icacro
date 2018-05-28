@@ -16,30 +16,39 @@ import './style.css';
 const test = {
 
   manipulateDom() {
-    const page = ELM.get('#page');
-    const buttons = ELM.create('div sticky-nav-buttons');
-    const buttonIngredients = ELM.create('div nav-button-ingredients');
-    const buttonHowto = ELM.create('div nav-button-howto');
 
-    const linkIngredients = ELM.create('a').attr('href','#ingredients-section').text('Ingredienser');
-    const linkHowto = ELM.create('a').attr('href','#recipe-howto').text('Gör så här');
+    const page = ELM.get('#page-wrapper');
+    if (page.exist) {
+      const buttons = ELM.create('div sticky-nav-buttons');
+      const buttonIngredients = ELM.create('div nav-button-ingredients');
+      const buttonHowto = ELM.create('div nav-button-howto');
+      const linkIngredients = ELM.create('a').attr('href','#ingredients-section').text('Ingredienser');
+      const linkHowto = ELM.create('a').attr('href','#recipe-howto').text('Gör så här');
 
-    buttonIngredients.append(linkIngredients);
-    buttonHowto.append(linkHowto);
+      buttonIngredients.append(linkIngredients);
+      buttonHowto.append(linkHowto);
 
-    buttonIngredients.click((e) => {
-      e.preventDefault();
-      //gaPush({ eventAction: 'A/B-test recept ankarnav ingredienser' });
-      test.scrollToElement('ingredients-section');
-    });
-    buttonHowto.click((e) => {
-      e.preventDefault();
-      //gaPush({ eventAction: 'A/B-test recept ankarnav instruktioner' });
-      test.scrollToElement('recipe-howto');
-    });
+      buttonIngredients.click((e) => {
+        e.preventDefault();
+        gaPush({ eventAction: 'A/B-test recept ankarnav ingredienser' });
+        test.scrollToElement('ingredients-section');
+      });
+      buttonHowto.click((e) => {
+        e.preventDefault();
+        gaPush({ eventAction: 'A/B-test recept ankarnav instruktioner' });
+        test.scrollToElement('recipe-howto');
+      });
 
-    buttons.append(buttonIngredients).append(buttonHowto);
-    page.append(buttons);
+      buttons.append(buttonIngredients).append(buttonHowto);
+      page.append(buttons);
+
+      if (ELM.get('.recipe-details').exist) {
+        const pos = document.querySelector('.recipe-details').offsetTop - 100;
+        window.onscroll = function() {test.checkScroll(pos)};
+      }
+
+    }
+
   },
 
   scrollToElement(elem) {
@@ -47,16 +56,19 @@ const test = {
     if (document.querySelector('.recipe-image-square')) {
       diff = document.querySelector('.recipe-image-square').offsetHeight;
     }
-
     const elPosition = document.getElementById(elem).offsetTop + diff;
-    // window.scroll({
-    //   top: elPosition,
-    //   left: 0,
-    //   behavior: 'smooth'
-    // });
     $('html,body').animate({
 			 scrollTop: elPosition
-		}, 1000);
+		}, 400);
+  },
+
+  checkScroll(pos) {
+    const scrollpos = window.pageYOffset;
+    if(scrollpos >= pos && !(ELM.get('.sticky-nav-buttons.hidden').exists)) {
+      ELM.get('.sticky-nav-buttons').css('hidden');
+    } else if (scrollpos <= pos) {
+      ELM.get('.sticky-nav-buttons').removeClass('hidden');
+    }
   },
 
 };
