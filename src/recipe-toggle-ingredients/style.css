@@ -3,26 +3,33 @@
   position: fixed;
   bottom: 0;
   width: 100%;
-  height: 40px;
+  height: 48px;
   background: #fff;
   box-shadow: 0 0 5px rgba(0,0,0,0.2);
-  z-index: 1000;
+  z-index: 1;
+  opacity: 1;
   transition: all 0.1s ease-in-out;
 }
 .cro .sticky-nav-buttons.hidden {
   bottom: -50px;
+  opacity: 0;
 }
 .cro .sticky-nav-buttons div {
   display: block;
   width: 50%;
-  height: 40px;
+  height: 48px;
 }
 .cro .sticky-nav-buttons a {
   display: block;
-  height: 40px;
-  line-height: 40px;
-  font-size: 0.8em;
+  height: 48px;
+  line-height: 48px;
+  font-size: 1em;
   text-align: center;
+  transition: all 0.5s ease-in-out;
+}
+.cro .sticky-nav-buttons a.active {
+  background: #F8EBF3;
+  /*color: #fff;*/
 }
 .cro .sticky-nav-buttons a:first-child {
   border-right:1px solid #eee;

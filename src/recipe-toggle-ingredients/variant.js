@@ -43,8 +43,29 @@ const test = {
       page.append(buttons);
 
       if (ELM.get('.recipe-details').exist) {
-        const pos = document.querySelector('.recipe-details').offsetTop - 100;
-        window.onscroll = function() {test.checkScroll(pos)};
+        const detailsPos = document.querySelector('.recipe-details').offsetTop - 200;
+        const howtoPos = document.getElementById('recipe-howto').offsetTop - 150;
+        const ingredientsPos = document.getElementById('ingredients-section').offsetTop - 150;
+        window.onscroll = function() {checkScroll(detailsPos,howtoPos,ingredientsPos)};
+      }
+
+      function checkScroll(detailsPos,howtoPos,ingredientsPos) {
+        const scrollpos = window.pageYOffset;
+        if(scrollpos >= detailsPos && !(ELM.get('.sticky-nav-buttons.hidden').exists)) {
+          ELM.get('.sticky-nav-buttons').css('hidden');
+        } else {
+          ELM.get('.sticky-nav-buttons').removeClass('hidden');
+          if (scrollpos >= howtoPos) {
+            linkHowto.css('active');
+            linkIngredients.removeClass('active');
+          } else if (scrollpos >= ingredientsPos) {
+            linkHowto.removeClass('active');
+            linkIngredients.css('active');
+          } else {
+            linkHowto.removeClass('active');
+            linkIngredients.removeClass('active');
+          }
+        }
       }
 
     }
@@ -60,15 +81,6 @@ const test = {
     $('html,body').animate({
 			 scrollTop: elPosition
 		}, 400);
-  },
-
-  checkScroll(pos) {
-    const scrollpos = window.pageYOffset;
-    if(scrollpos >= pos && !(ELM.get('.sticky-nav-buttons.hidden').exists)) {
-      ELM.get('.sticky-nav-buttons').css('hidden');
-    } else if (scrollpos <= pos) {
-      ELM.get('.sticky-nav-buttons').removeClass('hidden');
-    }
   },
 
 };
