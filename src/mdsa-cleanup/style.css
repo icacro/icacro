@@ -1,16 +1,24 @@
-.cro .recipes .mdsa article .content.sm_hidden {
+.cro .recipes .mdsa article .content.sm_hidden,
+.cro .filtersegment a[data-hits].show-hits:after,
+.cro .recipe .yellow-stars dt,
+.cro .recipe .yellow-stars .votes,
+.cro .recipes .mdsa article .content .votes.small,
+.cro .recipe .recipe-info li {
   display: none;
 }
+
+.cro h1 .mini-title,
+.cro h1 + p,
+.cro .tag-container {
+  display: none !important;
+}
+
 .cro .save-recipe-button a {
   display: inline-block;
   margin-top: 50px;
   width: 30px;
   height: 24px;
   overflow: hidden;
-}
-
-.cro .filtersegment a[data-hits].show-hits:after {
-  display: none;
 }
 
 .cro .filtersegment a {
@@ -23,13 +31,17 @@
 
 .cro .recipe header h2 {
   position: absolute;
-  top:50px;
+  top:60px;
+  padding-right: 70px;
 }
 
-.cro .recipe .yellow-stars dt,
-.cro .recipe .yellow-stars .votes,
-.cro .recipe .recipe-info li:first-child {
-  display: none;
+.cro .recipe .recipe-info li.md_lte_hidden {
+  display: inline-block;
+  margin-top: 0;
+}
+.cro .recipe .recipe-info li {
+  border-left: 1px solid rgba(0,0,0,0.2);
+  padding-left: 10px;
 }
 
 .cro .recipe .yellow-stars,
@@ -46,6 +58,7 @@
 .cro fieldset.search {
   max-width: 300px;
 }
+
 .cro .search-container {
   max-width: 340px;
   margin: 0 auto;
@@ -56,6 +69,56 @@
   margin: 0 auto;
 }
 
-@media only screen and (max-width: 780px) {
-  .cro { }
+.cro .filtermenu fieldset.contractable {
+  margin-bottom: 0;
+  border-bottom: 1px solid #e6e4e2;
+}
+
+.cro .filtermenu fieldset.contractable>ul {
+  height: 0;
+  margin: 0;
+}
+
+.cro .filtermenu fieldset.contractable:not(.contracted) {
+  margin-bottom: 20px;
+}
+
+.cro .filtermenu fieldset.contractable.contracted+.contractable:not(.contracted) {
+  margin-top: 20px;
+}
+
+.cro .filtermenu {
+  opacity: 0 !important;
+  -webkit-transition: height 0.3s ease-out, margin 0.3s 0.15s ease-out;
+  transition: height 0.3s ease-out, margin 0.3s 0.15s ease-out;
+}
+
+.cro .filtermenu.loaded {
+  opacity: 1 !important;
+}
+
+.cro .filtermenu fieldset.contractable.selected {
+  margin-top: 0;
+  margin-bottom: 20px;
+  padding: 0;
+}
+
+.cro .filtermenu fieldset.contractable.selected>ul {
+  height: auto;
+}
+
+.cro .grid_fluid .column.lg_size14of20 {
+  width: 70%;
+}
+
+@media only screen and (max-width: 699px) {
+  .cro .filtermenu .filter-toggle-button.toggle.button {
+    margin-top: 10px;
+  }
+  .cro .page-header .searchicon {
+    display: none;
+  }
+  .cro .grid_fluid .column.lg_size14of20 {
+    width: 100%;
+  }
 }
