@@ -57,9 +57,6 @@ const test = {
       }
     }
 
-    //Tid ngt som traffic kan få ut? Ngt mer vi behöver?
-    //Design??
-
   },
 
 };

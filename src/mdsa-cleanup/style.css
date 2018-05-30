@@ -111,6 +111,7 @@
   width: 70%;
 }
 
+
 @media only screen and (max-width: 699px) {
   .cro .filtermenu .filter-toggle-button.toggle.button {
     margin-top: 10px;
@@ -120,5 +121,12 @@
   }
   .cro .grid_fluid .column.lg_size14of20 {
     width: 100%;
+  }
+}
+
+
+@media only screen and (min-width: 980px) {
+  .cro .grid_fluid .column.xl_size16of20 {
+    width: 75%;
   }
 }
