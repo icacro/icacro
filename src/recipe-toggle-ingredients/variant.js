@@ -43,9 +43,10 @@ const test = {
       page.append(buttons);
 
       if (ELM.get('.recipe-details').exist) {
-        const detailsPos = document.querySelector('.recipe-details').offsetTop - 200;
-        const howtoPos = document.getElementById('recipe-howto').offsetTop - 150;
-        const ingredientsPos = document.getElementById('ingredients-section').offsetTop - 150;
+        const diff = window.innerHeight / 5;
+        const detailsPos = document.querySelector('.recipe-details').offsetTop;
+        const howtoPos = document.getElementById('recipe-howto').offsetTop - diff;
+        const ingredientsPos = document.getElementById('ingredients-section').offsetTop - diff;
         window.onscroll = function() {checkScroll(detailsPos,howtoPos,ingredientsPos)};
       }
 
