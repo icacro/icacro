@@ -1,0 +1,35 @@
+.cro .page .recipe-details,
+.cro .page #comments-section,
+.cro .page .related-recipes {
+  display: none;
+}
+
+.cro #recipe-howto-steps {
+  opacity: 1;
+}
+
+.cro .loading-area {
+  height:300px;
+  max-height: 50vh;
+  background: #F8EBF3;
+}
+
+.cro #page-next {
+  height: 0;
+  opacity: 0;
+  overflow: hidden;
+}
+
+.cro #page {
+  height: auto;
+  opacity: 1;
+  overflow: visible;
+}
+
+.cro #page-next {
+  padding-top: 0 !important;
+}
+
+@media only screen and (max-width: 780px) {
+  .cro { }
+}
