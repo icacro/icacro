@@ -1,7 +1,12 @@
+.cro #footer,
 .cro .page .recipe-details,
 .cro .page #comments-section,
 .cro .page .related-recipes {
   display: none;
+}
+
+.cro #footer.visible {
+  display: block;
 }
 
 .cro #recipe-howto-steps {
@@ -11,13 +16,17 @@
 .cro .loading-area {
   height:300px;
   max-height: 50vh;
-  background: #F8EBF3;
+  background: #f3f0eb;
+  padding-bottom: 340px;
+  text-align: center;
+  padding-top: 70px;
 }
 
 .cro #page-next {
   height: 0;
   opacity: 0;
   overflow: hidden;
+  padding-top: 0 !important;
 }
 
 .cro #page {
@@ -26,10 +35,62 @@
   overflow: visible;
 }
 
-.cro #page-next {
+.cro .page + .page.recipepage {
+  margin-top: -120px;
+}
+
+.cro .page + .page.recipepage.recipepage--small {
   padding-top: 0 !important;
+}
+
+.cro .loading-area p {
+  width:100%;
+  max-width: 500px;
+  margin: 0 auto;
+  font-size: 1em;
+  transition: opacity 0.5s ease-in-out;
+}
+
+.cro .loading-area .loading-area-title span {
+  font-weight: lighter;
+  display: block;
+}
+
+.cro .loading-area .loading-area-title {
+  font-weight: bold;
+}
+
+.cro .loading-area svg {
+  width:20px;
+  height: 20px;
+  opacity: 0;
+  display: block;
+  margin: 15px auto;
+  transition: opacity 0.5s ease-in-out;
+}
+
+.cro .loading-area .svg {
+  border:1px solid #333;
+  border-radius: 100%;
+  width: 50px;
+  height: 50px;
+  margin: 20px auto;
+}
+
+.cro .loading-area.added svg {
+  opacity: 1;
 }
 
 @media only screen and (max-width: 780px) {
   .cro { }
+}
+
+
+@media only print {
+  .cro .page,
+  .cro .loading-area {display: none;}
+  .cro #page {
+    display: block;
+    margin-top: 0;
+  }
 }
