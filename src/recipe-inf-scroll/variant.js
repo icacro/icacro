@@ -131,7 +131,7 @@ const test = {
         var tds = xmlDoc.getElementById("page");
         var title = xmlDoc.title;
         title = '<span>Nästa recept:</span> ' + title.substring(0, title.indexOf('|'));
-        var arrow = '<div class="svg"><svg width="32px" height="32px"><use xlink:href="/Assets/icons/symbols.svg#arrow-down"></use></svg></div>';
+        var arrow = '<div class="svg"><svg width="32px" height="32px"><use xlink:href="/Assets/icons/symbols.svg#arrow-down"></use></svg><span class="loader"></span></div>';
         document.getElementById('page-next').innerHTML=tds.innerHTML;
         document.querySelector('#page .loading-area .loading-area-title').innerHTML=title + arrow;
         if (tds.classList.contains('recipepage--large')) {

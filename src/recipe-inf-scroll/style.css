@@ -26,7 +26,7 @@
   height: 0;
   opacity: 0;
   overflow: hidden;
-  padding-top: 0 !important;
+  padding-top: 50px !important;
 }
 
 .cro #page {
@@ -35,8 +35,24 @@
   overflow: visible;
 }
 
+.cro .recipe-image-square {
+  opacity: 1;
+  transition: all 0.75s ease-out;
+  transition-delay: 0.25s;
+}
+
+.cro #page-next .recipe-image-square {
+  margin-top: -60px;
+  opacity: 0;
+}
+
+.cro .page {
+  transition: all 0.5s ease-out;
+}
+
 .cro .page + .page.recipepage {
   margin-top: -120px;
+  padding-top: 0 !important;
 }
 
 .cro .page + .page.recipepage.recipepage--small {
@@ -65,20 +81,39 @@
   height: 20px;
   opacity: 0;
   display: block;
-  margin: 15px auto;
+  margin: 17px auto;
   transition: opacity 0.5s ease-in-out;
 }
 
 .cro .loading-area .svg {
-  border:1px solid #333;
+  background: #fff;
   border-radius: 100%;
   width: 50px;
   height: 50px;
   margin: 20px auto;
+  overflow: hidden;
+  position: relative;
 }
 
 .cro .loading-area.added svg {
   opacity: 1;
+}
+
+.cro .loading-area .svg .loader {
+  display: block;
+  position: absolute;
+  top:0;
+  left:0;
+  opacity: 1;
+  transition: opacity 0.5s ease-in-out;
+  border-bottom: 1rem solid #fff;
+  border-right: 1rem solid #fff;
+  border-top: 1rem solid #fff;
+  border-left: 1rem solid #EB1F07;
+}
+
+.cro .loading-area.added .loader {
+  opacity: 0;
 }
 
 @media only screen and (max-width: 780px) {
