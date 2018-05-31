@@ -22,18 +22,18 @@ const test = {
       ELM.get('.mdsa-main-grid > div').removeClass('xl_size15of20').css('xl_size20of20');
     }
 
-    if (ELM.get('#content > .grid_fluid > .lg_size5of20').exist()) {
-      ELM.get('#content > .grid_fluid > .lg_size5of20').css('lg_size6of20').removeClass('lg_size5of20');
-    }
-    if (ELM.get('#content > .grid_fluid > .lg_size15of20').exist()) {
-      ELM.get('#content > .grid_fluid > .lg_size15of20').css('lg_size14of20').removeClass('lg_size15of20');
-    }
-    if (ELM.get('#content > .grid_fluid > .xl_size4of20').exist()) {
-      ELM.get('#content > .grid_fluid > .xl_size4of20').css('xl_size5of20').removeClass('xl_size4of20');
-    }
-    if (ELM.get('#content > .grid_fluid > .lg_size16of20').exist()) {
-      ELM.get('#content > .grid_fluid > .xl_size16of20').css('xl_size15of20').removeClass('xl_size16of20');
-    }
+    // if (ELM.get('#content > .grid_fluid > .lg_size5of20').exist()) {
+    //   ELM.get('#content > .grid_fluid > .lg_size5of20').css('lg_size6of20').removeClass('lg_size5of20');
+    // }
+    // if (ELM.get('#content > .grid_fluid > .lg_size15of20').exist()) {
+    //   ELM.get('#content > .grid_fluid > .lg_size15of20').css('lg_size14of20').removeClass('lg_size15of20');
+    // }
+    // if (ELM.get('#content > .grid_fluid > .xl_size4of20').exist()) {
+    //   ELM.get('#content > .grid_fluid > .xl_size4of20').css('xl_size5of20').removeClass('xl_size4of20');
+    // }
+    // if (ELM.get('#content > .grid_fluid > .lg_size16of20').exist()) {
+    //   ELM.get('#content > .grid_fluid > .xl_size16of20').css('xl_size15of20').removeClass('xl_size16of20');
+    // }
 
     if (ELM.get('fieldset.search').exist()) {
       const searchContainer = ELM.create('div search-container');
@@ -44,13 +44,25 @@ const test = {
 
     const filterSegments = document.querySelectorAll('fieldset.filtersegment');
     if (filterSegments.length) {
-      let isLoaded = setInterval(checkLoaded, 200);
+      const isLoaded = setInterval(checkLoaded, 200);
       function checkLoaded() {
         if (document.getElementById('RecipeFilterMenu').classList.contains('loaded')) {
           clearInterval(isLoaded);
           for (var i = 0; i < filterSegments.length; i++) {
             if (!filterSegments[i].classList.contains('selected')) {
               filterSegments[i].classList.add('contracted');
+            }
+          }
+          const recipeFooter = document.querySelectorAll('.recipe footer');
+          let time;
+          const clock = '<svg width="32px" height="32px"><use xlink:href="/Assets/icons/symbols.svg#clock"></use></svg>';
+          if (recipeFooter.length) {
+            for (var i = 0; i < recipeFooter.length; i++) {
+              time = document.createElement('div');
+              console.log(time);
+              time.innerHTML=clock + '15 min';
+              time.classList.add('time');
+              recipeFooter[i].parentNode.insertBefore(time, recipeFooter[i]);
             }
           }
         }
