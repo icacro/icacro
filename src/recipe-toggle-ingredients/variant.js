@@ -30,12 +30,12 @@ const test = {
 
       buttonIngredients.click((e) => {
         e.preventDefault();
-        gaPush('A/B','Recept','Ankarnav ingredienser');
+        gaPush({ eventAction: 'Recept, Ankarnav ingredienser' });
         test.scrollToElement('ingredients-section');
       });
       buttonHowto.click((e) => {
         e.preventDefault();
-        gaPush('A/B','Recept','Ankarnav instruktioner');
+        gaPush({ eventAction: 'Recept, Ankarnav instruktioner' });
         test.scrollToElement('recipe-howto');
       });
 
