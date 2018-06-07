@@ -1,4 +1,9 @@
 .cro { }
-@media only screen and (max-width: 780px) {
-  .cro { }
+@media only screen and (max-width: 699px) {
+  .cro header.page-header .searchicon {
+    display: none;
+  }
+  .cro .coachmark-tooltip {
+    display: none !important;
+  }
 }
