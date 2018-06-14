@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Banner
-// @path         //./src/recipe-toggle-ingredients/variant.js
+// @path         //./src/mdsa-cleanup/variant.js
 // @namespace    http://tampermonkey.net/
 // @version      0.1
 // @match        https://www.ica.se/*
@@ -18,7 +18,7 @@ function init() {
   var head = document.querySelector('head');
 
   script.setAttribute('async', '');
-  script.setAttribute('src', 'https://cdn.rawgit.com/icacro/icacro/v1.0.176/src/recipe-toggle-ingredients/variant.min.js');
+  script.setAttribute('src', 'https://cdn.rawgit.com/icacro/icacro/v1.0.176/src/mdsa-cleanup/variant.min.js');
 
   style.appendChild(document.createTextNode(css));
 

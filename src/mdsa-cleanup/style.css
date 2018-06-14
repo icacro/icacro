@@ -13,12 +13,33 @@
   display: none !important;
 }
 
+.cro .save-recipe-button {
+  float: none;
+  margin-top: 5px;
+}
+
 .cro .save-recipe-button a {
+  font-size: 12px;
+}
+
+.cro .save-recipe-button a::before {
+  display: none;
+}
+
+.cro .save-recipe-button a span {
   display: inline-block;
-  margin-top: 50px;
-  width: 30px;
-  height: 24px;
-  overflow: hidden;
+  background: rgba(160, 41, 113, 0.1);
+  padding:12px;
+  text-align: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 100%;
+  margin: 0 10px 0 -2px;
+}
+
+.cro .save-recipe-button a span svg {
+  display: inline;
+  fill: #A02971;
 }
 
 .cro .filtersegment a {
@@ -29,15 +50,16 @@
   position: relative;
 }
 
-.cro .recipe header h2 {
-  position: absolute;
-  top:46px;
-  padding-right: 70px;
-}
-
 .cro .recipes .mdsa:not(.thumb-view) article h2 a {
   font-size: 30px;
   line-height: 1.1;
+  font-weight: normal;
+  margin-bottom: 1em;
+}
+
+.cro .recipe header {
+  margin: 5px 0 10px;
+  max-width: 400px;
 }
 
 .cro .recipe .recipe-info li.md_lte_hidden {
@@ -57,7 +79,6 @@
   position: relative;
   vertical-align: top;
   line-height: 16px;
-  margin-top: -5px;
 }
 
 .cro .recipe .time {
@@ -136,16 +157,6 @@
   height: auto;
 }
 
-/*.cro .grid_fluid .column.lg_size14of20 {
-  width: 70%;
-}*/
-
-.cro .recipes .mdsa article figure {
-  padding-bottom: 0;
-  height: auto;
-}
-
-
 @media only screen and (max-width: 699px) {
   .cro .filtermenu .filter-toggle-button.toggle.button {
     margin-top: 10px;
@@ -161,6 +172,6 @@
 
 @media only screen and (min-width: 980px) {
   .cro .grid_fluid .column.xl_size16of20 {
-    width: 75%;
+    width: 80%;
   }
 }
