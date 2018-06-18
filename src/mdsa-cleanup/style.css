@@ -3,6 +3,10 @@
   transition: height 0.3s ease-out, margin 0.3s 0.15s ease-out, opacity 0.3s linear;
 }
 
+.cro #content {
+  visibility: visible;
+}
+
 .cro .recipes .mdsa article .content.sm_hidden,
 .cro .filtersegment a[data-hits].show-hits:after,
 .cro .recipe .yellow-stars dt,
