@@ -17,18 +17,24 @@ let recipesArr = [];
 const maxlength = 25;
 let nextPage,currentPage,nextUrl;
 
-//---även #page-prev måste vara unika
-//---utskrift endast aktivt recept
-//---maxlängd på recipesArr
-//---felhantering (laddning)
-//---design/innehåll avgränsningsyta, fejkladdning
-//---scroll tillbaka - ändra #page och url
 //bugg tom loadingarea? tillbaka till 1 och fram igen?
 //---(ev) förflytta sig i historiken - högst upp på aktuellt recept
 
 //görsåhär-styling, funktioner
 //fälla ut meta/kommentarer     .recipe-details: .nutrients, .climate
 //                              section.comments .comments__list .comments__list__item-wrapper
+
+
+//skriv ut - hoppar upp till första receptet
+//timer
+//instruktioner-avbockning
+//omräknare
+//lägg i inköpslista
+//e-handla
+//näring/klimatguide
+//kommentarer
+//ladda kupong / lägg i inköpslista
+
 
 const test = {
 
