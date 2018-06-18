@@ -1,9 +1,10 @@
-.cro .filtermenu fieldset {
-  -webkit-transition: height 0.3s ease-out, margin 0.3s 0.15s ease-out, opacity 0.3s linear;
-  transition: height 0.3s ease-out, margin 0.3s 0.15s ease-out, opacity 0.3s linear;
+.cro .filtermenu fieldset, .cro .filtermenu fieldset ul, .cro .filtermenu fieldset li {
+  -webkit-transition: height 0.3s ease-out, margin 0.3s 0.15s ease-out, opacity 0.3s linear !important;
+  transition: height 0.3s ease-out, margin 0.3s 0.15s ease-out, opacity 0.3s linear !important;
 }
 
-.cro #content {
+.cro #content,
+.cro .recipes article footer {
   visibility: visible;
 }
 
@@ -64,6 +65,7 @@
 
 .cro .recipes .mdsa:not(.thumb-view) article:not(.lazyhide):not(.digital-coupon):before {
   top:0;
+  visibility: visible;
 }
 
 .cro .recipes .mdsa:not(.thumb-view) article .column {
