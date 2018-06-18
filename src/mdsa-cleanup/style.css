@@ -4,7 +4,8 @@
 }
 
 .cro #content,
-.cro .recipes article footer {
+.cro .recipes article footer,
+.cro #content * {
   visibility: visible;
 }
 
@@ -65,7 +66,7 @@
 
 .cro .recipes .mdsa:not(.thumb-view) article:not(.lazyhide):not(.digital-coupon):before {
   top:0;
-  visibility: visible;
+  opacity: 1;
 }
 
 .cro .recipes .mdsa:not(.thumb-view) article .column {
@@ -111,12 +112,19 @@
 
 .cro .recipe .time {
   border-left: 1px solid rgba(0,0,0,0.2);
-  border-right: 1px solid rgba(0,0,0,0.2);
-  padding: 0 18px 0 34px;
-  margin-left: 10px;
-  margin-right: 18px;
+  padding: 0 0 0 34px;
+  margin-right: 0;
   color: #756f67;
   height: 16px;
+}
+
+.cro .recipe .ingredients {
+  float: none;
+  width: auto;
+  margin:0;
+  border-left: 1px solid rgba(0,0,0,0.2);
+  margin-left: 10px;
+  padding: 0 18px;
 }
 
 .cro .recipe .time svg {
@@ -199,19 +207,15 @@
     display: block;
   }
   .cro .recipe .time {
-    margin-left: 0;
-    padding-left: 18px;
-    border-left: none;
+    padding-left: 22px;
   }
   .cro .recipe .time svg {
-    left: 0;
+    left: 8px;
   }
-}
-
-@media only screen and (max-width: 340px) {
-  .cro .recipe .time {
-    padding-right: 6px;
-    margin-right: 6px;
+  .cro .recipe .ingredients {
+    margin-left: 0;
+    padding: 0 4px 0 0;
+    border-left: none;
   }
 }
 

@@ -88,7 +88,7 @@ const test = {
         //time.innerHTML=clock + recipeFooter[i].parentNode.parentNode.getAttribute('data-cookingtime');
         time.innerHTML=clock + 'XX min';
         time.classList.add('time');
-        recipeTxtDiv.insertBefore(time, recipeFooter);
+        recipeTxtDiv.insertBefore(time, recipe[i].querySelector('.save-recipe-button'));
 
         const imgWrapper = recipeImgDiv.querySelector('a');
         const imgContent = imgWrapper.innerHTML.replace('cf_5291','cf_259');
