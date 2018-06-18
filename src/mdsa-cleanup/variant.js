@@ -10,7 +10,7 @@
 'use strict';
 
 import { CROUTIL, ELM } from '../util/main';
-import { triggerHotJar, gaPush } from '../util/utils';
+import { gaPush } from '../util/utils';
 import './style.css';
 
 const test = {
@@ -22,11 +22,10 @@ const test = {
       ELM.get('.mdsa-main-grid > div').removeClass('xl_size15of20').css('xl_size20of20');
     }
 
-    if (ELM.get('fieldset.search').exist()) {
+    if (ELM.get('div.grid_fluid .filter-search').exist()) {
       const searchContainer = ELM.create('div search-container');
-      searchContainer.append(ELM.get('fieldset.search'));
+      searchContainer.append(ELM.get('.filter-search'));
       ELM.get('header.page-header').append(searchContainer);
-      ELM.get('.filter-search fieldset.search').remove();
     }
 
     const filterSegments = document.querySelectorAll('fieldset.filtersegment');
@@ -40,7 +39,7 @@ const test = {
       }
     });
 
-    mutationObserver.observe(document.documentElement, {
+    mutationObserver.observe(document.getElementById('recipes'), {
       attributes: true,
       characterData: true,
       childList: true,
@@ -62,28 +61,41 @@ const test = {
   },
 
   addChanges(filterSegments) {
+
     for (var i = 0; i < filterSegments.length; i++) {
       if (!filterSegments[i].classList.contains('selected')) {
         filterSegments[i].classList.add('contracted');
       }
     }
-    const recipeFooter = document.querySelectorAll('.recipe footer:not(.adjusted)');
-    if (recipeFooter.length) {
-      let time, saveSvg;
+
+    const recipe = document.querySelectorAll('.recipe:not(.adjusted)');
+
+    if (recipe.length) {
+      let time;
       const clock = '<svg width="32px" height="32px"><use xlink:href="/Assets/icons/symbols.svg#clock"></use></svg>';
-      const svg = '<svg width="12px" height="12px"><use xlink:href="/Assets/icons/symbols.svg#heart"></use></svg> ';
-      for (var i = 0; i < recipeFooter.length; i++) {
-        recipeFooter[i].classList.add('adjusted');
+      for (var i = 0; i < recipe.length; i++) {
+        recipe[i].classList.add('adjusted');
+        const recipeFooter = recipe[i].querySelector('footer');
+        const recipeImgDiv = recipe[i].querySelector('div:first-child');
+        const recipeTxtDiv = recipe[i].querySelector('div:last-child');
+        recipeTxtDiv.classList.add('size15of20');
+        recipeTxtDiv.classList.remove('lg_size15of20');
+        recipeTxtDiv.classList.remove('size12of20');
+        recipeImgDiv.classList.add('size5of20');
+        recipeImgDiv.classList.remove('lg_size5of20');
+        recipeImgDiv.classList.remove('size8of20');
         time = document.createElement('div');
         //time.innerHTML=clock + recipeFooter[i].parentNode.parentNode.getAttribute('data-cookingtime');
         time.innerHTML=clock + 'XX min';
         time.classList.add('time');
-        recipeFooter[i].parentNode.insertBefore(time, recipeFooter[i]);
-        saveSvg = document.createElement('span');
-        saveSvg.innerHTML=svg;
-        recipeFooter[i].parentNode.querySelector('.save-recipe-button a').prepend(saveSvg);
+        recipeTxtDiv.insertBefore(time, recipeFooter);
+
+        const imgWrapper = recipeImgDiv.querySelector('a');
+        const imgContent = imgWrapper.innerHTML.replace('cf_5291','cf_259');
+        imgWrapper.innerHTML = imgContent;
       }
     }
+
   }
 
 };

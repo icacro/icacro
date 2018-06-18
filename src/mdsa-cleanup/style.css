@@ -1,3 +1,8 @@
+.cro .filtermenu fieldset {
+  -webkit-transition: height 0.3s ease-out, margin 0.3s 0.15s ease-out, opacity 0.3s linear;
+  transition: height 0.3s ease-out, margin 0.3s 0.15s ease-out, opacity 0.3s linear;
+}
+
 .cro .recipes .mdsa article .content.sm_hidden,
 .cro .filtersegment a[data-hits].show-hits:after,
 .cro .recipe .yellow-stars dt,
@@ -14,11 +19,12 @@
 }
 
 .cro .save-recipe-button {
-  float: none;
-  margin-top: 5px;
+  /*float: none;
+  margin-top: 5px;*/
+  display: none;
 }
 
-.cro .save-recipe-button a {
+/*.cro .save-recipe-button a {
   font-size: 12px;
 }
 
@@ -40,14 +46,30 @@
 .cro .save-recipe-button a span svg {
   display: inline;
   fill: #A02971;
-}
+}*/
 
 .cro .filtersegment a {
   text-transform: lowercase;
 }
 
 .cro .recipe {
+  position: relative !important;
+  display: flex;
+  align-items: center;
+}
+
+.cro .recipes .mdsa:not(.thumb-view) article:not(.lazyhide):not(.digital-coupon):before {
+  top:0;
+}
+
+.cro .recipes .mdsa:not(.thumb-view) article .column {
+  min-width: 140px;
+}
+
+.cro .recipe {
   position: relative;
+  display: flex;
+  align-items: center;
 }
 
 .cro .recipes .mdsa:not(.thumb-view) article h2 a {
@@ -84,9 +106,9 @@
 .cro .recipe .time {
   border-left: 1px solid rgba(0,0,0,0.2);
   border-right: 1px solid rgba(0,0,0,0.2);
-  padding: 0 10px 0 25px;
-  margin-left: 4px;
-  margin-right: 8px;
+  padding: 0 18px 0 34px;
+  margin-left: 10px;
+  margin-right: 18px;
   color: #756f67;
   height: 16px;
 }
@@ -94,7 +116,7 @@
 .cro .recipe .time svg {
   position: absolute;
   top:2px;
-  left: 10px;
+  left: 18px;
   width: 11px;
   height: 11px;
   margin-right: 5px;
@@ -109,15 +131,20 @@
   max-width: 300px;
 }
 
-.cro .search-container {
-  max-width: 340px;
+.cro .search-container,
+.cro header.page-header .recipe-search {
+  max-width: 300px;
   margin: 0 auto;
 }
 
-/*.cro #content > .grid_fluid {
-  max-width: 960px;
-  margin: 0 auto;
-}*/
+.cro .filter-search {
+  margin-top: 0;
+}
+
+.cro #content > header > div:first-child h1 {
+  padding-top: 20px;
+  padding-bottom: 19px;
+}
 
 .cro .filtermenu fieldset.contractable {
   margin-bottom: 0;
@@ -157,6 +184,31 @@
   height: auto;
 }
 
+.cro #content > div.grid_fluid > div:first-child {
+  margin-top: -40px;
+}
+
+@media only screen and (max-width: 460px) {
+  .cro .recipe .yellow-stars {
+    display: block;
+  }
+  .cro .recipe .time {
+    margin-left: 0;
+    padding-left: 18px;
+    border-left: none;
+  }
+  .cro .recipe .time svg {
+    left: 0;
+  }
+}
+
+@media only screen and (max-width: 340px) {
+  .cro .recipe .time {
+    padding-right: 6px;
+    margin-right: 6px;
+  }
+}
+
 @media only screen and (max-width: 699px) {
   .cro .filtermenu .filter-toggle-button.toggle.button {
     margin-top: 10px;
@@ -164,11 +216,19 @@
   .cro .page-header .searchicon {
     display: none;
   }
-  /*.cro .grid_fluid .column.lg_size14of20 {
-    width: 100%;
-  }*/
 }
 
+@media only screen and (max-width: 767px) {
+  .cro .recipes .mdsa:not(.thumb-view) article h2 a {
+    font-size: 24px;
+  }
+}
+
+@media only screen and (max-width: 500px) {
+  .cro .recipes .mdsa:not(.thumb-view) article h2 a {
+    font-size: 18px;
+  }
+}
 
 @media only screen and (min-width: 980px) {
   .cro .grid_fluid .column.xl_size16of20 {
