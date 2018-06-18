@@ -10,13 +10,13 @@
 'use strict';
 
 import { CROUTIL, ELM } from '../util/main';
-import { triggerHotJar, gaPush } from '../util/utils';
+import { ajax, gaPush } from '../util/utils';
 import './style.css';
 
-//Spara
+//Spara-funktion - se om recept redan är sparat
 //ev ikoner
+//ta bort vid sök
 //gömma dubblett?
-//ta bort vid omsortering
 
 const test = {
 
@@ -45,6 +45,10 @@ const test = {
         toprecipesList.append(recipe1 + recipe2 + recipe3);
         //toprecipesList.insertAfter(recipeHeader);
         ELM.get('.recipes').appendFirst(toprecipesList);
+
+
+
+
 
         if (/^https:\/\/www.ica.se\/recept\/vardag\/$/.test(window.location)) {
           // Chili con carne - https://www.ica.se/recept/chili-con-carne-424/
@@ -384,6 +388,7 @@ const test = {
 
   modifyRecipe(recipe,recipeId,recipeName,recipeUrl,recipeImg,recipeAvg,recipeVotes,recipeIngredients,recipeIngredientsList,recipeDesc) {
     const recipeEl = ELM.get('#'+recipe);
+    const saveBtn = recipeEl.find('.save-recipe-button a');
     recipeEl.find('header a').text(recipeName).attr('href',recipeUrl);
     recipeEl.find('figure a').attr('href',recipeUrl);
     recipeEl.find('figure img').attr('src',recipeImg).attr('alt',recipeName);
@@ -392,28 +397,21 @@ const test = {
     recipeEl.find('.yellow-stars').attr('id','recipeRating' + recipeId);
     recipeEl.find('.rate-recipe .rate').attr('data-avg-rating',recipeAvg);
     recipeEl.find('.rate-recipe meter').attr('value',recipeAvg).text(recipeAvg + '/5');
-    recipeEl.find('.save-recipe-button a').attr('data-name',recipeName).attr('data-link',recipeUrl).attr('data-recipeid',recipeId);
     recipeEl.find('footer .ingredients').attr('title',recipeIngredientsList).text(recipeIngredients + ' ingredienser');
     recipeEl.find('dd.votes span').text(recipeVotes);
     recipeEl.find('#hdnRecipeId').attr('value',recipeId);
-  }
 
-  /*
-  .save-recipe-button a       data-name, data-link, data-recipeid
-  footer .ingredients         title, text (XX ingredienser)
-  dd.votes span               (antal röster)
-  #hdnRecipeId                value
+    saveBtn.attr('data-name',recipeName).attr('data-link',recipeUrl).attr('data-recipeid',recipeId);
 
-  .recipe figure a            href
-  .recipe figure img          src, alt
-  .recipe header a            href, text
-
-  .recipe .content a          href
-  .recipe .content p          text
-  .yellow-stars               id ("recipeRating424")
-  .rate-recipe .rate          data-avg-rating
-  .rate-recipe meter          value, text ("4.2/5")
-  */
+    saveBtn.click((e) => {
+      e.preventDefault();
+      ICA.legacy.savedRecipes.add(recipeId, function (data) {
+          icadatalayer.add('recipe-save'); // Add info to datalayer for analytics
+          saveBtn.css('active');
+          saveBtn.css('icon-heart-filled');
+      });
+    });
+  },
 
 };
 
