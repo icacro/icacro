@@ -46,9 +46,12 @@ const test = {
       subtree: true
     });
 
-    setTimeout(function() {
-      ELM.get('#content').css('cro-transitions');
-    },500);
+    document.querySelector('.filtermenu').onclick = function(){
+      this.classList.add('cro-transitions');
+      setTimeout(function() {
+        this.classList.removeClass('cro-transitions');
+      },300);
+    };
 
   },
 

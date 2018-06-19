@@ -1,6 +1,11 @@
-.cro .cro-transitions .filtermenu fieldset, .cro .cro-transitions .filtermenu fieldset ul, .cro .cro-transitions .filtermenu fieldset li {
-  -webkit-transition: height 0.3s ease-out, margin 0.3s 0.15s ease-out, opacity 0.3s linear !important;
-  transition: height 0.3s ease-out, margin 0.3s 0.15s ease-out, opacity 0.3s linear !important;
+.cro .filtermenu fieldset, .cro .filtermenu fieldset * {
+  -webkit-transition: none;
+  transition: none;
+}
+
+.cro .cro-transitions .filtermenu fieldset, .cro .cro-transitions .filtermenu fieldset * {
+  -webkit-transition: height 0.3s ease-out, margin 0.3s 0.15s ease-out, opacity 0.3s linear;
+  transition: height 0.3s ease-out, margin 0.3s 0.15s ease-out, opacity 0.3s linear;
 }
 
 .cro #content,
