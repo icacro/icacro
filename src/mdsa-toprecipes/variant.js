@@ -13,10 +13,10 @@ import { CROUTIL, ELM } from '../util/main';
 import { ajax, gaPush } from '../util/utils';
 import './style.css';
 
-//Spara-funktion - se om recept redan är sparat
+//spara recept - end om se om recept redan är sparat?
 //ev ikoner
-//ta bort vid sök
-//gömma dubblett?
+//---göm vid sök
+//gömma dubbletter?
 
 const test = {
 
@@ -38,16 +38,15 @@ const test = {
         const toprecipesList = ELM.create('div toprecipes-list column size20of20 white-bg mdsa loaded');
         let recipe1,recipe2,recipe3;
 
+        const topHeader = '<h3>ICA Köket rekommenderar</h3>';
+
         recipe1 = '<article class="recipe grid_fluid with-background" id="toprecipe-1"><div class="column size8of20 lg_size5of20"><figure class="sprite2-p" style=""><a href="" class="  lazyloaded" data-noscript=""><img src="" alt="" class="lazyNoscriptActive"></a></figure></div><div class="column size12of20 lg_size15of20"><header><h2 class="title"><a href=""></a></h2></header><div class="content sm_hidden"><a class="block"><p></p></a></div><div id="" class="yellow-stars" itemprop="aggregateRating" itemscope="" itemtype="http://schema.org/AggregateRating"><section class="rate-recipe"><div class="content"><dl class="inline rate" data-avg-rating=""><dt>Betyg:</dt><dd class="rating" style="z-index: 0"><meter class="hidden" value="" min="1" max="5"></meter><div class="grade grade-5" title="5 av 5" data-rating="5"><span class="sprite2 icon icon-star"></span></div><div class="grade grade-4" title="4 av 5" data-rating="4"><span class="sprite2 icon icon-star"></span></div><div class="grade grade-3" title="3 av 5" data-rating="3"><span class="sprite2 icon icon-star"></span></div><div class="grade grade-2" title="2 av 5" data-rating="2"><span class="sprite2 icon icon-star"></span></div><div class="grade grade-1" title="1 av 5" data-rating="1"><span class="sprite2 icon icon-star"></span></div><input type="hidden" id="hdnRecipeId" value=""></dd><dd class="small votes"><span itemprop="reviewCount"></span> röst<span class="plural-postfix">er</span></dd></dl></div></section></div><footer><ul class="recipe-info"><li class="md_lte_hidden"><span title="" class="ingredients"></span></li></ul></footer><div class="save-recipe-button"><a href="#" data-name="" data-link="" data-recipeid="" class="sprite2-p icon-heart save-recipe js-track-recipe-save " title="Spara">Spara</a></div></div></article>';
         recipe2 = '<article class="recipe grid_fluid with-background" id="toprecipe-2"><div class="column size8of20 lg_size5of20"><figure class="sprite2-p" style=""><a href="" class="  lazyloaded" data-noscript=""><img src="" alt="" class="lazyNoscriptActive"></a></figure></div><div class="column size12of20 lg_size15of20"><header><h2 class="title"><a href=""></a></h2></header><div class="content sm_hidden"><a class="block"><p></p></a></div><div id="" class="yellow-stars" itemprop="aggregateRating" itemscope="" itemtype="http://schema.org/AggregateRating"><section class="rate-recipe"><div class="content"><dl class="inline rate" data-avg-rating=""><dt>Betyg:</dt><dd class="rating" style="z-index: 0"><meter class="hidden" value="" min="1" max="5"></meter><div class="grade grade-5" title="5 av 5" data-rating="5"><span class="sprite2 icon icon-star"></span></div><div class="grade grade-4" title="4 av 5" data-rating="4"><span class="sprite2 icon icon-star"></span></div><div class="grade grade-3" title="3 av 5" data-rating="3"><span class="sprite2 icon icon-star"></span></div><div class="grade grade-2" title="2 av 5" data-rating="2"><span class="sprite2 icon icon-star"></span></div><div class="grade grade-1" title="1 av 5" data-rating="1"><span class="sprite2 icon icon-star"></span></div><input type="hidden" id="hdnRecipeId" value=""></dd><dd class="small votes"><span itemprop="reviewCount"></span> röst<span class="plural-postfix">er</span></dd></dl></div></section></div><footer><ul class="recipe-info"><li class="md_lte_hidden"><span title="" class="ingredients"></span></li></ul></footer><div class="save-recipe-button"><a href="#" data-name="" data-link="" data-recipeid="" class="sprite2-p icon-heart save-recipe js-track-recipe-save " title="Spara">Spara</a></div></div></article>';
         recipe3 = '<article class="recipe grid_fluid with-background" id="toprecipe-3"><div class="column size8of20 lg_size5of20"><figure class="sprite2-p" style=""><a href="" class="  lazyloaded" data-noscript=""><img src="" alt="" class="lazyNoscriptActive"></a></figure></div><div class="column size12of20 lg_size15of20"><header><h2 class="title"><a href=""></a></h2></header><div class="content sm_hidden"><a class="block"><p></p></a></div><div id="" class="yellow-stars" itemprop="aggregateRating" itemscope="" itemtype="http://schema.org/AggregateRating"><section class="rate-recipe"><div class="content"><dl class="inline rate" data-avg-rating=""><dt>Betyg:</dt><dd class="rating" style="z-index: 0"><meter class="hidden" value="" min="1" max="5"></meter><div class="grade grade-5" title="5 av 5" data-rating="5"><span class="sprite2 icon icon-star"></span></div><div class="grade grade-4" title="4 av 5" data-rating="4"><span class="sprite2 icon icon-star"></span></div><div class="grade grade-3" title="3 av 5" data-rating="3"><span class="sprite2 icon icon-star"></span></div><div class="grade grade-2" title="2 av 5" data-rating="2"><span class="sprite2 icon icon-star"></span></div><div class="grade grade-1" title="1 av 5" data-rating="1"><span class="sprite2 icon icon-star"></span></div><input type="hidden" id="hdnRecipeId" value=""></dd><dd class="small votes"><span itemprop="reviewCount"></span> röst<span class="plural-postfix">er</span></dd></dl></div></section></div><footer><ul class="recipe-info"><li class="md_lte_hidden"><span title="" class="ingredients"></span></li></ul></footer><div class="save-recipe-button"><a href="#" data-name="" data-link="" data-recipeid="" class="sprite2-p icon-heart save-recipe js-track-recipe-save " title="Spara">Spara</a></div></div></article>';
 
-        toprecipesList.append(recipe1 + recipe2 + recipe3);
+        toprecipesList.append(topHeader + recipe1 + recipe2 + recipe3);
         //toprecipesList.insertAfter(recipeHeader);
         ELM.get('.recipes').appendFirst(toprecipesList);
-
-
-
 
 
         if (/^https:\/\/www.ica.se\/recept\/vardag\/$/.test(window.location)) {
@@ -379,6 +378,14 @@ const test = {
           );
 
         }
+
+        window.onpopstate = function(event) {
+          if (/^https:\/\/www.ica.se\/recept\/.*:search=.*$/.test(window.location)) {
+            toprecipesList.css('cro-search');
+          } else {
+            toprecipesList.removeClass('cro-search');
+          }
+        };
 
       }
 
