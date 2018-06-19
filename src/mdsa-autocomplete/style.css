@@ -1,9 +1,15 @@
 .cro { }
+.cro .coachmark-tooltip {
+  display: none !important;
+}
+.cro .autocomplete {
+  background: white;
+  color: black;
+  list-style: none;
+  text-align: left;
+}
 @media only screen and (max-width: 699px) {
   .cro header.page-header .searchicon {
     display: none;
-  }
-  .cro .coachmark-tooltip {
-    display: none !important;
   }
 }

@@ -19,6 +19,7 @@ const filterStartsWith = q => (
 
 const test = {
   filters: [],
+  activeFilters: [],
   getFilters() {
     test.filters = [];
     $('.filtermenu .filtersegment').each(function () {
@@ -30,22 +31,82 @@ const test = {
   findFilter(q) {
     const hasAtLeastOneFilterStartingWith = s => (t => t.list.some(filterStartsWith(s)));
     const toFilterTypeWithMatchingFilters = t => (
-      { type: t.type, list: t.list.find(filterStartsWith(q)) }
+      { type: t.type, list: t.list.filter(filterStartsWith(q)) }
     );
 
     return test.filters.filter(hasAtLeastOneFilterStartingWith(q))
-      .map(toFilterTypeWithMatchingFilters(q));
+      .map(toFilterTypeWithMatchingFilters);
+  },
+  searchWithFilters() {
+    let baseUrl = '/Templates/ajaxresponse.aspx?ajaxFunction=RecipeListMdsa&';
+    baseUrl += test.activeFilters.map(f => `filter=${encodeURIComponent(`${f.type}:${f.name}`)}`).join('&');
+
+    // filter=Ingrediens%3AKyckling&filter=Typ+av+recept%3AGryta
+    // &mdsarowentityid=f7463ed4-2b41-42e7-9876-a42700eb38db
+    // &num=16
+    // &query=kyckling+bacon&sortbymetadata=Relevance
+    // &id=12
+    // &_hour=14
+    fetch(baseUrl).then((response) => {
+      response.text().then((data) => {
+        $('.mdsa').html(data);
+        $('.status .count').text($('.mdsa .TotalSearchItems').val());
+      });
+    })
+  },
+  createAutocompleteItem(type, name) {
+    return $(`<li/>`)
+      .text(name)
+      .click(() => {
+        const filter = { type, name };
+        console.log(filter);
+        test.activeFilters.push(filter);
+        test.searchWithFilters()
+      });
+  },
+  getAutocompleteList(list) {
+    return $('<ul class="autocomplete"/>').append(
+      list.reduce(
+        (acc, curr) => acc.concat(curr.list.map(i => test.createAutocompleteItem(curr.type, i))),
+        [],
+      )
+    );
   },
   manipulateDom() {
-    $('.cro .recipe-search').removeClass('sm_gte_hidden');
+    $('.cro .recipe-search')
+      .removeClass('sm_gte_hidden')
+      .find('#search2')
+      .on('input', test.debounce(test.searchFieldInputHandler, 1000))
+      .on('blur', test.searchFieldBlurHandler);
+  },
+  searchFieldInputHandler(e) {
+    const q = $(e.target).val();
+    if (q.length > 1) {
+      $('.autocomplete', e.target.parentNode).remove();
+      $('.cro .recipe-search #search2').after(test.getAutocompleteList(test.findFilter(q)))
+    }
+  },
+  searchFieldBlurHandler(e) {
+    window.setTimeout(() => $('.autocomplete', e.target.parentNode).remove(), 500);
+  },
+  debounce(func, wait) {
+    let timeout;
+    return function () {
+      const context = this;
+      const args = arguments;
+      const later = function () {
+        timeout = null;
+        func.apply(context, args);
+      };
+      window.clearTimeout(timeout);
+      timeout = setTimeout(later, wait);
+    };
   },
 };
 
 $(document).ready(() => {
   Object.assign(test, CROUTIL());
+  test.getFilters();
   test.manipulateDom();
-  test.getFilters()
-  console.log(test.filters);
-  console.log(test.findFilter('Bil'));
   // triggerHotJar('mdsaAutocompleteVariant');
 });
