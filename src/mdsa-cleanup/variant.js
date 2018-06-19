@@ -75,7 +75,7 @@ const test = {
     const recipe = document.querySelectorAll('.recipe:not(.adjusted)');
 
     if (recipe.length) {
-      let time;
+      let time, saveSvg;
       const clock = '<svg width="32px" height="32px"><use xlink:href="/Assets/icons/symbols.svg#clock"></use></svg>';
       for (var i = 0; i < recipe.length; i++) {
         recipe[i].classList.add('adjusted');
@@ -89,11 +89,15 @@ const test = {
         recipeImgDiv.classList.remove('lg_size5of20');
         recipeImgDiv.classList.remove('size8of20');
         time = document.createElement('div');
-        //time.innerHTML=clock + recipeFooter[i].parentNode.parentNode.getAttribute('data-cookingtime');
-        time.innerHTML=clock + 'XX min';
-        time.classList.add('time');
-        recipeTxtDiv.insertBefore(time, recipe[i].querySelector('.save-recipe-button'));
-
+        if (recipe[i].hasAttribute('data-cookingtime')) {
+          time.innerHTML=clock + recipe[i].getAttribute('data-cookingtime');
+          time.classList.add('time');
+          recipeTxtDiv.insertBefore(time, recipe[i].querySelector('.save-recipe-button'));
+        } else {
+          time.innerHTML=clock + 'XX min';
+          time.classList.add('time');
+          recipeTxtDiv.insertBefore(time, recipe[i].querySelector('.save-recipe-button'));
+        }
         const imgWrapper = recipeImgDiv.querySelector('a');
         const imgContent = imgWrapper.innerHTML.replace('cf_5291','cf_259');
         imgWrapper.innerHTML = imgContent;

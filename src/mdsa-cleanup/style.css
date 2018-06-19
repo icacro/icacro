@@ -25,34 +25,37 @@
 }
 
 .cro .save-recipe-button {
-  /*float: none;
-  margin-top: 5px;*/
-  display: none;
+  width: 26px;
+  height: 26px;
+  overflow: hidden;
+  position: absolute;
+  right:5%;
+  top:50%;
+
 }
 
-/*.cro .save-recipe-button a {
+.cro .save-recipe-button a {
   font-size: 12px;
 }
 
-.cro .save-recipe-button a::before {
+/*.cro .save-recipe-button a::before {
   display: none;
 }
 
 .cro .save-recipe-button a span {
   display: inline-block;
-  background: rgba(160, 41, 113, 0.1);
   padding:12px;
   text-align: center;
   width: 40px;
   height: 40px;
   border-radius: 100%;
   margin: 0 10px 0 -2px;
-}
+}*/
 
 .cro .save-recipe-button a span svg {
   display: inline;
   fill: #A02971;
-}*/
+}
 
 .cro .filtersegment a {
   text-transform: lowercase;
@@ -88,7 +91,7 @@
 }
 
 .cro .recipe header {
-  margin: 5px 0 10px;
+  margin: 5px 50px 10px 0;
   max-width: 400px;
 }
 
