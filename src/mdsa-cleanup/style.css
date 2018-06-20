@@ -161,7 +161,7 @@
 }
 
 .cro .filtermenu fieldset.contractable {
-  margin-bottom: 0;
+  margin-bottom: 10px !important;
   border-bottom: 1px solid #e6e4e2;
 }
 
@@ -171,7 +171,7 @@
 }
 
 .cro #RecipeFilterMenu fieldset.contractable:not(.contracted) {
-  margin-bottom: 20px;
+  margin-bottom: 10px !important;
   margin-top: 0;
 }
 

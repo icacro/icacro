@@ -12,7 +12,7 @@
 'use strict';
 
 function init() {
-  var css = '#RecipeFilterMenu fieldset {margin-bottom:0;} #content, .recipes article footer, .recipes .mdsa article:before {visibility:hidden;} .recipes .mdsa article:before {opacity: 0;} .filtermenu fieldset, .filtermenu fieldset ul, .filtermenu fieldset li {-webkit-transition: none !important; transition: none !important;}';
+  var css = '#RecipeFilterMenu fieldset {margin-bottom:0;} #content, .recipes article footer, .recipes .mdsa article:before {visibility:hidden;} .filtermenu fieldset, .filtermenu fieldset ul, .filtermenu fieldset li {-webkit-transition: none !important; transition: none !important;}';
   var style = document.createElement('style');
   var script = document.createElement('script');
   var head = document.querySelector('head');

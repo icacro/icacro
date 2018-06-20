@@ -46,12 +46,12 @@ const test = {
       subtree: true
     });
 
-    document.querySelector('.filtermenu').onclick = function(){
-      this.classList.add('cro-transitions');
-      setTimeout(function() {
-        this.classList.removeClass('cro-transitions');
-      },300);
-    };
+    // document.querySelector('.filtermenu').onclick = function(){
+    //   this.classList.add('cro-transitions');
+    //   setTimeout(function() {
+    //     this.classList.removeClass('cro-transitions');
+    //   },300);
+    // };
 
   },
 
