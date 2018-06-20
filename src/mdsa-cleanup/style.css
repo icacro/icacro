@@ -161,18 +161,29 @@
 }
 
 .cro .filtermenu fieldset.contractable {
-  margin-bottom: 10px !important;
+  /*margin-bottom: 0 !important;*/
   border-bottom: 1px solid #e6e4e2;
 }
 
-.cro .filtermenu fieldset.contractable>ul {
+.cro .filtermenu fieldset.contractable:not(.selected)>ul {
   height: 0;
-  margin: 0;
+  margin-bottom: 0;
 }
 
-.cro #RecipeFilterMenu fieldset.contractable:not(.contracted) {
-  margin-bottom: 10px !important;
-  margin-top: 0;
+.cro .filtermenu fieldset.contractable:not(.selected) {
+  margin-bottom: 0;
+}
+
+.cro .filtermenu fieldset.contractable:not(.selected) legend::before {
+  opacity: 1;
+}
+
+.cro .filtermenu fieldset.contractable:not(.selected) legend::after {
+  opacity: 0;
+}
+
+.cro .filtermenu fieldset.contractable.open {
+  margin: 20px 0;
 }
 
 .cro .filtermenu {

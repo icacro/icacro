@@ -46,13 +46,6 @@ const test = {
       subtree: true
     });
 
-    // document.querySelector('.filtermenu').onclick = function(){
-    //   this.classList.add('cro-transitions');
-    //   setTimeout(function() {
-    //     this.classList.removeClass('cro-transitions');
-    //   },300);
-    // };
-
   },
 
   checkForChanges(filterSegments) {
@@ -73,6 +66,14 @@ const test = {
       if (!filterSegments[i].classList.contains('selected')) {
         filterSegments[i].classList.add('contracted');
       }
+
+      filterSegments[i].onclick = function(){
+        if(this.classList.contains('open')) {
+          this.classList.remove('open');
+        } else {
+          this.classList.add('open');
+        }
+      };
     }
 
     const recipe = document.querySelectorAll('.recipe:not(.adjusted)');
