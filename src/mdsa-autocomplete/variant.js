@@ -10,7 +10,6 @@
 'use strict';
 
 import { CROUTIL, ELM } from '../util/main';
-// import { triggerHotJar } from '../util/utils';
 import './style.css';
 
 const filterStartsWith = q => (
@@ -19,63 +18,47 @@ const filterStartsWith = q => (
 
 const test = {
   filters: [],
-  activeFilters: [],
+  searchField: undefined,
+  topFilters: ['middag', 'nyttig', 'vegan', 'vegetarisk', 'vardag', 'fredag', 'lax', 'enkel'].reverse(),
   getFilters() {
     test.filters = [];
-    $('.filtermenu .filtersegment').each(function () {
-      const type = $('legend', this).text().trim();
-      const list = $.makeArray($('li > a:first-child', this).map((i, e) => $(e).text()));
-      test.filters.push({ type, list });
+    $('.filtermenu .filtersegment li > a:first-child').each(function () {
+      const filter = $(this);
+      test.filters.push({
+        urlname: filter.data('urlname'),
+        name: filter.text(),
+        element: filter,
+      });
     });
   },
   findFilter(q) {
-    const hasAtLeastOneFilterStartingWith = s => (t => t.list.some(filterStartsWith(s)));
-    const toFilterTypeWithMatchingFilters = t => (
-      { type: t.type, list: t.list.filter(filterStartsWith(q)) }
+    return test.filters.filter(
+      f => filterStartsWith(q)(f.name) && !f.element.parent().hasClass('active')
     );
-
-    return test.filters.filter(hasAtLeastOneFilterStartingWith(q))
-      .map(toFilterTypeWithMatchingFilters);
   },
-  searchWithFilters() {
-    let baseUrl = '/Templates/ajaxresponse.aspx?ajaxFunction=RecipeListMdsa&';
-    baseUrl += test.activeFilters.map(f => `filter=${encodeURIComponent(`${f.type}:${f.name}`)}`).join('&');
-
-    // filter=Ingrediens%3AKyckling&filter=Typ+av+recept%3AGryta
-    // &mdsarowentityid=f7463ed4-2b41-42e7-9876-a42700eb38db
-    // &num=16
-    // &query=kyckling+bacon&sortbymetadata=Relevance
-    // &id=12
-    // &_hour=14
-    fetch(baseUrl).then((response) => {
-      response.text().then((data) => {
-        $('.mdsa').html(data);
-        $('.status .count').text($('.mdsa .TotalSearchItems').val());
-      });
-    })
-  },
-  createAutocompleteItem(type, name) {
+  createAutocompleteItem(filter) {
     return $(`<li/>`)
-      .text(name)
+      .text(filter.name)
       .click(() => {
-        const filter = { type, name };
-        console.log(filter);
-        test.activeFilters.push(filter);
-        test.searchWithFilters()
+        filter.element.trigger('click');
+        filter.element[0].click();
       });
   },
   getAutocompleteList(list) {
+    if (!list.length) return undefined;
+
     return $('<ul class="autocomplete"/>').append(
-      list.reduce(
-        (acc, curr) => acc.concat(curr.list.map(i => test.createAutocompleteItem(curr.type, i))),
-        [],
-      )
+      test.sortList(list).map(test.createAutocompleteItem)
     );
   },
   manipulateDom() {
-    $('.cro .recipe-search')
-      .removeClass('sm_gte_hidden')
-      .find('#search2')
+    window.setTimeout(() => test.initFilters(), 0);
+
+    test.searchField = $('.cro .recipe-search').find('#search2');
+
+    $('.cro .recipe-search').removeClass('sm_gte_hidden');
+
+    test.searchField
       .on('input', test.debounce(test.searchFieldInputHandler, 1000))
       .on('blur', test.searchFieldBlurHandler);
   },
@@ -83,7 +66,7 @@ const test = {
     const q = $(e.target).val();
     if (q.length > 1) {
       $('.autocomplete', e.target.parentNode).remove();
-      $('.cro .recipe-search #search2').after(test.getAutocompleteList(test.findFilter(q)))
+      test.searchField.after(test.getAutocompleteList(test.findFilter(q)))
     }
   },
   searchFieldBlurHandler(e) {
@@ -101,6 +84,40 @@ const test = {
       window.clearTimeout(timeout);
       timeout = setTimeout(later, wait);
     };
+  },
+  createFilterElement(filter) {
+    const closeIcon = $('<span class="sprite1-p remove"></span>')
+      .click((e) => {
+        $(e.target.parentNode).remove();
+        filter.element[0].click();
+      });
+    const filterElement = $('<span class="filter-tag"></span>')
+      .text(filter.name)
+      .append(closeIcon);
+    test.searchField.parent().before(filterElement);
+  },
+  initFilters() {
+    const activeFilters = ICA.MDSA.urlHandler.getAllSegments()
+      .map((s) => {
+        const filter = $(`a[data-urlname='${s}']`);
+        return {
+          urlname: s,
+          name: filter.text(),
+          element: filter,
+        };
+      });
+    activeFilters.forEach(test.createFilterElement);
+  },
+  sortList(filters) {
+    test.topFilters.forEach((tf) => {
+      if (filters.some(f => f.urlname === tf)) {
+        const prioFilter = filters.find(f => f.urlname === tf);
+        const indexOfPrioFilter = filters.indexOf(prioFilter);
+        filters.splice(indexOfPrioFilter, 1);
+        filters.unshift(prioFilter);
+      }
+    });
+    return filters;
   },
 };
 
