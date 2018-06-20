@@ -66,26 +66,17 @@
   text-transform: lowercase;
 }
 
-.cro .recipe {
-  position: relative !important;
-  display: flex;
-  align-items: center;
-}
-
-.cro .recipes .mdsa:not(.thumb-view) article:not(.lazyhide):not(.digital-coupon):before {
-  top:0;
-  opacity: 1;
-  visibility: visible;
-}
-
 .cro .recipes .mdsa:not(.thumb-view) article .column {
   min-width: 140px;
 }
 
-.cro .recipe {
+.cro .recipes .mdsa article {
   position: relative;
   display: flex;
   align-items: center;
+}
+.cro .recipes .mdsa article::before {
+  top:0;
 }
 
 .cro .recipes .mdsa:not(.thumb-view) article h2 a {
@@ -157,7 +148,7 @@
 .cro .search-container,
 .cro header.page-header .recipe-search {
   max-width: 300px;
-  margin: 0 auto;
+  margin: 0 auto 80px;
 }
 
 .cro .filter-search {
@@ -179,12 +170,9 @@
   margin: 0;
 }
 
-.cro .filtermenu fieldset.contractable:not(.contracted) {
+.cro #RecipeFilterMenu fieldset.contractable:not(.contracted) {
   margin-bottom: 20px;
-}
-
-.cro .filtermenu fieldset.contractable.contracted+.contractable:not(.contracted) {
-  margin-top: 20px;
+  margin-top: 0;
 }
 
 .cro .filtermenu {
@@ -211,7 +199,35 @@
   margin-top: -40px;
 }
 
-@media only screen and (max-width: 460px) {
+.cro .filtermenu:not(.open) {
+  overflow: hidden;
+}
+
+@media only screen and (min-width: 980px) {
+  .cro .grid_fluid .column.xl_size16of20 {
+    width: 80%;
+  }
+}
+
+@media only screen and (max-width: 699px) {
+  .cro .filtermenu .filter-toggle-button.toggle.button {
+    margin-top: 10px;
+  }
+  .cro .page-header .searchicon {
+    display: none;
+  }
+  .cro .page-header {
+    min-height: 100px;
+  }
+}
+
+@media only screen and (max-width: 767px) {
+  .cro .recipes .mdsa:not(.thumb-view) article h2 a {
+    font-size: 24px;
+  }
+}
+
+@media only screen and (max-width: 500px) {
   .cro .recipe .yellow-stars {
     display: block;
   }
@@ -226,31 +242,10 @@
     padding: 0 4px 0 0;
     border-left: none;
   }
-}
-
-@media only screen and (max-width: 699px) {
-  .cro .filtermenu .filter-toggle-button.toggle.button {
-    margin-top: 10px;
-  }
-  .cro .page-header .searchicon {
-    display: none;
-  }
-}
-
-@media only screen and (max-width: 767px) {
   .cro .recipes .mdsa:not(.thumb-view) article h2 a {
-    font-size: 24px;
+    font-size: 14px;
   }
-}
-
-@media only screen and (max-width: 500px) {
-  .cro .recipes .mdsa:not(.thumb-view) article h2 a {
-    font-size: 18px;
-  }
-}
-
-@media only screen and (min-width: 980px) {
-  .cro .grid_fluid .column.xl_size16of20 {
-    width: 80%;
+  .cro .recipe header {
+    margin-right: 35px;
   }
 }
