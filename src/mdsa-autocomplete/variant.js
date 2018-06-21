@@ -33,25 +33,29 @@ const test = {
   },
   findFilter(q) {
     return test.filters.filter(
-      f => filterStartsWith(q)(f.name) && !f.element.parent().hasClass('active')
+      f => filterStartsWith(q)(f.name) && !f.element.parent().hasClass('active'),
     );
   },
   createAutocompleteItem(filter) {
     return $(`<li/>`)
       .text(filter.name)
       .click(() => {
-        filter.element.trigger('click');
+        if (filter.element.attr('href') === '#') {
+          test.createFilterElement(filter);
+        }
         filter.element[0].click();
+        test.searchField.val('');
       });
   },
   getAutocompleteList(list) {
     if (!list.length) return undefined;
 
     return $('<ul class="autocomplete"/>').append(
-      test.sortList(list).map(test.createAutocompleteItem)
+      test.sortList(list).map(test.createAutocompleteItem),
     );
   },
   manipulateDom() {
+    test.collapseFilterMenu();
     window.setTimeout(() => test.initFilters(), 0);
 
     test.searchField = $('.cro .recipe-search').find('#search2');
@@ -64,9 +68,9 @@ const test = {
   },
   searchFieldInputHandler(e) {
     const q = $(e.target).val();
+    $('.autocomplete', e.target.parentNode).remove();
     if (q.length > 1) {
-      $('.autocomplete', e.target.parentNode).remove();
-      test.searchField.after(test.getAutocompleteList(test.findFilter(q)))
+      test.searchField.after(test.getAutocompleteList(test.findFilter(q)));
     }
   },
   searchFieldBlurHandler(e) {
@@ -118,6 +122,25 @@ const test = {
       }
     });
     return filters;
+  },
+  collapseFilterMenu() {
+    const filterSegments = document.querySelectorAll('fieldset.filtersegment');
+
+    for (let i = 0; i < filterSegments.length; i++) {
+      if (!filterSegments[i].classList.contains('selected')) {
+        filterSegments[i].classList.add('contracted');
+      }
+
+      filterSegments[i].querySelector('legend').onclick = function () {
+        if (this.parentNode.classList.contains('open')) {
+          this.parentNode.classList.remove('open');
+          this.parentNode.classList.remove('contracted');
+        } else {
+          this.parentNode.classList.add('open');
+          this.parentNode.classList.add('contracted');
+        }
+      };
+    }
   },
 };
 

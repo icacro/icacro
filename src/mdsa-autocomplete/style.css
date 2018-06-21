@@ -57,39 +57,45 @@
   position: relative;
   direction: ltr;
   font-family: icatext;
+  margin-right: 0.5em;
+  margin-top: 0.5em;
 }
 .cro .filter-tag:hover {
   background: #e5e5e5;
   cursor: pointer;
 }
 .cro .filter-tag .remove {
-    color: #a02971;
-    display: inline-block;
-    position: absolute;
-    top: 0;
-    right: 0;
-    line-height: 1.2em;
-    font-size: 1.4rem;
-    padding: 0.3em 0.3em 0.1em 0.2em;
-    width: 2em;
-    text-align: center;
-    border-top-right-radius: 0.5em;
-    border-bottom-right-radius: 0.5em;
+  color: #a02971;
+  display: inline-block;
+  position: absolute;
+  top: 0;
+  right: 0;
+  line-height: 1.2em;
+  font-size: 1.4rem;
+  padding: 0.3em 0.3em 0.1em 0.2em;
+  width: 2em;
+  text-align: center;
+  border-top-right-radius: 0.5em;
+  border-bottom-right-radius: 0.5em;
 }
 .cro .filter-tag .remove:before {
-    width: 18px;
-    height: 19px;
-    background-position: -266px -2065px;
-    content: "";
-    display: inline-block;
+  width: 18px;
+  height: 19px;
+  background-position: -266px -2065px;
+  content: "";
+  display: inline-block;
 }
 .cro .filter-tag .remove:hover::before {
   background-position: -266px -2115px;
 }
 .sprite1, .sprite1-p:after, .sprite1-p:before {
-    background-image: url(/Templates/General/Views/Images/RWD/sprites/general_sprite1.png?1);
-    background-repeat: no-repeat;
-    background-size: 500px 2433px;
+  background-image: url(/Templates/General/Views/Images/RWD/sprites/general_sprite1.png?1);
+  background-repeat: no-repeat;
+  background-size: 500px 2433px;
+}
+.cro .tag-container {
+  position: absolute;
+  visibility: hidden;
 }
 /* fäll ihop filtermenyn */
 .cro .filtermenu {
