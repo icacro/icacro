@@ -103,29 +103,34 @@ const test = {
           recipeTxtDiv.insertBefore(time, recipe[i].querySelector('.save-recipe-button'));
         }
 
-        const recipeNo = i;
-        const imgWrapper = recipe[recipeNo].querySelector('div:first-child a');
-        if (imgWrapper.querySelectorAll('img').length === 1) {
-          test.hiresImage(imgWrapper);
+        if(window.innerWidth > 969) {
+          
+          const recipeNo = i;
+          const imgWrapper = recipe[recipeNo].querySelector('div:first-child a');
+          if (imgWrapper.querySelectorAll('img').length === 1) {
+            test.hiresImage(imgWrapper);
+          }
+
+          let imageObserver = new MutationObserver(function(mutations) {
+            for (var i = 0; i < mutations.length; i++) {
+              if (imgWrapper.querySelectorAll('img').length === 1) {
+                test.hiresImage(imgWrapper);
+                break;
+              } else {
+                imageObserver.disconnect();
+              }
+            }
+          });
+
+          imageObserver.observe(imgWrapper, {
+            attributes: false,
+            characterData: false,
+            childList: true,
+            subtree: false
+          });
+
         }
 
-        let imageObserver = new MutationObserver(function(mutations) {
-          for (var i = 0; i < mutations.length; i++) {
-            if (imgWrapper.querySelectorAll('img').length === 1) {
-              test.hiresImage(imgWrapper);
-              break;
-            } else {
-              imageObserver.disconnect();
-            }
-          }
-        });
-
-        imageObserver.observe(imgWrapper, {
-          attributes: false,
-          characterData: false,
-          childList: true,
-          subtree: false
-        });
       }
     }
 
