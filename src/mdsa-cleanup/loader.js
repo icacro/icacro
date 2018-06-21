@@ -12,7 +12,7 @@
 'use strict';
 
 function init() {
-  var css = '#RecipeFilterMenu fieldset {margin-bottom:0;} #content, .recipes article footer {visibility:hidden;}';
+  var css = '.mdsa-main-grid .right-content {display:none;} #RecipeFilterMenu fieldset {margin-bottom:0;} #content, .recipes article footer {visibility:hidden;}';
   var style = document.createElement('style');
   var script = document.createElement('script');
   var head = document.querySelector('head');

@@ -30,20 +30,20 @@ const test = {
 
     const filterSegments = document.querySelectorAll('fieldset.filtersegment');
 
-    let mutationObserver = new MutationObserver(function(mutations) {
+    let filterObserver = new MutationObserver(function(mutations) {
       for (var i = 0; i < mutations.length; i++) {
-        if (mutations[i].type === 'childList') {
+        //if (mutations[i].type === 'childList') {
           test.checkForChanges(filterSegments);
           break;
-        }
+        //}
       }
     });
 
-    mutationObserver.observe(document.getElementById('recipes'), {
-      attributes: true,
-      characterData: true,
+    filterObserver.observe(document.getElementById('recipes'), {
+      attributes: false,
+      characterData: false,
       childList: true,
-      subtree: true
+      subtree: false
     });
 
   },
@@ -67,11 +67,13 @@ const test = {
         filterSegments[i].classList.add('contracted');
       }
 
-      filterSegments[i].onclick = function(){
-        if(this.classList.contains('open')) {
-          this.classList.remove('open');
+      filterSegments[i].querySelector('legend').onclick = function(){
+        if(this.parentNode.classList.contains('open')) {
+          this.parentNode.classList.remove('open');
+          this.parentNode.classList.remove('contracted');
         } else {
-          this.classList.add('open');
+          this.parentNode.classList.add('open');
+          this.parentNode.classList.add('contracted');
         }
       };
     }
@@ -102,12 +104,40 @@ const test = {
           time.classList.add('time');
           recipeTxtDiv.insertBefore(time, recipe[i].querySelector('.save-recipe-button'));
         }
-        const imgWrapper = recipeImgDiv.querySelector('a');
-        const imgContent = imgWrapper.innerHTML.replace('cf_5291','cf_259');
-        imgWrapper.innerHTML = imgContent;
+
+        const recipeNo = i;
+        const imgWrapper = recipe[recipeNo].querySelector('div:first-child a');
+        if (imgWrapper.querySelectorAll('img').length === 1) {
+          test.hiresImage(imgWrapper);
+        }
+
+        let imageObserver = new MutationObserver(function(mutations) {
+          for (var i = 0; i < mutations.length; i++) {
+            if (imgWrapper.querySelectorAll('img').length === 1) {
+              test.hiresImage(imgWrapper);
+              break;
+            } else {
+              imageObserver.disconnect();
+            }
+          }
+        });
+
+        imageObserver.observe(imgWrapper, {
+          attributes: false,
+          characterData: false,
+          childList: true,
+          subtree: false
+        });
       }
     }
 
+  },
+
+  hiresImage(imgWrapper) {
+    const imgContent = imgWrapper.querySelector('img').cloneNode(false);
+    const imgPath = imgContent.getAttribute('src').replace('cf_5291','cf_259');
+    imgContent.setAttribute('src',imgPath);
+    imgWrapper.appendChild(imgContent);
   }
 
 };

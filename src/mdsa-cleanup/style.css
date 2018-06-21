@@ -1,4 +1,4 @@
-.cro .filtermenu fieldset, .cro .filtermenu fieldset * {
+/*.cro .filtermenu fieldset, .cro .filtermenu fieldset * {
   -webkit-transition: none;
   transition: none;
 }
@@ -6,7 +6,7 @@
 .cro .cro-transitions .filtermenu fieldset, .cro .cro-transitions .filtermenu fieldset * {
   -webkit-transition: height 0.3s ease-out, margin 0.3s 0.15s ease-out, opacity 0.3s linear;
   transition: height 0.3s ease-out, margin 0.3s 0.15s ease-out, opacity 0.3s linear;
-}
+}*/
 
 .cro #content,
 .cro .recipes article footer,
@@ -36,11 +36,15 @@
   position: absolute;
   right:5%;
   top:50%;
-
 }
 
 .cro .save-recipe-button a {
   font-size: 12px;
+}
+
+.cro .save-recipe-button a span svg {
+  display: inline;
+  fill: #A02971;
 }
 
 /*.cro .save-recipe-button a::before {
@@ -57,17 +61,8 @@
   margin: 0 10px 0 -2px;
 }*/
 
-.cro .save-recipe-button a span svg {
-  display: inline;
-  fill: #A02971;
-}
-
 .cro .filtersegment a {
   text-transform: lowercase;
-}
-
-.cro .recipes .mdsa:not(.thumb-view) article .column {
-  min-width: 140px;
 }
 
 .cro .recipes .mdsa article {
@@ -77,6 +72,10 @@
 }
 .cro .recipes .mdsa article::before {
   top:0;
+}
+
+.cro .recipes .mdsa:not(.thumb-view) article .column {
+  min-width: 140px;
 }
 
 .cro .recipes .mdsa:not(.thumb-view) article h2 a {
@@ -118,15 +117,6 @@
   height: 16px;
 }
 
-.cro .recipe .ingredients {
-  float: none;
-  width: auto;
-  margin:0;
-  border-left: 1px solid rgba(0,0,0,0.2);
-  margin-left: 10px;
-  padding: 0 18px;
-}
-
 .cro .recipe .time svg {
   position: absolute;
   top:2px;
@@ -137,13 +127,22 @@
   fill: #756f67;
 }
 
+.cro .recipe .ingredients {
+  float: none;
+  width: auto;
+  margin:0;
+  border-left: 1px solid rgba(0,0,0,0.2);
+  margin-left: 10px;
+  padding: 0 18px;
+}
+
 .cro .main-content {
   margin-top: -40px;
 }
 
-.cro fieldset.search {
+/*.cro fieldset.search {
   max-width: 300px;
-}
+}*/
 
 .cro .search-container,
 .cro header.page-header .recipe-search {
@@ -160,6 +159,21 @@
   padding-bottom: 19px;
 }
 
+
+.cro .filtermenu {
+  opacity: 0 !important;
+  -webkit-transition: height 0.3s ease-out, margin 0.3s 0.15s ease-out;
+  transition: height 0.3s ease-out, margin 0.3s 0.15s ease-out;
+}
+
+.cro .filtermenu.loaded {
+  opacity: 1 !important;
+}
+
+.cro .filtermenu:not(.open) {
+  overflow: hidden;
+}
+
 .cro .filtermenu fieldset.contractable {
   /*margin-bottom: 0 !important;*/
   border-bottom: 1px solid #e6e4e2;
@@ -174,26 +188,18 @@
   margin-bottom: 0;
 }
 
-.cro .filtermenu fieldset.contractable:not(.selected) legend::before {
+.cro .filtermenu fieldset.contractable:not(.selected) legend::before,
+.cro .filtermenu fieldset.contractable.open legend::after {
   opacity: 1;
 }
 
-.cro .filtermenu fieldset.contractable:not(.selected) legend::after {
+.cro .filtermenu fieldset.contractable:not(.selected) legend::after,
+.cro .filtermenu fieldset.contractable.open legend::before {
   opacity: 0;
 }
 
 .cro .filtermenu fieldset.contractable.open {
   margin: 20px 0;
-}
-
-.cro .filtermenu {
-  opacity: 0 !important;
-  -webkit-transition: height 0.3s ease-out, margin 0.3s 0.15s ease-out;
-  transition: height 0.3s ease-out, margin 0.3s 0.15s ease-out;
-}
-
-.cro .filtermenu.loaded {
-  opacity: 1 !important;
 }
 
 .cro .filtermenu fieldset.contractable.selected {
@@ -210,8 +216,9 @@
   margin-top: -40px;
 }
 
-.cro .filtermenu:not(.open) {
-  overflow: hidden;
+.cro .recipes .mdsa article figure img:last-child {
+  position: absolute;
+  top: 0;
 }
 
 @media only screen and (min-width: 980px) {
@@ -254,7 +261,7 @@
     border-left: none;
   }
   .cro .recipes .mdsa:not(.thumb-view) article h2 a {
-    font-size: 14px;
+    font-size: 16px;
   }
   .cro .recipe header {
     margin-right: 35px;
