@@ -32,10 +32,8 @@ const test = {
 
     let filterObserver = new MutationObserver(function(mutations) {
       for (var i = 0; i < mutations.length; i++) {
-        //if (mutations[i].type === 'childList') {
-          test.checkForChanges(filterSegments);
-          break;
-        //}
+        test.checkForChanges(filterSegments);
+        break;
       }
     });
 
@@ -100,7 +98,7 @@ const test = {
           time.classList.add('time');
           recipeTxtDiv.insertBefore(time, recipe[i].querySelector('.save-recipe-button'));
         } else {
-          time.innerHTML=clock + 'XX min';
+          time.innerHTML=clock + '-- min';
           time.classList.add('time');
           recipeTxtDiv.insertBefore(time, recipe[i].querySelector('.save-recipe-button'));
         }
