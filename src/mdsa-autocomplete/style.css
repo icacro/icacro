@@ -4,7 +4,7 @@
 .cro .recipe-search {
   margin-top: 1em !important;
 }
-.cro .coachmark-tooltip {
+.cro .coachmark-tooltip, .cro .coachmark-wrapper {
   display: none !important;
 }
 .cro .autocomplete {
