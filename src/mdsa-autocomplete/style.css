@@ -97,12 +97,18 @@
   position: absolute;
   visibility: hidden;
 }
+.cro #toggleFilterButton {
+  margin-bottom: 20px;
+}
 /* fäll ihop filtermenyn */
 .cro .filtermenu {
  opacity: 0 !important;
 }
+.cro .filtermenu.cro-loaded {
+ opacity: 1 !important;
+}
 
-.cro .filtermenu.loaded {
+/* .cro .filtermenu.loaded {
  opacity: 1 !important;
 }
 
@@ -145,7 +151,7 @@
 .cro .filtermenu fieldset.contractable:not(.open) legend::after,
 .cro .filtermenu fieldset.contractable.open legend::before {
  opacity: 0;
-}
+} */
 @media only screen and (max-width: 699px) {
   .cro header.page-header .searchicon {
     display: none;

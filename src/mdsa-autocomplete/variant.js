@@ -55,7 +55,8 @@ const test = {
     );
   },
   manipulateDom() {
-    test.collapseFilterMenu();
+    // test.collapseFilterMenu();
+    test.hideFilterMenu();
     window.setTimeout(() => test.initFilters(), 0);
 
     test.searchField = $('.cro .recipe-search').find('#search2');
@@ -123,24 +124,35 @@ const test = {
     });
     return filters;
   },
-  collapseFilterMenu() {
-    const filterSegments = document.querySelectorAll('fieldset.filtersegment');
-
-    for (let i = 0; i < filterSegments.length; i++) {
-      if (!filterSegments[i].classList.contains('selected')) {
-        filterSegments[i].classList.add('contracted');
-      }
-
-      filterSegments[i].querySelector('legend').onclick = function () {
-        if (this.parentNode.classList.contains('open')) {
-          this.parentNode.classList.remove('open');
-          this.parentNode.classList.remove('contracted');
-        } else {
-          this.parentNode.classList.add('open');
-          this.parentNode.classList.add('contracted');
-        }
-      };
-    }
+  // collapseFilterMenu() {
+  //   const filterSegments = document.querySelectorAll('fieldset.filtersegment');
+  //
+  //   for (let i = 0; i < filterSegments.length; i++) {
+  //     if (!filterSegments[i].classList.contains('selected')) {
+  //       filterSegments[i].classList.add('contracted');
+  //     }
+  //
+  //     filterSegments[i].querySelector('legend').onclick = function () {
+  //       if (this.parentNode.classList.contains('open')) {
+  //         this.parentNode.classList.remove('open');
+  //         this.parentNode.classList.remove('contracted');
+  //       } else {
+  //         this.parentNode.classList.add('open');
+  //         this.parentNode.classList.add('contracted');
+  //       }
+  //     };
+  //   }
+  // },
+  hideFilterMenu() {
+    const filterMenu = $('.filtermenu');
+    const button = $(`<a role="button" id="toggleFilterButton" class="toggle toggle-arrow button filter-toggle-button" data-activetext="Dölj filter" aria-pressed="false">
+      <span class="animated-toggle-arrow inherited-color"></span>Visa alla receptfilter
+    </a>`);
+    button.click(() => {
+      button.toggleClass('open');
+      filterMenu.toggle();
+    });
+    filterMenu.hide().before(button).addClass('cro-loaded');
   },
 };
 
