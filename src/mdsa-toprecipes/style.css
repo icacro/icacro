@@ -1,14 +1,81 @@
 .cro .toprecipes-list.cro-search {
   display: none;
 }
-.cro .toprecipes-list {
+
+.cro .recipes.grid_fluid .mdsa:not(.thumb-view).toprecipes-list {
   /*margin-left: 0 !important;
   margin-right: 0 !important;*/
   margin-top: 10px;
+  padding:0;
 }
+
 .cro .toprecipes-list h3 {
-   margin: -10px -10px 30px;
+  text-align: center;
+  margin: 0;
+  padding:10px;
+  max-width: 100%;
+  /*background: #f5faf4;*/
 }
-.cro .save-recipe-button {
+
+.cro .toprecipes-list h3 svg {
+  width:240px;
+  margin:10px 0 0;
+}
+
+.toprecipes-list-wrapper {
+  display: flex;
+  padding:0 10px 30px;
+  /*background: #f5faf4;*/
+}
+
+.cro .toprecipes-list article {
+  flex: 0 0 33.3%;
+  padding: 0 10px;
+}
+
+.cro .toprecipes-list .save-recipe-button {
   display: none;
+}
+
+.cro .toprecipes-list dl.inline dt {
+  display: none;
+}
+
+.cro .toprecipes-list meter {
+  display: none;
+}
+
+.cro .recipes .toprecipes-list.mdsa:not(.thumb-view) article h2 a {
+  font-size: 1.6rem;
+}
+
+.cro .info-column {
+  margin-top: 10px;
+}
+
+.cro .info-column footer .ingredients {
+  width: auto !important;
+}
+
+.cro .toprecipes-list.mdsa:not(.thumb-view) article::before {
+  display: none;
+}
+
+.cro .toprecipes-list.mdsa .rating {
+  margin-right: 5px;
+}
+
+.cro .toprecipes-list.mdsa .rate-recipe .small.votes {
+  margin: 0;
+}
+
+@media only screen and (max-width: 500px) {
+
+  .cro .toprecipes-list article {
+    flex: 0 0 50%;
+  }
+  .toprecipe-3 {
+    display: none;
+  }
+
 }
