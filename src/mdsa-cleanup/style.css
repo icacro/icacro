@@ -156,9 +156,15 @@
   margin-bottom: 0;
 }
 
+/*Nytt för height*/
 .cro .filtermenu fieldset.contractable:not(.selected)>ul {
-  height: 0;
+  height: 0 !important;
   margin-bottom: 0;
+}
+
+.cro .filtermenu fieldset.contractable.open>ul,
+.cro .filtermenu fieldset.contractable.selected>ul {
+  height: auto !important;
 }
 
 .cro .filtermenu fieldset.contractable.open {
@@ -169,10 +175,6 @@
   margin-top: 0;
   margin-bottom: 20px;
   padding: 0;
-}
-
-.cro .filtermenu fieldset.contractable.selected>ul {
-  height: auto;
 }
 
 .cro .filtermenu fieldset.contractable:not(.open) legend::before,

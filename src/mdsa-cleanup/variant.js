@@ -69,11 +69,11 @@ const test = {
         if(this.parentNode.classList.contains('open')) {
           this.parentNode.classList.remove('open');
           this.parentNode.classList.remove('contracted');
-        } else {
+        } else if (!this.parentNode.classList.contains('selected')) {
           this.parentNode.classList.add('open');
           this.parentNode.classList.add('contracted');
         }
-      };
+      }
     }
 
     const recipe = document.querySelectorAll('.recipe:not(.adjusted)');
@@ -104,7 +104,7 @@ const test = {
         }
 
         if(window.innerWidth > 969) {
-          
+
           const recipeNo = i;
           const imgWrapper = recipe[recipeNo].querySelector('div:first-child a');
           if (imgWrapper.querySelectorAll('img').length === 1) {
