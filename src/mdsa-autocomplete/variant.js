@@ -145,11 +145,17 @@ const test = {
   // },
   hideFilterMenu() {
     const filterMenu = $('.filtermenu');
-    const button = $(`<a role="button" id="toggleFilterButton" class="toggle toggle-arrow button filter-toggle-button" data-activetext="Dölj filter" aria-pressed="false">
-      <span class="animated-toggle-arrow inherited-color"></span>Visa alla receptfilter
+    const button = $(`<a role="button" class="filter-toggle-button button"">
+      <span class="animated-toggle-arrow inherited-color"></span>
+      <span class="filter-toggle-button__text">Visa alla receptfilter</span>
     </a>`);
     button.click(() => {
       button.toggleClass('open');
+      if (button.hasClass('open')) {
+        button.find('.filter-toggle-button__text').text('Dölj receptfilter');
+      } else {
+        button.find('.filter-toggle-button__text').text('Visa alla receptfilter');
+      }
       filterMenu.toggle();
     });
     filterMenu.hide().before(button).addClass('cro-loaded');
