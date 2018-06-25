@@ -202,6 +202,10 @@
   top: 0;
 }
 
+.cro .recipes .mdsa .digital-coupon__wrapper {
+  margin: 10px auto 20px;
+}
+
 @media only screen and (min-width: 980px) {
   .cro .grid_fluid .column.xl_size16of20 {
     width: 80%;

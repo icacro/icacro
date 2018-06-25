@@ -51,7 +51,9 @@ const test = {
         }
 
         let testURL = window.location.href;
-        testURL = testURL.slice(0,testURL.indexOf('#:'));
+        if (testURL.indexOf('#:') > 0) {
+          testURL = testURL.slice(0,testURL.indexOf('#:'));
+        }
 
         if (/^https:\/\/www.ica.se\/recept\/vardag\/$/.test(testURL)) {
           // Chili con carne - https://www.ica.se/recept/chili-con-carne-424/
