@@ -9,7 +9,8 @@
 .cro .recipe .yellow-stars dt,
 .cro .recipe .yellow-stars .votes,
 .cro .recipes .mdsa article .content .votes.small,
-.cro .recipe .recipe-info li {
+.cro .recipe .recipe-info li,
+.cro .grid_fluid.banner-area {
   display: none;
 }
 
@@ -114,6 +115,10 @@
 
 .cro .main-content {
   margin-top: -40px;
+}
+
+.cro #content .main-content>.grid_fluid:not(:first-child) {
+  margin-top: -30px !important;
 }
 
 /*.cro fieldset.search {
