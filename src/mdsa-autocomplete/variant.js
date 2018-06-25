@@ -64,7 +64,7 @@ const test = {
     $('.cro .recipe-search').removeClass('sm_gte_hidden');
 
     test.searchField
-      .on('input', test.debounce(test.searchFieldInputHandler, 1000))
+      .on('input', test.throttle(test.searchFieldInputHandler, 300))
       .on('blur', test.searchFieldBlurHandler);
   },
   searchFieldInputHandler(e) {
@@ -88,6 +88,20 @@ const test = {
       };
       window.clearTimeout(timeout);
       timeout = setTimeout(later, wait);
+    };
+  },
+  throttle(func, wait) {
+    let timeout = null;
+    return function () {
+      if (timeout === null) {
+        const context = this;
+        const args = arguments;
+        const later = function () {
+          timeout = null;
+          func.apply(context, args);
+        };
+        timeout = setTimeout(later, wait);
+      }
     };
   },
   createFilterElement(filter) {
