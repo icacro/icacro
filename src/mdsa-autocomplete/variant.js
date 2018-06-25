@@ -9,7 +9,8 @@
 
 'use strict';
 
-import { CROUTIL, ELM } from '../util/main';
+import { CROUTIL } from '../util/main';
+import { throttle } from '../util/utils';
 import './style.css';
 
 const filterStartsWith = q => (
@@ -64,7 +65,7 @@ const test = {
     $('.cro .recipe-search').removeClass('sm_gte_hidden');
 
     test.searchField
-      .on('input', test.throttle(test.searchFieldInputHandler, 300))
+      .on('input', throttle(test.searchFieldInputHandler, 300))
       .on('blur', test.searchFieldBlurHandler);
   },
   searchFieldInputHandler(e) {
@@ -76,33 +77,6 @@ const test = {
   },
   searchFieldBlurHandler(e) {
     window.setTimeout(() => $('.autocomplete', e.target.parentNode).remove(), 500);
-  },
-  debounce(func, wait) {
-    let timeout;
-    return function () {
-      const context = this;
-      const args = arguments;
-      const later = function () {
-        timeout = null;
-        func.apply(context, args);
-      };
-      window.clearTimeout(timeout);
-      timeout = setTimeout(later, wait);
-    };
-  },
-  throttle(func, wait) {
-    let timeout = null;
-    return function () {
-      if (timeout === null) {
-        const context = this;
-        const args = arguments;
-        const later = function () {
-          timeout = null;
-          func.apply(context, args);
-        };
-        timeout = setTimeout(later, wait);
-      }
-    };
   },
   createFilterElement(filter) {
     const closeIcon = $('<span class="sprite1-p remove"></span>')
