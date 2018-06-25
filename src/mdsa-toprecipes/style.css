@@ -1,4 +1,8 @@
-.cro .toprecipes-list.cro-search {
+.cro .toprecipes-list.cro-search,
+.cro .toprecipes-list .save-recipe-button,
+.cro .toprecipes-list dl.inline dt,
+.cro .toprecipes-list meter,
+.cro .toprecipes-list.mdsa:not(.thumb-view) article::before {
   display: none;
 }
 
@@ -33,18 +37,6 @@
   padding: 0 10px;
 }
 
-.cro .toprecipes-list .save-recipe-button {
-  display: none;
-}
-
-.cro .toprecipes-list dl.inline dt {
-  display: none;
-}
-
-.cro .toprecipes-list meter {
-  display: none;
-}
-
 .cro .recipes .toprecipes-list.mdsa:not(.thumb-view) article h2 a {
   font-size: 1.6rem;
 }
@@ -55,10 +47,6 @@
 
 .cro .info-column footer .ingredients {
   width: auto !important;
-}
-
-.cro .toprecipes-list.mdsa:not(.thumb-view) article::before {
-  display: none;
 }
 
 .cro .toprecipes-list.mdsa .rating {
@@ -76,6 +64,9 @@
   }
   .toprecipe-3 {
     display: none;
+  }
+  .cro .toprecipes-list h3 svg {
+    width:200px;
   }
 
 }

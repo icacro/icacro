@@ -12,13 +12,13 @@
 'use strict';
 
 function init() {
-  var css = '.classname { visibility: hidden; }';
+  var css = '.grid_fluid.banner-area { visibility: hidden; }';
   var style = document.createElement('style');
   var script = document.createElement('script');
   var head = document.querySelector('head');
 
   script.setAttribute('async', '');
-  script.setAttribute('src', 'https://cdn.rawgit.com/icacro/icacro/v1.0.176/src/mdsa-toprecipes/variant.min.js');
+  script.setAttribute('src', 'https://cdn.rawgit.com/icacro/icacro/v1.0.195/src/mdsa-toprecipes/variant.min.js');
 
   style.appendChild(document.createTextNode(css));
 
