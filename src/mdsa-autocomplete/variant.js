@@ -124,25 +124,6 @@ const test = {
     });
     return filters;
   },
-  // collapseFilterMenu() {
-  //   const filterSegments = document.querySelectorAll('fieldset.filtersegment');
-  //
-  //   for (let i = 0; i < filterSegments.length; i++) {
-  //     if (!filterSegments[i].classList.contains('selected')) {
-  //       filterSegments[i].classList.add('contracted');
-  //     }
-  //
-  //     filterSegments[i].querySelector('legend').onclick = function () {
-  //       if (this.parentNode.classList.contains('open')) {
-  //         this.parentNode.classList.remove('open');
-  //         this.parentNode.classList.remove('contracted');
-  //       } else {
-  //         this.parentNode.classList.add('open');
-  //         this.parentNode.classList.add('contracted');
-  //       }
-  //     };
-  //   }
-  // },
   hideFilterMenu() {
     const filterMenu = $('.filtermenu');
     const button = $(`<a role="button" class="filter-toggle-button button"">
