@@ -11,6 +11,11 @@
   margin-right: 0 !important;*/
   margin-top: 10px;
   padding:0;
+  display: none;
+}
+
+.cro .recipes.grid_fluid .mdsa:not(.thumb-view).toprecipes-list.loaded {
+  display: block;
 }
 
 .cro .toprecipes-list h3 {
@@ -33,6 +38,11 @@
 }
 
 .cro .toprecipes-list article {
+  display: none;
+}
+
+.cro .toprecipes-list .toprecipes-list-wrapper article {
+  display: block;
   flex: 0 0 33.3%;
   padding: 0 10px;
 }

@@ -30,7 +30,7 @@ const test = {
     // (/^https:\/\/www.ica.se\/recept\/grill\/$/.test(window.location))) {
 
       if (recipeHeader.exist()) {
-        const toprecipesList = ELM.create('div toprecipes-list column size20of20 white-bg mdsa loaded');
+        const toprecipesList = ELM.create('div toprecipes-list column size20of20 white-bg mdsa');
         const articleInner = '<div class="image-column"><figure class="sprite2-p" style=""><a href="" class="lazyloaded" data-noscript=""><img src="" alt="" class="lazyNoscriptActive"></a></figure></div><div class="info-column"><header><h2 class="title"><a href=""></a></h2></header><div class="content sm_hidden"><a class="block"><p></p></a></div><div id="" class="yellow-stars" itemprop="aggregateRating" itemscope="" itemtype="http://schema.org/AggregateRating"><section class="rate-recipe"><div class="content"><dl class="inline rate" data-avg-rating=""><dt>Betyg:</dt><dd class="rating" style="z-index: 0"><meter class="hidden" value="" min="1" max="5"></meter><div class="grade grade-5" title="5 av 5" data-rating="5"><span class="sprite2 icon icon-star"></span></div><div class="grade grade-4" title="4 av 5" data-rating="4"><span class="sprite2 icon icon-star"></span></div><div class="grade grade-3" title="3 av 5" data-rating="3"><span class="sprite2 icon icon-star"></span></div><div class="grade grade-2" title="2 av 5" data-rating="2"><span class="sprite2 icon icon-star"></span></div><div class="grade grade-1" title="1 av 5" data-rating="1"><span class="sprite2 icon icon-star"></span></div><input type="hidden" id="hdnRecipeId" value=""></dd><dd class="small votes"><span itemprop="reviewCount"></span> röst<span class="plural-postfix">er</span></dd></dl></div></section></div><footer><ul class="recipe-info"><li class="md_lte_hidden"><span title="" class="ingredients"></span></li></ul></footer><div class="save-recipe-button"><a href="#" data-name="" data-link="" data-recipeid="" class="sprite2-p icon-heart save-recipe js-track-recipe-save " title="Spara">Spara</a></div></div></article>';
         let recipe1,recipe2,recipe3;
 
@@ -45,13 +45,15 @@ const test = {
         toprecipesContent += '</div>';
 
         toprecipesList.append(toprecipesContent);
-        //toprecipesList.insertAfter(recipeHeader);
         ELM.get('.recipes').appendFirst(toprecipesList);
         if (ELM.get('.grid_fluid.banner-area').exist()) {
           ELM.get('.grid_fluid.banner-area').remove();
         }
 
-        if (/^https:\/\/www.ica.se\/recept\/vardag\/$/.test(window.location)) {
+        let testURL = window.location.href;
+        testURL = testURL.slice(0,testURL.indexOf('#:'));
+
+        if (/^https:\/\/www.ica.se\/recept\/vardag\/$/.test(testURL)) {
           // Chili con carne - https://www.ica.se/recept/chili-con-carne-424/
           // Krämig carbonara - https://www.ica.se/recept/kramig-carbonara-722780/
           // Busenkel broccolisoppa - https://www.ica.se/recept/busenkel-broccolisoppa-712859/
@@ -92,7 +94,7 @@ const test = {
             'En riktigt smarrig soppa av broccoli som dessutom är lätt som en plätt att laga till! Servera den varma broccolisoppan tillsammans med en brödbit och njut!'
           );
 
-        } else if (/^https:\/\/www.ica.se\/recept\/potatis\/sallad\/$/.test(window.location)) {
+        } else if (/^https:\/\/www.ica.se\/recept\/potatis\/sallad\/$/.test(testURL)) {
           // Enkel - https://www.ica.se/recept/enkel-potatissallad-723665/
           // Fransk - https://www.ica.se/recept/fransk-potatissallad-165198/
           // Med pepparrot och äpple - https://www.ica.se/recept/potatissallad-med-pepparrot-och-apple-722108/
@@ -133,7 +135,7 @@ const test = {
             'Äpple, pepparrot, gräslök och skivade rädisor ger din krämiga potatissallad en fräsch krispighet. Perfekt på buffébordet eller att ta med på picknick. Måste testas!'
           );
 
-        } else if (/^https:\/\/www.ica.se\/recept\/billiga-veckan\/$/.test(window.location)) {
+        } else if (/^https:\/\/www.ica.se\/recept\/billiga-veckan\/$/.test(testURL)) {
           // Pasta - https://www.ica.se/recept/pasta-med-tomatsas-och-linser-723155/
           // Chili - https://www.ica.se/recept/chili-con-carne-med-ris-723146/
           // Kyckling - https://www.ica.se/recept/kyckling-teriyaki-med-ris-och-minimajs-723152/
@@ -174,7 +176,7 @@ const test = {
             'Teriyaki kyckling gör du enkelt själv med färdig teriyakisås och kycklingfilé. Slänger du dessutom ner lite söt minimajs i pannan blir barnen extra glada. Servera kycklingen med ris och babyspenat och kanske lite rostade sesamfrön, om du har tid.'
           );
 
-        } else if (/^https:\/\/www.ica.se\/recept\/lax\/i-ugn\/$/.test(window.location)) {
+        } else if (/^https:\/\/www.ica.se\/recept\/lax\/i-ugn\/$/.test(testURL)) {
           // Limelax i ugn - https://www.ica.se/recept/limelax-i-ugn-med-chilicreme-722771/
           // Lax i ugn med romsås - https://www.ica.se/recept/ugnsstekt-lax-med-romsas-723067/
           // Saltinbakad med citronsås - https://www.ica.se/recept/saltbakad-lax-med-citronsas-laktosfri-676720/
@@ -215,7 +217,7 @@ const test = {
             'Denna himmelska, saltbakade lax med smakfull, laktosfri citronsås kommer bli mycket uppskattad på middagsbordet. Koka ihop din härliga sås under tiden laxen tillagas och servera den sedan ihop med pressad potatis, citron och krispiga sockerärter.'
           );
 
-        } else if (/^https:\/\/www.ica.se\/recept\/rabarber\/paj\/$/.test(window.location)) {
+        } else if (/^https:\/\/www.ica.se\/recept\/rabarber\/paj\/$/.test(testURL)) {
           // Knäckig rabarberpaj - https://www.ica.se/recept/knackig-rabarberpaj-715053/
           // Nyttigare rabarberpaj - https://www.ica.se/recept/nyttigare-rabarberpaj-721996/
           // Rabarberkladdkaka - https://www.ica.se/recept/rabarberkladdkaka-med-vit-choklad-och-kardemumma-721994/
@@ -256,7 +258,7 @@ const test = {
             'Smarrig kladdkaka med rabarber, vit choklad och kardemumma. Ett lättlagat och somrigt recept där rabarberns syrliga strävhet balanseras av den söta och mjuka kladdkakan. Här hittar du fler härliga kladdkakerecept.'
           );
 
-        } else if (/^https:\/\/www.ica.se\/recept\/rabarber\/$/.test(window.location)) {
+        } else if (/^https:\/\/www.ica.se\/recept\/rabarber\/$/.test(testURL)) {
           // Knäckig rabarberpaj med brynt smör - https://www.ica.se/recept/rabarberpaj-med-brynt-smor-718995/
           // Rabarberkräm - https://www.ica.se/recept/len-rabarberkram-med-kardemumma-713752/
           // Rabarberkladdkaka - https://www.ica.se/recept/rabarberkladdkaka-med-vit-choklad-och-kardemumma-721994/
@@ -297,7 +299,7 @@ const test = {
             'Smarrig kladdkaka med rabarber, vit choklad och kardemumma. Ett lättlagat och somrigt recept där rabarberns syrliga strävhet balanseras av den söta och mjuka kladdkakan. Här hittar du fler härliga kladdkakerecept.'
           );
 
-        } else if (/^https:\/\/www.ica.se\/recept\/middag\/$/.test(window.location)) {
+        } else if (/^https:\/\/www.ica.se\/recept\/middag\/$/.test(testURL)) {
           // Klassisk lasagne - https://www.ica.se/recept/klassisk-lasagne-679675/
           // Risotto med svamp - https://www.ica.se/recept/risotto-med-skogschampinjoner-716952/
           // Foliepaket med torsk - https://www.ica.se/recept/foliepaket-med-torskrygg-sparris-potatis-orter-och-citron-714922/
@@ -338,7 +340,7 @@ const test = {
             'Enklaste sättet att grilla är i folie! Gärna primörer med gräslök, persilja, citron, lite chili och smör. Riktigt gott till grillad fisk som torsk eller lax. En sommarfräsch middag till både vardag och fest.'
           );
 
-        } else if (/^https:\/\/www.ica.se\/recept\/grill\/$/.test(window.location)) {
+        } else if (/^https:\/\/www.ica.se\/recept\/grill\/$/.test(testURL)) {
           // Grillad lax i folie - https://www.ica.se/recept/grillad-lax-i-folie-720557/
           // Grillade grönsaksspett med sting - https://www.ica.se/recept/grillade-gronsaksspett-med-sting-720369/
           // Karréspett - https://www.ica.se/recept/karrespett-med-tahinisas-och-grillad-hjartsallad-723893/
@@ -382,7 +384,7 @@ const test = {
         }
 
         window.onpopstate = function(event) {
-          if (/^https:\/\/www.ica.se\/recept\/.*:search=.*$/.test(window.location)) {
+          if (/^https:\/\/www.ica.se\/recept\/.*:search=.*$/.test(testURL)) {
             toprecipesList.css('cro-search');
           } else {
             toprecipesList.removeClass('cro-search');
@@ -410,6 +412,8 @@ const test = {
     recipeEl.find('footer .ingredients').attr('title',recipeIngredientsList).text(recipeIngredients + ' ingredienser');
     recipeEl.find('dd.votes span').text(recipeVotes);
     recipeEl.find('#hdnRecipeId').attr('value',recipeId);
+
+    ELM.get('.toprecipes-list').css('loaded');
 
     // saveBtn.attr('data-name',recipeName).attr('data-link',recipeUrl).attr('data-recipeid',recipeId);
     //
