@@ -125,8 +125,13 @@ const test = {
     return filters;
   },
   hideFilterMenu() {
+    if ($('html').hasClass('is-mobile') ||
+        $('html').hasClass('is-tablet')) {
+      return;
+    }
+
     const filterMenu = $('.filtermenu');
-    const button = $(`<a role="button" class="filter-toggle-button button"">
+    const button = $(`<a role="button" class="cro-filter-toggle-button button"">
       <span class="animated-toggle-arrow inherited-color"></span>
       <span class="filter-toggle-button__text">Visa alla receptfilter</span>
     </a>`);

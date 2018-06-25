@@ -1,3 +1,6 @@
+.cro .search-recipes.search-fieldset {
+  overflow: visible;
+}
 .cro .filter-search {
   display: none;
 }
@@ -13,6 +16,11 @@
   color: black;
   list-style: none;
   text-align: left;
+  position: absolute;
+  border-left: 1px solid #ebebec;
+  border-right: 1px solid #ebebec;
+  width: 90%;
+  z-index: 1;
 }
 .cro .autocomplete li {
   position: relative;
@@ -97,39 +105,41 @@
   position: absolute;
   visibility: hidden;
 }
-.cro .filter-toggle-button {
-  margin: 0 auto;
-  margin-bottom: 20px;
-  width: 100%;
-  max-height: 38px;
-  background-color: #a02971;
-  color: #fff;
-}
-.cro .filter-toggle-button .animated-toggle-arrow {
-  max-height: 0;
-  max-width: 0;
-  border-width: 4px;
-  border-style: solid;
-  border-left: 5px solid #a02971;
-  display: inline-block;
-  transition: all 0.3s ease-out;
-  transform-origin: 25% 50%;
-  background-image: none !important;
-  color: white;
-  border-color: white;
-  border-top-color: transparent;
-  border-right-color: transparent;
-  border-bottom-color: transparent;
-}
-.cro .filter-toggle-button.open .animated-toggle-arrow {
-  transform: rotate(-90deg);
-}
-/* fäll ihop filtermenyn */
-.cro .filtermenu {
- opacity: 0 !important;
-}
-.cro .filtermenu.cro-loaded {
- opacity: 1 !important;
+@media only screen and (min-width: 700px) {
+  .cro .cro-filter-toggle-button {
+    margin: 0 auto;
+    margin-bottom: 20px;
+    width: 100%;
+    max-height: 38px;
+    background-color: #a02971;
+    color: #fff;
+  }
+  .cro .cro-filter-toggle-button .animated-toggle-arrow {
+    max-height: 0;
+    max-width: 0;
+    border-width: 4px;
+    border-style: solid;
+    border-left: 5px solid #a02971;
+    display: inline-block;
+    transition: all 0.3s ease-out;
+    transform-origin: 25% 50%;
+    background-image: none !important;
+    color: white;
+    border-color: white;
+    border-top-color: transparent;
+    border-right-color: transparent;
+    border-bottom-color: transparent;
+  }
+  .cro .cro-filter-toggle-button.open .animated-toggle-arrow {
+    transform: rotate(-90deg);
+  }
+  /* fäll ihop filtermenyn */
+  .cro .filtermenu {
+   opacity: 0 !important;
+  }
+  .cro .filtermenu.cro-loaded {
+   opacity: 1 !important;
+  }
 }
 @media only screen and (max-width: 699px) {
   .cro header.page-header .searchicon {
