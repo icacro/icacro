@@ -1,0 +1,141 @@
+.cro .search-recipes.search-fieldset {
+  overflow: visible;
+}
+.cro .filter-search {
+  display: none;
+}
+.cro .recipe-search {
+  margin-top: 1em !important;
+}
+.cro .coachmark-tooltip, .cro .coachmark-wrapper {
+  display: none !important;
+}
+.cro .autocomplete {
+  margin: 0 16px;
+  background: white;
+  color: black;
+  list-style: none;
+  text-align: left;
+  position: absolute;
+  border-left: 1px solid #ebebec;
+  border-right: 1px solid #ebebec;
+  width: 90%;
+  z-index: 3;
+}
+.cro .autocomplete li {
+  position: relative;
+  font-size: 1.4rem;
+  line-height: 1.2em;
+  padding: 0 1rem;
+  margin: 0;
+  border-bottom: 1px solid #ebebec;
+  cursor: pointer;
+  padding-top: .8rem;
+  padding-bottom: .6rem;
+}
+.cro .autocomplete li:hover::before,
+.cro .autocomplete li:hover::after {
+  content: "";
+  display: block;
+  position: absolute;
+  top: 0;
+}
+.cro .autocomplete li:hover::before {
+  left: 0;
+  right: 0;
+  opacity: 0;
+}
+.cro .autocomplete li:hover::after {
+  opacity: 1;
+  left: -1px;
+  bottom: 0;
+  width: 4px;
+  background: #dc438c;
+}
+.cro .filter-tag {
+  pointer-events: auto;
+  display: inline-block;
+  background: #d5d7da;
+  line-height: 1.4em;
+  padding: 0.4em 2.5em 0.3em 0.5em;
+  border-radius: 0.5em;
+  color: black;
+  font-size: 1.4rem;
+  vertical-align: middle;
+  position: relative;
+  direction: ltr;
+  font-family: icatext;
+  margin-right: 0.5em;
+  margin-top: 0.5em;
+}
+.cro .filter-tag:hover {
+  background: #e5e5e5;
+  cursor: pointer;
+}
+.cro .filter-tag .remove {
+  color: #a02971;
+  display: inline-block;
+  position: absolute;
+  top: 0;
+  right: 0;
+  line-height: 1.2em;
+  font-size: 1.4rem;
+  padding: 0.3em 0.3em 0.1em 0.2em;
+  width: 2em;
+  text-align: center;
+  border-top-right-radius: 0.5em;
+  border-bottom-right-radius: 0.5em;
+}
+.cro .filter-tag .remove:before {
+  width: 18px;
+  height: 19px;
+  background-position: -266px -2065px;
+  content: "";
+  display: inline-block;
+}
+.cro .filter-tag .remove:hover::before {
+  background-position: -266px -2115px;
+}
+.sprite1, .sprite1-p:after, .sprite1-p:before {
+  background-image: url(/Templates/General/Views/Images/RWD/sprites/general_sprite1.png?1);
+  background-repeat: no-repeat;
+  background-size: 500px 2433px;
+}
+.cro .tag-container {
+  position: absolute;
+  visibility: hidden;
+}
+@media only screen and (min-width: 700px) {
+  .cro .cro-filter-toggle-button {
+    margin: 0 auto;
+    margin-bottom: 20px;
+    width: 100%;
+    max-height: 38px;
+    background-color: #a02971;
+    color: #fff;
+  }
+  .cro .cro-filter-toggle-button .animated-toggle-arrow {
+    max-height: 0;
+    max-width: 0;
+    border-width: 4px;
+    border-style: solid;
+    border-left: 5px solid #a02971;
+    display: inline-block;
+    transition: all 0.3s ease-out;
+    transform-origin: 25% 50%;
+    background-image: none !important;
+    color: white;
+    border-color: white;
+    border-top-color: transparent;
+    border-right-color: transparent;
+    border-bottom-color: transparent;
+  }
+  .cro .cro-filter-toggle-button.open .animated-toggle-arrow {
+    transform: rotate(-90deg);
+  }
+}
+@media only screen and (max-width: 699px) {
+  .cro header.page-header .searchicon {
+    display: none;
+  }
+}

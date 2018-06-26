@@ -11,6 +11,7 @@
 
 import { CROUTIL } from '../util/main';
 import { throttle } from '../util/utils';
+import './style.common.css';
 import './style.css';
 
 const filterStartsWith = q => (
@@ -56,16 +57,20 @@ const test = {
     );
   },
   manipulateDom() {
-    test.hideFilterMenu();
+    $('.mdsa-main-grid').parent().removeClass('lg_size15of20 xl_size16of20');
+    $('.cro .recipe-search').removeClass('sm_gte_hidden');
+
     window.setTimeout(() => test.initFilters(), 0);
 
     test.searchField = $('.cro .recipe-search').find('#search2');
 
-    $('.cro .recipe-search').removeClass('sm_gte_hidden');
-
     test.searchField
+      .attr('placeholder', 'T ex nyttig middag, lax, pasta eller wok')
+      .attr('autocomplete', 'off')
       .on('input', throttle(test.searchFieldInputHandler, 300))
       .on('blur', test.searchFieldBlurHandler);
+
+    test.addHelpLinks();
   },
   searchFieldInputHandler(e) {
     const q = $(e.target).val();
@@ -86,7 +91,7 @@ const test = {
     const filterElement = $('<span class="filter-tag"></span>')
       .text(filter.name)
       .append(closeIcon);
-    test.searchField.parent().before(filterElement);
+    test.searchField.parent().after(filterElement);
   },
   initFilters() {
     const activeFilters = ICA.MDSA.urlHandler.getAllSegments()
@@ -132,6 +137,42 @@ const test = {
       filterMenu.toggle();
     });
     filterMenu.hide().before(button).addClass('cro-loaded');
+  },
+  addHelpLinks() {
+    const links = $(`
+      <ul class="cro-help-links">
+          <li class="cro-help-links__item">
+              <a href="/recept/ingrediens/">Ingrediens</a>
+          </li>
+          <li class="cro-help-links__item">
+              <a href="/recept/typ-av-recept/">Typ av recept</a>
+          </li>
+          <li class="cro-help-links__item">
+              <a href="/recept/specialkost/">Specialkost</a>
+          </li>
+          <li class="cro-help-links__item">
+              <a href="/recept/maltid/">Måltid</a>
+          </li>
+          <li class="cro-help-links__item">
+              <a href="/recept/tillfalle/">Tillfälle</a>
+          </li>
+          <li class="cro-help-links__item">
+              <a href="/recept/varldens-kok/">Världens kök</a>
+          </li>
+          <li class="cro-help-links__item">
+              <a href="/recept/tillagningssatt/">Tillagningssätt</a>
+          </li>
+      </ul>
+    `);
+    const button = $(`
+      <button class="cro-help-button"><span class="arrow"></span> Hjälp mig hitta nåt att laga</button>
+    `)
+      .on('click', () => {
+        button.toggleClass('open');
+        links.toggleClass('open');
+      });
+
+    $('.recipe-search').append(button).append(links);
   },
 };
 

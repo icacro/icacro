@@ -9,9 +9,9 @@
 
 'use strict';
 
-import { CROUTIL, ELM } from '../util/main';
-import './style.css';
-import './style.filter-menu.css'
+import { CROUTIL } from '../util/main';
+import './style.common.css';
+import './style.filter-menu.css';
 
 const filterStartsWith = q => (
   f => f.toLowerCase().startsWith(q.toLowerCase())

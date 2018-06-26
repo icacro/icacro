@@ -1,3 +1,8 @@
+/* fäll ihop filtermenyn */
+.cro .filtermenu {
+ opacity: 0 !important;
+}
+
 .cro .filtermenu.loaded {
   opacity: 1 !important;
 }
