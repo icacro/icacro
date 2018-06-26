@@ -45,7 +45,11 @@ const test = {
         if (filter.element.attr('href') === '#') {
           test.createFilterElement(filter);
         }
-        filter.element[0].click();
+        if (filter.element.parent().hasClass('active')) {
+          // TODO: gör en sökning istället för att trigga click
+        } else {
+          filter.element[0].click();
+        }
         test.searchField.val('');
       });
   },
