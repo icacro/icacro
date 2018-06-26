@@ -35,6 +35,10 @@
   /*background: #f5faf4;*/
 }
 
+.cro .toprecipes-list > article {
+  display: none;
+}
+
 .cro .toprecipes-list .toprecipes-list-wrapper article {
   flex: 0 0 33.3%;
   padding: 0 10px;
