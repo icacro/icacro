@@ -49,6 +49,8 @@
 }
 .cro .recipes .mdsa article::before {
   top:0;
+  left:0 !important;
+  right:0 !important;
 }
 
 .cro .recipes .mdsa:not(.thumb-view) article .column {

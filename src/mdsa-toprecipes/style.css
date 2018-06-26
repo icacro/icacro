@@ -35,13 +35,22 @@
   /*background: #f5faf4;*/
 }
 
-.cro .toprecipes-list > article {
+.cro .toprecipes-list > article,
+.cro .toprecipes-list .recipe-bottom-container {
   display: none;
 }
 
 .cro .toprecipes-list .toprecipes-list-wrapper article {
   flex: 0 0 33.3%;
   padding: 0 10px;
+}
+
+.cro .recipes .toprecipes-list.mdsa:not(.thumb-view) article h2 {
+  margin: 1em 0 -2px;
+}
+
+.cro .recipes .toprecipes-list.mdsa:not(.thumb-view) article footer {
+  margin-top: -5px;
 }
 
 .cro .recipes .toprecipes-list.mdsa:not(.thumb-view) article h2 a {
@@ -60,8 +69,10 @@
   margin-right: 5px;
 }
 
-.cro .toprecipes-list.mdsa .rate-recipe .small.votes {
+.cro .toprecipes-list.mdsa .rate-recipe dd.small.votes {
   margin: 0;
+  vertical-align: top;
+  line-height: 1.4em;
 }
 
 @media only screen and (max-width: 500px) {
