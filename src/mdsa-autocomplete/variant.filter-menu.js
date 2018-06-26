@@ -9,9 +9,9 @@
 
 'use strict';
 
-import { CROUTIL } from '../util/main';
-import { throttle } from '../util/utils';
+import { CROUTIL, ELM } from '../util/main';
 import './style.css';
+import './style.filter-menu.css'
 
 const filterStartsWith = q => (
   f => f.toLowerCase().startsWith(q.toLowerCase())
@@ -34,29 +34,26 @@ const test = {
   },
   findFilter(q) {
     return test.filters.filter(
-      f => filterStartsWith(q)(f.name) && !f.element.parent().hasClass('active'),
+      f => filterStartsWith(q)(f.name) && !f.element.parent().hasClass('active')
     );
   },
   createAutocompleteItem(filter) {
     return $(`<li/>`)
       .text(filter.name)
       .click(() => {
-        if (filter.element.attr('href') === '#') {
-          test.createFilterElement(filter);
-        }
+        filter.element.trigger('click');
         filter.element[0].click();
-        test.searchField.val('');
       });
   },
   getAutocompleteList(list) {
     if (!list.length) return undefined;
 
     return $('<ul class="autocomplete"/>').append(
-      test.sortList(list).map(test.createAutocompleteItem),
+      test.sortList(list).map(test.createAutocompleteItem)
     );
   },
   manipulateDom() {
-    test.hideFilterMenu();
+    test.collapseFilterMenu();
     window.setTimeout(() => test.initFilters(), 0);
 
     test.searchField = $('.cro .recipe-search').find('#search2');
@@ -64,18 +61,31 @@ const test = {
     $('.cro .recipe-search').removeClass('sm_gte_hidden');
 
     test.searchField
-      .on('input', throttle(test.searchFieldInputHandler, 300))
+      .on('input', test.debounce(test.searchFieldInputHandler, 1000))
       .on('blur', test.searchFieldBlurHandler);
   },
   searchFieldInputHandler(e) {
     const q = $(e.target).val();
-    $('.autocomplete', e.target.parentNode).remove();
     if (q.length > 1) {
-      test.searchField.after(test.getAutocompleteList(test.findFilter(q)));
+      $('.autocomplete', e.target.parentNode).remove();
+      test.searchField.after(test.getAutocompleteList(test.findFilter(q)))
     }
   },
   searchFieldBlurHandler(e) {
     window.setTimeout(() => $('.autocomplete', e.target.parentNode).remove(), 500);
+  },
+  debounce(func, wait) {
+    let timeout;
+    return function () {
+      const context = this;
+      const args = arguments;
+      const later = function () {
+        timeout = null;
+        func.apply(context, args);
+      };
+      window.clearTimeout(timeout);
+      timeout = setTimeout(later, wait);
+    };
   },
   createFilterElement(filter) {
     const closeIcon = $('<span class="sprite1-p remove"></span>')
@@ -111,28 +121,25 @@ const test = {
     });
     return filters;
   },
-  hideFilterMenu() {
-    if ($('html').hasClass('is-mobile') ||
-        $('html').hasClass('is-tablet')) {
-      return;
-    }
+  collapseFilterMenu(){
+    const filterSegments = document.querySelectorAll('fieldset.filtersegment');
 
-    const filterMenu = $('.filtermenu');
-    const button = $(`<a role="button" class="cro-filter-toggle-button button"">
-      <span class="animated-toggle-arrow inherited-color"></span>
-      <span class="filter-toggle-button__text">Visa alla receptfilter</span>
-    </a>`);
-    button.click(() => {
-      button.toggleClass('open');
-      if (button.hasClass('open')) {
-        button.find('.filter-toggle-button__text').text('Dölj receptfilter');
-      } else {
-        button.find('.filter-toggle-button__text').text('Visa alla receptfilter');
+    for (var i = 0; i < filterSegments.length; i++) {
+      if (!filterSegments[i].classList.contains('selected')) {
+        filterSegments[i].classList.add('contracted');
       }
-      filterMenu.toggle();
-    });
-    filterMenu.hide().before(button).addClass('cro-loaded');
-  },
+
+      filterSegments[i].querySelector('legend').onclick = function(){
+        if(this.parentNode.classList.contains('open')) {
+          this.parentNode.classList.remove('open');
+          this.parentNode.classList.remove('contracted');
+        } else if (!this.parentNode.classList.contains('selected')){
+          this.parentNode.classList.add('open');
+          this.parentNode.classList.add('contracted');
+        }
+      };
+    }
+  }
 };
 
 $(document).ready(() => {
