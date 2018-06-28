@@ -95,12 +95,8 @@ const test = {
         recipeImgDiv.classList.remove('lg_size5of20');
         recipeImgDiv.classList.remove('size8of20');
         time = document.createElement('div');
-        if (recipe[i].hasAttribute('data-cookingtime')) {
-          time.innerHTML=clock + recipe[i].getAttribute('data-cookingtime');
-          time.classList.add('time');
-          recipeTxtDiv.insertBefore(time, recipe[i].querySelector('.save-recipe-button'));
-        } else {
-          time.innerHTML=clock + '-- min';
+        if (recipe[i].hasAttribute('data-cooking-time')) {
+          time.innerHTML=clock + recipe[i].getAttribute('data-cooking-time') + ' min';
           time.classList.add('time');
           recipeTxtDiv.insertBefore(time, recipe[i].querySelector('.save-recipe-button'));
         }
