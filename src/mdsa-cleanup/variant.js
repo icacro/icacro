@@ -30,6 +30,8 @@ const test = {
 
     const filterSegments = document.querySelectorAll('fieldset.filtersegment');
 
+    test.checkForChanges(filterSegments);
+
     let filterObserver = new MutationObserver(function(mutations) {
       for (var i = 0; i < mutations.length; i++) {
         test.checkForChanges(filterSegments);
