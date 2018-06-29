@@ -10,7 +10,7 @@
 'use strict';
 
 import { CROUTIL } from '../util/main';
-import { throttle } from '../util/utils';
+import { throttle, gaPush } from '../util/utils';
 import './style.common.css';
 import './style.css';
 
@@ -91,6 +91,7 @@ const test = {
       .click((e) => {
         $(e.target.parentNode).remove();
         filter.element[0].click();
+        gaPush({ eventAction: 'Ta bort filter', eventLabel: filter.name });
       });
     const filterElement = $('<span class="filter-tag"></span>')
       .text(filter.name)
@@ -167,13 +168,20 @@ const test = {
               <a href="/recept/tillagningssatt/">Tillagningssätt</a>
           </li>
       </ul>
-    `);
+    `)
+      .on('click', (e) => {
+        const el = $(e.target);
+        if (el.parent().hasClass('cro-help-links__item')) {
+          gaPush({ eventAction: 'Klicka på hjälplänk', eventLabel: el.attr('href') });
+        }
+      });
     const button = $(`
       <button class="cro-help-button"><span class="arrow"></span> Hjälp mig hitta nåt att laga</button>
     `)
       .on('click', () => {
         button.toggleClass('open');
         links.toggleClass('open');
+        gaPush({ eventAction: 'Klicka på hjälpknapp', eventLabel: button.hasClass('open') ? 'Öppnar' : 'Stänger' });
       });
 
     $('.recipe-search').append(button).append(links);
