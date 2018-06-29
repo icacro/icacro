@@ -135,13 +135,17 @@ const test = {
     if (recipe.hasAttribute('data-cooking-time')) {
       test.setCookingTime(recipe,time,clock,recipeTxtDiv,recipe.getAttribute('data-cooking-time'));
     } else {
+      console.log('1');
       setTimeout(function() {
         if (recipe.hasAttribute('data-cooking-time')) {
           test.setCookingTime(recipe,time,clock,recipeTxtDiv,recipe.getAttribute('data-cooking-time'));
         } else {
+          console.log('2');
           setTimeout(function() {
             if (recipe.hasAttribute('data-cooking-time')) {
               test.setCookingTime(recipe,time,clock,recipeTxtDiv,recipe.getAttribute('data-cooking-time'));
+            } else {
+              console.log('3');
             }
           },2000);
         }
@@ -150,6 +154,7 @@ const test = {
   },
 
   setCookingTime(recipe,time,clock,recipeTxtDiv,cookingtime) {
+    console.log('4');
     if (cookingtime > 0) {
       time.innerHTML=clock + cookingtime + ' min';
       time.classList.add('time');
