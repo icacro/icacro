@@ -133,17 +133,27 @@ const test = {
 
   addCookingTime(recipe,time,clock,recipeTxtDiv) {
     if (recipe.hasAttribute('data-cooking-time')) {
-      time.innerHTML=clock + recipe.getAttribute('data-cooking-time') + ' min';
-      time.classList.add('time');
-      recipeTxtDiv.insertBefore(time, recipe.querySelector('.save-recipe-button'));
+      test.setCookingTime(recipe,time,clock,recipeTxtDiv,recipe.getAttribute('data-cooking-time'));
     } else {
       setTimeout(function() {
         if (recipe.hasAttribute('data-cooking-time')) {
-          time.innerHTML=clock + recipe.getAttribute('data-cooking-time') + ' min';
-          time.classList.add('time');
-          recipeTxtDiv.insertBefore(time, recipe.querySelector('.save-recipe-button'));
+          test.setCookingTime(recipe,time,clock,recipeTxtDiv,recipe.getAttribute('data-cooking-time'));
+        } else {
+          setTimeout(function() {
+            if (recipe.hasAttribute('data-cooking-time')) {
+              test.setCookingTime(recipe,time,clock,recipeTxtDiv,recipe.getAttribute('data-cooking-time'));
+            }
+          },2000);
         }
       },1000);
+    }
+  },
+
+  setCookingTime(recipe,time,clock,recipeTxtDiv,cookingtime) {
+    if (cookingtime > 0) {
+      time.innerHTML=clock + cookingtime + ' min';
+      time.classList.add('time');
+      recipeTxtDiv.insertBefore(time, recipe.querySelector('.save-recipe-button'));
     }
   },
 
