@@ -81,9 +81,11 @@ const test = {
     const recipe = document.querySelectorAll('.recipe:not(.adjusted)');
 
     if (recipe.length) {
+      console.log('a');
       let time, saveSvg;
       const clock = '<svg width="32px" height="32px"><use xlink:href="/Assets/icons/symbols.svg#clock"></use></svg>';
       for (var i = 0; i < recipe.length; i++) {
+        console.log('b');
         const currentRecipe = recipe[i];
         currentRecipe.classList.add('adjusted');
         const recipeFooter = currentRecipe.querySelector('footer');
