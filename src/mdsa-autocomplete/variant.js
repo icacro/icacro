@@ -45,8 +45,9 @@ const test = {
         if (filter.element.attr('href') === '#') {
           test.createFilterElement(filter);
         }
-        if (filter.element.parent().hasClass('active')) {
-          // TODO: gör en sökning istället för att trigga click
+        if (filter.element.parent().hasClass('subcat')) {
+          test.searchField.val(filter.name);
+          $('.search > button:submit').click();
         } else {
           filter.element[0].click();
         }
