@@ -20,7 +20,8 @@
   border-left: 1px solid #ebebec;
   border-right: 1px solid #ebebec;
   width: 90%;
-  z-index: 3;
+  z-index: 4;
+  box-shadow: 0 0 15px rgba(0,0,0,0.15);
 }
 .cro .autocomplete li {
   position: relative;

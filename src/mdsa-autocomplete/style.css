@@ -16,18 +16,31 @@
   background: none;
 }
 .cro .cro-help-links {
+  position: absolute;
+  z-index: 3;
+  width: 100%;
+  max-width: 25em;
   list-style: none;
   display: none;
   font-size: 14px;
-  flex-wrap: wrap;
-  background: rgba(255,255,255,0.75);
-  border-radius: 4px;
+  box-shadow: 0 0 15px rgba(0,0,0,0.15);
 }
 .cro .cro-help-links.open {
-  display: flex;
+  display: block;
 }
 .cro .cro-help-links__item {
-  margin: 0.5em;
+  margin: 0;
+  padding: 0.2em;
+  border: solid 1px #ebebec;
+  border-bottom: none;
+  background-color: white;
+}
+.cro .cro-help-links__item:last-child {
+  border-bottom: solid 1px #ebebec;
+}
+.cro .cro-help-links a {
+  display: inline-block;
+  width: 100%;
 }
 .cro .cro-help-button .arrow {
   max-height: 0;
