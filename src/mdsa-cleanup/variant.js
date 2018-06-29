@@ -83,11 +83,9 @@ const test = {
     const recipe = document.querySelectorAll('.recipe:not(.adjusted)');
 
     if (recipe.length) {
-      console.log('a');
       let time, saveSvg;
       const clock = '<svg width="32px" height="32px"><use xlink:href="/Assets/icons/symbols.svg#clock"></use></svg>';
       for (var i = 0; i < recipe.length; i++) {
-        console.log('b');
         const currentRecipe = recipe[i];
         currentRecipe.classList.add('adjusted');
         const recipeFooter = currentRecipe.querySelector('footer');
@@ -137,23 +135,7 @@ const test = {
   },
 
   addCookingTime(recipe,time,clock,recipeTxtDiv) {
-    console.log('0');
-    if (recipe.hasAttribute('data-cooking-time')) {
-      test.setCookingTime(recipe,time,clock,recipeTxtDiv,recipe.getAttribute('data-cooking-time'));
-    } else {
-      console.log('1');
-      setTimeout(function() {
-        if (recipe.hasAttribute('data-cooking-time')) {
-          test.setCookingTime(recipe,time,clock,recipeTxtDiv,recipe.getAttribute('data-cooking-time'));
-        } else {
-          console.log('2');
-        }
-      },1000);
-    }
-  },
-
-  setCookingTime(recipe,time,clock,recipeTxtDiv,cookingtime) {
-    console.log('4');
+    const cookingtime = recipe.getAttribute('data-cooking-time');
     if (cookingtime > 0) {
       time.innerHTML=clock + cookingtime + ' min';
       time.classList.add('time');
