@@ -84,10 +84,11 @@ const test = {
       let time, saveSvg;
       const clock = '<svg width="32px" height="32px"><use xlink:href="/Assets/icons/symbols.svg#clock"></use></svg>';
       for (var i = 0; i < recipe.length; i++) {
-        recipe[i].classList.add('adjusted');
-        const recipeFooter = recipe[i].querySelector('footer');
-        const recipeImgDiv = recipe[i].querySelector('div:first-child');
-        const recipeTxtDiv = recipe[i].querySelector('div:last-child');
+        const currentRecipe = recipe[i];
+        currentRecipe.classList.add('adjusted');
+        const recipeFooter = currentRecipe.querySelector('footer');
+        const recipeImgDiv = currentRecipe.querySelector('div:first-child');
+        const recipeTxtDiv = currentRecipe.querySelector('div:last-child');
         recipeTxtDiv.classList.add('size15of20');
         recipeTxtDiv.classList.remove('lg_size15of20');
         recipeTxtDiv.classList.remove('size12of20');
@@ -96,7 +97,7 @@ const test = {
         recipeImgDiv.classList.remove('size8of20');
         time = document.createElement('div');
 
-        test.addCookingTime(recipe[i],time,clock,recipeTxtDiv);
+        test.addCookingTime(currentRecipe,time,clock,recipeTxtDiv);
 
         if(window.innerWidth > 969) {
 
@@ -132,6 +133,7 @@ const test = {
   },
 
   addCookingTime(recipe,time,clock,recipeTxtDiv) {
+    console.log('0');
     if (recipe.hasAttribute('data-cooking-time')) {
       test.setCookingTime(recipe,time,clock,recipeTxtDiv,recipe.getAttribute('data-cooking-time'));
     } else {
@@ -141,13 +143,6 @@ const test = {
           test.setCookingTime(recipe,time,clock,recipeTxtDiv,recipe.getAttribute('data-cooking-time'));
         } else {
           console.log('2');
-          setTimeout(function() {
-            if (recipe.hasAttribute('data-cooking-time')) {
-              test.setCookingTime(recipe,time,clock,recipeTxtDiv,recipe.getAttribute('data-cooking-time'));
-            } else {
-              console.log('3');
-            }
-          },2000);
         }
       },1000);
     }
