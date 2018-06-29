@@ -137,7 +137,7 @@ const test = {
   addCookingTime(recipe,time,clock,recipeTxtDiv) {
     const cookingtimeValue = /(\d+)/.exec(recipe.getAttribute('data-cooking-time'));
     const cookingtime = cookingtimeValue ? parseInt(cookingtimeValue[1], 10) : 0;
-    if (cookingtime > 0) {
+    if (cookingtime > 1) {
       time.innerHTML=clock + cookingtime + ' min';
       time.classList.add('time');
       recipeTxtDiv.insertBefore(time, recipe.querySelector('.save-recipe-button'));
