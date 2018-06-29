@@ -1,6 +1,6 @@
 {
   "name": "icacro",
-  "version": "1.0.212",
+  "version": "1.0.213",
   "description": "",
   "main": "template.js",
   "devDependencies": {
