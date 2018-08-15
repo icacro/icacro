@@ -1,0 +1,23 @@
+.cro .mob-filter-container .active-filter-display {
+  display: none;
+}
+
+.cro .mob-filter-container {
+  position: relative;
+}
+
+.cro .mob-filter-container .filter-toggle-button.toggle.button {
+  width:25% !important;
+  position: absolute;
+  right:10px;
+  top:10px;
+}
+
+.cro .mob-filter-container > a, .cro .mob-filter-container .filtermenu > a {
+  width:25% !important;
+  font-size: 12px;
+}
+
+.cro .toggle.button.open[data-activetext]:after {
+  font-size: 12px;
+}
