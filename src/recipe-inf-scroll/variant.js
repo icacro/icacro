@@ -18,22 +18,18 @@ const maxlength = 25;
 let nextPage,currentPage,nextUrl;
 
 //bugg tom loadingarea? tillbaka till 1 och fram igen?
-//---(ev) förflytta sig i historiken - högst upp på aktuellt recept
+//---(ev) förflytta sig i historiken - hamna högst upp på aktuellt recept
 
-//görsåhär-styling, funktioner
-//fälla ut meta/kommentarer     .recipe-details: .nutrients, .climate
-//                              section.comments .comments__list .comments__list__item-wrapper
-
-
-//skriv ut - hoppar upp till första receptet
+//OK____skriv ut
+//portionsomräknare
+//OK____görsåhär-styling
+//"För alla" m.m. (kvarvarande ol ok?)
 //timer
-//instruktioner-avbockning
-//omräknare
 //lägg i inköpslista
+//ladda kupong
 //e-handla
 //näring/klimatguide
 //kommentarer
-//ladda kupong / lägg i inköpslista
 
 
 const test = {
@@ -69,7 +65,61 @@ const test = {
       const pagePosition = currentPage.offsetTop;
       const svg = '<svg><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/Assets/icons/sprite.svg#arrow-down"></use></svg>';
 
-      if (currentPage.find('section.comments').exist()) {
+      const printBtn = currentPage.find('.button--print');
+      if (printBtn.exist()) {
+        printBtn.removeAttr('href');
+        printBtn.click(() => {
+          window.print();
+        })
+      }
+
+      const howtoSection = currentPage.find('howto-steps');
+      if (howtoSection.exist()) {
+        const howTo = ELM.create('div howto-steps');
+        const howtoItems = document.querySelectorAll('.recipe-howto-steps ol > li');
+        for (var i = 0; i < howtoItems.length; i++) {
+          const cookingStepCheck = ELM.create('div cooking-step__check').append(ELM.create('label checkbox checkbox--circle').attr('tabindex','0').append(ELM.create('input checkbox__input js-track-cookmode-stepcompleted').attr('type','checkbox').attr('tabindex','-1').attr('data-tracking','{&quot;step&quot;:' + (i+1) + '}')).append(ELM.create('span checkbox__label')));
+          const cookingStepContent = ELM.create('div cooking-step__content').append(ELM.create('div cooking-step__content__instruction').append(howtoItems[i].innerHTML));
+          howTo.append(ELM.create('div cooking-step').append(cookingStepCheck).append(cookingStepContent));
+          let completed = 0;
+          cookingStepCheck.click(() => {
+            if (completed === 0) {
+              cookingStepCheck.parent().css('completed');
+              window.setTimeout(function () {
+                completed = 1;
+              },20);
+            } else {
+              cookingStepCheck.parent().removeClass('completed');
+              window.setTimeout(function () {
+                completed = 0;
+              },30);
+            }
+          })
+        }
+        howtoSection.parent().append(howTo.append(howtoSection));
+        document.querySelector('howto-steps ol').remove();
+        const wrapper = document.querySelector('howto-steps');
+        wrapper.outerHTML = wrapper.innerHTML;
+      }
+
+      const servingsPicker = currentPage.find('.servings-picker--static');
+      if (servingsPicker.exist()) {
+        const servingsWrapper = servingsPicker.parent();
+        document.querySelector('.servings-picker--static').innerHTML='';
+        const customServings = ELM.create('div custom-select').append('<select name="portions" id="currentPortions" class="js-servingspicker"><option class="servings-picker__servings" value="2">2 portioner</option><option class="servings-picker__servings" value="4">4 portioner</option><option class="servings-picker__servings" value="6">6 portioner</option><option class="servings-picker__servings" value="8">8 portioner</option><option class="servings-picker__servings" value="10">10 portioner</option><option class="servings-picker__servings" value="12">12 portioner</option></select>');
+        servingsPicker.css('servings-picker--dynamic').removeClass('servings-picker--static').append(customServings);
+        //servingsWrapper.css('currentpage');
+        const ingredientsHeader = ELM.create('div ingredients__header').append(currentPage.find('.ingredients--dynamic h2'));
+
+        //OBS! hantera recept m flera listor: https://www.ica.se/recept/kramig-paprikapasta-med-kronartskockor-722028/
+
+        const ingredientsContent = ELM.create('div ingredients__content').append(currentPage.find('.ingredients--dynamic ul'));
+        currentPage.find('.ingredients--dynamic').append(servingsPicker).append(ingredientsHeader).append(ingredientsContent);
+        servingsWrapper.append(ingredientsContent);
+      }
+
+      const commentsSection = currentPage.find('section.comments');
+      if (commentsSection.exist()) {
         let commentsText;
         const commentsCount = currentPage.find('.comments__header__text--votes');
         if (commentsCount.exist()) {
@@ -78,22 +128,23 @@ const test = {
           commentsText = 'Kommentarer (0)';
         }
         const commentsBtn = ELM.create('div comments-toggle button--link').append(commentsText + svg).css('button');
-        currentPage.find('section.comments').append(commentsBtn);
+        commentsSection.append(commentsBtn);
         commentsBtn.click(() => {
           commentsBtn.parent().find('.comments__inner-wrapper').toggle('open');
         })
       }
 
-      let detailsText;
-      if (currentPage.find('.recipe-details .nutrients').exist() && currentPage.find('.recipe-details .climate').exist()) {
-        detailsText = 'Näringsvärde och klimatguide';
-      } else if (currentPage.find('.recipe-details .nutrients').exist()) {
-        detailsText = 'Näringsvärde';
-      } else if (currentPage.find('.recipe-details .climate').exist()) {
-        detailsText = 'Klimatguide';
-      }
-
-      if (currentPage.find('.recipe-details .nutrients').exist() || currentPage.find('.recipe-details .climate').exist()) {
+      const nutrientsSection = currentPage.find('.recipe-details .nutrients');
+      const climateSection = currentPage.find('.recipe-details .climate');
+      if (nutrientsSection.exist() || climateSection.exist()) {
+        let detailsText;
+        if (nutrientsSection.exist() && climateSection.exist()) {
+          detailsText = 'Näringsvärde och klimatguide';
+        } else if (nutrientsSection.exist()) {
+          detailsText = 'Näringsvärde';
+        } else if (climateSection.exist()) {
+          detailsText = 'Klimatguide';
+        }
         const detailsBtn = ELM.create('div details-toggle button--link').append(detailsText + svg).css('button');
         currentPage.find('.recipe-details').append(detailsBtn);
         detailsBtn.click(() => {
