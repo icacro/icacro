@@ -1,23 +1,38 @@
-.cro .mob-filter-container .active-filter-display {
-  display: none;
+.cro .mob-filter-container .active-filter-display,
+.cro #recipe-header {
+  display: none !important;
 }
 
 .cro .mob-filter-container {
   position: relative;
 }
 
-.cro .mob-filter-container .filter-toggle-button.toggle.button {
-  width:25% !important;
-  position: absolute;
-  right:10px;
-  top:10px;
+.cro .recipes.grid_fluid .mob-filter-container .button-row {
+  display: flex !important;
+  flex-direction: row;
 }
 
-.cro .mob-filter-container > a, .cro .mob-filter-container .filtermenu > a {
+.cro .mob-filter-container .toggle { order: 2; }
+
+.cro .mob-filter-container .button-row > .toggle.open,
+.cro .mob-filter-container .button-row > .button.active {
+  background: #ccc;
+}
+
+.cro .mob-filter-container .button-row > a {
   width:25% !important;
-  font-size: 12px;
+  font-size: 11px;
+  border-right: 1px solid #fff;
+  background: #eee;
+  color: #333;
+  padding-left: 0;
+  padding-right: 0;
 }
 
 .cro .toggle.button.open[data-activetext]:after {
-  font-size: 12px;
+  font-size: 11px;
+}
+
+.cro .filtermenu.open {
+  margin-top: 10px;
 }
