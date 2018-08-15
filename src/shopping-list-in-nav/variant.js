@@ -10,7 +10,7 @@
 'use strict';
 
 import { CROUTIL, ELM } from '../util/main';
-import { triggerHotJar, gaPush } from '../util/utils';
+import { gaPush } from '../util/utils';
 import './style.css';
 
 const test = {
@@ -19,7 +19,7 @@ const test = {
     const svg = ELM.svg('purchase-list', 'purchase-list');
     svg.click(() => {
       gaPush({ eventAction: 'Inköpslista i menyn, gå till inköpslista' });
-      window.location.href = 'https://www.ica.se/mittica/#:mittica=inkopslistor';
+      window.location.href = 'https://www.ica.se/inkopslista/';
     });
     svg.insertAfter(profile);
   },
@@ -28,5 +28,4 @@ const test = {
 $(document).ready(() => {
   Object.assign(test, CROUTIL());
   test.manipulateDom();
-  triggerHotJar('shoppingListInNavVariant');
 });
