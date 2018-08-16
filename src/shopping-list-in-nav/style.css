@@ -10,6 +10,9 @@
   height: 48px;
   width: inherit;
 }
+.cro #dropdown-avatar .dropdown__arrow {
+  right:104px;
+}
 
 @media only screen and (max-width: 630px) {
   .cro .top-bar-display-name {
@@ -30,10 +33,27 @@
     min-width: 44px;
     height: 48px;
   }
+  .cro #dropdown-avatar .dropdown__arrow {
+    right:84px;
+  }
 }
 
-@media only screen and (max-width: 340px) {
+@media only screen and (max-width: 479px) {
+  .cro #dropdown-avatar .dropdown__arrow {
+    right:100px;
+  }
+}
+
+@media only screen and (max-width: 380px) {
   .cro #js-toggle-avatar {
     width: 37px;
   }
+  .cro #dropdown-avatar .dropdown__arrow {
+    right:26%;
+  }
 }
+
+
+/*
+84
+100*/
