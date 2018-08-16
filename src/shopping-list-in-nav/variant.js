@@ -13,6 +13,9 @@ import { CROUTIL, ELM } from '../util/main';
 import { gaPush } from '../util/utils';
 import './style.css';
 
+//Fixa inloggad desktop - återställ desktop och kör mindre ikoner enbart i mobil
+//Fixa flicker
+
 const test = {
   manipulateDom() {
     const profile = ELM.get('#js-toggle-avatar');

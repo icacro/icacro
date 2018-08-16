@@ -1,22 +1,35 @@
+.cro .top-bar__right { visibility: visible; }
+
 .cro .purchase-list {
-  width: 40px;
+  width: 48px;
   height: 48px;
   cursor: pointer;
 }
 .cro .purchase-list svg {
   fill: #A02971;
   height: 48px;
-  width: 44px;
+  width: inherit;
 }
 
-.cro .top-bar__button {
-  width: 40px;
-}
-
-.cro .top-bar__button svg {
-  width: 44px;
-  min-width: 44px;
-  height: 48px;
+@media only screen and (max-width: 630px) {
+  .cro .top-bar-display-name {
+      display: none;
+  }
+  .cro .purchase-list {
+    width: 40px;
+    height: 48px;
+  }
+  .cro .purchase-list svg {
+    width: 44px;
+  }
+  .cro .top-bar__button {
+    width: 40px;
+  }
+  .cro .top-bar__button svg {
+    width: 44px;
+    min-width: 44px;
+    height: 48px;
+  }
 }
 
 @media only screen and (max-width: 340px) {
