@@ -13,56 +13,113 @@ import { CROUTIL, ELM } from '../util/main';
 import { gaPush } from '../util/utils';
 import './style.css';
 
-//Välja bort
-//Filterlevel > 0
+// const filter1='barn';
+// const filter1name='Barnvänligt';
+// const filter2='billiga-veckan';
+// const filter2name='Prisvärt';
+// const filter3='under-15-minuter';
+// const filter3name='Snabbt';
+
+//Problem - barn och snabbt svårkombinerat som recepten är upptaggade idag! Andra kategorier?
+
+const filter1='middag';
+const filter1name='Middag';
+const filter2='billiga-veckan';
+const filter2name='Prisvärt';
+const filter3='under-15-minuter';
+const filter3name='Snabbt';
+
+let filterlevel;
+if (window.location.href.indexOf(filter1) !== -1 || window.location.href.indexOf(filter2) !== -1 || window.location.href.indexOf(filter3) !== -1) {
+  filterlevel=1;
+  if (/#:recipefilter=/.test(window.location.href)) {
+    filterlevel=2;
+  }
+} else {
+  filterlevel=0;
+}
+
+const buttonRow = ELM.create('div button-row');
+const btnToggle = ELM.get('.mob-filter-container .filter-toggle-button');
 
 const test = {
 
   manipulateDom() {
 
-    let filterlevel;
-    if (/barn/.test(window.location.href) || /billiga-veckan/.test(window.location.href) || /under-15-minuter/.test(window.location.href)) {
-      filterlevel=1;
-      if (/#:recipefilter=/.test(window.location.href)) {
-        filterlevel=2;
-      }
-    } else {
-      filterlevel=0;
-    }
-
-    const btnToggle = ELM.get('.mob-filter-container .filter-toggle-button');
-    const btnQuick = ELM.create('a').text('Snabbt');
-    const btnCostEff = ELM.create('a').text('Prisvärt');
-    const btnChildren = ELM.create('a').text('Barnvänligt');
-
-    const buttonRow = ELM.create('div button-row');
-
+    btnToggle.text('Fler filter');
+    ELM.get('.mob-filter-container .active-filter-display').css('hidden');
     ELM.get('.mob-filter-container').append(buttonRow);
 
-    ELM.get('.mob-filter-container .active-filter-display').remove();
-    btnToggle.text('Fler filter');
+    test.createButton(filter3name,filter3);
+    test.createButton(filter2name,filter2);
+    test.createButton(filter1name,filter1);
 
-    test.createButton(btnQuick,'under-15-minuter',buttonRow,btnToggle,filterlevel);
-    test.createButton(btnCostEff,'billiga-veckan',buttonRow,btnToggle,filterlevel);
-    test.createButton(btnChildren,'barn',buttonRow,btnToggle,filterlevel);
     buttonRow.append(btnToggle);
     ELM.get('#RecipeFilterMenu').insertAfter(buttonRow);
 
   },
 
-  createButton(btn,filter,buttonRow,btnToggle,filterlevel) {
-    buttonRow.append(btn.css('button'));
-    btn.attr('href','#');
+  createButton(btnText,filter) {
 
-    const filtermatch = ELM.get('.filtermenu a[data-urlname=' + filter + ']');
+    const btn = ELM.create('a').text(btnText);
+    const filtermatch = document.querySelector('.filtermenu a[data-urlname=' + filter + ']');
+    btn.attr('href','#').css('button').css('btn-' + filter);
+    buttonRow.append(btn);
 
-    if(filtermatch.exist()) {
-      btn.css('clickable');
-      btn.click((e) => {
-        filtermatch.click();
-      });
+    btn.click((e) => {
+      e.preventDefault();
+    });
+
+    if(filtermatch) {
+      test.createListener(btn,filter,filtermatch);
+      window.setTimeout(function () {
+        if(filtermatch.getAttribute('data-hits') === '0') {
+          // Även kontrollera så att inte annat filter i samma kategori
+          btn.css('inactive');
+        } else {
+          if (filtermatch.parentNode.classList.contains('active')) {
+            btn.css('active');
+          }
+        }
+      },500);
+    } else {
+      btn.css('inactive').css('no-filter');
     }
 
+    return btn;
+
+  },
+
+  createListener(btn,filter,filtermatch) {
+    btn.click((e) => {
+      if (!btn.hasClass('inactive')) {
+        btn.toggle('active');
+        filtermatch.click();
+        window.setTimeout(function () {
+          if (filter !== filter1) test.checkFilter(filter1);
+          if (filter !== filter2) test.checkFilter(filter2);
+          if (filter !== filter3) test.checkFilter(filter3);
+        },500);
+      }
+    });
+  },
+
+  checkFilter(filter) {
+    const btn = ELM.get('.button-row .btn-' + filter);
+    const filtermatch = document.querySelector('.filtermenu a[data-urlname="'+filter+'"]');
+    if (filtermatch) {
+      if (filtermatch.getAttribute('data-hits') === '0') {
+        // Även kontrollera så att inte annat filter i samma kategori
+        btn.css('inactive');
+      } else {
+        btn.removeClass('inactive');
+        if (btn.hasClass('no-filter')) {
+          test.createListener(btn,filter,filtermatch);
+        }
+      }
+    } else {
+      btn.css('inactive');
+    }
   }
 
 };
