@@ -1,6 +1,12 @@
-.cro .mob-filter-container .active-filter-display,
-.cro #recipe-header {
+.cro .mob-filter-container .active-filter-display {
   display: none !important;
+}
+
+.cro #recipe-header {
+  display: block;
+  visibility: hidden;
+  top: -60px;
+  position: relative;
 }
 
 .cro .mob-filter-container {

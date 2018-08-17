@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Banner
-// @path         //./src/mdsa-cleanup/variant.js
+// @path         //./src/mdsa-priofilter/variant.js
 // @namespace    http://tampermonkey.net/
 // @version      0.1
 // @match        https://www.ica.se/*
@@ -12,13 +12,13 @@
 'use strict';
 
 function init() {
-  var css = '.mdsa-main-grid .right-content, .grid_fluid.banner-area {display:none;} #content, .recipes article footer {visibility:hidden;}';
+  var css = '.cro .mob-filter-container .active-filter-display, .cro #recipe-header {display:none;}';
   var style = document.createElement('style');
   var script = document.createElement('script');
   var head = document.querySelector('head');
 
   script.setAttribute('async', '');
-  script.setAttribute('src', 'https://cdn.rawgit.com/icacro/icacro/v1.0.198/src/mdsa-cleanup/variant.min.js');
+  script.setAttribute('src', 'https://cdn.rawgit.com/icacro/icacro/v1.0.217/src/mdsa-priofilter/variant.min.js');
 
   style.appendChild(document.createTextNode(css));
 

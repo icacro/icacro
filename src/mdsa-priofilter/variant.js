@@ -22,11 +22,11 @@ import './style.css';
 
 //Problem - barn och snabbt svårkombinerat som recepten är upptaggade idag! Andra kategorier?
 
-const filter1='middag';
-const filter1name='Middag';
+const filter1='barn';
+const filter1name='Barnvänligt';
 const filter2='billiga-veckan';
 const filter2name='Prisvärt';
-const filter3='under-15-minuter';
+const filter3='under-30-minuter';
 const filter3name='Snabbt';
 
 let filterlevel;
