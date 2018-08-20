@@ -4,10 +4,6 @@
     display: none !important;
   }
 
-  .cro.cro-fallback .mob-filter-container .active-filter-display {
-    display: block !important;
-  }
-
   .cro .filter-toggle-button {
     display: block;
   }
