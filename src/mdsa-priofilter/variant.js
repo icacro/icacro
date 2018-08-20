@@ -13,13 +13,6 @@ import { CROUTIL, ELM } from '../util/main';
 import { gaPush } from '../util/utils';
 import './style.css';
 
-// const filter1='barn'; //Typ av recept - krockar med många andra kategorier
-// const filter1name='Barnvänligt';
-// const filter2='billiga-veckan';
-// const filter2name='Prisvärt';
-// const filter3='under-15-minuter';
-// const filter3name='Snabbt';
-
 const filter1='enkel';
 const filter1name='Enkelt';
 const filter1Id='61';
@@ -39,44 +32,47 @@ const test = {
     const btnToggle = ELM.get('.mob-filter-container .filter-toggle-button');
 
     if (btnToggle.exist()) {
-      test.createFilters(btnToggle);
+      test.createPrioFilters(btnToggle);
     } else {
       const filterWrapper = document.querySelector('.mob-filter-container');
       let i = 0;
       setInterval(function() {
         i++;
         if (btnToggle.exist()) {
-          console.log('filters ok');
-          test.createFilters(btnToggle);
+          test.createPrioFilters(btnToggle);
+          clearInterval(this);
         } else if (i === 20) {
-          console.log('filters timeout');
           clearInterval(this);
         }
-      }, 500);
+      }, 200);
     }
 
     let filterObserver = new MutationObserver(function(mutations) {
       let filterId;
       for (var i = 0; i < mutations.length; i++) {
-        if (mutations[i].target.hasAttribute('data-id')) {
-          filterId = mutations[i].target.getAttribute('data-id');
-          if (filterId === filter1Id || filterId === filter2Id || filterId === filter3Id) {
-            test.filterClasses(mutations[i].target, filterId);
-          }
-        }
+        filterId = mutations[i].target.getAttribute('data-id');
+        test.filterClasses(mutations[i].target, filterId);
       }
     });
 
-    filterObserver.observe(document.getElementById('RecipeFilterMenu'), {
+    const config = {
       attributes: true,
       childList: false,
       characterData: false,
-      subtree: true
-    });
+      subtree: false
+    };
+
+    const filternode1 = document.querySelector('.filtermenu a[data-id="' + filter1Id + '"]');
+    const filternode2 = document.querySelector('.filtermenu a[data-id="' + filter2Id + '"]');
+    const filternode3 = document.querySelector('.filtermenu a[data-id="' + filter3Id + '"]');
+
+    if (filternode1) filterObserver.observe(filternode1, config);
+    if (filternode2) filterObserver.observe(filternode2, config);
+    if (filternode3) filterObserver.observe(filternode3, config);
 
   },
 
-  createFilters(btnToggle) {
+  createPrioFilters(btnToggle) {
 
     btnToggle.text('Fler filter');
     ELM.get('.mob-filter-container .active-filter-display').css('hidden');
@@ -85,6 +81,7 @@ const test = {
     test.createButton(filter3name,filter3,filter3Id);
     test.createButton(filter2name,filter2,filter2Id);
     test.createButton(filter1name,filter1,filter1Id);
+
     buttonRow.append(btnToggle);
     buttonRow.insertAfter(ELM.get('.mob-filter-container .active-filter-display'));
 
@@ -93,52 +90,59 @@ const test = {
   createButton(btnText,filter,filterId) {
 
     const btn = ELM.create('a').attr('data-filter-id', filterId).text(btnText);
-    const filtermatch = document.querySelector('.filtermenu a[data-urlname=' + filter + ']');
-    btn.attr('href','#').css('button').css('btn-' + filter);
+    btn.attr('href','#').css('button');
     buttonRow.append(btn);
 
+    const filtermatch = document.querySelector('.filtermenu a[data-id="' + filterId + '"]');
     btn.click((e) => {
       e.preventDefault();
+      if (btn.hasClass('clickable')) {
+        if(filtermatch) {
+          filtermatch.click();
+        }
+      }
     });
-
     if(filtermatch) {
-      test.addClickListener(btn,filter,filtermatch);
+      test.filterClasses(filtermatch, filterId);
+      btn.css('clickable');
+    } else {
+      btn.css('inactive');
     }
 
-    test.filterClasses(filtermatch, filterId);
     return btn;
 
   },
 
-  addClickListener(btn,filter,filtermatch) {
-    btn.click((e) => {
-      if (!btn.hasClass('inactive')) {
-        filtermatch.click();
-      }
-    });
-  },
-
   filterClasses(filtermatch,filterId) {
-
-    if (filtermatch) {
-
-      const button = ELM.get('.button-row a[data-filter-id="' + filterId + '"]');
-      
-      if(filtermatch.getAttribute('data-hits') === '0') {
-        button.css('inactive');
+    const btn = ELM.get('.button-row a[data-filter-id="' + filterId + '"]');
+    if(btn.exist()) {
+      if(filtermatch.getAttribute('data-hits') === '0' || test.hasActiveSiblings(filtermatch)) {
+        btn.css('inactive');
+        setTimeout(function() {
+          btn.removeClass('clickable');
+        },200);
       } else {
-        button.removeClass('inactive');
+        btn.removeClass('inactive');
+        setTimeout(function() {
+          btn.css('clickable');
+        },200);
       }
       if(filtermatch.parentNode.classList.contains('active')) {
-        button.css('active');
+        btn.css('active');
       } else {
-        button.removeClass('active');
+        btn.removeClass('active');
       }
-
-    } else {
-      button.css('inactive');
     }
+  },
 
+  hasActiveSiblings(filtermatch) {
+    const activeFilters = filtermatch.parentNode.parentNode.getElementsByClassName('active');
+    for (var i = 0; i < activeFilters.length; i++) {
+      if (activeFilters[i] !== filtermatch.parentNode) {
+        return true;
+      }
+    }
+    return false;
   }
 
 };

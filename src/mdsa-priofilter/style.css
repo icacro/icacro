@@ -11,7 +11,7 @@
   .cro #recipe-header {
     display: block;
     visibility: hidden;
-    top: 0;
+    top: -97px;
     position: relative;
     margin-bottom: -37px;
   }
