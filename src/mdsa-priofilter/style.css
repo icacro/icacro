@@ -2,20 +2,29 @@
   display: none !important;
 }
 
+.cro .filter-toggle-button {
+  display: block;
+}
+
 .cro #recipe-header {
   display: block;
   visibility: hidden;
-  top: -60px;
+  top: 0;
   position: relative;
+  margin-bottom: -37px;
 }
 
 .cro .mob-filter-container {
   position: relative;
+  padding-bottom: 0;
 }
 
 .cro .recipes.grid_fluid .mob-filter-container .button-row {
   display: flex !important;
   flex-direction: row;
+  width: 100%;
+  top: -15px;
+  position: relative;
 }
 
 .cro .mob-filter-container .toggle { order: 2; }
@@ -44,5 +53,5 @@
 }
 
 .cro .filtermenu.open {
-  margin-top: 10px;
+  margin-top: 0;
 }

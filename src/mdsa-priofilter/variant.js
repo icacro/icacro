@@ -13,40 +13,73 @@ import { CROUTIL, ELM } from '../util/main';
 import { gaPush } from '../util/utils';
 import './style.css';
 
-// const filter1='barn';
+// const filter1='barn'; //Typ av recept - krockar med många andra kategorier
 // const filter1name='Barnvänligt';
 // const filter2='billiga-veckan';
 // const filter2name='Prisvärt';
 // const filter3='under-15-minuter';
 // const filter3name='Snabbt';
 
-//Problem - barn och snabbt svårkombinerat som recepten är upptaggade idag! Andra kategorier?
-
-const filter1='barn';
-const filter1name='Barnvänligt';
+const filter1='enkel';
+const filter1name='Enkelt';
 const filter2='billiga-veckan';
 const filter2name='Prisvärt';
 const filter3='under-30-minuter';
 const filter3name='Snabbt';
 
-let filterlevel;
-if (window.location.href.indexOf(filter1) !== -1 || window.location.href.indexOf(filter2) !== -1 || window.location.href.indexOf(filter3) !== -1) {
-  filterlevel=1;
-  if (/#:recipefilter=/.test(window.location.href)) {
-    filterlevel=2;
-  }
-} else {
-  filterlevel=0;
-}
-
 const buttonRow = ELM.create('div button-row');
-const btnToggle = ELM.get('.mob-filter-container .filter-toggle-button');
 
 const test = {
 
   manipulateDom() {
 
+    const btnToggle = ELM.get('.mob-filter-container .filter-toggle-button');
+
+    if (btnToggle.exist()) {
+      test.createFilters(btnToggle);
+    } else {
+
+      const filterWrapper = ELM.get('.mob-filter-container');
+
+      // let i = 0;
+      // setInterval(function() {
+      //   i++;
+      //   if (btnToggle.exist()) {
+      //     console.log('filters ok');
+      //     test.createFilters(btnToggle);
+      //   } else if (i === 10) {
+      //     console.log('filters timeout');
+      //     clearInterval(this);
+      //   }
+      // }, 500);
+
+      let btnToggleObserver = new MutationObserver(function(mutations) {
+        for (var i = 0; i < mutations.length; i++) {
+          console.log('checking...');
+          if (btnToggle.exist()) {
+            console.log('found!');
+            test.createFilters(btnToggle);
+            btnToggleObserver.disconnect();
+            break;
+          }
+        }
+      });
+
+      btnToggleObserver.observe(filterWrapper, {
+        attributes: false,
+        characterData: false,
+        childList: true,
+        subtree: false
+      });
+
+    }
+
+  },
+
+  createFilters(btnToggle) {
+
     btnToggle.text('Fler filter');
+
     ELM.get('.mob-filter-container .active-filter-display').css('hidden');
     ELM.get('.mob-filter-container').append(buttonRow);
 
@@ -72,44 +105,53 @@ const test = {
 
     if(filtermatch) {
       test.createListener(btn,filter,filtermatch);
-      window.setTimeout(function () {
-        if(filtermatch.getAttribute('data-hits') === '0') {
-          // Även kontrollera så att inte annat filter i samma kategori
+      setTimeout(function() {
+        if(filtermatch.getAttribute('data-hits') === '0' || test.hasActiveSiblings(filtermatch)) {
           btn.css('inactive');
-        } else {
-          if (filtermatch.parentNode.classList.contains('active')) {
-            btn.css('active');
-          }
+        } else if (filtermatch.parentNode.classList.contains('active')) {
+          btn.css('active');
         }
       },500);
+      return btn;
     } else {
       btn.css('inactive').css('no-filter');
+      return btn;
     }
-
-    return btn;
 
   },
 
+  hasActiveSiblings(filtermatch) {
+    const activeFilters = filtermatch.parentNode.parentNode.getElementsByClassName('active');
+    for (var i = 0; i < activeFilters.length; i++) {
+      if (activeFilters[i].innerHtml !== filtermatch.innerHtml) {
+        return true;
+      }
+    }
+    return false;
+  },
+
   createListener(btn,filter,filtermatch) {
+
     btn.click((e) => {
       if (!btn.hasClass('inactive')) {
         btn.toggle('active');
         filtermatch.click();
-        window.setTimeout(function () {
+        setTimeout(function() {
           if (filter !== filter1) test.checkFilter(filter1);
           if (filter !== filter2) test.checkFilter(filter2);
           if (filter !== filter3) test.checkFilter(filter3);
         },500);
       }
     });
+
   },
 
   checkFilter(filter) {
+
     const btn = ELM.get('.button-row .btn-' + filter);
     const filtermatch = document.querySelector('.filtermenu a[data-urlname="'+filter+'"]');
     if (filtermatch) {
-      if (filtermatch.getAttribute('data-hits') === '0') {
-        // Även kontrollera så att inte annat filter i samma kategori
+      if (filtermatch.getAttribute('data-hits') === '0' || test.hasActiveSiblings(filtermatch)) {
         btn.css('inactive');
       } else {
         btn.removeClass('inactive');
@@ -120,6 +162,7 @@ const test = {
     } else {
       btn.css('inactive');
     }
+
   }
 
 };

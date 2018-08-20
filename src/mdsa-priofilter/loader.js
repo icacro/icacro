@@ -12,7 +12,7 @@
 'use strict';
 
 function init() {
-  var css = '.cro .mob-filter-container .active-filter-display, .cro #recipe-header {display:none;}';
+  var css = '.mob-filter-container .active-filter-display, .filter-toggle-button, #recipe-header {display:none;}';
   var style = document.createElement('style');
   var script = document.createElement('script');
   var head = document.querySelector('head');
