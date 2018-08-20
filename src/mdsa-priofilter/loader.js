@@ -12,7 +12,7 @@
 'use strict';
 
 function init() {
-  var css = '.mob-filter-container .active-filter-display, .filter-toggle-button, #recipe-header {display:none;}';
+  var css = '@media only screen and (max-width: 699px) {.mob-filter-container .active-filter-display, .filter-toggle-button, #recipe-header {display:none;}}';
   var style = document.createElement('style');
   var script = document.createElement('script');
   var head = document.querySelector('head');

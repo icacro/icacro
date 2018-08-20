@@ -1,57 +1,67 @@
-.cro .mob-filter-container .active-filter-display {
-  display: none !important;
-}
+@media only screen and (max-width: 699px) {
 
-.cro .filter-toggle-button {
-  display: block;
-}
+  .cro .mob-filter-container .active-filter-display {
+    display: none !important;
+  }
 
-.cro #recipe-header {
-  display: block;
-  visibility: hidden;
-  top: 0;
-  position: relative;
-  margin-bottom: -37px;
-}
+  .cro.cro-fallback .mob-filter-container .active-filter-display {
+    display: block !important;
+  }
 
-.cro .mob-filter-container {
-  position: relative;
-  padding-bottom: 0;
-}
+  .cro .filter-toggle-button {
+    display: block;
+  }
 
-.cro .recipes.grid_fluid .mob-filter-container .button-row {
-  display: flex !important;
-  flex-direction: row;
-  width: 100%;
-  top: -15px;
-  position: relative;
-}
+  .cro #recipe-header {
+    display: block;
+    visibility: hidden;
+    top: 0;
+    position: relative;
+    margin-bottom: -37px;
+  }
 
-.cro .mob-filter-container .toggle { order: 2; }
+  .cro .mob-filter-container {
+    position: relative;
+    padding-bottom: 0;
+  }
 
-.cro .mob-filter-container .button-row > .toggle.open,
-.cro .mob-filter-container .button-row > .button.active {
-  background: #ccc;
-}
+  .cro .recipes.grid_fluid .mob-filter-container .button-row {
+    display: flex !important;
+    flex-direction: row;
+    width: 100%;
+    top: -15px;
+    position: relative;
+  }
 
-.cro .mob-filter-container .button-row > a {
-  width:25% !important;
-  font-size: 11px;
-  border-right: 1px solid #fff;
-  background: #eee;
-  color: #333;
-  padding-left: 0;
-  padding-right: 0;
-}
+  .cro .mob-filter-container .toggle { order: 2; }
 
-.cro .mob-filter-container .button-row > a.inactive {
-  color: #ccc;
-}
+  .cro .mob-filter-container .button-row > .toggle.open,
+  .cro .mob-filter-container .button-row > .button.active {
+    background: #ccc;
+  }
 
-.cro .toggle.button.open[data-activetext]:after {
-  font-size: 11px;
-}
+  .cro .mob-filter-container .button-row > a {
+    width:25% !important;
+    font-size: 11px;
+    border-right: 1px solid #fff;
+    background: #eee;
+    color: #333;
+    padding-left: 0;
+    padding-right: 0;
+  }
 
-.cro .filtermenu.open {
-  margin-top: 0;
+  .cro .mob-filter-container .button-row > a.inactive {
+    color: #ccc;
+  }
+
+  .cro .toggle.button.open[data-activetext]:after {
+    font-size: 11px;
+  }
+
+  .cro .filtermenu.open {
+    margin-top: 0;
+    margin-bottom: 0;
+    padding-bottom: 10px;
+  }
+
 }

@@ -39,19 +39,7 @@ const test = {
       test.createFilters(btnToggle);
     } else {
 
-      const filterWrapper = ELM.get('.mob-filter-container');
-
-      // let i = 0;
-      // setInterval(function() {
-      //   i++;
-      //   if (btnToggle.exist()) {
-      //     console.log('filters ok');
-      //     test.createFilters(btnToggle);
-      //   } else if (i === 10) {
-      //     console.log('filters timeout');
-      //     clearInterval(this);
-      //   }
-      // }, 500);
+      const filterWrapper = document.querySelector('.mob-filter-container');
 
       let btnToggleObserver = new MutationObserver(function(mutations) {
         for (var i = 0; i < mutations.length; i++) {
@@ -88,7 +76,7 @@ const test = {
     test.createButton(filter1name,filter1);
 
     buttonRow.append(btnToggle);
-    ELM.get('#RecipeFilterMenu').insertAfter(buttonRow);
+    buttonRow.insertAfter(ELM.get('.mob-filter-container .active-filter-display'));
 
   },
 
