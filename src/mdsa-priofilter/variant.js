@@ -25,6 +25,11 @@ const filter3Id='146';
 
 const buttonRow = ELM.create('div button-row');
 
+//safaristyling
+//"Snabbt" vs "under 30 minuter" (obs! finns ett annat "snabbt")
+//"Prisvärt" vs "billiga veckan"
+//fördröjning markering i mobil - ställa om redan vid klick
+
 const test = {
 
   manipulateDom() {
@@ -99,6 +104,9 @@ const test = {
       if (btn.hasClass('clickable')) {
         if(filtermatch) {
           filtermatch.click();
+          btn.toggle('active');
+          //prevent double clicks
+          btn.removeClass('clickable');
         }
       }
     });
