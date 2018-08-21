@@ -25,6 +25,9 @@ const filter3Id='146';
 
 const buttonRow = ELM.create('div button-row');
 
+//filter-bg
+//lägg tillbaka clickable om klick på annan?
+
 const test = {
 
   manipulateDom() {
@@ -109,8 +112,6 @@ const test = {
         if(filtermatch) {
           filtermatch.click();
           btn.toggle('active');
-          //prevent double clicks
-          btn.removeClass('clickable');
         }
       }
     });
