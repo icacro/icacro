@@ -1,6 +1,6 @@
 // ==UserScript==
-// @name         recipe-toggle-ingredients
-// @path         //./src/mdsa-cleanup/variant.js
+// @name         mdsa-priofilter
+// @path         //./src/mdsa-priofilter/variant.js
 // @namespace    http://tampermonkey.net/
 // @version      0.1
 // @match        https://www.ica.se/recept/*
@@ -24,11 +24,6 @@ const filter3name='Snabbt';
 const filter3Id='146';
 
 const buttonRow = ELM.create('div button-row');
-
-//safaristyling
-//"Snabbt" vs "under 30 minuter" (obs! finns ett annat "snabbt")
-//"Prisvärt" vs "billiga veckan"
-//fördröjning markering i mobil - ställa om redan vid klick
 
 const test = {
 
@@ -78,6 +73,15 @@ const test = {
   },
 
   createPrioFilters(btnToggle) {
+
+    btnToggle.click((e) => {
+      if (btnToggle.text() === 'Fler filter') {
+        gaPush({ eventAction: 'Öppnat mobilfilter' });
+        btnToggle.text('Dölj filter');
+      } else {
+        btnToggle.text('Fler filter');
+      }
+    });
 
     btnToggle.text('Fler filter');
     ELM.get('.mob-filter-container .active-filter-display').css('hidden');
@@ -156,8 +160,6 @@ const test = {
 };
 
 $(document).ready(() => {
-  if (ELM.get('.mob-filter-container').exist()) {
-    Object.assign(test, CROUTIL());
-    test.manipulateDom();
-  }
+  Object.assign(test, CROUTIL());
+  test.manipulateDom();
 });
