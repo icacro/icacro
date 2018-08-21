@@ -1,0 +1,45 @@
+// ==UserScript==
+// @name         mdsa-sorting
+// @path         //./src/mdsa-sorting/variant.1.js
+// @namespace    http://tampermonkey.net/
+// @version      0.1
+// @match        https://www.ica.se/recept/*
+// @grant        none
+// ==/UserScript==
+
+'use strict';
+
+import { CROUTIL, ELM } from '../util/main';
+import { gaPush } from '../util/utils';
+//import './style.css';
+
+const test = {
+
+  manipulateDom() {
+
+    const sorting = getCookie('recipeSortingPreference');
+
+    ELM.get('.filter-dropdown-wrapper filter-option[value="Grade"]').css('hidden');
+    ELM.get('.filter-dropdown-wrapper filter-option[value="Votes"]').css('hidden');
+    ELM.get('.filter-dropdown-wrapper filter-option[value="Climate"]').css('hidden');
+    ELM.get('.filter-dropdown-wrapper filter-option[value="Comments"]').css('hidden');
+    ELM.get('.filter-dropdown-wrapper filter-option[value="Nutrition"]').css('hidden');
+
+    ELM.get('.filter-dropdown-wrapper filter-option[value="Saves"]').text('Populärast');
+
+    if (sorting === 'Saves') {
+      ELM.get('.filter-dropdown-selected .filter-dropdown-selected-content').text('Populärast');
+    }
+
+    //Event vid öppning?
+
+  },
+
+};
+
+$(document).ready(() => {
+  if (ELM.get('.filter-dropdown').exist()) {
+    Object.assign(test, CROUTIL());
+    test.manipulateDom();
+  }
+});
