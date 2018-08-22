@@ -25,9 +25,6 @@ const filter3Id='146';
 
 const buttonRow = ELM.create('div button-row');
 
-//filter-bg
-//lägg tillbaka clickable om klick på annan?
-
 const test = {
 
   manipulateDom() {
@@ -79,7 +76,7 @@ const test = {
 
     btnToggle.click((e) => {
       if (btnToggle.text() === 'Fler filter') {
-        gaPush({ eventAction: 'Öppnat mobilfilter' });
+        gaPush({ eventAction: 'Öppnat fler filter' });
         btnToggle.text('Dölj filter');
       } else {
         btnToggle.text('Fler filter');
@@ -110,11 +107,18 @@ const test = {
       e.preventDefault();
       if (btn.hasClass('clickable')) {
         if(filtermatch) {
+          if (btn.hasClass('active')) {
+            gaPush({ eventAction: 'Stängt snabbfilter' });
+            btn.removeClass('active');
+          } else {
+            gaPush({ eventAction: 'Öppnat snabbfilter' });
+            btn.css('active');
+          }
           filtermatch.click();
-          btn.toggle('active');
         }
       }
     });
+
     if(filtermatch) {
       test.filterClasses(filtermatch, filterId);
       btn.css('clickable');

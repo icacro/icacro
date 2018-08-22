@@ -121,4 +121,8 @@
     margin-top: 20px;
   }
 
+  .cro .recipes.grid_fluid .recipe-header {
+    margin: 0 -10px -1px;
+  }
+
 }
