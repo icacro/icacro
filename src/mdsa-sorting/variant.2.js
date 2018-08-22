@@ -7,6 +7,9 @@
 // @grant        none
 // ==/UserScript==
 
+
+//Dölj otydliga filter, visa som synliga knappar
+
 'use strict';
 
 import { CROUTIL, ELM } from '../util/main';

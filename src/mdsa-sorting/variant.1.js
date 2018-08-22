@@ -7,6 +7,9 @@
 // @grant        none
 // ==/UserScript==
 
+
+//Dölj otydliga filter
+
 'use strict';
 
 import { CROUTIL, ELM } from '../util/main';
