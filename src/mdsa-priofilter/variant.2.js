@@ -27,8 +27,6 @@ const test = {
         setTimeout(function() {
           if (btn.hasClass('open')) {
             gaPush({ eventAction: 'Öppnat filtermeny' });
-          } else {
-            gaPush({ eventAction: 'Stängt filtermeny' });
           }
         },200);
       });

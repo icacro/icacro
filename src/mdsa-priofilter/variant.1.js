@@ -76,7 +76,7 @@ const test = {
 
     btnToggle.click((e) => {
       if (btnToggle.text() === 'Fler filter') {
-        gaPush({ eventAction: 'Öppnat fler filter' });
+        gaPush({ eventAction: 'Öppnat filtermeny' });
         btnToggle.text('Dölj filter');
       } else {
         btnToggle.text('Fler filter');
@@ -108,10 +108,10 @@ const test = {
       if (btn.hasClass('clickable')) {
         if(filtermatch) {
           if (btn.hasClass('active')) {
-            gaPush({ eventAction: 'Stängt snabbfilter' });
+            gaPush({ eventAction: 'Avaktiverat snabbfilter', eventLabel: filter });
             btn.removeClass('active');
           } else {
-            gaPush({ eventAction: 'Öppnat snabbfilter' });
+            gaPush({ eventAction: 'Aktiverat snabbfilter', eventLabel: filter });
             btn.css('active');
           }
           filtermatch.click();
