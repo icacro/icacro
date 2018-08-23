@@ -122,3 +122,30 @@ export function triggerHotJar(triggerName) {
 
   hj('trigger', triggerName);
 }
+
+export function debounce(func, wait) {
+  let timeout;
+  return function (...args) {
+    const context = this;
+    const later = function () {
+      timeout = null;
+      func.apply(context, args);
+    };
+    window.clearTimeout(timeout);
+    timeout = setTimeout(later, wait);
+  };
+}
+
+export function throttle(func, wait) {
+  let timeout = null;
+  return function (...args) {
+    if (timeout === null) {
+      const context = this;
+      const later = function () {
+        timeout = null;
+        func.apply(context, args);
+      };
+      timeout = setTimeout(later, wait);
+    }
+  };
+}

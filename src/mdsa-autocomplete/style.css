@@ -1,0 +1,63 @@
+.cro .filtermenu {
+ display: none;
+}
+
+.cro .mob-filter-container.mob-filter-container {
+  display: none !important;
+}
+
+.cro .cro-help-button {
+  display: block;
+  margin: 1em auto;
+  background: none;
+  text-shadow: 0 0 15px black;
+}
+.cro .cro-help-button:hover {
+  background: none;
+}
+.cro .cro-help-links {
+  position: absolute;
+  z-index: 3;
+  width: 100%;
+  max-width: 25em;
+  list-style: none;
+  display: none;
+  font-size: 14px;
+  box-shadow: 0 0 15px rgba(0,0,0,0.15);
+}
+.cro .cro-help-links.open {
+  display: block;
+}
+.cro .cro-help-links__item {
+  margin: 0;
+  padding: 0.2em;
+  border: solid 1px #ebebec;
+  border-bottom: none;
+  background-color: white;
+}
+.cro .cro-help-links__item:last-child {
+  border-bottom: solid 1px #ebebec;
+}
+.cro .cro-help-links a {
+  display: inline-block;
+  width: 100%;
+}
+.cro .cro-help-button .arrow {
+  max-height: 0;
+  max-width: 0;
+  border-width: 4px;
+  border-style: solid;
+  border-left: 5px solid #a02971;
+  display: inline-block;
+  transition: all 0.3s ease-out;
+  transform-origin: 25% 50%;
+  background-image: none !important;
+  color: white;
+  border-color: white;
+  border-top-color: transparent;
+  border-right-color: transparent;
+  border-bottom-color: transparent;
+}
+.cro .cro-help-button.open .arrow {
+  transform: rotate(-90deg);
+}
