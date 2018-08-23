@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Banner
-// @path         //./src/mdsa-priofilter/variant.js
+// @path         //./src/mdsa-sorting/variant.1.js
 // @namespace    http://tampermonkey.net/
 // @version      0.1
 // @match        https://www.ica.se/*
@@ -18,7 +18,7 @@ function init() {
   var head = document.querySelector('head');
 
   script.setAttribute('async', '');
-  script.setAttribute('src', 'https://cdn.rawgit.com/icacro/icacro/v1.0.217/src/mdsa-sorting/variant.min.js');
+  script.setAttribute('src', 'https://cdn.rawgit.com/icacro/icacro/v1.0.217/src/mdsa-sorting/variant.1.min.js');
 
   style.appendChild(document.createTextNode(css));
 

@@ -49,12 +49,29 @@
   color: #fff !important;
   background: #ff0000;
   border-color: #ff0000;
+  position: relative;
+}
+
+.cro filter-dropdown[selected] .filter-dropdown-wrapper filter-option:first-child::before,
+.cro filter-dropdown[selected] .filter-dropdown-wrapper filter-option[value="Saves"]::before,
+.cro .filter-dropdown[selected] .filter-dropdown-selected::before,
+.cro .filter-dropdown[selected] filter-option[selected]::before,
+.cro filter-dropdown .filter-dropdown-wrapper filter-option:first-child::before {
+  content: '✓';
+  width:10px;
+  height:10px;
+  display: inline-block;
+  margin-right: 2px;
 }
 
 .cro filter-dropdown[selected] .filter-dropdown-wrapper filter-option:first-child {
   color:#a02971 !important;
   background: #ffffff;
   border-color: #dadbde;
+}
+
+.cro filter-dropdown[selected] .filter-dropdown-wrapper filter-option:first-child::before {
+  display: none;
 }
 
 @media only screen and (max-width: 699px) {

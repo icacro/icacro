@@ -7,9 +7,6 @@
 // @grant        none
 // ==/UserScript==
 
-
-//Dölj otydliga filter, visa som synliga knappar
-
 'use strict';
 
 import { CROUTIL, ELM } from '../util/main';
@@ -20,28 +17,44 @@ const test = {
 
   manipulateDom() {
 
-    const sorting = getCookie('recipeSortingPreference');
+    const defaultSorting = 'Saves';
 
     ELM.get('.filter-dropdown-wrapper filter-option[value="Grade"]').css('hidden');
     ELM.get('.filter-dropdown-wrapper filter-option[value="Votes"]').css('hidden');
     ELM.get('.filter-dropdown-wrapper filter-option[value="Climate"]').css('hidden');
     ELM.get('.filter-dropdown-wrapper filter-option[value="Comments"]').css('hidden');
     ELM.get('.filter-dropdown-wrapper filter-option[value="Nutrition"]').css('hidden');
-
     ELM.get('.filter-dropdown-wrapper filter-option[value="Saves"]').text('Populärast');
 
-    if (sorting === 'Saves') {
-      ELM.get('.filter-dropdown-selected .filter-dropdown-selected-content').text('Populärast');
+    let selectedSorting = getCookie('recipeSortingPreferenceSelected');
+
+    if (selectedSorting === null) {
+      selectedSorting = defaultSorting;
+      document.cookie = 'recipeSortingPreferenceSelected=' + selectedSorting + '; path=/';
+      if (defaultSorting === 'Saves') {
+        ELM.get('.filter-dropdown-wrapper filter-option[value="Saves"]').click();
+        ELM.get('filter-dropdown').attr('selected','selected');
+        document.cookie = 'recipeSortingPreference=' + selectedSorting + '; path=/';
+      }
+    } else if (selectedSorting === 'Saves') {
       ELM.get('filter-dropdown').attr('selected','selected');
-    } else if (sorting === null) {
-      //Ingen åtgärd?
-      console.log('null');
-    } else {
-      //Spelar ingen större roll?
-      console.log('other sorting options');
+      ELM.get('.filter-dropdown-selected .filter-dropdown-selected-content').text('Populärast');
     }
 
-    //Event vid öppning?
+    const relevanceBtn = ELM.get('.filter-dropdown-wrapper filter-option:first-child');
+    const savesBtn = ELM.get('.filter-dropdown-wrapper filter-option[value="Saves"]');
+
+    savesBtn.click((e) => {
+      document.cookie = 'recipeSortingPreference=Saves; path=/';
+      document.cookie = 'recipeSortingPreferenceSelected=Saves; path=/';
+      gaPush({ eventAction: 'Klick på sorteringsknapp', eventLabel: 'Populärast' });
+    });
+
+    relevanceBtn.click((e) => {
+      document.cookie = 'recipeSortingPreference=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/';
+      document.cookie = 'recipeSortingPreferenceSelected=Relevance; path=/';
+      gaPush({ eventAction: 'Klick på sorteringsknapp', eventLabel: 'Relevans' });
+    });
 
   },
 
