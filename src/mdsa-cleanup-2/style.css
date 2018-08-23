@@ -1,0 +1,375 @@
+.cro #content,
+.cro .recipes article footer,
+.cro #content * {
+  visibility: visible;
+}
+
+.cro .recipes .mdsa article .content.sm_hidden,
+.cro .filtersegment a[data-hits].show-hits:after,
+.cro .recipe .yellow-stars dt,
+.cro .recipe .yellow-stars .votes,
+.cro .recipes .mdsa article .content .votes.small,
+.cro .recipe .recipe-info li,
+.cro .grid_fluid.banner-area {
+  display: none;
+}
+
+.cro h1 .mini-title,
+.cro h1 + p,
+.cro .tag-container {
+  display: none !important;
+}
+
+.cro .save-recipe-button {
+  width: 26px;
+  height: 26px;
+  overflow: hidden;
+  position: absolute;
+  right:5%;
+  top:50%;
+}
+
+.cro .save-recipe-button a {
+  font-size: 12px;
+}
+
+.cro .save-recipe-button a span svg {
+  display: inline;
+  fill: #A02971;
+}
+
+.cro .filtersegment a {
+  text-transform: lowercase;
+}
+
+.cro .recipes .mdsa article {
+  position: relative;
+}
+.cro .recipes .mdsa article::before {
+  top:0;
+  left:0 !important;
+  right:0 !important;
+}
+
+.cro .recipes .mdsa:not(.thumb-view) article .column {
+  min-width: 140px;
+}
+
+.cro .recipes .mdsa:not(.thumb-view) article h2 a {
+  font-size: 30px;
+  line-height: 1.1;
+  font-weight: normal;
+  margin-bottom: 1em;
+}
+
+.cro .recipe header {
+  margin: 5px 50px 10px 0;
+  max-width: 400px;
+}
+
+.cro .recipe .recipe-info li.md_lte_hidden {
+  display: inline-block;
+  margin-top: 0;
+}
+.cro .recipe .recipe-info li {
+  padding-left: 0;
+  margin-left: 0;
+  border: none;
+}
+
+.cro .recipe .yellow-stars,
+.cro .recipe .time,
+.cro .recipe footer {
+  display: inline-block;
+  position: relative;
+  vertical-align: top;
+  line-height: 16px;
+}
+
+.cro .recipe .time {
+  border-left: 1px solid rgba(0,0,0,0.2);
+  padding: 0 0 0 34px;
+  margin-right: 0;
+  color: #756f67;
+  height: 16px;
+}
+
+.cro .recipe .time svg {
+  position: absolute;
+  top:2px;
+  left: 18px;
+  width: 11px;
+  height: 11px;
+  margin-right: 5px;
+  fill: #756f67;
+}
+
+.cro .recipe .ingredients {
+  float: none;
+  width: auto;
+  margin:0;
+  border-left: 1px solid rgba(0,0,0,0.2);
+  margin-left: 10px;
+  padding: 0 18px;
+}
+
+.cro .main-content {
+  margin-top: -40px;
+}
+
+.cro #content .main-content>.grid_fluid:not(:first-child) {
+  margin-top: -30px !important;
+}
+
+/*.cro fieldset.search {
+  max-width: 300px;
+}*/
+
+.cro .search-container,
+.cro header.page-header .recipe-search {
+  max-width: 300px;
+  margin: 0 auto 80px;
+}
+
+.cro .filter-search {
+  margin-top: 0;
+}
+
+.cro #content > header > div:first-child h1 {
+  padding-top: 20px;
+  padding-bottom: 19px;
+}
+
+
+.cro .filtermenu {
+  opacity: 0 !important;
+}
+
+.cro .filtermenu.loaded {
+  opacity: 1 !important;
+}
+
+.cro .filtermenu:not(.open) {
+  overflow: hidden;
+}
+
+.cro .filtermenu fieldset.contractable {
+  border-bottom: 1px solid #e6e4e2;
+}
+
+.cro .filtermenu fieldset.contractable:not(.selected) {
+  margin-bottom: 0;
+}
+
+/*Nytt för height*/
+.cro .filtermenu fieldset.contractable:not(.selected)>ul {
+  height: 0 !important;
+  margin-bottom: 0;
+}
+
+.cro .filtermenu fieldset.contractable.open>ul,
+.cro .filtermenu fieldset.contractable.selected>ul {
+  height: auto !important;
+}
+
+.cro .filtermenu fieldset.contractable.open {
+  margin: 20px 0;
+}
+
+.cro .filtermenu fieldset.contractable.selected {
+  margin-top: 0;
+  margin-bottom: 20px;
+  padding: 0;
+}
+
+.cro .filtermenu fieldset.contractable:not(.open) legend::before,
+.cro .filtermenu fieldset.contractable.open legend::after {
+  opacity: 1;
+}
+
+.cro .filtermenu fieldset.contractable:not(.open) legend::after,
+.cro .filtermenu fieldset.contractable.open legend::before {
+  opacity: 0;
+}
+
+
+.cro #content > div.grid_fluid > div:first-child {
+  margin-top: -40px;
+}
+
+.cro .recipes .mdsa article figure img:last-child {
+  position: absolute;
+  top: 0;
+}
+
+.cro .recipes .mdsa .digital-coupon__wrapper {
+  margin: 10px auto 20px;
+}
+
+
+
+
+
+.cro .toprecipes-list.cro-search,
+.cro .toprecipes-list .save-recipe-button,
+.cro .toprecipes-list dl.inline dt,
+.cro .toprecipes-list meter,
+.cro .toprecipes-list.mdsa:not(.thumb-view) article::before {
+  display: none;
+}
+
+.cro .recipes.grid_fluid .mdsa:not(.thumb-view).toprecipes-list {
+  margin-top: 10px;
+  padding:0;
+  display: none;
+}
+
+.cro .recipes.grid_fluid .mdsa:not(.thumb-view).toprecipes-list.loaded {
+  display: block;
+}
+
+.cro .toprecipes-list h3 {
+  text-align: center;
+  margin: 0;
+  padding:10px;
+  max-width: 100%;
+  /*background: #f5faf4;*/
+}
+
+.cro .toprecipes-list h3 svg {
+  width:240px;
+  margin:10px 0 0;
+}
+
+.toprecipes-list-wrapper {
+  display: flex;
+  padding:0 10px 30px;
+  /*background: #f5faf4;*/
+}
+
+.cro .toprecipes-list > article,
+.cro .toprecipes-list .recipe-bottom-container {
+  display: none;
+}
+
+.cro .toprecipes-list .toprecipes-list-wrapper article {
+  flex: 0 0 33.3%;
+  padding: 0 10px;
+}
+
+.cro .recipes .toprecipes-list.mdsa:not(.thumb-view) article h2 {
+  margin: 1em 0 -2px;
+}
+
+.cro .recipes .toprecipes-list.mdsa:not(.thumb-view) article footer {
+  margin-top: -5px;
+}
+
+.cro .recipes .toprecipes-list.mdsa:not(.thumb-view) article h2 a {
+  font-size: 1.6rem;
+}
+
+.cro .info-column {
+  margin-top: 10px;
+}
+
+.cro .info-column footer .ingredients {
+  width: auto !important;
+}
+
+.cro .toprecipes-list.mdsa .rating {
+  margin-right: 5px;
+}
+
+.cro .toprecipes-list.mdsa .rate-recipe dd.small.votes {
+  margin: 0;
+  vertical-align: top;
+  line-height: 1.4em;
+}
+
+.cro .recipes .mdsa article figure {
+  padding-bottom: 60%;
+}
+
+.cro .toprecipes-list .recipe .recipe-info li.md_lte_hidden {
+  margin-top: 8px;
+}
+
+
+@media only screen and (min-width: 980px) {
+  .cro .grid_fluid .column.xl_size16of20 {
+    width: 80%;
+  }
+  .cro .recipes .toprecipes-list.mdsa:not(.thumb-view) article h2 a {
+    font-size: 2rem;
+  }
+}
+
+@media only screen and (max-width: 980px) {
+  .cro .toprecipes-list .recipe footer {
+    display: block;
+  }
+  .cro .toprecipes-list .recipe .ingredients {
+    display: block;
+    border:0;
+    padding-left: 0;
+    margin-left: 0;
+  }
+}
+
+@media only screen and (max-width: 767px) {
+  .cro .recipes .mdsa:not(.thumb-view) article h2 a {
+    font-size: 24px;
+  }
+}
+
+@media only screen and (max-width: 699px) {
+  .cro .filtermenu .filter-toggle-button.toggle.button {
+    margin-top: 10px;
+  }
+  .cro .page-header .searchicon {
+    display: none;
+  }
+  .cro .page-header {
+    min-height: 100px;
+  }
+  .cro .toprecipes-list-wrapper {
+    padding: 0 5px;
+  }
+  .cro .toprecipes-list .toprecipes-list-wrapper article {
+    padding: 0 5px 30px;
+  }
+}
+
+@media only screen and (max-width: 500px) {
+  .cro .toprecipes-list .toprecipes-list-wrapper article {
+    flex: 0 0 50%;
+  }
+  .cro #content #toprecipe-3 {
+    display: none;
+    visibility: hidden;
+  }
+  .cro .toprecipes-list h3 svg {
+    width:200px;
+  }
+  .cro .recipe .yellow-stars {
+    display: block;
+  }
+  .cro .recipe .time {
+    padding-left: 22px;
+  }
+  .cro .recipe .time svg {
+    left: 8px;
+  }
+  .cro .recipe .ingredients {
+    margin-left: 0;
+    padding: 0 4px 0 0;
+    border-left: none;
+  }
+  .cro .recipes .mdsa:not(.thumb-view) article h2 a {
+    font-size: 16px;
+  }
+  .cro .recipe header {
+    margin-right: 35px;
+  }
+}
