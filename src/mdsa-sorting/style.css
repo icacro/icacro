@@ -10,6 +10,7 @@
 .cro filter-dropdown {
   border:0;
   width: 180px;
+  z-index: 1;
 }
 
 .cro .filter-dropdown-wrapper {
