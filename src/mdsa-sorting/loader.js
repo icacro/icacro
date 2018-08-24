@@ -12,7 +12,7 @@
 'use strict';
 
 function init() {
-  var css = 'filter-dropdown.filter-dropdown {border:0;} filter-dropdown .toggle-arrow-icon {display:none} .filter-dropdown-selected-content {color:#fff;}';
+  var css = '#recipes .article {opacity:0;} filter-dropdown.filter-dropdown {border:0;} filter-dropdown .toggle-arrow-icon {display:none} .filter-dropdown-selected-content {color:#fff;}';
   var style = document.createElement('style');
   var script = document.createElement('script');
   var head = document.querySelector('head');

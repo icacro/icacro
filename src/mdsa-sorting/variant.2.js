@@ -18,7 +18,6 @@ const test = {
   manipulateDom() {
 
     const defaultSorting = 'Saves';
-    ICA.MDSA.recipeList.defaultSort = defaultSorting;
 
     ELM.get('.filter-dropdown-wrapper filter-option[value="Grade"]').css('hidden');
     ELM.get('.filter-dropdown-wrapper filter-option[value="Votes"]').css('hidden');
@@ -32,13 +31,8 @@ const test = {
     if (selectedSorting === null) {
       selectedSorting = defaultSorting;
       document.cookie = 'recipeSortingPreferenceSelected=' + selectedSorting + '; path=/';
-      if (defaultSorting === 'Saves') {
-
-        ELM.get('filter-dropdown').attr('selected','selected');
-        document.cookie = 'recipeSortingPreference=' + selectedSorting + '; path=/';
-
-      }
-
+      ELM.get('filter-dropdown').attr('selected','selected');
+      document.cookie = 'recipeSortingPreference=' + selectedSorting + '; path=/';
     } else if (selectedSorting === 'Saves') {
       ELM.get('filter-dropdown').attr('selected','selected');
       ELM.get('.filter-dropdown-selected .filter-dropdown-selected-content').text('Populärast');
@@ -47,19 +41,31 @@ const test = {
     const relevanceBtn = ELM.get('.filter-dropdown-wrapper filter-option:first-child');
     const savesBtn = ELM.get('.filter-dropdown-wrapper filter-option[value="Saves"]');
 
+    console.log(selectedSorting);
+    test.sort(selectedSorting);
+
     savesBtn.click((e) => {
       document.cookie = 'recipeSortingPreference=Saves; path=/';
       document.cookie = 'recipeSortingPreferenceSelected=Saves; path=/';
       gaPush({ eventAction: 'Klick på sorteringsknapp', eventLabel: 'Populärast' });
+      test.sort('Saves');
     });
 
     relevanceBtn.click((e) => {
       document.cookie = 'recipeSortingPreference=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/';
       document.cookie = 'recipeSortingPreferenceSelected=Relevance; path=/';
       gaPush({ eventAction: 'Klick på sorteringsknapp', eventLabel: 'Relevans' });
+      setTimeout(function () {
+        test.sort('Relevance');
+      }, 200);
     });
 
   },
+
+  sort(selectedSorting) {
+    ICA.MDSA.recipeList.defaultSort = selectedSorting;
+    ICA.MDSA.recipeList.updateSort();
+  }
 
 };
 
