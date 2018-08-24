@@ -19,6 +19,9 @@ const test = {
 
     const defaultSorting = 'Saves';
     ICA.MDSA.recipeList.defaultSort = defaultSorting;
+    setTimeout(function () {
+      ICA.MDSA.recipeList.updateSort();
+    }, 100);
 
     ELM.get('.filter-dropdown-wrapper filter-option[value="Grade"]').css('hidden');
     ELM.get('.filter-dropdown-wrapper filter-option[value="Votes"]').css('hidden');
