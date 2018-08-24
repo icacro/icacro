@@ -41,20 +41,21 @@ const test = {
     const relevanceBtn = ELM.get('.filter-dropdown-wrapper filter-option:first-child');
     const savesBtn = ELM.get('.filter-dropdown-wrapper filter-option[value="Saves"]');
 
+    console.log(selectedSorting);
     test.sort(selectedSorting);
 
     savesBtn.click((e) => {
       document.cookie = 'recipeSortingPreference=Saves; path=/';
       document.cookie = 'recipeSortingPreferenceSelected=Saves; path=/';
       gaPush({ eventAction: 'Klick på sorteringsknapp', eventLabel: 'Populärast' });
-      test.sort(selectedSorting);
+      test.sort('Saves');
     });
 
     relevanceBtn.click((e) => {
       document.cookie = 'recipeSortingPreference=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/';
       document.cookie = 'recipeSortingPreferenceSelected=Relevance; path=/';
       gaPush({ eventAction: 'Klick på sorteringsknapp', eventLabel: 'Relevans' });
-      test.sort(selectedSorting);
+      test.sort('Relevance');
     });
 
   },
