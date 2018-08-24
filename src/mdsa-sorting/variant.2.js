@@ -62,9 +62,9 @@ const test = {
 
   sort(selectedSorting) {
     ICA.MDSA.recipeList.defaultSort = selectedSorting;
-    setTimeout(function () {
+    //setTimeout(function () {
       ICA.MDSA.recipeList.updateSort();
-    }, 100);
+    //}, 100);
   }
 
 };
