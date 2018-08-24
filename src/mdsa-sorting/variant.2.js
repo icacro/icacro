@@ -18,6 +18,7 @@ const test = {
   manipulateDom() {
 
     const defaultSorting = 'Saves';
+    ICA.MDSA.recipeList.defaultSort = defaultSorting;
 
     ELM.get('.filter-dropdown-wrapper filter-option[value="Grade"]').css('hidden');
     ELM.get('.filter-dropdown-wrapper filter-option[value="Votes"]').css('hidden');
@@ -35,28 +36,6 @@ const test = {
 
         ELM.get('filter-dropdown').attr('selected','selected');
         document.cookie = 'recipeSortingPreference=' + selectedSorting + '; path=/';
-
-        let filterObserver = new MutationObserver(function(mutations) {
-          console.log('observer');
-          const option = ELM.get('.filter-dropdown-wrapper filter-option[value="Saves"]');
-          for (var i = 0; i < mutations.length; i++) {
-            if (option.exist()) {
-              setTimeout(function () {
-                ELM.get('.filter-dropdown-wrapper filter-option[value="Saves"]').click();
-                console.log('click');
-              }, 1000);
-            }
-          }
-        });
-
-        const config = {
-          attributes: true,
-          childList: false,
-          characterData: false,
-          subtree: false
-        };
-
-        filterObserver.observe(document.getElementById('recipe-header'), config);
 
       }
 
