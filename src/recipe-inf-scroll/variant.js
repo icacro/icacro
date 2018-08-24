@@ -102,21 +102,27 @@ const test = {
         wrapper.outerHTML = wrapper.innerHTML;
       }
 
-      // const servingsPicker = currentPage.find('.servings-picker--static');
-      // if (servingsPicker.exist()) {
-      //   const servingsWrapper = servingsPicker.parent();
-      //   document.querySelector('.servings-picker--static').innerHTML='';
-      //   const customServings = ELM.create('div custom-select').append('<select name="portions" id="currentPortions" class="js-servingspicker"><option class="servings-picker__servings" value="2">2 portioner</option><option class="servings-picker__servings" value="4">4 portioner</option><option class="servings-picker__servings" value="6">6 portioner</option><option class="servings-picker__servings" value="8">8 portioner</option><option class="servings-picker__servings" value="10">10 portioner</option><option class="servings-picker__servings" value="12">12 portioner</option></select>');
-      //   servingsPicker.css('servings-picker--dynamic').removeClass('servings-picker--static').append(customServings);
-      //   //servingsWrapper.css('currentpage');
-      //   const ingredientsHeader = ELM.create('div ingredients__header').append(currentPage.find('.ingredients--dynamic h2'));
-      //
-      //   //OBS! hantera recept m flera listor: https://www.ica.se/recept/kramig-paprikapasta-med-kronartskockor-722028/
-      //
-      //   const ingredientsContent = ELM.create('div ingredients__content').append(currentPage.find('.ingredients--dynamic ul'));
-      //   currentPage.find('.ingredients--dynamic').append(servingsPicker).append(ingredientsHeader).append(ingredientsContent);
-      //   servingsWrapper.append(ingredientsContent);
-      // }
+      //innehåller ngt som totalkraschade 23 augusti...
+
+      const servingsPicker = currentPage.find('.servings-picker--static');
+      if (servingsPicker.exist()) {
+        const servingsWrapper = servingsPicker.parent();
+        document.querySelector('.servings-picker--static').innerHTML='';
+        const customServings = ELM.create('div custom-select').append('<select name="portions" id="currentPortions" class="js-servingspicker"><option class="servings-picker__servings" value="2">2 portioner</option><option class="servings-picker__servings" value="4">4 portioner</option><option class="servings-picker__servings" value="6">6 portioner</option><option class="servings-picker__servings" value="8">8 portioner</option><option class="servings-picker__servings" value="10">10 portioner</option><option class="servings-picker__servings" value="12">12 portioner</option></select>');
+        servingsPicker.css('servings-picker--dynamic').removeClass('servings-picker--static').append(customServings);
+
+        const ingredientsHeader = ELM.create('div ingredients__header').append(currentPage.find('.ingredients--dynamic h2'));
+
+        const ingredientsContent = ELM.create('div ingredients__content');
+        currentPage.find('.ingredients--dynamic').append(servingsPicker).append(ingredientsHeader).append(ingredientsContent);
+
+        const ingredientList = currentPage.find('.ingredients--dynamic').children('ul, strong');
+
+        for (var i = 0; i < ingredientList.length; i++) {
+          ingredientsContent.append(ingredientList[i]);
+        }
+
+      }
 
       const commentsSection = currentPage.find('section.comments');
       if (commentsSection.exist()) {
