@@ -1,0 +1,189 @@
+.cro #footer,
+.cro .page .related-recipes,
+.cro .recipe-content,
+.cro .recipe-details,
+.cro .comments {
+  display: none;
+}
+
+.cro #footer.visible {
+  display: block;
+}
+
+.cro #recipe-howto-steps {
+  opacity: 1;
+}
+
+.cro .loading-area {
+  height:300px;
+  max-height: 50vh;
+  background: #f3f0eb;
+  padding-bottom: 340px;
+  text-align: center;
+  padding-top: 70px;
+}
+
+.cro #page-next {
+  height: 0;
+  opacity: 0;
+  overflow: hidden;
+  padding-top: 50px !important;
+}
+
+.cro #page {
+  height: auto;
+  opacity: 1;
+  overflow: visible;
+}
+
+.cro .recipe-image-square {
+  opacity: 1;
+  transition: all 0.75s ease-out;
+  transition-delay: 0.25s;
+}
+
+.cro #page-next .recipe-image-square {
+  margin-top: -60px;
+  opacity: 0;
+}
+
+.cro .page {
+  transition: all 0.5s ease-out;
+}
+
+.cro .page + .page.recipepage {
+  margin-top: -120px;
+  padding-top: 0 !important;
+}
+
+.cro .page + .page.recipepage.recipepage--small {
+  padding-top: 0 !important;
+}
+
+.cro .loading-area p {
+  width:100%;
+  max-width: 500px;
+  margin: 0 auto;
+  font-size: 1em;
+  transition: opacity 0.5s ease-in-out;
+}
+
+.cro .loading-area .loading-area-title span {
+  font-weight: lighter;
+  display: block;
+}
+
+.cro .loading-area .loading-area-title {
+  font-weight: bold;
+}
+
+.cro .loading-area svg {
+  width:20px;
+  height: 20px;
+  opacity: 0;
+  display: block;
+  margin: 17px auto;
+  transition: opacity 0.5s ease-in-out;
+}
+
+.cro .loading-area .svg {
+  background: #fff;
+  border-radius: 100%;
+  width: 50px;
+  height: 50px;
+  margin: 20px auto;
+  overflow: hidden;
+  position: relative;
+}
+
+.cro .loading-area.added svg {
+  opacity: 1;
+}
+
+.cro .loading-area .svg .loader {
+  display: block;
+  position: absolute;
+  top:0;
+  left:0;
+  opacity: 1;
+  transition: opacity 0.5s ease-in-out;
+  border-bottom: 1rem solid #fff;
+  border-right: 1rem solid #fff;
+  border-top: 1rem solid #fff;
+  border-left: 1rem solid #EB1F07;
+}
+
+.cro .loading-area.added .loader {
+  opacity: 0;
+  -webkit-animation: load8 1.1s 3 linear;
+  animation: load8 1.1s 3 linear;
+}
+
+.cro .loading-area.reload .loading-area-title {
+  font-weight: lighter;
+}
+
+.cro .loading-area.reload .loading-area-title a {
+  font-weight: bold;
+}
+
+.cro section.comments,
+.cro .recipe-details {
+  position: relative;
+  padding-bottom: 40px;
+}
+.cro .comments-toggle,
+.cro .details-toggle {
+  position: absolute;
+  top:0;
+  margin: 0;
+  padding: 0;
+  width: auto;
+  min-width: 40px;
+}
+
+.cro section.comments {
+  margin: 20px 0 40px;
+}
+
+
+.cro .recipe-details .row,
+.cro .page .comments__inner-wrapper {
+  height: 0;
+  overflow: hidden;
+}
+
+.cro .recipe-details .row.open,
+.cro .comments__inner-wrapper.open {
+  height: auto;
+  margin-bottom: 80px;
+}
+
+
+.cro .recipe-details .row.open + .details-toggle,
+.cro .comments__inner-wrapper.open + .comments-toggle {
+  display: none;
+}
+
+/*.cro .recipe-details .row .button--link,
+.cro .comments__inner-wrapper .button--link {
+  display: none;
+}*/
+
+
+
+
+
+@media only screen and (max-width: 780px) {
+  .cro { }
+}
+
+
+@media only print {
+  .cro .page,
+  .cro .loading-area {display: none;}
+  .cro #page {
+    display: block;
+    margin-top: 0;
+  }
+}

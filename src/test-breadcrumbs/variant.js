@@ -10,27 +10,12 @@
 'use strict';
 
 import { CROUTIL, ELM } from '../util/main';
-import { triggerHotJar, gaPush } from '../util/utils';
+import { throttle, triggerHotJar, gaPush } from '../util/utils';
 import './style.css';
 
 let recipesArr = [];
 const maxlength = 25;
 let nextPage,currentPage,nextUrl;
-
-//bugg tom loadingarea? tillbaka till 1 och fram igen?
-//---(ev) förflytta sig i historiken - hamna högst upp på aktuellt recept
-
-//OK____skriv ut
-//portionsomräknare
-//OK____görsåhär-styling
-//"För alla" m.m. (kvarvarande ol ok?)
-//timer
-//lägg i inköpslista
-//ladda kupong
-//e-handla
-//näring/klimatguide
-//kommentarer
-
 
 const test = {
 
@@ -45,7 +30,122 @@ const test = {
 
     test.gotoPage(pageNext,page,currentUrl);
 
+
+    },
+
+    manipulateDom2() {
+      // get current category
+      var category = test.getCategory();
+      if(category == null) { // no category found, no recipe
+        return;
+      }
+
+      // create elements
+      var $bc = $("<ul />");
+      $bc.addClass("breadcrumb");
+
+      $bc.append(test.getCrumbItem("", "ICA", 0));
+      $bc.append(test.getCrumbItem("", "Recept", 1));
+
+      $bc.append(test.getCrumbItem(test.getUrl(category), category, 2));
+      var recipe = test.getRecipeInfo();
+      $bc.append(test.getCrumbItem(recipe.url, recipe.name, 3));
+
+      // add elements
+      $("body").prepend($bc);
+
   },
+
+  //tegories: ['cheesecake', 'smörgåstårta', 'färs', 'hamburgare', 'tårta', 'kärleksmums', 'smoothie', 'sallad', 'pasta'],
+  //topIngredientCategories: ['västerbottensost', 'kyckling', 'lax', 'zucchini', 'körsbär', 'squash', 'lax'],
+  //topMealCategories: ['vardag', 'middag', 'enkel', 'nyttig', 'efterrätt', 'grill'],
+
+  topTypeCategories: ['cheesecake', 'smörgåstårta', 'hamburgare', 'tårta', 'smoothie', 'sallad', 'pasta', 'quesadillas', 'paj', 'cupcakes', 'müsli', 'pannkakor', 'bakverk', 'tapas', 'pizza', 'ugnspannkaka', 'soppa', 'kladdkaka', 'bröd'],
+  topIngredientCategories: ['västerbottensost', 'kyckling', 'lax', 'zucchini', 'körsbär', 'squash', 'lax', 'halloumi', 'kyckling', 'kassler', 'torsk', 'plommon', 'falukorv', 'karljohan', 'kantarell', 'sötpotatis'],
+  topMealCategories: ['vardag', 'middag', 'enkel', 'nyttig', 'efterrätt', 'grill', 'förrätt'],
+
+  //topSpecial: ['vegan', 'vegetarisk'],
+
+  //['middag', 'nyttig', 'vegan', 'vegetarisk', 'vardag', 'fredag', 'lax', 'enkel']
+
+  // specialkost?
+
+  findTopCategory(tags, topCategories) {
+    if(tags != undefined && tags.length > 0){
+
+      var categories = $.map(tags, function(a) { return a.content.toLowerCase(); });
+      var result = null;
+
+      topCategories.forEach((tc) => {
+        if(result == null) {
+          if(categories.some(function(c) {
+            return c == tc;
+          })) {
+            result = tc;
+          }
+        }
+      });
+      return test.capitalizeFirstLetter(result == null ? categories[0] : result);
+    }
+    return null;
+  },
+
+  getCategory() {
+    //check if traffic is direct
+    //alert(document.referrer);
+
+    var category = null;
+
+    // look for meta 'Typ av recept', check prio list or use first
+    category = test.findTopCategory($("meta[name='Typ av recept']"), test.topTypeCategories);
+    if(category != null) {
+      return category;
+    }
+
+    // look for meta 'Ingrediens', check prio list or use first
+    category = test.findTopCategory($("meta[name=Ingrediens]"), test.topIngredientCategories);
+    if(category != null) {
+      return category;
+    }
+
+    // look for meta 'Måltid', check prio list or use first
+    category = test.findTopCategory($("meta[name=Måltid]"), test.topMealCategories);
+    if(category != null) {
+      return category;
+    }
+
+    return null;
+  },
+  getUrl(title) {
+    // convert special charcters
+    var url = title.toLowerCase().replace(/ /g,"-");
+    url = url.replace(/[áàäâãå]/g,"a").replace(/[óòöôõ]/g,"o");
+    url = url.replace(/[éèëê]/g,"e").replace(/[úùüû]/g,"u").replace(/[íìïî]/g,"i");
+    return url.replace(/[^a-z-]/g, "").replace(/(-)\1+/g, '$1');
+  },
+  capitalizeFirstLetter(txt) {
+    return txt.charAt(0).toUpperCase() + txt.slice(1);
+  },
+  getCrumbItem(urlPart, title, level) {
+			// get formatted bread crumb
+			var url = "https://www.ica.se";
+			if(level > 0){
+				url += "/recept/" + urlPart;
+			}
+			title = level > 0 ? " / " + title : title;
+			return $("<li/>").append("<a href='" + url + "'>" + title + "</a>");
+		},
+    getRecipeInfo() {
+			// get information about current recipe
+      console.log(ELM.get('#bottom-bar meta[name=Måltid]').exist());
+			var id = $('meta[name=Id]').attr("content");
+			var name = $('meta[name=RecipeName]').attr("content");
+			var url = test.getUrl(name) + "-" + id;
+			return { name: name, url: url};
+		},
+
+
+    //Scrollet
 
   gotoPage(pageNext,page,currentUrl) {
 
@@ -65,93 +165,6 @@ const test = {
       const pagePosition = currentPage.offsetTop;
       const svg = '<svg><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/Assets/icons/sprite.svg#arrow-down"></use></svg>';
 
-      const printBtn = currentPage.find('.button--print');
-      if (printBtn.exist()) {
-        printBtn.removeAttr('href');
-        printBtn.click(() => {
-          window.print();
-        })
-      }
-
-      const howtoSection = currentPage.find('howto-steps');
-      if (howtoSection.exist()) {
-        const howTo = ELM.create('div howto-steps');
-        const howtoItems = document.querySelectorAll('.recipe-howto-steps ol > li');
-        for (var i = 0; i < howtoItems.length; i++) {
-          const cookingStepCheck = ELM.create('div cooking-step__check').append(ELM.create('label checkbox checkbox--circle').attr('tabindex','0').append(ELM.create('input checkbox__input js-track-cookmode-stepcompleted').attr('type','checkbox').attr('tabindex','-1').attr('data-tracking','{&quot;step&quot;:' + (i+1) + '}')).append(ELM.create('span checkbox__label')));
-          const cookingStepContent = ELM.create('div cooking-step__content').append(ELM.create('div cooking-step__content__instruction').append(howtoItems[i].innerHTML));
-          howTo.append(ELM.create('div cooking-step').append(cookingStepCheck).append(cookingStepContent));
-          let completed = 0;
-          cookingStepCheck.click(() => {
-            if (completed === 0) {
-              cookingStepCheck.parent().css('completed');
-              window.setTimeout(function () {
-                completed = 1;
-              },20);
-            } else {
-              cookingStepCheck.parent().removeClass('completed');
-              window.setTimeout(function () {
-                completed = 0;
-              },30);
-            }
-          })
-        }
-        howtoSection.parent().append(howTo.append(howtoSection));
-        document.querySelector('howto-steps ol').remove();
-        const wrapper = document.querySelector('howto-steps');
-        wrapper.outerHTML = wrapper.innerHTML;
-      }
-
-      // const servingsPicker = currentPage.find('.servings-picker--static');
-      // if (servingsPicker.exist()) {
-      //   const servingsWrapper = servingsPicker.parent();
-      //   document.querySelector('.servings-picker--static').innerHTML='';
-      //   const customServings = ELM.create('div custom-select').append('<select name="portions" id="currentPortions" class="js-servingspicker"><option class="servings-picker__servings" value="2">2 portioner</option><option class="servings-picker__servings" value="4">4 portioner</option><option class="servings-picker__servings" value="6">6 portioner</option><option class="servings-picker__servings" value="8">8 portioner</option><option class="servings-picker__servings" value="10">10 portioner</option><option class="servings-picker__servings" value="12">12 portioner</option></select>');
-      //   servingsPicker.css('servings-picker--dynamic').removeClass('servings-picker--static').append(customServings);
-      //   //servingsWrapper.css('currentpage');
-      //   const ingredientsHeader = ELM.create('div ingredients__header').append(currentPage.find('.ingredients--dynamic h2'));
-      //
-      //   //OBS! hantera recept m flera listor: https://www.ica.se/recept/kramig-paprikapasta-med-kronartskockor-722028/
-      //
-      //   const ingredientsContent = ELM.create('div ingredients__content').append(currentPage.find('.ingredients--dynamic ul'));
-      //   currentPage.find('.ingredients--dynamic').append(servingsPicker).append(ingredientsHeader).append(ingredientsContent);
-      //   servingsWrapper.append(ingredientsContent);
-      // }
-
-      const commentsSection = currentPage.find('section.comments');
-      if (commentsSection.exist()) {
-        let commentsText;
-        const commentsCount = currentPage.find('.comments__header__text--votes');
-        if (commentsCount.exist()) {
-          commentsText = 'Kommentarer '+ commentsCount.text();
-        } else {
-          commentsText = 'Kommentarer (0)';
-        }
-        const commentsBtn = ELM.create('div comments-toggle button--link').append(commentsText + svg).css('button');
-        commentsSection.append(commentsBtn);
-        commentsBtn.click(() => {
-          commentsBtn.parent().find('.comments__inner-wrapper').toggle('open');
-        })
-      }
-
-      const nutrientsSection = currentPage.find('.recipe-details .nutrients');
-      const climateSection = currentPage.find('.recipe-details .climate');
-      if (nutrientsSection.exist() || climateSection.exist()) {
-        let detailsText;
-        if (nutrientsSection.exist() && climateSection.exist()) {
-          detailsText = 'Näringsvärde och klimatguide';
-        } else if (nutrientsSection.exist()) {
-          detailsText = 'Näringsvärde';
-        } else if (climateSection.exist()) {
-          detailsText = 'Klimatguide';
-        }
-        const detailsBtn = ELM.create('div details-toggle button--link').append(detailsText + svg).css('button');
-        currentPage.find('.recipe-details').append(detailsBtn);
-        detailsBtn.click(() => {
-          detailsBtn.parent().find('.row').toggle('open');
-        });
-      }
-
       if (pageCount >= maxlength) {
         document.getElementById('footer').classList.add('visible');
       } else {
@@ -168,6 +181,7 @@ const test = {
         currentPage.append(loadingArea);
         nextPage.attr('data-href',nextUrl);
         pageWrapper.append(nextPage);
+        test.manipulateDom2();
       }
 
       if (currentPage !== prevPage) {
@@ -194,13 +208,6 @@ const test = {
       document.querySelector('#page .loading-area').classList.add('reload');
     }
 
-    // window.onpopstate = function(event) {
-    //   window.setTimeout(function () {
-    //     console.log(window.location.pathname);
-    //     window.location.replace(window.location.pathname);
-    //   }, 50);
-    // };
-
   },
 
   removeDuplicates(recipesArr){
@@ -221,6 +228,23 @@ const test = {
         title = '<span>Nästa recept:</span> ' + title.substring(0, title.indexOf('|'));
         var arrow = '<div class="svg"><svg width="32px" height="32px"><use xlink:href="/Assets/icons/symbols.svg#arrow-down"></use></svg><span class="loader"></span></div>';
         document.getElementById('page-next').innerHTML=tds.innerHTML;
+
+        var head = xmlDoc.querySelector("head");
+        document.getElementById('bottom-bar').innerHTML = '';
+        const metaNew = head.querySelectorAll('meta');
+        for (var i = 0; i < metaNew.length; i++) {
+          if (metaNew[i].getAttribute('name') !== null && metaNew[i].getAttribute('content') !== null) {
+            const el = document.createElement('meta');
+            const nameAttr=document.createAttribute('name');
+            const contentAttr=document.createAttribute('content');
+            nameAttr.value = metaNew[i].getAttribute('name');
+            contentAttr.value = metaNew[i].getAttribute('content');
+            el.setAttributeNode(nameAttr);
+            el.setAttributeNode(contentAttr);
+            document.getElementById('bottom-bar').append(el);
+          }
+        }
+
         document.querySelector('#page .loading-area .loading-area-title').innerHTML=title + arrow;
         if (tds.classList.contains('recipepage--large')) {
           document.getElementById('page-next').classList.add('recipepage--large');
@@ -309,4 +333,5 @@ const test = {
 $(document).ready(() => {
   Object.assign(test, CROUTIL());
   test.manipulateDom();
+  test.manipulateDom2();
 });

@@ -12,6 +12,7 @@
 import { CROUTIL, ELM } from '../util/main';
 import { triggerHotJar, gaPush } from '../util/utils';
 import './style.css';
+import breadcrumbs from '../test-breadcrumbs/variant.2.js';
 
 let recipesArr = [];
 const maxlength = 25;
@@ -155,6 +156,7 @@ const test = {
       if (pageCount >= maxlength) {
         document.getElementById('footer').classList.add('visible');
       } else {
+
         nextPage = ELM.create('div page page-mod-fullwidth pl recipepage').attr('id','page-next');
         if (recipesArr.length < maxlength) {
           const relatedList = document.querySelectorAll('#page .related-recipes-list > a');
@@ -168,6 +170,13 @@ const test = {
         currentPage.append(loadingArea);
         nextPage.attr('data-href',nextUrl);
         pageWrapper.append(nextPage);
+
+        //if (ELM.get('#bottom-bar meta').exist()) {
+          //$("#page-wrapper").append($("<div class='breadcrumbs-area'></div>"));
+          breadcrumbs.manipulateDom();
+          console.log(nextUrl);
+        //}
+
       }
 
       if (currentPage !== prevPage) {
@@ -188,6 +197,7 @@ const test = {
         const elem = $(this).closest('.page').next().attr('id');
         test.scrollToElement(elem);
       });
+
 
     } else {
       document.querySelector('#page .loading-area .loading-area-title').innerHTML='Vi lyckades tyvärr inte ladda nästa recept.<br><a href="' + currentPage.attr('data-href') + '">Prova igen!</a>';
@@ -227,6 +237,20 @@ const test = {
         } else {
           document.getElementById('page-next').classList.add('recipepage--small');
         }
+
+        var head = xmlDoc.querySelector("head");
+        document.getElementById('bottom-bar').innerHTML = '';
+        const metaNew = head.querySelectorAll('meta');
+        for (var i = 0; i < metaNew.length; i++) {
+          if (metaNew[i].getAttribute('name') !== null && metaNew[i].getAttribute('content') !== null) {
+            const metaName = metaNew[i].getAttribute('name');
+            const metaContent = metaNew[i].getAttribute('content');
+            const newMeta = $('<meta></meta>').attr('name',metaName).attr('content',metaContent);
+            //console.log(metaName + ' / ' + metaContent);
+            $('#bottom-bar').append(newMeta);
+          }
+        }
+
       } else {
         //felhantering?
       }
