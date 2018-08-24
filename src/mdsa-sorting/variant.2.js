@@ -32,9 +32,28 @@ const test = {
       selectedSorting = defaultSorting;
       document.cookie = 'recipeSortingPreferenceSelected=' + selectedSorting + '; path=/';
       if (defaultSorting === 'Saves') {
-        ELM.get('.filter-dropdown-wrapper filter-option[value="Saves"]').click();
         ELM.get('filter-dropdown').attr('selected','selected');
         document.cookie = 'recipeSortingPreference=' + selectedSorting + '; path=/';
+
+        let filterObserver = new MutationObserver(function(mutations) {
+          const option = ELM.get('.filter-dropdown-wrapper filter-option[value="Saves"]');
+          for (var i = 0; i < mutations.length; i++) {
+            if (option.exist()) {
+              ELM.get('.filter-dropdown-wrapper filter-option[value="Saves"]').click();
+              break;
+            }
+          }
+        });
+
+        const config = {
+          attributes: true,
+          childList: false,
+          characterData: false,
+          subtree: false
+        };
+
+        filterObserver.observe(document.getElementById('recipe-header'), config);
+
       }
     } else if (selectedSorting === 'Saves') {
       ELM.get('filter-dropdown').attr('selected','selected');
