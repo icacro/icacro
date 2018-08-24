@@ -55,16 +55,16 @@ const test = {
       document.cookie = 'recipeSortingPreference=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/';
       document.cookie = 'recipeSortingPreferenceSelected=Relevance; path=/';
       gaPush({ eventAction: 'Klick på sorteringsknapp', eventLabel: 'Relevans' });
-      test.sort('Relevance');
+      setTimeout(function () {
+        test.sort('Relevance');
+      }, 200);
     });
 
   },
 
   sort(selectedSorting) {
     ICA.MDSA.recipeList.defaultSort = selectedSorting;
-    //setTimeout(function () {
-      ICA.MDSA.recipeList.updateSort();
-    //}, 100);
+    ICA.MDSA.recipeList.updateSort();
   }
 
 };
