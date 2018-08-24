@@ -4,3 +4,5 @@ node_modules
 ./npm-debug.log
 $Recycle.Bin
 npm-debug.log
+package.json
+package-lock.json
