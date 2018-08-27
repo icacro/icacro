@@ -9,7 +9,7 @@ To build and watch a project
 
 Util library is in folder icacro.
 
-Util git repo: https://github.com/Banzaci/icacro
+Util git repo:
 
 In Chrome
   - chrome://extensions/

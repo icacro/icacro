@@ -32,21 +32,21 @@ const breadcrumbs = {
   findTopCategory(tags, topCategories) {
     if(tags != undefined && tags.length > 0){
 
-      var categories = $.map(tags, function(a) { return a.content.toLowerCase(); });
+      //var categories = $.map(tags, function(a) { return a.content.toLowerCase(); });
       var result = null;
 
       topCategories.forEach((tc) => {
         if(result == null) {
-          if(categories.some(function(c) {
+          if(tags.some(function(c) {
             return c == tc;
           })) {
-            result = tc;
+            result = breadcrumbs.capitalizeFirstLetter(tc);
           }
         }
       });
-      return breadcrumbs.capitalizeFirstLetter(result == null ? categories[0] : result);
+      //return test.capitalizeFirstLetter(result == null ? tags[0] : result);
     }
-    return null;
+    return result;
   },
 
   getCategory() {
@@ -56,21 +56,67 @@ const breadcrumbs = {
     var category = null;
 
     // look for meta 'Typ av recept', check prio list or use first
-    category = breadcrumbs.findTopCategory($("#bottom-bar meta[name='Typ av recept']"), breadcrumbs.topTypeCategories);
+    var typeTags = $.map($("#bottom-bar meta[name='Typ av recept']"), function(a) { return a.content.toLowerCase(); });
+    category = breadcrumbs.findTopCategory(typeTags, breadcrumbs.topTypeCategories);
     if(category != null) {
       return category;
     }
 
     // look for meta 'Ingrediens', check prio list or use first
-    category = breadcrumbs.findTopCategory($("#bottom-bar meta[name=Ingrediens]"), breadcrumbs.topIngredientCategories);
+    var ingridientTags = $.map($("#bottom-bar meta[name=Ingrediens]"), function(a) { return a.content.toLowerCase(); });
+    category = breadcrumbs.findTopCategory(ingridientTags, breadcrumbs.topIngredientCategories);
     if(category != null) {
       return category;
     }
 
     // look for meta 'Måltid', check prio list or use first
-    category = breadcrumbs.findTopCategory($("#bottom-bar meta[name=Måltid]"), breadcrumbs.topMealCategories);
+    var mealTags = $.map($("#bottom-bar meta[name=Måltid]"), function(a) { return a.content.toLowerCase(); });
+    category = breadcrumbs.findTopCategory(mealTags, breadcrumbs.topMealCategories);
     if(category != null) {
       return category;
+    }
+
+    // look for ingridents in title
+    var title = $('#bottom-bar meta[name=RecipeName]').attr("content");
+    if(title == undefined) {
+      title = "abc";
+    }
+    title = title.toLowerCase();
+
+    if(ingridientTags != undefined && ingridientTags.length > 0){
+      for(var i = 0; i < ingridientTags.length; i++) {
+        if(title.indexOf(ingridientTags[i]) != -1) {
+          return breadcrumbs.capitalizeFirstLetter(ingridientTags[i]);
+        }
+      }
+    }
+
+    if(typeTags != undefined && typeTags.length > 0){
+      for(var i = 0; i < typeTags.length; i++) {
+        if(title.indexOf(typeTags[i]) != -1) {
+          return breadcrumbs.capitalizeFirstLetter(typeTags[i]);
+        }
+      }
+    }
+
+    if(mealTags != undefined && mealTags.length > 0){
+      for(var i = 0; i < mealTags.length; i++) {
+        if(title.indexOf(mealTags[i]) != -1) {
+          return breadcrumbs.capitalizeFirstLetter(mealTags[i]);
+        }
+      }
+    }
+
+    if(ingridientTags != null && ingridientTags.length > 0) {
+      return breadcrumbs.capitalizeFirstLetter(ingridientTags[0]);
+    }
+
+    if(typeTags != null && typeTags.length > 0) {
+      return breadcrumbs.capitalizeFirstLetter(typeTags[0]);
+    }
+
+    if(mealTags != null && mealTags.length > 0) {
+      return breadcrumbs.capitalizeFirstLetter(mealTags[0]);
     }
 
     return null;
