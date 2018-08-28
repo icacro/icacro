@@ -131,9 +131,9 @@ const test = {
 			// get formatted bread crumb
 			var url = "https://www.ica.se";
 			if(level > 0){
-				url += "/recept/" + urlPart;
+				url += "recept" + urlPart;
 			}
-			title = level > 0 ? " / " + title : title;
+			//title = level > 0 ? " / " + title : title;
 			return $("<li/>").append("<a href='" + url + "'>" + title + "</a>");
 		},
     getRecipeInfo() {
@@ -151,6 +151,8 @@ const test = {
     }
 
     // create elements
+    var $div = $("<div />");
+    $div.addClass("bread-crumbs");
     var $bc = $("<ul />");
     $bc.addClass("breadcrumb");
 
@@ -160,9 +162,10 @@ const test = {
     $bc.append(test.getCrumbItem(test.getUrl(category), category, 2));
     var recipe = test.getRecipeInfo();
     $bc.append(test.getCrumbItem(recipe.url, recipe.name, 3));
+    $div.append($bc);
 
     // add elements
-    $("body").prepend($bc);
+    $("div.col-12.recipe-meta.recipe-meta--header").parent().prepend($div);
   }
 };
 
