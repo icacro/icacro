@@ -19,7 +19,7 @@ const test = {
   //topIngredientCategories: ['västerbottensost', 'kyckling', 'lax', 'zucchini', 'körsbär', 'squash', 'lax'],
   //topMealCategories: ['vardag', 'middag', 'enkel', 'nyttig', 'efterrätt', 'grill'],
 
-  topTypeCategories: ['cheesecake', 'smörgåstårta', 'hamburgare', 'tårta', 'smoothie', 'sallad', 'pasta', 'quesadillas', 'paj', 'cupcakes', 'müsli', 'pannkakor', 'bakverk', 'tapas', 'pizza', 'ugnspannkaka', 'soppa', 'kladdkaka', 'bröd'],
+  topTypeCategories: ['cheesecake', 'smörgåstårta', 'hamburgare', 'tårta', 'smoothie', 'sallad', 'pasta', 'quesadillas', 'paj', 'cupcakes', 'müsli', 'pannkakor', 'bakverk', 'tapas', 'pizza', 'ugnspannkaka', 'soppa', 'kladdkaka', 'bröd', 'biffar', 'burgare', 'kottbullar', 'gratang', 'gryta', 'lasagne', 'risotto', 'sylt', 'dryck', 'tacos', 'burrito'],
   topIngredientCategories: ['västerbottensost', 'kyckling', 'lax', 'zucchini', 'körsbär', 'squash', 'lax', 'halloumi', 'kyckling', 'kassler', 'torsk', 'plommon', 'falukorv', 'karljohan', 'kantarell', 'sötpotatis'],
   topMealCategories: ['vardag', 'middag', 'enkel', 'nyttig', 'efterrätt', 'grill', 'förrätt'],
 
@@ -61,6 +61,10 @@ const test = {
     if(category != null) {
       return category;
     }
+
+    // styckdel
+    //'file', 'fars', 'biff', 'entrecote', 'karre', 'kotlett', 'lovbiff', 'revbensspjall', 'rostbiff'
+    // <meta name="Styckdel" content="Rostas">
 
     // look for meta 'Ingrediens', check prio list or use first
     var ingridientTags = $.map($("meta[name=Ingrediens]"), function(a) { return a.content.toLowerCase(); });
@@ -131,7 +135,7 @@ const test = {
 			// get formatted bread crumb
 			var url = "https://www.ica.se";
 			if(level > 0){
-				url += "recept" + urlPart;
+				url += "/recept/" + urlPart;
 			}
 			//title = level > 0 ? " / " + title : title;
 			return $("<li/>").append("<a href='" + url + "'>" + title + "</a>");
@@ -165,7 +169,12 @@ const test = {
     $div.append($bc);
 
     // add elements
-    $("div.col-12.recipe-meta.recipe-meta--header").parent().prepend($div);
+    var $header = $("div.col-12.recipe-meta.recipe-meta--header");
+    $header.css("visibility", "hidden");
+
+    $header.parent().prepend($div);
+
+    $(".recipe-header").append("<span class='cooking-time'>" + $header.text().trim() + "</span>");
   }
 };
 

@@ -174,7 +174,7 @@ const test = {
         //if (ELM.get('#bottom-bar meta').exist()) {
           //$("#page-wrapper").append($("<div class='breadcrumbs-area'></div>"));
           breadcrumbs.manipulateDom();
-          console.log(nextUrl);
+          //console.log(nextUrl);
         //}
 
       }
