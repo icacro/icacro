@@ -12,25 +12,11 @@
 import { CROUTIL, ELM } from '../util/main';
 import { triggerHotJar, gaPush } from '../util/utils';
 import './style.css';
+import recipe from './recipe.js';
 
 let recipesArr = [];
 const maxlength = 25;
 let nextPage,currentPage,nextUrl;
-
-//bugg tom loadingarea? tillbaka till 1 och fram igen?
-//---(ev) förflytta sig i historiken - hamna högst upp på aktuellt recept
-
-//OK____skriv ut
-//portionsomräknare
-//OK____görsåhär-styling
-//"För alla" m.m. (kvarvarande ol ok?)
-//timer
-//lägg i inköpslista
-//ladda kupong
-//e-handla
-//näring/klimatguide
-//kommentarer
-
 
 const test = {
 
@@ -43,12 +29,17 @@ const test = {
 
     recipesArr.push(currentUrl);
 
+    //bättre placering för dessa?
+    const urlParts = currentUrl.split('/');
+    const nameParts = urlParts[2].split('-');
+    const recipeId = nameParts[nameParts.length - 1];
+    page.attr('data-id',recipeId);
+
     test.gotoPage(pageNext,page,currentUrl);
 
   },
 
   gotoPage(pageNext,page,currentUrl) {
-
     const pageWrapper = ELM.get('#page-wrapper');
 
     currentPage = pageNext;
@@ -65,102 +56,13 @@ const test = {
       const pagePosition = currentPage.offsetTop;
       const svg = '<svg><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/Assets/icons/sprite.svg#arrow-down"></use></svg>';
 
-      const printBtn = currentPage.find('.button--print');
-      if (printBtn.exist()) {
-        printBtn.removeAttr('href');
-        printBtn.click(() => {
-          window.print();
-        })
-      }
-
-      const howtoSection = currentPage.find('howto-steps');
-      if (howtoSection.exist()) {
-        const howTo = ELM.create('div howto-steps');
-        const howtoItems = document.querySelectorAll('.recipe-howto-steps ol > li');
-        for (var i = 0; i < howtoItems.length; i++) {
-          const cookingStepCheck = ELM.create('div cooking-step__check').append(ELM.create('label checkbox checkbox--circle').attr('tabindex','0').append(ELM.create('input checkbox__input js-track-cookmode-stepcompleted').attr('type','checkbox').attr('tabindex','-1').attr('data-tracking','{&quot;step&quot;:' + (i+1) + '}')).append(ELM.create('span checkbox__label')));
-          const cookingStepContent = ELM.create('div cooking-step__content').append(ELM.create('div cooking-step__content__instruction').append(howtoItems[i].innerHTML));
-          howTo.append(ELM.create('div cooking-step').append(cookingStepCheck).append(cookingStepContent));
-          let completed = 0;
-          cookingStepCheck.click(() => {
-            if (completed === 0) {
-              cookingStepCheck.parent().css('completed');
-              window.setTimeout(function () {
-                completed = 1;
-              },20);
-            } else {
-              cookingStepCheck.parent().removeClass('completed');
-              window.setTimeout(function () {
-                completed = 0;
-              },30);
-            }
-          })
-        }
-        howtoSection.parent().append(howTo.append(howtoSection));
-        document.querySelector('howto-steps ol').remove();
-        const wrapper = document.querySelector('howto-steps');
-        wrapper.outerHTML = wrapper.innerHTML;
-      }
-
-      //innehåller ngt som totalkraschade 23 augusti...
-
-      const servingsPicker = currentPage.find('.servings-picker--static');
-      if (servingsPicker.exist()) {
-        const servingsWrapper = servingsPicker.parent();
-        document.querySelector('.servings-picker--static').innerHTML='';
-        const customServings = ELM.create('div custom-select').append('<select name="portions" id="currentPortions" class="js-servingspicker"><option class="servings-picker__servings" value="2">2 portioner</option><option class="servings-picker__servings" value="4">4 portioner</option><option class="servings-picker__servings" value="6">6 portioner</option><option class="servings-picker__servings" value="8">8 portioner</option><option class="servings-picker__servings" value="10">10 portioner</option><option class="servings-picker__servings" value="12">12 portioner</option></select>');
-        servingsPicker.css('servings-picker--dynamic').removeClass('servings-picker--static').append(customServings);
-
-        const ingredientsHeader = ELM.create('div ingredients__header').append(currentPage.find('.ingredients--dynamic h2'));
-
-        const ingredientsContent = ELM.create('div ingredients__content');
-        currentPage.find('.ingredients--dynamic').append(servingsPicker).append(ingredientsHeader).append(ingredientsContent);
-
-        const ingredientList = currentPage.find('.ingredients--dynamic').children('ul, strong');
-
-        for (var i = 0; i < ingredientList.length; i++) {
-          ingredientsContent.append(ingredientList[i]);
-        }
-
-      }
-
-      const commentsSection = currentPage.find('section.comments');
-      if (commentsSection.exist()) {
-        let commentsText;
-        const commentsCount = currentPage.find('.comments__header__text--votes');
-        if (commentsCount.exist()) {
-          commentsText = 'Kommentarer '+ commentsCount.text();
-        } else {
-          commentsText = 'Kommentarer (0)';
-        }
-        const commentsBtn = ELM.create('div comments-toggle button--link').append(commentsText + svg).css('button');
-        commentsSection.append(commentsBtn);
-        commentsBtn.click(() => {
-          commentsBtn.parent().find('.comments__inner-wrapper').toggle('open');
-        })
-      }
-
-      const nutrientsSection = currentPage.find('.recipe-details .nutrients');
-      const climateSection = currentPage.find('.recipe-details .climate');
-      if (nutrientsSection.exist() || climateSection.exist()) {
-        let detailsText;
-        if (nutrientsSection.exist() && climateSection.exist()) {
-          detailsText = 'Näringsvärde och klimatguide';
-        } else if (nutrientsSection.exist()) {
-          detailsText = 'Näringsvärde';
-        } else if (climateSection.exist()) {
-          detailsText = 'Klimatguide';
-        }
-        const detailsBtn = ELM.create('div details-toggle button--link').append(detailsText + svg).css('button');
-        currentPage.find('.recipe-details').append(detailsBtn);
-        detailsBtn.click(() => {
-          detailsBtn.parent().find('.row').toggle('open');
-        });
-      }
+      recipe.initRecipe(currentPage);
 
       if (pageCount >= maxlength) {
+        //no more scrolling
         document.getElementById('footer').classList.add('visible');
       } else {
+        //add next page
         nextPage = ELM.create('div page page-mod-fullwidth pl recipepage').attr('id','page-next');
         if (recipesArr.length < maxlength) {
           const relatedList = document.querySelectorAll('#page .related-recipes-list > a');
@@ -177,17 +79,32 @@ const test = {
       }
 
       if (currentPage !== prevPage) {
+        //meaning "not first page" - fix id:s,attrs,url etc
         currentPage.attr('id','page');
         prevPage.attr('id','page-' + prevPage.attr('data-count'));
         test.changeURL(pagePosition,title,currentUrl);
         currentPage.attr('data-count',pageCount);
+
+        const buyBtnId = 'IcaOnlineBuyButton-' + prevPage.attr('data-count');
+        if (prevPage.find('.icaOnlineBuyButton.buy-active').exist()) {
+          prevPage.find('.icaOnlineBuyButton.buy-active').removeClass('buy-active');
+        }
+        currentPage.find('#IcaOnlineBuyButton').attr('id',buyBtnId).css('buy-active');
+
+        const urlParts = currentPage.attr('data-href').split('/');
+        const nameParts = urlParts[2].split('-');
+        const recipeId = nameParts[nameParts.length - 1];
+        currentPage.attr('data-id',recipeId);
+        recipe.buyBtn(buyBtnId,recipeId);
+
       } else {
+        //first page
         currentPage.attr('data-count','1');
         currentPage.attr('data-href',currentUrl);
       }
 
-      $(window).on('scroll', _.throttle(function() {
-        test.scrollListener(loadingArea,nextPage,pageWrapper,nextUrl,currentPage,pageCount);
+      $(window).on('scroll', _.debounce(function() {
+        test.scrollListener(loadingArea,nextPage,nextUrl,currentPage,pageCount);
       }, 200));
 
       $('body').on('click','.page .loading-area.added .loading-area-title', function() {
@@ -199,13 +116,6 @@ const test = {
       document.querySelector('#page .loading-area .loading-area-title').innerHTML='Vi lyckades tyvärr inte ladda nästa recept.<br><a href="' + currentPage.attr('data-href') + '">Prova igen!</a>';
       document.querySelector('#page .loading-area').classList.add('reload');
     }
-
-    // window.onpopstate = function(event) {
-    //   window.setTimeout(function () {
-    //     console.log(window.location.pathname);
-    //     window.location.replace(window.location.pathname);
-    //   }, 50);
-    // };
 
   },
 
@@ -219,20 +129,24 @@ const test = {
     request.open('GET', url, true);
     request.onload = function() {
       if (request.status >= 200 && request.status < 400) {
-        var resp = request.responseText;
-        var parser = new DOMParser();
-        var xmlDoc = parser.parseFromString(resp,"text/html");
-        var tds = xmlDoc.getElementById("page");
-        var title = xmlDoc.title;
+        const resp = request.responseText;
+        const parser = new DOMParser();
+        const xmlDoc = parser.parseFromString(resp,"text/html");
+        const tds = xmlDoc.getElementById("page");
+        //const recipeinfo = xmlDoc.querySelector('script[type="application/ld+json"]');
+        const arrow = '<div class="svg"><svg width="32px" height="32px"><use xlink:href="/Assets/icons/symbols.svg#arrow-down"></use></svg><span class="loader"></span></div>';
+        const pageNext = document.getElementById('page-next');
+        let title = xmlDoc.title;
         title = '<span>Nästa recept:</span> ' + title.substring(0, title.indexOf('|'));
-        var arrow = '<div class="svg"><svg width="32px" height="32px"><use xlink:href="/Assets/icons/symbols.svg#arrow-down"></use></svg><span class="loader"></span></div>';
-        document.getElementById('page-next').innerHTML=tds.innerHTML;
+        pageNext.innerHTML=tds.innerHTML;
+        //document.querySelector('script[type="application/ld+json"]').innerHTML = recipeinfo.innerHTML;
         document.querySelector('#page .loading-area .loading-area-title').innerHTML=title + arrow;
         if (tds.classList.contains('recipepage--large')) {
-          document.getElementById('page-next').classList.add('recipepage--large');
+          pageNext.classList.add('recipepage--large');
         } else {
-          document.getElementById('page-next').classList.add('recipepage--small');
+          pageNext.classList.add('recipepage--small');
         }
+        pageNext.querySelector('#ingredients-section > div.button').classList.add('button--secondary');
       } else {
         //felhantering?
       }
@@ -249,7 +163,18 @@ const test = {
     history.pushState(stateObj, title, currentUrl);
   },
 
-  scrollListener(loadingArea,nextPage,pageWrapper,nextUrl,currentPage,pageCount) {
+  changeActivePage(oldCur,newCur) {
+    newCur.id = 'page';
+    test.changeURL('0',newCur.getElementsByTagName('h1')[0].innerHTML,newCur.getAttribute('data-href'));
+    oldCur.querySelector('.icaOnlineBuyButton').classList.remove('buy-active');
+    newCur.querySelector('.icaOnlineBuyButton').classList.add('buy-active');
+    if (newCur.querySelector('.icaOnlineBuyButton').hasChildNodes()) {
+      newCur.querySelector('.icaOnlineBuyButton').innerHTML='';
+      recipe.buyBtn(newCur.querySelector('.icaOnlineBuyButton').id, newCur.getAttribute('data-id'));
+    }
+  },
+
+  scrollListener(loadingArea,nextPage,nextUrl,currentPage,pageCount) {
     if (document.getElementById('page')) {
      const cur = document.getElementById('page');
      const pageHeight = cur.offsetHeight;
@@ -257,20 +182,33 @@ const test = {
      const endPos = startPos + pageHeight - 300;
      const currentPos = window.pageYOffset + window.innerHeight;
      if (currentPos < startPos) {
+       //activate previous page
        test.goToPrevPage(cur);
      } else if (currentPos > endPos) {
        if(window.scrollY + window.innerHeight >= document.body.scrollHeight - 300) {
          if (!loadingArea.hasClass('added')) {
            loadingArea.css('added');
            window.setTimeout(function () {
+             //activate new page
              test.gotoPage(nextPage,currentPage,nextUrl);
            }, 1000);
          }
        } else {
+         //activate next (but not new) page
          test.goToNextPage(cur);
        }
      }
    }
+  },
+
+  goToPrevPage(cur) {
+    if (cur.getAttribute('data-count') > 2) {
+      cur.id = 'page-' + cur.getAttribute('data-count');
+      test.changeActivePage(cur, cur.previousSibling);
+    } else {
+      cur.id = 'page-2';
+      test.changeActivePage(cur, document.getElementById('page-1'));
+    }
   },
 
   goToNextPage(cur) {
@@ -278,28 +216,12 @@ const test = {
       if (cur.getAttribute('data-count') > 1) {
         if ((parseInt(cur.getAttribute('data-count')) + 1) <= document.querySelectorAll('.page:not(#page-next)').length) {
           cur.id = 'page-' + cur.getAttribute('data-count');
-          cur.nextSibling.id = 'page';
-          test.changeURL('0',cur.nextSibling.getElementsByTagName('h1')[0].innerHTML,cur.nextSibling.getAttribute('data-href'));
+          test.changeActivePage(cur, cur.nextSibling);
         }
       }
     } else if (cur.nextSibling.id !== 'page-next' && cur.nextSibling.id !== 'page' && document.querySelectorAll('.page:not(#page-next)').length > 1) {
       document.querySelector('#page-wrapper .page:first-child').id = 'page-1';
-      const next = document.querySelector('#page-wrapper .page:nth-child(2)');
-      next.id = 'page';
-      test.changeURL('0',next.getElementsByTagName('h1')[0].innerHTML,next.getAttribute('data-href'));
-    }
-  },
-
-  goToPrevPage(cur) {
-    cur.id = 'page-' + cur.getAttribute('data-count');
-    if (cur.getAttribute('data-count') > 2) {
-      cur.previousSibling.id = 'page';
-      test.changeURL('0',cur.previousSibling.getElementsByTagName('h1')[0].innerHTML,cur.previousSibling.getAttribute('data-href'));
-    } else {
-      const first = document.getElementById('page-1');
-      first.id = 'page';
-      cur.id = 'page-2';
-      test.changeURL('0',first.getElementsByTagName('h1')[0].innerHTML,first.getAttribute('data-href'));
+      test.changeActivePage(cur, document.querySelector('#page-wrapper .page:nth-child(2)'));
     }
   },
 
@@ -314,5 +236,7 @@ const test = {
 
 $(document).ready(() => {
   Object.assign(test, CROUTIL());
-  test.manipulateDom();
+  if (window.self === window.top) {
+    test.manipulateDom();
+  }
 });
