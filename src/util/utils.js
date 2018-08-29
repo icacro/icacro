@@ -2,7 +2,7 @@ import Storage from './modules/storage';
 import CreateElement from './create-element';
 import Element from './element';
 
-export const ReservedElements = ['svg', 'article', 'label', 'div', 'body', 'head', 'img', 'style', 'span', 'ul', 'li', 'input', 'button', 'h1', 'h2', 'h3', 'h4', 'a', 'p', 'strong', 'svg'];
+export const ReservedElements = ['svg', 'article', 'label', 'div', 'body', 'head', 'img', 'style', 'span', 'ul', 'li', 'input', 'button', 'h1', 'h2', 'h3', 'h4', 'a', 'p', 'strong', 'iframe'];
 
 const GetElement = (selector) => {
   if (selector instanceof HTMLElement) return selector;
