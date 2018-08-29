@@ -1,5 +1,7 @@
 .cro #footer,
-.cro .page .related-recipes {
+.cro-frame #footer,
+.cro .page .related-recipes,
+.cro-frame .page .related-recipes {
   display: none;
 }
 
@@ -167,8 +169,34 @@
   display: none;
 }*/
 
+.cro .icaOnlineBuyButton {
+  position: relative;
+  height: 50px;
+}
 
+.cro .icaOnlineBuyButton button {
+  position: absolute;
+  left:0;
+  top:0;
+}
 
+.cro .recipe-scroll {
+  width:100%;
+  height:150vh;
+  border:0;
+  overflow: hidden;
+}
+
+.cro-frame {
+  width:100%;
+  height:150vh;
+  border:0;
+  overflow: hidden;
+}
+
+.cro-frame .top-bar {
+  display: none;
+}
 
 
 @media only screen and (max-width: 780px) {
