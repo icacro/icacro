@@ -4,13 +4,16 @@
 }
 
 .cro .breadcrumb {
-  background-color: white;
   list-style-type: none;
   font-size: 14px;
   padding-left: 10px;
 }
-.cro .breadcrumb ul {
+.cro ul.breadcrumb {
   padding-left: 0px;
+  width: 60%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 .cro .breadcrumb li {
   display: inline;
