@@ -9,6 +9,32 @@
 
 'use strict';
 
+///
+/// OBS! TRACKING
+///
+///
+///
+/// OBS! TRACKING
+///
+///
+///
+/// OBS! TRACKING
+///
+///
+///
+/// OBS! TRACKING
+///
+///
+///
+/// OBS! TRACKING
+///
+///
+///
+/// OBS! TRACKING
+///
+///
+
+
 import { CROUTIL, ELM } from '../util/main';
 import { gaPush } from '../util/utils';
 import './style.css';
@@ -86,671 +112,473 @@ const test = {
               testURL = testURL.slice(0,testURL.indexOf('#:'));
             }
 
-            if (/^https:\/\/www.ica.se\/recept\/vardag\/$/.test(testURL)) {
-              // Chili con carne - https://www.ica.se/recept/chili-con-carne-424/
-              // Krämig carbonara - https://www.ica.se/recept/kramig-carbonara-722780/
-              // Busenkel broccolisoppa - https://www.ica.se/recept/busenkel-broccolisoppa-712859/
-
-              test.modifyRecipe('toprecipe-1',
-                424,
-                'Chili con carne',
-                'https://www.ica.se/recept/chili-con-carne-424/',
-                '//www.ica.se/imagevaultfiles/id_182604/cf_259/chili_con_carne.jpg',
-                '4.2','95','15',
-                'gul lök\nnötfärs\nolja\nchili\npaprikapulver\nsvartpeppar\nsalt\nsoja\ntomat\nböna\njalapeñopeppar\nbrytbröd\nsalladskål\npersilja\nvinägrett',
-                'Chili con carne är en mustig och het gryta med köttfärs, chili, vita bönor, paprika och tomater. Detta klassiska mexikanska recept är både lättlagat och uppskattat av dina middagsgäster.'
-              );
-
-              test.modifyRecipe('toprecipe-2',
-                722780,
-                'Krämig carbonara',
-                'https://www.ica.se/recept/kramig-carbonara-722780/',
-                '//www.ica.se/imagevaultfiles/id_168478/cf_259/kramig_carbonara.jpg',
-                '3.9','82','9',
-                'spaghetti\nbacon\nägg\nvispgrädde\nparmesanost\nsalt\nsvartpeppar\nruccola\näggula',
-                'En klassisk, krämig carbonara med parmesanost, ruccola och den finaste svartpepparn – Tellicherry! Lika god en fredagkväll tillsammans med ett gott glas vin som till lyxlunch på helgen.'
-              );
-
-              test.modifyRecipe('toprecipe-3',
-                712859,
-                'Busenkel broccolisoppa',
-                'https://www.ica.se/recept/busenkel-broccolisoppa-712859/',
-                '//www.ica.se/imagevaultfiles/id_79915/cf_259/busenkel_broccolisoppa.jpg',
-                '4.2','99','8',
-                'lök\npotatis\nbroccoli\ngrönsaksbuljong\nmatlagningsgrädde\nsalt och peppar\nbröd\nkräftstjärt',
-                'En riktigt smarrig soppa av broccoli som dessutom är lätt som en plätt att laga till! Servera den varma broccolisoppan tillsammans med en brödbit och njut!'
-              );
-
-            } else if (/^https:\/\/www.ica.se\/recept\/potatis\/sallad\/$/.test(testURL)) {
-              // Enkel - https://www.ica.se/recept/enkel-potatissallad-723665/
-              // Fransk - https://www.ica.se/recept/fransk-potatissallad-165198/
-              // Med pepparrot och äpple - https://www.ica.se/recept/potatissallad-med-pepparrot-och-apple-722108/
-
-              test.modifyRecipe('toprecipe-1',
-                723665,
-                'Enkel potatissallad',
-                'https://www.ica.se/recept/enkel-potatissallad-723665/',
-                '//www.ica.se/imagevaultfiles/id_180652/cf_259/enkel_potatissallad.jpg',
-                '3.7','3','8',
-                'potatis\nsalladslök\nbostongurka\ngräddfil\nmajonnäs\ndijonsenap\nsalt\nsvartpeppar',
-                'Sommarens bästa potatissallad? Perfekt för midsommar eller middagen med det där lilla extra. Klassiska ingredienser men nu med adderad dijonsenap vilket ger ett extra sting!'
-              );
-
-              test.modifyRecipe('toprecipe-2',
-                165198,
-                'Fransk potatissallad',
-                'https://www.ica.se/recept/fransk-potatissallad-165198/',
-                '//www.ica.se/imagevaultfiles/id_44923/cf_259/fransk_potatissallad.jpg',
-                '4.6','38','11',
-                'potatis\nschalottenlök\ndill\nkapris\nvinäger\nsenap\nsalt\nsvartpeppar\nsocker\nolivolja\nvatten',
-                'Denna fantastiskt goda, franska potatissallad passar utmärkt med det mesta. Sin karaktäristiska, mumsiga smak får potatissalladen när den blandas ihop med den lena senaps- och vinägersåsen. Strö över lite kapris och servera ihop med mört kött.'
-              );
-
-              test.modifyRecipe('toprecipe-3',
-                722108,
-                'Potatissallad med pepparrot och äpple',
-                'https://www.ica.se/recept/potatissallad-med-pepparrot-och-apple-722108/',
-                '//www.ica.se/imagevaultfiles/id_160299/cf_259/potatissallad_med_pepparrot_och_apple.jpg',
-                '5.0','6','12',
-                'potatis\nsalladslök\ngräslök\nrädisa\npepparrot\nsaltgurka\näpple\ngräddfil\nmajonnäs\ndijonsenap\nkapris\nsalt och svartpeppar',
-                'Äpple, pepparrot, gräslök och skivade rädisor ger din krämiga potatissallad en fräsch krispighet. Perfekt på buffébordet eller att ta med på picknick. Måste testas!'
-              );
-
-            } else if (/^https:\/\/www.ica.se\/recept\/billiga-veckan\/$/.test(testURL)) {
-              // Pasta - https://www.ica.se/recept/pasta-med-tomatsas-och-linser-723155/
-              // Chili - https://www.ica.se/recept/chili-con-carne-med-ris-723146/
-              // Kyckling - https://www.ica.se/recept/kyckling-teriyaki-med-ris-och-minimajs-723152/
-
-              test.modifyRecipe('toprecipe-1',
-                723155,
-                'Pasta med tomatsås och linser',
-                'https://www.ica.se/recept/pasta-med-tomatsas-och-linser-723155/',
-                '//www.ica.se/imagevaultfiles/id_176291/cf_259/pasta_med_tomatsas_och_linser.jpg',
-                '4.6','16','9',
-                'morot\krossad tomat\krossad tomat\röd lins\spaghetti\olivolja\vatten\salt\peppar',
-                'Pasta är en riktig vardagshjälte när tiden är knapp och familjen är hungrig. Men för att höja näringsvärdet på måltiden är röda linser och morötter två smarta ingredienser att ha i såsen. Detta recept är superenkelt och såsen kan mixas om det passar barnen bättre. Toppa med riven ost.'
-              );
-
-              test.modifyRecipe('toprecipe-2',
-                723146,
-                'Chili con carne med ris',
-                'https://www.ica.se/recept/chili-con-carne-med-ris-723146/',
-                '//www.ica.se/imagevaultfiles/id_176253/cf_259/chili_con_carne_med_ris.jpg',
-                '3.7','18','12',
-                'ris\nlök\nkidneyböna\nnötfärs\npastasås\npaprika\nolja\ntomatpuré\npaprikapulver\nvatten\nsalt\npeppar',
-                'Med färdig pastasås, en burk kidneybönor och köttfärs har du grunden till en riktigt snabb och enkel chili con carne. Tillsammans med paprika och ris blir måltiden komplett och passar hela familjen. Perfekt att frysa in i matlådor om det blir mat över.'
-              );
-
-              test.modifyRecipe('toprecipe-3',
-                723152,
-                'Kyckling teriyaki med ris och minimajs',
-                'https://www.ica.se/recept/kyckling-teriyaki-med-ris-och-minimajs-723152/',
-                '//www.ica.se/imagevaultfiles/id_176288/cf_259/kyckling_teriyaki_med_ris_och_minimajs.jpg',
-                '4.0','19','7',
-                'ris\nkycklingfilé\nminimajs\nteriyakisås\nbabyspenat\nolja\nvatten',
-                'Teriyaki kyckling gör du enkelt själv med färdig teriyakisås och kycklingfilé. Slänger du dessutom ner lite söt minimajs i pannan blir barnen extra glada. Servera kycklingen med ris och babyspenat och kanske lite rostade sesamfrön, om du har tid.'
-              );
-
-            } else if (/^https:\/\/www.ica.se\/recept\/lax\/i-ugn\/$/.test(testURL)) {
-              // Limelax i ugn - https://www.ica.se/recept/limelax-i-ugn-med-chilicreme-722771/
-              // Lax i ugn med romsås - https://www.ica.se/recept/ugnsstekt-lax-med-romsas-723067/
-              // Saltinbakad med citronsås - https://www.ica.se/recept/saltbakad-lax-med-citronsas-laktosfri-676720/
-
-              test.modifyRecipe('toprecipe-1',
-                722771,
-                'Limelax i ugn med chilicrème',
-                'https://www.ica.se/recept/limelax-i-ugn-med-chilicreme-722771/',
-                '//www.ica.se/imagevaultfiles/id_169738/cf_259/limelax_i_ugn_med_chilicrème_.jpg',
-                '4.4','19','19',
-                'laxfilé\nolivolja\nlimeskal\nsalt\nsvartpeppar\ncrème fraiche\nlimejuice\nsrirachasås\nsalt\npeppar\nbroccoli\nvitlöksklyfta\nmajskorn\nsmör\nsalt\npeppar\nkoriander\ngurka\ntortillabröd',
-                'Lax i ugn ger fin fredagsfeeling med goda tillbehör som smörstekt majs, broccoli och chilicréme. Bjud limelaxen och tillbehören plockigt och låt var och en fylla sitt bröd efter egen smak.'
-              );
-
-              test.modifyRecipe('toprecipe-2',
-                722771,
-                'Ugnsstekt lax med romsås',
-                'https://www.ica.se/recept/limelax-i-ugn-med-chilicreme-722771/',
-                '//www.ica.se/imagevaultfiles/id_172037/cf_259/ugnsstekt_lax_med_romsas.jpg',
-                '4.5','26','7',
-                'potatis\nlaxfilé\nsalt\npeppar\ngräddfil\ncaviarmix\nbroccoli',
-                'Ugnsstekt lax som tillagas tills den blir underbart mör passar utmärkt ihop med en krämig romsås. Ät fisken tillsammans med nykokt potatis och krispig broccoli och du har en vardagsmiddag som passar hela familjen.'
-              );
-
-              test.modifyRecipe('toprecipe-3',
-                676720,
-                'Saltbakad lax med citronsås - laktosfri',
-                'https://www.ica.se/recept/saltbakad-lax-med-citronsas-laktosfri-676720/',
-                '//www.ica.se/imagevaultfiles/id_19462/cf_259/saltbakad_lax_med_citronsas_-_laktosfri.jpg',
-                '4.6','18','11',
-                'lax\nsalt\nlätt crème fraiche\nmatlagningsgrädde\nfiskbuljongtärning\ncitron\nsalt\ngräslök\npotatis\nsockerärta\ncitronklyfta',
-                'Denna himmelska, saltbakade lax med smakfull, laktosfri citronsås kommer bli mycket uppskattad på middagsbordet. Koka ihop din härliga sås under tiden laxen tillagas och servera den sedan ihop med pressad potatis, citron och krispiga sockerärter.'
-              );
-
-            } else if (/^https:\/\/www.ica.se\/recept\/rabarber\/paj\/$/.test(testURL)) {
-              // Knäckig rabarberpaj - https://www.ica.se/recept/knackig-rabarberpaj-715053/
-              // Nyttigare rabarberpaj - https://www.ica.se/recept/nyttigare-rabarberpaj-721996/
-              // Rabarberkladdkaka - https://www.ica.se/recept/rabarberkladdkaka-med-vit-choklad-och-kardemumma-721994/
-
-              test.modifyRecipe('toprecipe-1',
-                715053,
-                'Knäckig rabarberpaj',
-                'https://www.ica.se/recept/knackig-rabarberpaj-715053/',
-                '//www.ica.se/imagevaultfiles/id_63250/cf_259/knackig_rabarberpaj.jpg',
-                '4.4','205','11',
-                'rabarber\nhavregryn\nsocker\nvetemjöl\nbakpulver\nvaniljsocker\nsmör\nvispgrädde\nsirap\nsmör\nvaniljglass',
-                'Syrlig rabarber under knäckigt havretäcke med kolasmak. Läckrare rabarberpaj får man leta efter. Servera gärna med vaniljglass.'
-              );
-
-              test.modifyRecipe('toprecipe-2',
-                721996,
-                'Nyttigare rabarberpaj',
-                'https://www.ica.se/recept/nyttigare-rabarberpaj-721996/',
-                '//www.ica.se/imagevaultfiles/id_161155/cf_259/nyttigare_rabarberpaj.jpg',
-                '4.5','8','10',
-                'rabarber\njordgubbe\nkardemummakärna\nkokossocker\npotatismjöl\nhavregryn\nhonung\nvaniljsocker\nsmör\nvatten',
-                'Klassisk smulpaj med syrliga rabarber och söta jordgubbar. Pajen är sötad med honung och kokossocker. Vi har valt havregryn som tillför nyttiga fibrer istället för vetemjöl och den innehåller mindre smör. Smakar som en sommardag!'
-              );
-
-              test.modifyRecipe('toprecipe-3',
-                721994,
-                'Rabarberkladdkaka med vit choklad och kardemumma',
-                'https://www.ica.se/recept/rabarberkladdkaka-med-vit-choklad-och-kardemumma-721994/',
-                '//www.ica.se/imagevaultfiles/id_161146/cf_259/rabarberkladdkaka_med_vit_choklad_och_kardemumma.jpg',
-                '3.9','65','10',
-                'smör\nvit choklad\nströsocker\nsalt\nägg\nkardemummakärna\nvetemjöl\nrabarber\npotatismjöl\nflorsocker',
-                'Smarrig kladdkaka med rabarber, vit choklad och kardemumma. Ett lättlagat och somrigt recept där rabarberns syrliga strävhet balanseras av den söta och mjuka kladdkakan. Här hittar du fler härliga kladdkakerecept.'
-              );
-
-            } else if (/^https:\/\/www.ica.se\/recept\/rabarber\/$/.test(testURL)) {
-              // Knäckig rabarberpaj med brynt smör - https://www.ica.se/recept/rabarberpaj-med-brynt-smor-718995/
-              // Rabarberkräm - https://www.ica.se/recept/len-rabarberkram-med-kardemumma-713752/
-              // Rabarberkladdkaka - https://www.ica.se/recept/rabarberkladdkaka-med-vit-choklad-och-kardemumma-721994/
-
-              test.modifyRecipe('toprecipe-1',
-                718995,
-                'Knäckig rabarberpaj med brynt smör',
-                'https://www.ica.se/recept/rabarberpaj-med-brynt-smor-718995/',
-                '//www.ica.se/imagevaultfiles/id_116224/cf_259/rabarberpaj_med_brynt_smor.jpg',
-                '4.3','23','9',
-                'rabarber\nsmör\nhavregryn\nströsocker\nvetemjöl\nbakpulver\nsirap\nmjölk\nsalt',
-                'Lyxa till rabarberpajen med brynt smör. Det ger en fantastisk nötig touch som passar perfekt till den sötsyrliga fyllningen. En glutenfri variant? Välj ren havre och byt ut vetemjöl mot potatismjöl. Servera pajen ljummen med vaniljglass eller fluffig vaniljsås.'
-              );
-
-              test.modifyRecipe('toprecipe-2',
-                713752,
-                'Len rabarberkräm med kardemumma',
-                'https://www.ica.se/recept/len-rabarberkram-med-kardemumma-713752/',
-                '//www.ica.se/imagevaultfiles/id_36643/cf_259/len_rabarberkram_med_kardemumma_.jpg',
-                '4.1','13','7',
-                'vatten\nsocker\nkardemumma\nrabarber\npotatismjöl\nsocker\nmjölk',
-                'Recept på en utsökt och somrig efterrätt gjord på rabarber. Rabarberkräm med kardemumma fixar du snabbt av bland annat socker, kardemumma, rabarber och potatismjöl. Servera den lena krämen med mjölk till dessert.'
-              );
-
-              test.modifyRecipe('toprecipe-3',
-                721994,
-                'Rabarberkladdkaka med vit choklad och kardemumma',
-                'https://www.ica.se/recept/rabarberkladdkaka-med-vit-choklad-och-kardemumma-721994/',
-                '//www.ica.se/imagevaultfiles/id_161146/cf_259/rabarberkladdkaka_med_vit_choklad_och_kardemumma.jpg',
-                '3.9','65','10',
-                'smör\nvit choklad\nströsocker\nsalt\nägg\nkardemummakärna\nvetemjöl\nrabarber\npotatismjöl\nflorsocker',
-                'Smarrig kladdkaka med rabarber, vit choklad och kardemumma. Ett lättlagat och somrigt recept där rabarberns syrliga strävhet balanseras av den söta och mjuka kladdkakan. Här hittar du fler härliga kladdkakerecept.'
-              );
-
-            } else if (/^https:\/\/www.ica.se\/recept\/middag\/$/.test(testURL)) {
-              // Klassisk lasagne - https://www.ica.se/recept/klassisk-lasagne-679675/
-              // Risotto med svamp - https://www.ica.se/recept/risotto-med-skogschampinjoner-716952/
-              // Foliepaket med torsk - https://www.ica.se/recept/foliepaket-med-torskrygg-sparris-potatis-orter-och-citron-714922/
-
-              test.modifyRecipe('toprecipe-1',
-                679675,
-                'Klassisk lasagne',
-                'https://www.ica.se/recept/klassisk-lasagne-679675/',
-                '//www.ica.se/imagevaultfiles/id_76171/cf_259/klassisk_lasagne.jpg',
-                '4.2','217','17',
-                'lök\nvitlöksklyfta\nnötfärs\nolja\ntomatpuré\ntimjan\nrosmarin\nkrossad tomat\nköttbuljongtärning\nsalt och peppar\nlasagneplatta\nmatfett\nvetemjöl\nmjölk\nsalt och peppar\nparmesanost\nsallad',
-                'Klassisk lasagne är väl en rätt man aldrig tröttnar på? Med det här receptet blir din lasagne perfekt med en mjuk och härlig konsistens och dessutom har den en ljuv och exemplarisk smak. Parmesanosten är pricken över i!'
-              );
-
-              test.modifyRecipe('toprecipe-2',
-                716952,
-                'Risotto med skogschampinjoner',
-                'https://www.ica.se/recept/risotto-med-skogschampinjoner-716952/',
-                '//www.ica.se/imagevaultfiles/id_89399/cf_259/risotto_med_skogschampinjoner.jpg',
-                '4.8','106','11',
-                'schalottenlök\nvitlöksklyfta\nsvampbuljong\nolivolja\narborioris\nvin\nkastanjechampinjon\nsmör\nparmesanost\nsalt\nruccola',
-                'En perfekt kokt risotto är krämig och riset har kvar lite tuggmotstånd. Följ det här grundreceptet på svamprisotto och du har alla chanser att lyckas. Kastanjechampinjonerna i risotton går utmärkt att byta ut mot andra goda svampar som kantareller, karljohansvamp eller portabella till en ännu lyxigare vegetarisk festrätt.'
-              );
-
-              test.modifyRecipe('toprecipe-3',
-                714922,
-                'Foliepaket med torskrygg, sparris, potatis, örter och citron',
-                'https://www.ica.se/recept/foliepaket-med-torskrygg-sparris-potatis-orter-och-citron-714922/',
-                '//www.ica.se/imagevaultfiles/id_63758/cf_259/foliepaket_med_torskrygg__sparris__potatis__orter_och_citron.jpg',
-                '4.8','23','12',
-                'färskpotatis\nrödlök\nchili\nrädisa\ngrön sparris\nsmör\nört\ncitron\nflingsalt\npeppar\ngrillfolie\ntorskfilé',
-                'Enklaste sättet att grilla är i folie! Gärna primörer med gräslök, persilja, citron, lite chili och smör. Riktigt gott till grillad fisk som torsk eller lax. En sommarfräsch middag till både vardag och fest.'
-              );
-
-            } else if (/^https:\/\/www.ica.se\/recept\/grill\/$/.test(testURL)) {
-              // Grillad lax i folie - https://www.ica.se/recept/grillad-lax-i-folie-720557/
-              // Grillade grönsaksspett med sting - https://www.ica.se/recept/grillade-gronsaksspett-med-sting-720369/
-              // Karréspett - https://www.ica.se/recept/karrespett-med-tahinisas-och-grillad-hjartsallad-723893/
-
-              test.modifyRecipe('toprecipe-1',
-                720557,
-                'Grillad lax i folie',
-                'https://www.ica.se/recept/grillad-lax-i-folie-720557/',
-                '//www.ica.se/imagevaultfiles/id_138072/cf_259/grillad_lax_i_folie.jpg',
-                '4.0','5','5',
-                'laxfilé\nfolieark\nsalt och svartpeppar\nsmör\nört',
-                'Grillad lax i folie som trängs med härliga kryddor blir verkligen en smaksensation i sig. Lägg till en god sås, härliga tillbehör och en solig eftermiddag och du har garanterat en sommardag att minnas tillbaka till.'
-              );
-
-              test.modifyRecipe('toprecipe-2',
-                720369,
-                'Grillade grönsaksspett med sting',
-                'https://www.ica.se/recept/grillade-gronsaksspett-med-sting-720369/',
-                '//www.ica.se/imagevaultfiles/id_137108/cf_259/grillade_gronsaksspett_med_sting_____.jpg',
-                '3.0','112','9',
-                'grillspett\npaprikapulver\nsambal oelek\nolja\nzucchini\nröd paprika\naubergine\nchampinjon\nsalt och svartpeppar',
-                'Grillade grönsaksspett piffar upp vilken grilltallrik som helst och med den röda paprikan i fokus blir det en härlig färgklick. I receptet som presenteras nedan oljas grönsakerna in med både parikapulver och sambal oelek, som i sin tur förhöjer smakerna i denna fina grönsaksblandning.'
-              );
-
-              test.modifyRecipe('toprecipe-3',
-                723893,
-                'Karréspett med tahinisås och grillad hjärtsallad',
-                'https://www.ica.se/recept/karrespett-med-tahinisas-och-grillad-hjartsallad-723893/',
-                '//www.ica.se/imagevaultfiles/id_180838/cf_259/karréspett_med_tahinisas_och_grillad_hjartsallad.jpg',
-                '5.0','1','14',
-                'kokosmjölk\ningefära\ntahini\nhonung\nlime\nsrirachasås\nsalt\nkarré\npeppar\nhjärtsalladshuvud\nbroccoli\nris\nsesamfrö\nlime',
-                'Gör premiär på grillen med dessa saftiga och möra karréspett och grillad hjärtsallad. Den karaktäristiska tahinisåsen som du serverar till, får sin smak från tahini, ingefära, kokosmjölk, lime och sriracha. Lägg upp det grillade på ett stort fat och strö över rostade sesamfrön. Voìla!'
-              );
-
-            } else if (/^https:\/\/www.ica.se\/recept\/cheesecake\/$/.test(testURL)) {
-                // https://www.ica.se/recept/cheesecake-med-oreos-722836/
-                // https://www.ica.se/recept/klassisk-cheesecake-721948/
-                // https://www.ica.se/recept/fryst-choklad-och-hasselnotscheesecake-721427/
-
-                test.modifyRecipe('toprecipe-1',
-                  722836,
-                  'Cheesecake med oreos',
-                  'https://www.ica.se/recept/cheesecake-med-oreos-722836/',
-                  '//www.ica.se/imagevaultfiles/id_169592/cf_259/cheesecake_med_oreos.jpg',
-                  '4.7','49','7',
-                  'smör\noreokaka\nägg\nströsocker\nfärskost\nvaniljsocker\nvispgrädde',
-                  ''
-                );
-
-                test.modifyRecipe('toprecipe-2',
-                  721948,
-                  'Klassisk cheesecake',
-                  'https://www.ica.se/recept/klassisk-cheesecake-721948/',
-                  '//www.ica.se/imagevaultfiles/id_158770/cf_259/klassisk_cheesecake.jpg',
-                  '3.5','54','9',
-                  'färskost\nströsocker\nägg\ncitron\nvetemjöl\ngräddfil\nbär\ndigestivekex\nsmör',
-                  ''
-                );
-
-                test.modifyRecipe('toprecipe-3',
-                  721427,
-                  'Fryst choklad- och hasselnötscheesecake',
-                  'https://www.ica.se/recept/fryst-choklad-och-hasselnotscheesecake-721427/',
-                  '//www.ica.se/imagevaultfiles/id_152415/cf_259/fryst_choklad-_och_hasselnotscheesecake.jpg',
-                  '3.8','42','7',
-                  'cornflake\nhasselnötskräm\nfärskost\nhasselnötskräm\nchoklad\nvispgrädde\nhasselnöt',
-                  ''
-                );
-
-            } else if (/^https:\/\/www.ica.se\/recept\/vegetarisk\/$/.test(testURL)) {
-                // https://www.ica.se/recept/lasagne-med-halloumi-spenat-och-pumpakarnor-718382/
-                // https://www.ica.se/recept/morots-och-halloumibiffar-720975/
-                // https://www.ica.se/recept/palak-paneer-med-tomat-och-halloumi-722056/
-
-                test.modifyRecipe('toprecipe-1',
-                  718382,
-                  'Lasagne med halloumi, spenat och pumpakärnor',
-                  'https://www.ica.se/recept/lasagne-med-halloumi-spenat-och-pumpakarnor-718382/',
-                  '//www.ica.se/imagevaultfiles/id_106734/cf_259/lasagne_med_halloumi__spenat_och_pumpakarnor.jpg',
-                  '4.7','366','16',
-                  'lök\nvitlöksklyfta\nrapsolja\nlasagneplatta\ntomatpuré\ntomat\nhonung\ngrönsaksbuljongtärning\ntimjan\nvatten\nbladspenat\nhalloumiost\npumpakärna\nprästost\nsalt och svartpeppar\ntimjan',
-                  ''
-                );
-
-                test.modifyRecipe('toprecipe-2',
-                  720975,
-                  'Morots- och halloumibiffar',
-                  'https://www.ica.se/recept/morots-och-halloumibiffar-720975/',
-                  '//www.ica.se/imagevaultfiles/id_143528/cf_259/morots-_och_halloumibiffar.jpg',
-                  '4.4','389','11',
-                  'morot\nhalloumiost\nägg\nströbröd\nchiliflakes\nsalt\nsvartpeppar\nolja\nbulgur\nsallad\nhummus',
-                  ''
-                );
-
-                test.modifyRecipe('toprecipe-3',
-                  722056,
-                  'Palak paneer med tomat och halloumi',
-                  'https://www.ica.se/recept/palak-paneer-med-tomat-och-halloumi-722056/',
-                  '//www.ica.se/imagevaultfiles/id_159450/cf_259/palak_paneer_med_tomat_och_halloumi.jpg',
-                  '4.8','259','ingredienser',
-                  'ris\nschalottenlök\nvitlöksklyfta\ntomat\ningefära\nolivolja\ntomatpuré\ngaram masala\nkrossad tomat\nmatlagningsvin\nvispgrädde\ngrönsaksbuljongtärning\nspenat\nhalloumiost\nsalt',
-                  ''
-                );
-
-            } else if (/^https:\/\/www.ica.se\/recept\/hamburgare\/$/.test(testURL)) {
-                // https://www.ica.se/recept/hamburgare-med-klyftpotatis-723267/
-                // https://www.ica.se/recept/portabelloburgare-med-grillad-avokado-och-het-bonkram-723769/
-                // https://www.ica.se/recept/sliders-med-picklad-rodlok-och-majs-721908/
-
-                test.modifyRecipe('toprecipe-1',
-                  723267,
-                  'Hamburgare med klyftpotatis',
-                  'https://www.ica.se/recept/hamburgare-med-klyftpotatis-723267/',
-                  '//www.ica.se/imagevaultfiles/id_174101/cf_259/hamburgare_med_klyftpotatis.jpg',
-                  '4.1','12','11',
-                  'bakpotatis\nolja\nsalt och peppar\ntomat\nkrispsallad\nrödlök\nnötfärs\nsalt\nolja\nhamburgerbröd\nhamburgerdressing',
-                  ''
-                );
-
-                test.modifyRecipe('toprecipe-2',
-                  723769,
-                  'Portabelloburgare med grillad avokado och het bönkräm',
-                  'https://www.ica.se/recept/portabelloburgare-med-grillad-avokado-och-het-bonkram-723769/',
-                  '//www.ica.se/imagevaultfiles/id_180481/cf_259/portabelloburgare_med_grillad_avokado_och_het_bonkram.jpg',
-                  '4.5','2','17',
-                  'rödlök\nrödvinsvinäger\nsocker\npersilja\nböna\nolivolja\nsrirachasås\nsalt\nportabellasvamp\nvitlöksklyfta\nolivolja\nört\nsalt\npeppar\navokado\nsurdegsbröd\nkrispsallad',
-                  ''
-                );
-
-                test.modifyRecipe('toprecipe-3',
-                  721908,
-                  'Sliders med picklad rödlök och majs',
-                  'https://www.ica.se/recept/sliders-med-picklad-rodlok-och-majs-721908/',
-                  '//www.ica.se/imagevaultfiles/id_161646/cf_259/sliders_med_picklad_rodlok_och_majs.jpg',
-                  '5.0','1','13',
-                  'rödlök\nsocker\nättika\nvatten\nmajskorn\nolja\nchili\navokado\nslider\nsalt och peppar\nsliderbröd\nsallad\ntomat',
-                  ''
-                );
-
-            } else if (/^https:\/\/www.ica.se\/recept\/lax\/grillad\/$/.test(testURL)) {
-                // https://www.ica.se/recept/grillad-lax-i-folie-720557/
-                // https://www.ica.se/recept/fish-taco-med-grillad-avokado-och-rokt-paprikamajonnas-718984/
-                // https://www.ica.se/recept/grillad-laxsida-723660/
-
-                test.modifyRecipe('toprecipe-1',
-                  720557,
-                  'Grillad lax i folie',
-                  'https://www.ica.se/recept/grillad-lax-i-folie-720557/',
-                  '//www.ica.se/imagevaultfiles/id_138072/cf_259/grillad_lax_i_folie.jpg',
-                  '4.0','5','5',
-                  'laxfilé\nfolieark\nsalt och svartpeppar\nsmör\nört',
-                  ''
-                );
-
-                test.modifyRecipe('toprecipe-2',
-                  718984,
-                  'Fish taco med grillad avokado och rökt paprikamajonnäs',
-                  'https://www.ica.se/recept/fish-taco-med-grillad-avokado-och-rokt-paprikamajonnas-718984/',
-                  '//www.ica.se/imagevaultfiles/id_116176/cf_259/fish_taco_med_grillad_avokado_och_rokt_paprikamajonnas.jpg',
-                  '4.9','16','18',
-                  'chiliflakes\npaprikapulver\ningefära\nkoriander\nfarinsocker\nsalt\nlax\nrädisa\navokado\nrapsolja\nsalt och svartpeppar\nkoriander\npaprika\nmajonnäs\npaprikapulver\nlimejuice\nsalt\npeppar',
-                  ''
-                );
-
-                test.modifyRecipe('toprecipe-3',
-                  723660,
-                  'Grillad laxsida',
-                  'https://www.ica.se/recept/grillad-laxsida-723660/',
-                  '//www.ica.se/imagevaultfiles/id_179631/cf_259/grillad_laxsida.jpg',
-                  '4.0','6','11',
-                  'lax\nsalt\nsvartpeppar\ndijonsenap\ndill\ntomatcrème\nbasilika\ncitronskal\ndragon\nfänkål\nrosépeppar',
-                  ''
-                );
-
-            } else if (/^https:\/\/www.ica.se\/recept\/bal\/$/.test(testURL)) {
-                // https://www.ica.se/recept/sommarbal-med-rabarber-flader-och-jordgubbar-723669/
-                // https://www.ica.se/recept/seabreeze-bal-718883/
-                // https://www.ica.se/recept/paloma-mexikansk-drink-med-grapefrukt-och-lime-722286/
-
-                test.modifyRecipe('toprecipe-1',
-                  723669,
-                  'Sommarbål med rabarber, fläder och jordgubbar',
-                  'https://www.ica.se/recept/sommarbal-med-rabarber-flader-och-jordgubbar-723669/',
-                  '//www.ica.se/imagevaultfiles/id_180987/cf_259/sommarbal_med_rabarber__flader_och_jordgubbar.jpg',
-                  '5.0','2','4',
-                  'jordgubbe\nlemonad\nflädersaft\nisbit',
-                  ''
-                );
-
-                test.modifyRecipe('toprecipe-2',
-                  718883,
-                  'Seabreeze-bål',
-                  'https://www.ica.se/recept/seabreeze-bal-718883/',
-                  '//www.ica.se/imagevaultfiles/id_113691/cf_259/seabreeze-bal.jpg',
-                  '4.3','6','5',
-                  'tranbärsjuice\ngrapefruktjuice\nvodka\ngrapefrukt\nisbit',
-                  ''
-                );
-
-                test.modifyRecipe('toprecipe-3',
-                  722286,
-                  'Paloma - mexikansk drink med grapefrukt och lime',
-                  'https://www.ica.se/recept/paloma-mexikansk-drink-med-grapefrukt-och-lime-722286/',
-                  '//www.ica.se/imagevaultfiles/id_162937/cf_259/paloma_-_mexikansk_drink_med_grapefrukt_och_lime.jpg',
-                  '4.8','4','6',
-                  'grapefruktjuice\nvatten\nlimejuice\nagavesirap\nis\ngrapefrukt',
-                  ''
-                );
-
-            } else if (/^https:\/\/www.ica.se\/recept\/vegan\/$/.test(testURL)) {
-                // https://www.ica.se/recept/linscurry-med-kokosmjolk-och-lime-720274/
-                // https://www.ica.se/recept/vegansk-pizza-med-sotpotatis-mandel-och-svartkal-723341/
-                // https://www.ica.se/recept/portabelloburgare-med-grillad-avokado-och-het-bonkram-723769/
-
-                test.modifyRecipe('toprecipe-1',
-                  720274,
-                  'Linscurry med kokosmjölk och lime',
-                  'https://www.ica.se/recept/linscurry-med-kokosmjolk-och-lime-720274/',
-                  '//www.ica.se/imagevaultfiles/id_134475/cf_259/linscurry_med_kokosmjolk_och_lime.jpg',
-                  '4.6','198','17',
-                  'ris\nlins\ngul lök\ningefära\nsambal oelek\nolja\nvitlöksklyfta\ncurry\ntomatpuré\ngrönsaksbuljong\nkokosmjölk\nblomkålshuvud\nkörsbärstomat\nlime\nsalt och peppar\nbabyspenat\ncashewnöt',
-                  ''
-                );
-
-                test.modifyRecipe('toprecipe-2',
-                  723341,
-                  'Vegansk pizza med sötpotatis, mandel och svartkål',
-                  'https://www.ica.se/recept/vegansk-pizza-med-sotpotatis-mandel-och-svartkal-723341/',
-                  '//www.ica.se/imagevaultfiles/id_175649/cf_259/vegansk_pizza_med_sotpotatis__mandel_och_svartkal.jpg',
-                  '3.4','8','12',
-                  'sötpotatis\nvitlöksklyfta\nolivolja\nsalt\npeppar\nsvartkål\nolivolja\nsalt\nsötmandel\npizzaost\npizzabotten\ncitron',
-                  ''
-                );
-
-                test.modifyRecipe('toprecipe-3',
-                  723769,
-                  'Portabelloburgare med grillad avokado och het bönkräm',
-                  'https://www.ica.se/recept/portabelloburgare-med-grillad-avokado-och-het-bonkram-723769/',
-                  '//www.ica.se/imagevaultfiles/id_180481/cf_259/portabelloburgare_med_grillad_avokado_och_het_bonkram.jpg',
-                  '4.5','2','17',
-                  'rödlök\nrödvinsvinäger\nsocker\npersilja\nböna\nolivolja\nsrirachasås\nsalt\nportabellasvamp\nvitlöksklyfta\nolivolja\nört\nsalt\npeppar\navokado\nsurdegsbröd\nkrispsallad',
-                  ''
-                );
-
-            } else if (/^https:\/\/www.ica.se\/recept\/nyttig\/middag\/$/.test(testURL)) {
-                // https://www.ica.se/recept/tacopaj-718512/
-                // https://www.ica.se/recept/morots-och-halloumibiffar-720975/
-                // https://www.ica.se/recept/torskknyten-med-medelhavssmaker-724013/
-
-                test.modifyRecipe('toprecipe-1',
-                  718512,
-                  'Tacopaj',
-                  'https://www.ica.se/recept/tacopaj-718512/',
-                  '//www.ica.se/imagevaultfiles/id_110887/cf_259/tacopaj.jpg',
-                  '2.3','1298','15',
-                  'pajdeg\nlök\nvitlöksklyfta\nmorot\nrotselleri\nmajskorn\nolja\nnötfärs\ntaco kryddmix\nvatten\nmatlagningsgrädde\ntomat\nost\nkvarg\nvitkålssallad',
-                  ''
-                );
-
-                test.modifyRecipe('toprecipe-2',
-                  720975,
-                  'Morots- och halloumibiffar',
-                  'https://www.ica.se/recept/morots-och-halloumibiffar-720975/',
-                  '//www.ica.se/imagevaultfiles/id_143528/cf_259/morots-_och_halloumibiffar.jpg',
-                  '4.4','389','11',
-                  'morot\nhalloumiost\nägg\nströbröd\nchiliflakes\nsalt\nsvartpeppar\nolja\nbulgur\nsallad\nhummus',
-                  ''
-                );
-
-                test.modifyRecipe('toprecipe-3',
-                  724013,
-                  'Torskknyten med medelhavssmaker',
-                  'https://www.ica.se/recept/torskknyten-med-medelhavssmaker-724013/',
-                  '//www.ica.se/imagevaultfiles/id_182638/cf_259/torskknyten_med_medelhavssmaker.jpg',
-                  '5.0','1','12',
-                  'torskfilé\ngrillfolie\nsalt\nsvartpeppar\nkörsbärstomat\nkalamataoliv\nrödlök\nvitlöksklyfta\nkapris\nbasilika\nolivolja\nfärskpotatis',
-                  ''
-                );
-
-            } else if (/^https:\/\/www.ica.se\/recept\/smoothie\/$/.test(testURL)) {
-                // https://www.ica.se/recept/jorgubbssmoothie-722995/
-                // https://www.ica.se/recept/vitaminsmoothie-723918/
-                // https://www.ica.se/recept/nordisk-smoothie-bowl-719518/
-
-                test.modifyRecipe('toprecipe-1',
-                  722995,
-                  'Jorgubbssmoothie',
-                  'https://www.ica.se/recept/jorgubbssmoothie-722995/',
-                  '//www.ica.se/imagevaultfiles/id_170473/cf_259/jorgubbssmoothie.jpg',
-                  '4.2','27','7',
-                  'jordgubbe\nbanan\nfiberhavregryn\nhavredryck\nlimejuice\ningefära\nmandel',
-                  ''
-                );
-
-                test.modifyRecipe('toprecipe-2',
-                  723918,
-                  'Vitaminsmoothie',
-                  'https://www.ica.se/recept/vitaminsmoothie-723918/',
-                  '//www.ica.se/imagevaultfiles/id_181240/cf_259/vitaminsmoothie.jpg',
-                  '4.8','5','9',
-                  'avokado\nkokosdryck\nbabyspenat\ningefära\ncitron\nmango\nkokosolja\nagavesirap\nkokos',
-                  ''
-                );
-
-                test.modifyRecipe('toprecipe-3',
-                  719518,
-                  'Nordisk smoothie bowl',
-                  'https://www.ica.se/recept/nordisk-smoothie-bowl-719518/',
-                  '//www.ica.se/imagevaultfiles/id_124628/cf_5291/nordisk_smoothie_bowl.jpg',
-                  '4.4','8','10',
-                  'banan\nblåbär\nlingon\nmandeldryck\nagavesirap\nbanan\nbär\nmandelsmör\nmüsli\nkokosflinga',
-                  ''
-                );
-
-            } else if (/^https:\/\/www.ica.se\/recept\/smorgastarta\/$/.test(testURL)) {
-                // https://www.ica.se/recept/varens-godaste-smorgastarta-720205/
-                // https://www.ica.se/recept/smorgastarta-a-la-club-sandwich-714805/
-                // https://www.ica.se/recept/vegansk-smorgastarta-721995/
-
-                test.modifyRecipe('toprecipe-1',
-                  720205,
-                  'Vårens godaste smörgåstårta',
-                  'https://www.ica.se/recept/varens-godaste-smorgastarta-720205/',
-                  '//www.ica.se/imagevaultfiles/id_133925/cf_259/varens_godaste_smorgastarta.jpg',
-                  '4.8','36','28',
-                  'landgångsbröd\nsparris\nfänkål\nsalladsärta\ngulbeta\närtskott\nlax\nlaxrom\ndillvippa\nrödlök\nägg\nlax i bit\ncrème fraiche\ncitronskal\ngräslök\nsalt och peppar\nräkor i lake\nmajonnäs\npepparrot\ndijonsenap\ndill\nsalt och peppar\ncrème fraiche\npepparrot\ncitronskal\nsalt\navokado\ncitron',
-                  ''
-                );
-
-                test.modifyRecipe('toprecipe-2',
-                  714805,
-                  'Smörgåstårta à la club sandwich',
-                  'https://www.ica.se/recept/smorgastarta-a-la-club-sandwich-714805/',
-                  '//www.ica.se/imagevaultfiles/id_63848/cf_259/smorgastarta_à_la_club_sandwich.jpg',
-                  '4.9','49','13',
-                  'bacon\nkyckling\ntomat\nmajonnäs\nmatyoghurt\ngräslök\ndijonsenap\nsalt\npeppar\nformbröd\nfärskost\nkörsbärstomat\nruccola',
-                  ''
-                );
-
-                test.modifyRecipe('toprecipe-3',
-                  721995,
-                  'Vegansk smörgåstårta',
-                  'https://www.ica.se/recept/vegansk-smorgastarta-721995/',
-                  '//www.ica.se/imagevaultfiles/id_162275/cf_5291/vegansk_smorgastarta.jpg',
-                  '4.4','23','27',
-                  'gurka\nrödlök\ncitron\nmajonnäs\ntångcaviar\npepparrot\navokado\nolivolja\nsalt\npeppar\ncitronsaft\npaprika\npeppar\nvitlöksklyfta\nsolrosfrö\nolivolja\nrödvinsvinäger\nbröd\nlandgångsbröd\nmajonnäs\nmajonnäs\ngurka\ncitron\ntångcaviar\navokado\nkörsbärstomat\närtskott',
-                  ''
-                );
-
-            } else if (/^https:\/\/www.ica.se\/recept\/sallad\/$/.test(testURL)) {
-                // https://www.ica.se/recept/tabbouleh-716342/
-                // https://www.ica.se/recept/bulgursallad-med-halloumi-och-citrusrora-716370/
-                // https://www.ica.se/recept/coleslaw/
-
-                test.modifyRecipe('toprecipe-1',
-                  716342,
-                  'Tabbouleh ',
-                  'https://www.ica.se/recept/tabbouleh-716342/',
-                  '//www.ica.se/imagevaultfiles/id_74123/cf_259/tabbouleh .jpg',
-                  '4.6','40','8',
-                  'bladpersilja\nbulgur\ngul lök\ntomat\ncitronjuice\nolivolja\nsalt\npeppar',
-                  ''
-                );
-
-                test.modifyRecipe('toprecipe-2',
-                  716370,
-                  'Bulgursallad med halloumi och citrusröra',
-                  'https://www.ica.se/recept/bulgursallad-med-halloumi-och-citrusrora-716370/',
-                  '//www.ica.se/imagevaultfiles/id_74757/cf_259/bulgursallad_med_halloumi_och_citrusrora_.jpg',
-                  '4.4','11','14',
-                  'bulgur\nrödlök\nmorot\nzucchini\nolivolja\nsalt och svartpeppar\ntimjan\nbalsamvinäger\nhalloumiost\ngurka\nkvarg\nvitlöksklyfta\ncitron\nruccola',
-                  ''
-                );
-
-                test.modifyRecipe('toprecipe-3',
-                  722114,
-                  'Klassisk coleslaw',
-                  'https://www.ica.se/recept/klassisk-coleslaw-722114/',
-                  '//www.ica.se/imagevaultfiles/id_160357/cf_259/klassisk_coleslaw.jpg',
-                  '4.2','29','8',
-                  'vitkål\nsalt\nrödvinsvinäger\nmorot\nmajonnäs\ncrème fraiche\ndijonsenap\nsvartpeppar',
-                  ''
-                );
-
-            } else if (/^https:\/\/www.ica.se\/recept\/kyckling\/gryta\/$/.test(testURL)) {
-                // https://www.ica.se/recept/flygande-jacob-717569/
-                // https://www.ica.se/recept/kramig-kycklinggryta-med-soltorkad-tomat-723346/
-                // https://www.ica.se/recept/kycklinggryta-med-dragon-och-apple-723215/
-
-                test.modifyRecipe('toprecipe-1',
-                  717569,
-                  'Flygande Jacob',
-                  'https://www.ica.se/recept/flygande-jacob-717569/',
-                  '//www.ica.se/imagevaultfiles/id_93260/cf_259/flygande_jacob.jpg',
-                  '4.4','46','10',
-                  'kycklingfilé\nolja\nsalt\npeppar\nbacon\nbanan\nmatlagningsgrädde\nchilisås\nbasmatiris\njordnöt',
-                  ''
-                );
-
-                test.modifyRecipe('toprecipe-2',
-                  723346,
-                  'Krämig kycklinggryta med soltorkad tomat',
-                  'https://www.ica.se/recept/kramig-kycklinggryta-med-soltorkad-tomat-723346/',
-                  '//www.ica.se/imagevaultfiles/id_175331/cf_259/kramig_kycklinggryta_med_soltorkad_tomat.jpg',
-                  '4.4','53','9',
-                  'ris\nkycklingfilé\nolja\nsalt\npeppar\ncrème fraiche\nkycklingbuljong\nsoltorkad tomat\nsockerärta',
-                  ''
-                );
-
-                test.modifyRecipe('toprecipe-3',
-                  723215,
-                  'Kycklinggryta med dragon och äpple',
-                  'https://www.ica.se/recept/kycklinggryta-med-dragon-och-apple-723215/',
-                  '//www.ica.se/imagevaultfiles/id_175344/cf_259/kycklinggryta_med_dragon_och_apple.jpg',
-                  '3.5','36','15',
-                  'gul lök\nvitlöksklyfta\näpple\nkycklinglårfilé\nsmör\ndragon\nsalt\npeppar\nvatten\nkycklingfond\nvispgrädde\nmajsstärkelse\ncitronskal\nmathavre\ngrönsallad',
-                  ''
-                );
-            }
+
+                        if (/^https:\/\/www.ica.se\/recept\/vardag\/$/.test(testURL)) {
+                          // /recept/vardag/
+                          // Enorm trafik - https://www.ica.se/recept/chili-con-carne-424/
+                          // Alla älskar halloumi - https://www.ica.se/recept/lasagne-med-halloumi-spenat-och-pumpakarnor-718382/
+                          // Mest poppis fiskrecept - https://www.ica.se/recept/torsk-i-ugn-med-dill-och-citronsas-719374/
+
+                          test.modifyRecipe('toprecipe-1',
+                            424,
+                            'Chili con carne',
+                            'https://www.ica.se/recept/chili-con-carne-424/',
+                            '//www.ica.se/imagevaultfiles/id_182604/cf_259/chili_con_carne.jpg',
+                            '4.2','95','15',
+                            'gul lök\nnötfärs\nolja\nchili\npaprikapulver\nsvartpeppar\nsalt\nsoja\ntomat\nböna\njalapeñopeppar\nbrytbröd\nsalladskål\npersilja\nvinägrett'
+                          );
+
+                          test.modifyRecipe('toprecipe-2',
+                            718382,
+                            'Lasagne med halloumi, spenat och pumpakärnor',
+                            'https://www.ica.se/recept/lasagne-med-halloumi-spenat-och-pumpakarnor-718382/',
+                            '//www.ica.se/imagevaultfiles/id_106734/cf_259/lasagne_med_halloumi__spenat_och_pumpakarnor.jpg',
+                            '4.7','382','16',
+                            'lök\nvitlöksklyfta\nrapsolja\nlasagneplatta\ntomatpuré\ntomat\nhonung\ngrönsaksbuljongtärning\ntimjan\nvatten\nbladspenat\nhalloumiost\npumpakärna\nprästost\nsalt\nsvartpeppar\ntimjan'
+                          );
+
+                          test.modifyRecipe('toprecipe-3',
+                            719374,
+                            'Torsk i ugn med dill- och citronsås',
+                            'https://www.ica.se/recept/torsk-i-ugn-med-dill-och-citronsas-719374/',
+                            '//www.ica.se/imagevaultfiles/id_122727/cf_259/torsk_i_ugn_med_dill-_och_citronsas.jpg',
+                            '4.5','95','9',
+                            'potatis\ntorskfilé\nsalt och peppar\nsmetana\nfiskbuljongtärning\nvatten\ndill\ncitron\nbroccoli'
+                          );
+
+                        } else if (/^https:\/\/www.ica.se\/recept\/middag\/$/.test(testURL)) {
+                          // /recept/middag/
+                          // Tacopaj - https://www.ica.se/recept/tacopaj-713200/
+                          // Höstig - https://www.ica.se/recept/risotto-med-skogschampinjoner-716952/
+                          // Fisk - https://www.ica.se/recept/lysande-gul-fiskgryta-1677/
+
+                          test.modifyRecipe('toprecipe-1',
+                            713200,
+                            'Tacopaj',
+                            'https://www.ica.se/recept/tacopaj-713200/',
+                            '//www.ica.se/imagevaultfiles/id_105941/cf_259/tacopaj.jpg',
+                            '4.2','68','11',
+                            'vetemjöl\nsmör eller margarin\nkvarg\nvatten\nnötfärs\nsmör eller margarin\ntacokrydda\nvatten\ncrème fraiche\nkörsbärstomat\nost'
+                          );
+
+                          test.modifyRecipe('toprecipe-2',
+                            716952,
+                            'Risotto med skogschampinjoner',
+                            'https://www.ica.se/recept/risotto-med-skogschampinjoner-716952/',
+                            '//www.ica.se/imagevaultfiles/id_89399/cf_259/risotto_med_skogschampinjoner.jpg',
+                            '4.8','117','11',
+                            'schalottenlök\nvitlöksklyfta\nsvampbuljong\nolivolja\narborioris\nvin\nkastanjechampinjon\nsmör\nparmesanost\nsalt\nruccola'
+                          );
+
+                          test.modifyRecipe('toprecipe-3',
+                            1677,
+                            'Lysande gul fiskgryta',
+                            'https://www.ica.se/recept/lysande-gul-fiskgryta-1677/',
+                            '//www.ica.se/imagevaultfiles/id_63144/cf_259/lysande_gul_fiskgryta.jpg',
+                            '4.6','208','19',
+                            'sej\nlaxfilé\npurjolök\ngul lök\nsmör\nvitlöksklyfta\nsalt\ntimjan\nbasilika\nvitt vin\nfiskbuljongtärning\nvispgrädde\ncrème fraiche\nvatten\nsaffran\nräka\nmussla\ntomatpuré\nbröd'
+                          );
+
+                        } else if (/^https:\/\/www.ica.se\/recept\/kyckling\/gryta\/$/.test(testURL)) {
+                          // /recept/kyckling/gryta/ (det här är samma som sist)
+                          // Oerhört poppis - https://www.ica.se/recept/flygande-jacob-717569/
+                          // Gräddig och populär - https://www.ica.se/recept/kramig-kycklinggryta-med-soltorkad-tomat-723346/
+                          // Med äpple till hösten - https://www.ica.se/recept/kycklinggryta-med-dragon-och-apple-723215/
+
+                          test.modifyRecipe('toprecipe-1',
+                            717569,
+                            'Flygande Jacob',
+                            'https://www.ica.se/recept/flygande-jacob-717569/',
+                            '//www.ica.se/imagevaultfiles/id_93260/cf_259/flygande_jacob.jpg',
+                            '4.4','46','10',
+                            'kycklingfilé\nolja\nsalt\npeppar\nbacon\nbanan\nmatlagningsgrädde\nchilisås\nbasmatiris\njordnöt',
+                            ''
+                          );
+
+                          test.modifyRecipe('toprecipe-2',
+                            723346,
+                            'Krämig kycklinggryta med soltorkad tomat',
+                            'https://www.ica.se/recept/kramig-kycklinggryta-med-soltorkad-tomat-723346/',
+                            '//www.ica.se/imagevaultfiles/id_175331/cf_259/kramig_kycklinggryta_med_soltorkad_tomat.jpg',
+                            '4.4','53','9',
+                            'ris\nkycklingfilé\nolja\nsalt\npeppar\ncrème fraiche\nkycklingbuljong\nsoltorkad tomat\nsockerärta',
+                            ''
+                          );
+
+                          test.modifyRecipe('toprecipe-3',
+                            723215,
+                            'Kycklinggryta med dragon och äpple',
+                            'https://www.ica.se/recept/kycklinggryta-med-dragon-och-apple-723215/',
+                            '//www.ica.se/imagevaultfiles/id_175344/cf_259/kycklinggryta_med_dragon_och_apple.jpg',
+                            '3.5','36','15',
+                            'gul lök\nvitlöksklyfta\näpple\nkycklinglårfilé\nsmör\ndragon\nsalt\npeppar\nvatten\nkycklingfond\nvispgrädde\nmajsstärkelse\ncitronskal\nmathavre\ngrönsallad',
+                            ''
+                          );
+
+                        } else if (/^https:\/\/www.ica.se\/recept\/vegetarisk\/$/.test(testURL)) {
+                          // /recept/vegetarisk/
+                          // Pumpa på hösten - https://www.ica.se/recept/pumpacurry-med-kikarter-och-kokosmjolk-724160/
+                          // Nytt från Buffé - https://www.ica.se/recept/savoykalsdolmar-med-svamp-724196/
+                          // Klassiker i vegotappning - https://www.ica.se/recept/vegopaella-med-rostad-paprika-zucchini-och-halloumi-724157/
+
+                          test.modifyRecipe('toprecipe-1',
+                            724160,
+                            'Pumpacurry med kikärter och kokosmjölk',
+                            'https://www.ica.se/recept/pumpacurry-med-kikarter-och-kokosmjolk-724160/',
+                            '//www.ica.se/imagevaultfiles/id_184473/cf_259/pumpacurry_med_kikarter_och_kokosmjolk.jpg',
+                            '3.5','2','18',
+                            'gul lök\nbutternutpumpa\nmorot\nkikärta\nolja\nvitlöksklyfta\ncurry\nspiskummin\nkardemumma\ngrönsaksbuljong\nkokosmjölk\nmajsstärkelse\nsalt\nsvartpeppar\nlime\nsalladslök\nbasmatiris\nkoriander'
+                          );
+
+                          test.modifyRecipe('toprecipe-2',
+                            724196,
+                            'Savoykålsdolmar med svamp',
+                            'https://www.ica.se/recept/savoykalsdolmar-med-svamp-724196/',
+                            '//www.ica.se/imagevaultfiles/id_184586/cf_259/savoykalsdolmar_med_svamp.jpg',
+                            '0','0','16',
+                            'savoykål\nvitlöksklyfta\nsvamp\nvattenkastanj\ngröna linser\nrapsolja\ningefära\njapansk soja\nsalt\nsvartpeppar\nmisopasta\nvatten\nmatfett\nlingon\nsweet chilisås\nkoriander'
+                          );
+
+                          test.modifyRecipe('toprecipe-3',
+                            724157,
+                            'Vegopaella med rostad paprika, zucchini och halloumi',
+                            'https://www.ica.se/recept/vegopaella-med-rostad-paprika-zucchini-och-halloumi-724157/',
+                            '//www.ica.se/imagevaultfiles/id_184470/cf_259/vegopaella_med_rostad_paprika__zucchini_och_halloumi.jpg',
+                            '4.3','4','11',
+                            'grönsaksbuljong\ngul lök\nvitlöksklyfta\nolivolja\navorioris\nsaffran\npaprika\nzucchini\nhalloumiost\nkörsbärstomat\nolja'
+                          );
+
+                        } else if (/^https:\/\/www.ica.se\/recept\/vegan\/$/.test(testURL)) {
+                          // /recept/vegan/
+                          // Alla älskar denna - https://www.ica.se/recept/vegansk-tomat-och-purjolokspaj-723198/
+                          // Höstigt från Buffé - https://www.ica.se/recept/savoykalsdolmar-med-svamp-724196/
+                          // Efterrätt - https://www.ica.se/recept/veganska-vafflor-724217/
+
+                          test.modifyRecipe('toprecipe-1',
+                            723198,
+                            'Vegansk tomat- och purjolökspaj',
+                            'https://www.ica.se/recept/vegansk-tomat-och-purjolokspaj-723198/',
+                            '//www.ica.se/imagevaultfiles/id_174744/cf_259/vegansk_tomat-_och_purjolokspaj.jpg',
+                            '4.3','31','15',
+                            'margarin\ndinkelmjöl\nvatten\nsalt\npurjolök\npaprika\nolivolja\nrosmarin\nsalt\nsvartpeppar\nvetemjöl\nhavregrädde\nsoltorkad tomat\nost\nkörsbärstomat'
+                          );
+
+                          test.modifyRecipe('toprecipe-2',
+                            724196,
+                            'Savoykålsdolmar med svamp',
+                            'https://www.ica.se/recept/savoykalsdolmar-med-svamp-724196/',
+                            '//www.ica.se/imagevaultfiles/id_184586/cf_259/savoykalsdolmar_med_svamp.jpg',
+                            '0','0','16',
+                            'savoykål\nvitlöksklyfta\nsvamp\nvattenkastanj\ngröna linser\nrapsolja\ningefära\njapansk soja\nsalt\nsvartpeppar\nmisopasta\nvatten\nmatfett\nlingon\nsweet chilisås\nkoriander'
+                          );
+
+                          test.modifyRecipe('toprecipe-3',
+                            724217,
+                            'Veganska våfflor',
+                            'https://www.ica.se/recept/veganska-vafflor-724217/',
+                            '//www.ica.se/imagevaultfiles/id_184453/cf_259/veganska_vafflor.jpg',
+                            '0','0','13',
+                            'vetemjöl\nhavregryn\nbakpulver\nströsocker\nvaniljsocker\nsalt\nyogoat\nmjölkdryck\nrapsolja\nblåbär\nkardemumma\nhallon\nmörk choklad'
+                          );
+
+                        } else if (/^https:\/\/www.ica.se\/recept\/cheesecake\/$/.test(testURL)) {
+                          // /recept/cheesecake/
+                          // Med Daim - https://www.ica.se/recept/daimcheesecake-722916/
+                          // Citron och mynta - https://www.ica.se/recept/cheesecake-med-citron-och-mynta-721966/
+                          // Fin variant på vanlig - https://www.ica.se/recept/fryst-cheesecakesandwich-med-blabar-722518/
+
+                          test.modifyRecipe('toprecipe-1',
+                            722916,
+                            'Daimcheesecake',
+                            'https://www.ica.se/recept/daimcheesecake-722916/',
+                            '//www.ica.se/imagevaultfiles/id_172407/cf_259/daimcheesecake.jpg',
+                            '4.4','18','12',
+                            'smör\noreokaka\nvispgrädde\nvaniljsocker\näggvita\näggula\nströsocker\nfärskost\ndaimkula\noreokaka\nhallon\ndaimkula'
+                          );
+
+                          test.modifyRecipe('toprecipe-2',
+                            721966,
+                            'Cheesecake med citron och mynta',
+                            'https://www.ica.se/recept/cheesecake-med-citron-och-mynta-721966/',
+                            '//www.ica.se/imagevaultfiles/id_159833/cf_259/cheesecake_med_citron_och_mynta.jpg',
+                            '4.4','25','13',
+                            'kardemumma\ndigestivekex\nsmör\nsocker\nfärskost\ncrème fraiche\nströsocker\nägg\ncitronskal\nmynta\njordgubbe\nmynta\nflorsocker'
+                          );
+
+                          test.modifyRecipe('toprecipe-3',
+                            722518,
+                            'Fryst cheesecakesandwich med blåbär',
+                            'https://www.ica.se/recept/fryst-cheesecakesandwich-med-blabar-722518/',
+                            '//www.ica.se/imagevaultfiles/id_165614/cf_259/fryst_cheesecakesandwich_med_blabar.jpg',
+                            '4.2','9','7',
+                            'digestivekex\ncashewnöt\nsmör\nkondenserad mjölk\nfärskost\nblåbär\nvaniljpulver'
+                          );
+
+                        } else if (/^https:\/\/www.ica.se\/recept\/fisk\/soppa\/$/.test(testURL)) {
+                          // /recept/fisk/soppa/
+                          // Poppis - https://www.ica.se/recept/fiskarhustruns-fisksoppa-3760/
+                          // Krämig - https://www.ica.se/recept/kramig-fiskgryta-722195/
+                          // Klassiker - https://www.ica.se/recept/bouillabaisse-med-apelsinaioli-och-ortkrutonger-714535/
+
+                          test.modifyRecipe('toprecipe-1',
+                            3760,
+                            'Fiskarhustruns fisksoppa',
+                            'https://www.ica.se/recept/fiskarhustruns-fisksoppa-3760/',
+                            '//www.ica.se/imagevaultfiles/id_73537/cf_259/fiskarhustruns_fisksoppa.jpg',
+                            '4.5','112','10',
+                            'fiskfilé\nlök\nsmör\ntomat\nfiskbuljong\nvitt vin\ntimjan\nräka\nvispgrädde\ndill'
+                          );
+
+                          test.modifyRecipe('toprecipe-2',
+                            722195,
+                            'Krämig fiskgryta',
+                            'https://www.ica.se/recept/kramig-fiskgryta-722195/',
+                            '//www.ica.se/imagevaultfiles/id_160675/cf_259/kramig_fiskgryta.jpg',
+                            '4.3','66','14',
+                            'potatis\nmorot\npurjolök\nolja\nmajsstärkelse\nvispgrädde\nvatten\nfiskbuljongtärning\nmjölk\npaprika\nlax\nsalt\ncayennepeppar\ngräslök'
+                          );
+
+                          test.modifyRecipe('toprecipe-3',
+                            714535,
+                            'Bouillabaisse med apelsinaioli och örtkrutonger',
+                            'https://www.ica.se/recept/bouillabaisse-med-apelsinaioli-och-ortkrutonger-714535/',
+                            '//www.ica.se/imagevaultfiles/id_46830/cf_259/bouillabaisse_med_apelsinaioli_och_ortkrutonger.jpg',
+                            '4.7','27','20',
+                            'laxtärning\ngul lök\nvitlöksklyfta\nfänkål\npotatis\nolja\nsaffran\ntomatpuré\nfiskbuljong\ntimjan\nformbröd\nkräftstjärt\nsalt och peppar\ndill\näggula\nvitlöksklyfta\nvitvinsvinäger\nrapsolja\nsalt och peppar\napelsinskal'
+                          );
+
+                        } else if (/^https:\/\/www.ica.se\/recept\/soppa\/$/.test(testURL)) {
+                          // /recept/soppa/
+                          // Ny från Buffé - https://www.ica.se/recept/minestronesoppa-pa-sasongens-skord-724190/
+                          // Alltid poppis - https://www.ica.se/recept/morotssoppa-med-kokos-722533/
+                          // Enkel och populär - https://www.ica.se/recept/busenkel-broccolisoppa-712859/
+
+                          test.modifyRecipe('toprecipe-1',
+                            724190,
+                            'Minestronesoppa på säsongens skörd',
+                            'https://www.ica.se/recept/minestronesoppa-pa-sasongens-skord-724190/',
+                            '//www.ica.se/imagevaultfiles/id_184550/cf_259/minestronesoppa_pa_sasongens_skord.jpg',
+                            '4.7','3','16',
+                            'gul lök\nvitlöksklyfta\nbutternutpumpa\nsavoykål\nsidfläsk\nolivolja\nvatten\ngrönsaksbuljongtärning\ntomat\ntimjan\nlagerblad\npasta\nsalt\nsvartpeppar\nborlottibönor\nparmesanost'
+                          );
+
+                          test.modifyRecipe('toprecipe-2',
+                            722533,
+                            'Morotssoppa med kokos',
+                            'https://www.ica.se/recept/morotssoppa-med-kokos-722533/',
+                            '//www.ica.se/imagevaultfiles/id_166009/cf_259/morotssoppa_med_kokos.jpg',
+                            '4.6','84','14',
+                            'olivolja\ngul lök\nvitlöksklyfta\nmorot\nspiskummin\ningefära\nchiliflakes\nkokosmjölk\ngrönsaksfond\nvatten\nlimejuice\nsalt\nsvartpeppar\npumpafrö'
+                          );
+
+                          test.modifyRecipe('toprecipe-3',
+                            712859,
+                            'Busenkel broccolisoppa',
+                            'https://www.ica.se/recept/busenkel-broccolisoppa-712859/',
+                            '//www.ica.se/imagevaultfiles/id_79915/cf_259/busenkel_broccolisoppa.jpg',
+                            '4.2','103','8',
+                            'lök\npotatis\nbroccoli\ngrönsaksbuljong\nmatlagningsgrädde\nsalt och peppar\nbröd\nkräftstjärt'
+                          );
+
+                        } else if (/^https:\/\/www.ica.se\/recept\/smoothie\/$/.test(testURL)) {
+                          // /recept/smoothie/
+                          // Grön - https://www.ica.se/recept/vitaminsmoothie-723918/
+                          // Bowl- https://www.ica.se/recept/nordisk-smoothie-bowl-719518/
+                          // Snickers! Från senaste Buffé - https://www.ica.se/recept/snickerssmoothie-724025/
+
+                          test.modifyRecipe('toprecipe-1',
+                            723918,
+                            'Vitaminsmoothie',
+                            'https://www.ica.se/recept/vitaminsmoothie-723918/',
+                            '//www.ica.se/imagevaultfiles/id_181240/cf_259/vitaminsmoothie.jpg',
+                            '4.4','8','9',
+                            'avokado\nkokosdryck\nbabyspenat\ningefära\ncitron\nmango\nkokosolja\nagavesirap\nkokos'
+                          );
+
+                          test.modifyRecipe('toprecipe-2',
+                            719518,
+                            'Nordisk smoothie bowl',
+                            'https://www.ica.se/recept/nordisk-smoothie-bowl-719518/',
+                            '//www.ica.se/imagevaultfiles/id_124628/cf_259/nordisk_smoothie_bowl.jpg',
+                            'betyg','röster','ingredienser',
+                            'ingredienslista'
+                          );
+
+                          test.modifyRecipe('toprecipe-3',
+                            724025,
+                            'Snickerssmoothie',
+                            'https://www.ica.se/recept/snickerssmoothie-724025/',
+                            '//www.ica.se/imagevaultfiles/id_182994/cf_259/snickerssmoothie.jpg',
+                            '4.9','11','10',
+                            'banan\nkakao\njordnötssmör\nvaniljpulver\nmandeldryck\ndadel\nmandeldryck\nvaniljpulver\njordnöt\nkakaonibs'
+                          );
+
+                        } else if (/^https:\/\/www.ica.se\/recept\/karljohan\/$/.test(testURL)) {
+                          // /recept/karljohan/
+                          // På pizza - https://www.ica.se/recept/pizza-bianco-med-skogssvamp-och-folke-722884/
+                          // Med renskav - https://www.ica.se/recept/renskav-med-karljohan-senap-och-enbar-717903/
+                          // I soppa - https://www.ica.se/recept/karljohansvampsoppa-med-balsamvinager-551641/
+
+                          test.modifyRecipe('toprecipe-1',
+                            722884,
+                            'Pizza bianco med skogssvamp och Folke',
+                            'https://www.ica.se/recept/pizza-bianco-med-skogssvamp-och-folke-722884/',
+                            '//www.ica.se/imagevaultfiles/id_170368/cf_259/pizza_bianco_med_skogssvamp_och_folke_.jpg',
+                            '4.6','8','10',
+                            'karljohanssvamp\nkastanjechampinjon\nsmör\nsalt och peppar\nvitlöksklyfta\npizzabotten\ncrème fraiche\ntimjan\nost\nhasselnöt'
+                          );
+
+                          test.modifyRecipe('toprecipe-2',
+                            717903,
+                            'Renskav med karljohan, senap och enbär',
+                            'https://www.ica.se/recept/renskav-med-karljohan-senap-och-enbar-717903/',
+                            '//www.ica.se/imagevaultfiles/id_103916/cf_259/renskav_med_karljohan__senap_och_enbar.jpg',
+                            '4.6','8','14',
+                            'renskav\nkarljohanssvamp\nrödlök\nenbär\nmatolja\nköttbuljong\nfärskost\ndijonsenap\nhonung\nmajsstärkelse\nsmör\nsalt och svartpeppar\npotatismos\nlingon'
+                          );
+
+                          test.modifyRecipe('toprecipe-3',
+                            551641,
+                            'Karljohansvampsoppa med balsamvinäger',
+                            'https://www.ica.se/recept/karljohansvampsoppa-med-balsamvinager-551641/',
+                            '//www.ica.se/imagevaultfiles/id_16141/cf_259/karljohansvampsoppa_med_balsamvinager.jpg',
+                            '2.9','40','9',
+                            'karljohanssvamp\nschalottenlök\nolivolja\nsvampbuljong\nmjölk\nmatlagningsgrädde\nbalsamvinäger\nsalt\nört'
+                          );
+
+                        } else if (/^https:\/\/www.ica.se\/recept\/vasterbottensost\/paj\/$/.test(testURL)) {
+                          // /recept/vasterbottensost/paj/
+                          // Finaste pajen - https://www.ica.se/recept/vasterbottensostpaj-med-spenat-och-jordartskocka-721584/
+                          // Glutenfri - https://www.ica.se/recept/glutenfri-vasterbottenpaj-723680/
+                          // Enkel - https://www.ica.se/recept/enkel-vasterbottenpaj-med-smordeg-723666/
+
+                          test.modifyRecipe('toprecipe-1',
+                            721584,
+                            'Västerbottensostpaj med spenat och jordärtskocka',
+                            'https://www.ica.se/recept/vasterbottensostpaj-med-spenat-och-jordartskocka-721584/',
+                            '//www.ica.se/imagevaultfiles/id_157919/cf_259/vasterbottensostpaj_med_spenat_och_jordartskocka.jpg',
+                            '4.3','13','14',
+                            'smör\nvetemjöl\nvatten\nlök\njordärtskocka\nolja\nsalt och svartpeppar\nVästerbottensost\nägg\nbabyspenat\nmatlagningsgrädde\nsalt\nsvartpeppar\nsallad'
+                          );
+
+                          test.modifyRecipe('toprecipe-2',
+                            723680,
+                            'Glutenfri västerbottenpaj',
+                            'https://www.ica.se/recept/glutenfri-vasterbottenpaj-723680/',
+                            '//www.ica.se/imagevaultfiles/id_180675/cf_259/glutenfri_vasterbottenpaj.jpg',
+                            '3.5','4','11',
+                            'mjölmix\nsmör\nkvarg\nvatten\nägg\nvispgrädde\nmjölk\nsalt\nsvartpeppar\nVästerbottensost\nsallad'
+                          );
+
+                          test.modifyRecipe('toprecipe-3',
+                            723666,
+                            'Enkel västerbottenpaj med smördeg',
+                            'https://www.ica.se/recept/enkel-vasterbottenpaj-med-smordeg-723666/',
+                            '//www.ica.se/imagevaultfiles/id_180740/cf_259/enkel_vasterbottenpaj_med_smordeg.jpg',
+                            '4.8','9','8',
+                            'smördeg\nägg\nvispgrädde\nmjölk\nsalt\nsvartpeppar\nVästerbottensost\nsallad'
+                          );
+
+                        } else if (/^https:\/\/www.ica.se\/recept\/kraftskiva\/$/.test(testURL)) {
+                          // /recept/kraftskiva/
+                          // Klassiker - https://www.ica.se/recept/vasterbottensostpaj-med-kantareller-och-lojrom-722432/
+                          // Kräftbröd - https://www.ica.se/recept/kraftbrod-med-ost-och-dill-720878/
+                          // Potatisaioli - https://www.ica.se/recept/potatisaioli-med-sesam-och-chili-720877/
+
+                          test.modifyRecipe('toprecipe-1',
+                            722432,
+                            'Västerbottensostpaj med kantareller och löjrom',
+                            'https://www.ica.se/recept/vasterbottensostpaj-med-kantareller-och-lojrom-722432/',
+                            '//www.ica.se/imagevaultfiles/id_164592/cf_259/vasterbottensostpaj_med_kantareller_och_lojrom.jpg',
+                            '5.0','4','16',
+                            'smör\nfilodeg\nkantarell\nsmör\nvitlöksklyfta\nschalottenlök\nVästerbottensost\ntryffelolja\nägg\ngrädde\nmjölk\nsalt\nsvartpeppar\ndill\ngräddfil\nlöjrom'
+                          );
+
+                          test.modifyRecipe('toprecipe-2',
+                            720878,
+                            'Kräftbröd med ost och dill',
+                            'https://www.ica.se/recept/kraftbrod-med-ost-och-dill-720878/',
+                            '//www.ica.se/imagevaultfiles/id_142539/cf_259/kraftbrod_med_ost_och_dill.jpg',
+                            '2.8','6','9',
+                            'jäst\nvatten\nvetemjöl\ndinkelmjöl\nsalt\nost\ndill\noliv\nägg'
+                          );
+
+                          test.modifyRecipe('toprecipe-3',
+                            720877,
+                            'Potatisaioli med sesam och chili',
+                            'https://www.ica.se/recept/potatisaioli-med-sesam-och-chili-720877/',
+                            '//www.ica.se/imagevaultfiles/id_142598/cf_259/potatisaioli_med_sesam_och_chili.jpg',
+                            '4.5','2','9',
+                            'potatis\näggula\nvitlöksklyfta\nsambal oelek\ncitronjuice\nsesamolja\nrapsolja\nsalt\nsvartpeppar'
+                          );
+
+                        } else if (/^https:\/\/www.ica.se\/recept\/potatis\/sallad\/$/.test(testURL)) {
+                          // /recept/potatis/sallad/
+                          // Grundrecept - https://www.ica.se/recept/grundrecept-potatissallad-722110/
+                          // Med äpple - https://www.ica.se/recept/potatissallad-med-pepparrot-och-apple-722108/
+                          // Varm rostad - https://www.ica.se/recept/rostad-fransk-potatissallad-med-dragon-720634/
+
+                          test.modifyRecipe('toprecipe-1',
+                            722110,
+                            'Grundrecept potatissallad',
+                            'https://www.ica.se/recept/grundrecept-potatissallad-722110/',
+                            '//www.ica.se/imagevaultfiles/id_160295/cf_259/grundrecept_potatissallad.jpg',
+                            '4.3','6','8',
+                            'färskpotatis\nsalladslök\nsaltgurka\ngräddfil\nmajonnäs\ndijonsenap\nkapris\nsalt och svartpeppar'
+                          );
+
+                          test.modifyRecipe('toprecipe-2',
+                            722108,
+                            'Potatissallad med pepparrot och äpple',
+                            'https://www.ica.se/recept/potatissallad-med-pepparrot-och-apple-722108/',
+                            '//www.ica.se/imagevaultfiles/id_160299/cf_259/potatissallad_med_pepparrot_och_apple.jpg',
+                            '4.8','12','12',
+                            'potatis\nsalladslök\ngräslök\nrädisa\npepparrot\nsaltgurka\näpple\ngräddfil\nmajonnäs\ndijonsenap\nkapris\nsalt och svartpeppar'
+                          );
+
+                          test.modifyRecipe('toprecipe-3',
+                            720634,
+                            'Rostad fransk potatissallad med dragon',
+                            'https://www.ica.se/recept/rostad-fransk-potatissallad-med-dragon-720634/',
+                            '//www.ica.se/imagevaultfiles/id_139436/cf_259/rostad_fransk_potatissallad_med_dragon.jpg',
+                            '4.7','31','13',
+                            'färskpotatis\nolivolja\nflingsalt\npeppar\nkapris\nschalottenlök\nbladpersilja\ndragon\nrödvinsvinäger\ndijonsenap\nrapsolja\nsalt\npeppar'
+                          );
+
+                        } else if (/^https:\/\/www.ica.se\/recept\/zucchini\/$/.test(testURL)) {
+                          // /recept/zucchini/
+                          // Zucchiniplättar - https://www.ica.se/recept/zucchiniplattar-med-fetaost-och-dill-720960/
+                          // Paella - https://www.ica.se/recept/vegopaella-med-rostad-paprika-zucchini-och-halloumi-724157/
+                          // I en kaka - https://www.ica.se/recept/morots-och-zucchinikaka-723834/
+
+                          test.modifyRecipe('toprecipe-1',
+                            720960,
+                            'Zucchiniplättar med fetaost och dill',
+                            'https://www.ica.se/recept/zucchiniplattar-med-fetaost-och-dill-720960/',
+                            '//www.ica.se/imagevaultfiles/id_142923/cf_259/zucchiniplattar_med_fetaost_och_dill.jpg',
+                            '4.3','184','11',
+                            'zucchini\nsalladslök\nfetaost\nvetemjöl\nägg\ndill\nsalt\nsvartpeppar\nolja\nmatlagningsyoghurt\nvitlök'
+                          );
+
+                          test.modifyRecipe('toprecipe-2',
+                            724157,
+                            'Vegopaella med rostad paprika, zucchini och halloumi',
+                            'https://www.ica.se/recept/vegopaella-med-rostad-paprika-zucchini-och-halloumi-724157/',
+                            '//www.ica.se/imagevaultfiles/id_184470/cf_259/vegopaella_med_rostad_paprika__zucchini_och_halloumi.jpg',
+                            '4.3','4','11',
+                            'grönsaksbuljong\ngul lök\nvitlöksklyfta\nolivolja\navorioris\nsaffran\npaprika\nzucchini\nhalloumiost\nkörsbärstomat\nolja'
+                          );
+
+                          test.modifyRecipe('toprecipe-3',
+                            723834,
+                            'Morots- och zucchinikaka',
+                            'https://www.ica.se/recept/morots-och-zucchinikaka-723834/',
+                            '//www.ica.se/imagevaultfiles/id_181458/cf_259/morots-_och_zucchinikaka_.jpg',
+                            '5.0','1','14',
+                            'zucchini\nmorot\nolivolja\nlimeskal\nrörsocker\nägg\nvetemjöl\nbakpulver\nkanel\nflingsalt\nfärskost\nflorsocker\nlimeskal\nlimejuice'
+                          );
+
+                        }
 
             window.onpopstate = function(event) {
               if (/^https:\/\/www.ica.se\/recept\/.*:search=.*$/.test(testURL)) {

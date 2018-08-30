@@ -10,9 +10,16 @@
 .cro .recipe .yellow-stars .votes,
 .cro .recipes .mdsa article .content .votes.small,
 .cro .recipe .recipe-info li,
-.cro .grid_fluid.banner-area {
+.cro .grid_fluid.banner-area,
+.cro .grid_fluid.top-puff-area,
+.cro .active-filter-display {
   display: none;
 }
+
+
+
+
+
 
 .cro h1 .mini-title,
 .cro h1 + p,
@@ -42,29 +49,31 @@
   text-transform: lowercase;
 }
 
-.cro .recipes .mdsa article {
+.cro #recipes article {
   position: relative;
+  display: flex;
+  align-items: center;
 }
-.cro .recipes .mdsa article::before {
+.cro #recipes article::before {
   top:0;
   left:0 !important;
   right:0 !important;
 }
 
-.cro .recipes .mdsa:not(.thumb-view) article .column {
+.cro #recipes:not(.thumb-view) article .column {
   min-width: 140px;
 }
 
-.cro .recipes .mdsa:not(.thumb-view) article h2 a {
+.cro #recipes:not(.thumb-view) article h2 a {
   font-size: 30px;
   line-height: 1.1;
   font-weight: normal;
   margin-bottom: 1em;
 }
 
-.cro .recipe header {
+.cro #recipes .recipe header {
   margin: 5px 50px 10px 0;
-  max-width: 400px;
+  max-width: 440px;
 }
 
 .cro .recipe .recipe-info li.md_lte_hidden {
@@ -243,6 +252,7 @@
 
 .toprecipes-list-wrapper {
   display: flex;
+  flex: 1 1 0;
   padding:0 10px 30px;
   /*background: #f5faf4;*/
 }
@@ -287,17 +297,16 @@
   line-height: 1.4em;
 }
 
-.cro .recipes .mdsa article figure {
-  padding-bottom: 60%;
-}
-
 .cro .toprecipes-list .recipe .recipe-info li.md_lte_hidden {
   margin-top: 8px;
 }
 
 
 @media only screen and (min-width: 980px) {
-  .cro .grid_fluid .column.xl_size16of20 {
+  .cro .recipes .mdsa article figure {
+    padding-bottom: 60%;
+  }
+  .cro .toprecipes-list-wrapper.grid_fluid .column.xl_size16of20 {
     width: 80%;
   }
   .cro .recipes .toprecipes-list.mdsa:not(.thumb-view) article h2 a {
@@ -318,7 +327,7 @@
 }
 
 @media only screen and (max-width: 767px) {
-  .cro .recipes .mdsa:not(.thumb-view) article h2 a {
+  .cro #recipes:not(.thumb-view) article h2 a {
     font-size: 24px;
   }
 }
@@ -366,7 +375,7 @@
     padding: 0 4px 0 0;
     border-left: none;
   }
-  .cro .recipes .mdsa:not(.thumb-view) article h2 a {
+  .cro #recipes:not(.thumb-view) article h2 a {
     font-size: 16px;
   }
   .cro .recipe header {
