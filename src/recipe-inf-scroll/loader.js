@@ -12,17 +12,12 @@
 'use strict';
 
 function init() {
-  var css = '.classname { visibility: hidden; }';
-  var style = document.createElement('style');
   var script = document.createElement('script');
   var head = document.querySelector('head');
 
   script.setAttribute('async', '');
-  script.setAttribute('src', 'https://cdn.rawgit.com/icacro/icacro/v1.0.176/src/recipe-toggle-ingredients/variant.min.js');
+  script.setAttribute('src', 'https://cdn.rawgit.com/icacro/icacro/v1.0.242/src/recipe-inf-scroll/variant.3.min.js');
 
-  style.appendChild(document.createTextNode(css));
-
-  head.appendChild(style);
   head.appendChild(script);
 }
 init();
