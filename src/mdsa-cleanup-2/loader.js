@@ -18,7 +18,7 @@ function init() {
   var head = document.querySelector('head');
 
   script.setAttribute('async', '');
-  script.setAttribute('src', 'https://cdn.rawgit.com/icacro/icacro/v1.0.198/src/mdsa-cleanup/variant.min.js');
+  script.setAttribute('src', 'https://cdn.rawgit.com/icacro/icacro/v1.0.240/src/mdsa-cleanup-2/variant.min.js');
 
   style.appendChild(document.createTextNode(css));
 

@@ -12,7 +12,8 @@
 .cro .recipe .recipe-info li,
 .cro .grid_fluid.banner-area,
 .cro .grid_fluid.top-puff-area,
-.cro .active-filter-display {
+.cro .active-filter-display,
+.cro .active-filter-display[data-activefilters] {
   display: none;
 }
 
@@ -264,6 +265,7 @@
 
 .cro .toprecipes-list .toprecipes-list-wrapper article {
   flex: 0 0 33.3%;
+  max-width: 33.3%;
   padding: 0 10px;
 }
 
@@ -353,6 +355,7 @@
 @media only screen and (max-width: 500px) {
   .cro .toprecipes-list .toprecipes-list-wrapper article {
     flex: 0 0 50%;
+    max-width: 50%;
   }
   .cro #content #toprecipe-3 {
     display: none;
