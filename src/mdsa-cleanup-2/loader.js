@@ -12,13 +12,13 @@
 'use strict';
 
 function init() {
-  var css = '.mdsa-main-grid .right-content, .grid_fluid.banner-area {display:none;} #content, .recipes article footer {visibility:hidden;}';
+  var css = '.mdsa-main-grid .right-content, .grid_fluid.banner-area, .grid_fluid.top-puff-area, .active-filter-display {display:none;} #content, .recipes article footer {visibility:hidden;}';
   var style = document.createElement('style');
   var script = document.createElement('script');
   var head = document.querySelector('head');
 
   script.setAttribute('async', '');
-  script.setAttribute('src', 'https://cdn.rawgit.com/icacro/icacro/v1.0.198/src/mdsa-cleanup/variant.min.js');
+  script.setAttribute('src', 'https://cdn.rawgit.com/icacro/icacro/v1.0.240/src/mdsa-cleanup-2/variant.min.js');
 
   style.appendChild(document.createTextNode(css));
 

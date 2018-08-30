@@ -11,7 +11,7 @@
 
 import { CROUTIL, ELM } from '../util/main';
 import { triggerHotJar, gaPush } from '../util/utils';
-import './style.css';
+import './style-iframe.css';
 import recipe from './recipe.js';
 
 const maxlength = 25;
