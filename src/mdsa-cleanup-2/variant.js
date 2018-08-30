@@ -9,32 +9,6 @@
 
 'use strict';
 
-///
-/// OBS! TRACKING
-///
-///
-///
-/// OBS! TRACKING
-///
-///
-///
-/// OBS! TRACKING
-///
-///
-///
-/// OBS! TRACKING
-///
-///
-///
-/// OBS! TRACKING
-///
-///
-///
-/// OBS! TRACKING
-///
-///
-
-
 import { CROUTIL, ELM } from '../util/main';
 import { gaPush } from '../util/utils';
 import './style.css';
@@ -84,6 +58,27 @@ const test = {
       }
     }
 
+    let testURL = window.location.href;
+    if (testURL.indexOf('#:') > 0) {
+      testURL = testURL.slice(0,testURL.indexOf('#:'));
+    }
+
+    if ((/^https:\/\/www.ica.se\/recept\/vardag\/$/.test(testURL))
+      || (/^https:\/\/www.ica.se\/recept\/middag\/$/.test(testURL))
+      || (/^https:\/\/www.ica.se\/recept\/kyckling\/gryta\/$/.test(testURL))
+      || (/^https:\/\/www.ica.se\/recept\/vegetarisk\/$/.test(testURL))
+      || (/^https:\/\/www.ica.se\/recept\/vegan\/$/.test(testURL))
+      || (/^https:\/\/www.ica.se\/recept\/cheesecake\/$/.test(testURL))
+      || (/^https:\/\/www.ica.se\/recept\/fisk\/soppa\/$/.test(testURL))
+      || (/^https:\/\/www.ica.se\/recept\/soppa\/$/.test(testURL))
+      || (/^https:\/\/www.ica.se\/recept\/smoothie\/$/.test(testURL))
+      || (/^https:\/\/www.ica.se\/recept\/karljohan\/$/.test(testURL))
+      || (/^https:\/\/www.ica.se\/recept\/vasterbottensost\/paj\/$/.test(testURL))
+      || (/^https:\/\/www.ica.se\/recept\/kraftskiva\/$/.test(testURL))
+      || (/^https:\/\/www.ica.se\/recept\/potatis\/sallad\/$/.test(testURL))
+      || (/^https:\/\/www.ica.se\/recept\/zucchini\/$/.test(testURL))) {
+
+        gaPush({ eventAction: 'Recept, 3 utvalda', eventLabel: 'Laddat ' + testURL.slice(testURL.indexOf('recept'),testURL.length) });
 
         const recipeHeader = ELM.get('#recipe-header');
 
@@ -105,11 +100,6 @@ const test = {
             ELM.get('.recipes').appendFirst(toprecipesList);
             if (ELM.get('.grid_fluid.banner-area').exist()) {
               ELM.get('.grid_fluid.banner-area').remove();
-            }
-
-            let testURL = window.location.href;
-            if (testURL.indexOf('#:') > 0) {
-              testURL = testURL.slice(0,testURL.indexOf('#:'));
             }
 
 
@@ -590,7 +580,7 @@ const test = {
 
           }
 
-        // }
+        }
 
       },
 
