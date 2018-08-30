@@ -36,3 +36,7 @@
 .cro .breadcrumb li:last-child::after {
   border : 0;
 }
+.cro span.cooking-time {
+ padding-left: 20px;
+ font-size: 14px;
+}
