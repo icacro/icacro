@@ -10,13 +10,16 @@
 }
 .cro ul.breadcrumb {
   padding-left: 0px;
-  width: 60%;
+  width: 45vw;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  padding-left: 10px;
+  text-transform: none;
 }
 .cro .breadcrumb li {
   display: inline;
+  color: #808283;
 }
 .cro .breadcrumb li a {
   text-decoration: none;
@@ -42,4 +45,7 @@
 .cro span.cooking-time {
  padding-left: 20px;
  font-size: 14px;
+}
+.cro .rating-stars {
+  margin-right: 0 !important;
 }

@@ -143,8 +143,9 @@ const test = {
 			if(level > 0){
 				url += "/recept/" + urlPart;
 			}
+      var content = level < 3 ? "<a href='" + url + "'>" + title + "</a>" : title;
 			//title = level > 0 ? " / " + title : title;
-			return $("<li/>").append("<a href='" + url + "'>" + title + "</a>");
+			return $("<li/>").append(content);
 		},
     getRecipeInfo() {
 			// get information about current recipe
@@ -176,11 +177,14 @@ const test = {
 
     // add elements
     var $header = $("div.col-12.recipe-meta.recipe-meta--header");
-    $header.css("visibility", "hidden");
+    var cookingTime = $header.text().trim();
+    //$header.css("visibility", "hidden");
+    $header.text("");
+    $header.append($div);
 
-    $header.parent().prepend($div);
+    //$header.parent().prepend($div);
 
-    $(".recipe-header").append("<span class='cooking-time'>" + $header.text().trim() + "</span>");
+    $(".recipe-header").append("<span class='cooking-time'>" + cookingTime + "</span>");
   }
 };
 
