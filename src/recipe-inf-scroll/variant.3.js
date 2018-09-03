@@ -17,18 +17,20 @@ import recipe from './recipe.js';
 const maxlength = 25;
 const pageWrapper = ELM.get('#page-wrapper');
 let recipesArr = [];
-let nextPage,currentPage,nextUrl;
+let nextPageEl,currentPageEl,nextUrl,pageCount;
 
 const test = {
 
   manipulateDom() {
     const currentUrl = window.location.pathname;
-    const page = ELM.get('#page');
-    const pageNext = page;
-    page.attr('data-count',1);
+    currentPageEl = ELM.get('#page');
+    nextPageEl = currentPageEl;
+
+    currentPageEl.attr('data-count',1).css('page-active');
     recipesArr.push(currentUrl);
     test.addLoadingArea();
-    test.gotoPage(pageNext,page,currentUrl);
+    test.gotoPage(currentPageEl,nextPageEl,currentUrl);
+
   },
 
   addLoadingArea() {
@@ -53,67 +55,60 @@ const test = {
     }
   },
 
-  gotoPage(pageNext,page,currentUrl) {
-    currentPage = pageNext;
-    const prevPage = page;
+  gotoPage(currentPageEl,nextPageEl,currentUrl) {
+
+    const prevPage = currentPageEl;
     const pages = document.querySelectorAll('.page');
-    const pageCount = pages.length;
-    const pagePosition = currentPage.offsetTop;
+    const pagePosition = currentPageEl.offsetTop;
     const svg = '<svg><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/Assets/icons/sprite.svg#arrow-down"></use></svg>';
     const arrow = '<div class="svg"><svg width="32px" height="32px"><use xlink:href="/Assets/icons/symbols.svg#arrow-down"></use></svg><span class="loader"></span></div>';
-    const urlParts = currentUrl.split('/');
-    const nameParts = urlParts[2].split('-');
-    const recipeId = nameParts[nameParts.length - 1];
+
+    const recipeId = test.getRecipeId(currentUrl);
+
     let pageType;
+
+    pageCount = pages.length;
+
     if (pageCount >= maxlength) {
       //no more scrolling
       document.getElementById('footer').classList.add('visible');
     } else {
-      if (currentPage.attr('id') === 'page') {
+      if (currentPageEl.attr('id') === 'page') {
         pageType = 'start';
-        test.addNext(currentPage,currentUrl,pageCount,recipeId,prevPage,pagePosition);
+        currentPageEl.attr('data-id',recipeId);
+        nextPageEl = test.addNext(currentPageEl,currentUrl,pageCount,recipeId,prevPage,pagePosition,pageType);
       } else {
         pageType = 'iframe';
         const title = 'temp';
         test.addLoadingArea();
-        test.addNext(currentPage,currentUrl,pageCount,recipeId,prevPage,pagePosition);
+        nextPageEl = test.addNext(currentPageEl,currentUrl,pageCount,recipeId,prevPage,pagePosition,pageType);
       }
     }
-  },
-
-  addNext(currentPage,currentUrl,pageCount,recipeId,prevPage) {
-
-    test.buildRecipeArr(currentPage.attr('id'));
-
-    nextUrl = recipesArr[recipesArr.indexOf(currentUrl)+1];
-    nextPage = ELM.create('iframe page recipe-scroll loading').attr('src',nextUrl).attr('id','page-' + pageCount).attr('name','recipe-scroll').attr('data-id',recipeId);
-
-    //dölj så länge loading-klassen finns - bevaka när cro-frame slagit in och ta bort den
-
-    pageWrapper.append(nextPage);
-
-    // if (currentPage !== prevPage) {
-    //   //meaning "not first page" - fix id:s,attrs,url etc
-    //   //currentPage.attr('id','page');
-    //   //prevPage.attr('id','page-' + prevPage.attr('data-count'));
-    //   //test.changeURL(pagePosition,title,currentUrl);
-    //   currentPage.attr('data-count',pageCount);
-    //   currentPage.attr('data-href',currentUrl);
-    // } else {
-    //   //first page
-    //   currentPage.attr('data-count','1');
-    //   currentPage.attr('data-href',currentUrl);
-    // }
 
     $(window).on('scroll', _.debounce(function() {
-      test.scrollListener(nextPage,nextUrl,currentPage,pageCount);
-    }, 200));
+      test.scrollListener(nextPageEl,nextUrl,currentPageEl);
+    }, 10));
 
-    // $('body').on('click','.page .loading-area.added .loading-area-title', function() {
-    //   const elem = $(this).closest('.page').next().attr('id');
-    //   test.scrollToElement(elem);
-    // });
+  },
 
+  addNext(currentPageEl,currentUrl,pageCount,recipeId) {
+
+    test.buildRecipeArr(currentPageEl.attr('id'));
+
+    nextUrl = recipesArr[recipesArr.indexOf(currentUrl)+1];
+    nextPageEl = ELM.create('iframe page recipe-scroll loading').attr('src',nextUrl).attr('id','page-' + pageCount).attr('name','recipe-scroll').attr('data-id',recipeId);
+
+    pageWrapper.append(nextPageEl);
+
+    return nextPageEl;
+
+  },
+
+  getRecipeId(currentUrl) {
+    const urlParts = currentUrl.split('/');
+    const nameParts = urlParts[2].split('-');
+    const recipeId = nameParts[nameParts.length - 1];
+    return recipeId;
   },
 
   removeDuplicates(recipesArr){
@@ -169,31 +164,27 @@ const test = {
     }
   },
 
-  scrollListener(nextPage,nextUrl,currentPage,pageCount,loadingArea) {
-    if (document.getElementById('page')) {
-     const cur = document.getElementById('page');
-     const pageHeight = cur.offsetHeight;
-     const startPos = cur.offsetTop - 70;
-     const endPos = startPos + pageHeight - 300;
-     const currentPos = window.pageYOffset + window.innerHeight;
-     if (currentPos < startPos) {
-       //activate previous page
-       test.goToPrevPage(cur);
-     } else if (currentPos > endPos) {
-       if(window.scrollY + window.innerHeight >= document.body.scrollHeight - 300) {
-         if (!nextPage.hasClass('added')) {
-           nextPage.css('added');
-           window.setTimeout(function () {
+  scrollListener(nextPageEl,nextUrl,currentPage) {
+    if (document.querySelector('.page-active')) {
+      const cur = document.querySelector('.page-active');
+      const pageHeight = cur.offsetHeight;
+      const startPos = cur.offsetTop;
+      const endPos = startPos + pageHeight + (window.innerHeight * 0.4);
+      const currentPos = window.pageYOffset + window.innerHeight;
+
+      console.log(currentPos + ' / ' + endPos);
+
+      if (currentPos === endPos) {
+        if (nextPageEl.hasClass('loading')) {
+          nextPageEl.css('active').css('page-active').removeClass('loading');
+          currentPageEl.css('prev').removeClass('page-active').removeClass('active');
+          window.setTimeout(function () {
              //activate new page
-             test.gotoPage(nextPage,currentPage,nextUrl);
-           }, 1000);
-         }
-       } else {
-         //activate next (but not new) page
-         test.goToNextPage(cur);
-       }
-     }
-   }
+             test.gotoPage(nextPageEl,currentPageEl,nextUrl);
+          }, 500);
+        }
+      }
+    }
   },
 
   goToPrevPage(cur) {

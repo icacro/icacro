@@ -14,19 +14,10 @@
 }
 
 .cro .loading-area {
-  height:300px;
-  max-height: 50vh;
+  position: relative;
+  height:40vh;
   background: #f3f0eb;
-  padding-bottom: 340px;
   text-align: center;
-  padding-top: 70px;
-}
-
-.cro #page-next {
-  height: 0;
-  opacity: 0;
-  overflow: hidden;
-  padding-top: 50px !important;
 }
 
 .cro #page {
@@ -182,14 +173,47 @@
 
 .cro .recipe-scroll {
   width:100vw;
-  height:500vh;
+  height:0;
   border:0;
   overflow: hidden;
+  transition: all 1s ease-in-out;
+  position: absolute;
+  top:100vh;
+  opacity: 0;
+}
+
+.cro .recipe-scroll.active {
+  height:200vh;
+  /*top:40vh;*/
+  opacity: 1;
+}
+
+.cro #page.prev {
+  position: fixed;
+  width:100vw;
+  bottom: 40vh;
+}
+
+.cro #page .hero,
+.cro #page .container-backdrop {
+  transition: opacity 0.5s ease-in-out;
+}
+
+/*.cro #page.prev .hero,
+.cro #page.prev .container-backdrop {
+  opacity: 1;
+}*/
+
+
+.cro #page.prev + .loading-area {
+  position: fixed;
+  width:100vw;
+  bottom: 0;
 }
 
 .cro-frame {
   width:100vw;
-  height:500vh;
+  height:200vh;
   border:0;
   overflow: hidden;
 }
