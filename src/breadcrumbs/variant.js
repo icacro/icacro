@@ -20,6 +20,7 @@ const test = {
   //topMealCategories: ['vardag', 'middag', 'enkel', 'nyttig', 'efterrätt', 'grill'],
 
   topTypeCategories: ['cheesecake', 'smörgåstårta', 'hamburgare', 'tårta', 'smoothie', 'sallad', 'pasta', 'quesadillas', 'paj', 'cupcakes', 'müsli', 'pannkakor', 'bakverk', 'tapas', 'pizza', 'ugnspannkaka', 'soppa', 'kladdkaka', 'bröd', 'biffar', 'burgare', 'kottbullar', 'gratang', 'gryta', 'lasagne', 'risotto', 'sylt', 'dryck', 'tacos', 'burrito'],
+  topAnimalPartCategories: ['file', 'färs', 'biff', 'entrecote', 'karre', 'kotlett', 'lövbiff', 'revbensspjäll', 'rostbiff'],
   topIngredientCategories: ['västerbottensost', 'kyckling', 'lax', 'zucchini', 'körsbär', 'squash', 'lax', 'halloumi', 'kyckling', 'kassler', 'torsk', 'plommon', 'falukorv', 'karljohan', 'kantarell', 'sötpotatis'],
   topMealCategories: ['vardag', 'middag', 'enkel', 'nyttig', 'efterrätt', 'grill', 'förrätt'],
 
@@ -65,6 +66,11 @@ const test = {
     // styckdel
     //'file', 'fars', 'biff', 'entrecote', 'karre', 'kotlett', 'lovbiff', 'revbensspjall', 'rostbiff'
     // <meta name="Styckdel" content="Rostas">
+    var animalTags = $.map($("meta[name=Styckdel]"), function(a) { return a.content.toLowerCase(); });
+    category = test.findTopCategory(animalTags, test.topAnimalPartCategories);
+    if(category != null) {
+      return category;
+    }
 
     // look for meta 'Ingrediens', check prio list or use first
     var ingridientTags = $.map($("meta[name=Ingrediens]"), function(a) { return a.content.toLowerCase(); });
@@ -137,8 +143,9 @@ const test = {
 			if(level > 0){
 				url += "/recept/" + urlPart;
 			}
+      var content = level < 3 ? "<a href='" + url + "'>" + title + "</a>" : title;
 			//title = level > 0 ? " / " + title : title;
-			return $("<li/>").append("<a href='" + url + "'>" + title + "</a>");
+			return $("<li/>").append(content);
 		},
     getRecipeInfo() {
 			// get information about current recipe
@@ -160,7 +167,7 @@ const test = {
     var $bc = $("<ul />");
     $bc.addClass("breadcrumb");
 
-    $bc.append(test.getCrumbItem("", "ICA", 0));
+    //$bc.append(test.getCrumbItem("", "ICA", 0));
     $bc.append(test.getCrumbItem("", "Recept", 1));
 
     $bc.append(test.getCrumbItem(test.getUrl(category), category, 2));
@@ -170,11 +177,14 @@ const test = {
 
     // add elements
     var $header = $("div.col-12.recipe-meta.recipe-meta--header");
-    $header.css("visibility", "hidden");
+    var cookingTime = $header.text().trim();
+    //$header.css("visibility", "hidden");
+    $header.text("");
+    $header.append($div);
 
-    $header.parent().prepend($div);
+    //$header.parent().prepend($div);
 
-    $(".recipe-header").append("<span class='cooking-time'>" + $header.text().trim() + "</span>");
+    $(".recipe-header").append("<span class='cooking-time'>" + cookingTime + "</span>");
   }
 };
 
