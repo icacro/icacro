@@ -200,10 +200,13 @@
 .cro .recipe-wrapper {
   margin-top: -25px;
   position: relative;
+  height: 100vh;
+  overflow: hidden;
 }
 
 .cro .recipe-wrapper:first-child {
   margin-top: 0;
+  overflow: auto;
 }
 
 .cro .recipe-scroll {
@@ -216,9 +219,6 @@
 
 .cro .recipe-scroll.active {
   height:200vh;
-}
-
-.cro .recipe-wrapper.prev {
 }
 
 .cro #page .hero,
