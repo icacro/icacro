@@ -54,6 +54,9 @@ const test = {
     //check if traffic is direct
     //alert(document.referrer);
 
+    // koll om receptsida
+
+
     var category = null;
 
     // look for meta 'Typ av recept', check prio list or use first
@@ -143,7 +146,7 @@ const test = {
 			if(level > 0){
 				url += "/recept/" + urlPart;
 			}
-      var content = level < 3 ? "<a href='" + url + "'>" + title + "</a>" : title;
+      var content = level < 3 ? "<a class='cro-breadcrumb-link' href='" + url + "'>" + title + "</a>" : title;
 			//title = level > 0 ? " / " + title : title;
 			return $("<li/>").append(content);
 		},
@@ -154,6 +157,11 @@ const test = {
 			var url = test.getUrl(name) + "-" + id;
 			return { name: name, url: url};
 		},
+  onClick(e) {
+    e.preventDefault();
+    console.log(e.target.href);
+    gaPush({ eventAction: 'Recept, Breadcrumbs', eventLabel: e.target.href });
+  },
   manipulateDom() {
     // get current category
     var category = test.getCategory();
@@ -182,7 +190,9 @@ const test = {
     $header.text("");
     $header.append($div);
 
-    //$header.parent().prepend($div);
+    // tracking
+    //gaPush({ eventAction: 'Recept, Breadcrumbs', eventLabel: länk url });
+    $(".cro-breadcrumb-link").on("click", test.onClick);
 
     $(".recipe-header").append("<span class='cooking-time'>" + cookingTime + "</span>");
   }
