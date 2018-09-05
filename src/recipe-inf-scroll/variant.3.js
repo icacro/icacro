@@ -11,21 +11,22 @@
 
 import { CROUTIL, ELM } from '../util/main';
 import { triggerHotJar, gaPush } from '../util/utils';
-import './style-iframe2.css';
+import './style-iframe.css';
 import recipe from './recipe.js';
 
 const maxlength = 25;
 const pageWrapper = ELM.get('#page-wrapper');
 let recipesArr = [];
-let nextPageEl,currentPageEl,nextUrl,pageCount;
+let nextPageEl,currentPageEl,nextUrl,pageCount,activeUrl,activePageCount;
 
 const test = {
 
   manipulateDom() {
     const currentUrl = window.location.pathname;
+    activePageCount = 0;
     currentPageEl = ELM.get('#page');
     nextPageEl = currentPageEl;
-    currentPageEl.css('page-active');
+    currentPageEl.css('page-active').attr('data-count','0').attr('data-title',document.querySelector('meta[name=RecipeName]').getAttribute('content'));
     recipesArr.push(currentUrl);
     const recipeWrapper = ELM.create('div recipe-wrapper pl').attr('id','recipe-wrapper-0');
     const loadingArea = test.addLoadingArea(currentPageEl);
@@ -51,19 +52,22 @@ const test = {
         nextPageEl = test.addNext(currentPageEl,currentUrl,pageCount,recipeId,prevPage,pagePosition,pageType);
       } else {
         pageType = 'iframe';
-        const title = 'temp';
         nextPageEl = test.addNext(currentPageEl,currentUrl,pageCount,recipeId,prevPage,pagePosition,pageType);
       }
     }
     $(window).on('scroll', _.debounce(function() {
-      test.scrollListener(nextPageEl,nextUrl,currentPageEl);
+      //test.scrollListener(nextPageEl,nextUrl,currentPageEl);
+      test.scrollListener2();
     }, 10));
   },
 
   addNext(currentPageEl,currentUrl,pageCount,recipeId) {
     test.buildRecipeArr(currentPageEl.attr('id'));
     nextUrl = recipesArr[recipesArr.indexOf(currentUrl)+1];
-    nextPageEl = ELM.create('iframe page recipe-scroll loading').attr('src',nextUrl).attr('id','page-' + pageCount).attr('name','recipe-scroll').attr('data-id',recipeId);
+
+    activeUrl = currentUrl;
+
+    nextPageEl = ELM.create('iframe page recipe-scroll loading').attr('src',nextUrl).attr('id','page-' + pageCount).attr('name','recipe-scroll').attr('data-id',recipeId).attr('data-count',pageCount);
     const recipeWrapper = ELM.create('div recipe-wrapper pl').attr('id','recipe-wrapper-' + pageCount);
     const loadingArea = test.addLoadingArea(nextPageEl);
     pageWrapper.append(recipeWrapper.append(nextPageEl).append(loadingArea));
@@ -116,7 +120,7 @@ const test = {
     history.pushState(stateObj, title, currentUrl);
   },
 
-  scrollListener(nextPageEl,nextUrl,currentPage) {
+  scrollListener(nextPageEl,nextUrl,currentPageEl) {
     const currentPos = window.pageYOffset + window.innerHeight + 280;
     if (document.querySelector('.page-active')) {
       let endPos = document.getElementById('page-wrapper').offsetHeight + document.getElementById('page-wrapper').offsetTop;
@@ -125,17 +129,71 @@ const test = {
           const frameId=nextPageEl.attr('id');
           const frame=document.getElementById(frameId).contentWindow.document;
           if (frame.querySelector('body')) {
-            test.checkActive(nextPageEl,currentPage,frameId,frame);
+            test.checkActive(nextPageEl,currentPageEl,frameId,frame);
           } else {
             setTimeout(function () {
-              test.scrollListener(nextPageEl,nextUrl,currentPage)
+              test.scrollListener(nextPageEl,nextUrl,currentPageEl)
             }, 1000);
           }
         }
       } else {
 
-        //console.log(test.isElementInViewport(document.getElementById('page')));
+        console.log(test.isElementInViewport(document.getElementById(currentPageEl.attr('id'))));
 
+      }
+    }
+  },
+
+  scrollListener2() {
+    //console.log(nextPageEl.attr('id') + ' / ' + nextUrl + ' / ' + currentPageEl.attr('id'));
+    const currentPos = window.pageYOffset + window.innerHeight + 280;
+    if (document.querySelector('.page-active')) {
+      let endPos = document.getElementById('page-wrapper').offsetHeight + document.getElementById('page-wrapper').offsetTop;
+      if (currentPos > endPos) {
+        if (nextPageEl.hasClass('loading')) {
+          const frameId=nextPageEl.attr('id');
+          const frame=document.getElementById(frameId).contentWindow.document;
+          if (frame.querySelector('body')) {
+            test.checkActive(nextPageEl,currentPageEl,frameId,frame);
+          } else {
+            setTimeout(function () {
+              //test.scrollListener(nextPageEl,nextUrl,currentPageEl)
+              test.scrollListener2();
+            }, 1000);
+          }
+        }
+      } else {
+        setTimeout(function () {
+          //console.log(activePageCount + '/' + currentPageEl.attr('id'));
+          if (activePageCount > 0) {
+            if (test.isElementInViewport(document.getElementById(currentPageEl.attr('id')))) {
+              //console.log(currentPageEl.attr('id') + ' i viewport - ' + activePageCount);
+            } else if (activePageCount < pageCount) {
+
+              let checkPage;
+              if (activePageCount > 1) {
+                //console.log(currentPageEl.attr('id') + ' inte i viewport - kolla ' + (activePageCount - 1));
+                checkPage = 'page-' + (activePageCount - 1);
+              } else {
+                //console.log(currentPageEl.attr('id') + ' inte i viewport - kolla page');
+                checkPage = 'page';
+              }
+
+              setTimeout(function () {
+                if (test.isElementInViewport(document.getElementById(checkPage)) && document.getElementById(checkPage).getAttribute('src')) {
+                  console.log(checkPage + ': ' + document.getElementById(checkPage).getAttribute('data-title') + ' / ' + document.getElementById(checkPage).getAttribute('src'));
+                }
+              }, 100);
+
+
+              // const checkCount = 'page-' + (activePageCount - 1);
+              // if (test.isElementInViewport(document.getElementById(checkCount))) {
+              //   console.log('backa - ' + checkCount);
+              //   test.changeURL('0','test',ELM.get(checkCount).attr('href'));
+              // }
+            }
+          }
+        }, 300);
       }
     }
   },
@@ -163,15 +221,21 @@ const test = {
       test.setActive(nextPageEl,currentPage,frameId,frame);
     } else {
       setTimeout(function () {
-        test.scrollListener(nextPageEl,nextUrl,currentPage)
+        //test.scrollListener(nextPageEl,nextUrl,currentPage)
+        test.scrollListener2()
       }, 1000);
     }
   },
 
   setActive(nextPageEl,currentPage,frameId,frame) {
-    nextPageEl.css('active').css('page-active').removeClass('loading');
+    const recipeName = frame.querySelector('meta[name=RecipeName]').getAttribute('content');
+    nextPageEl.css('active').css('page-active').removeClass('loading').attr('data-title',recipeName);
     currentPage.css('prev').removeClass('page-active').removeClass('active');
-    currentPage.parent().css('prev').find('.loading-area').css('added').find('.rname').html(frame.querySelector('meta[name=RecipeName]').getAttribute('content'));
+    currentPage.parent().css('prev').find('.loading-area').css('added').find('.rname').html(recipeName);
+
+    test.changeURL('0',recipeName,nextPageEl.attr('href'));
+    activePageCount = nextPageEl.attr('data-count');
+
     document.getElementById(frameId).style.height = frame.getElementById('page').offsetHeight + 'px';
 
     let contentObserver = new MutationObserver(function(mutations) {
@@ -194,7 +258,8 @@ const test = {
     }
 
     window.setTimeout(function () {
-       test.gotoPage(nextPageEl,currentPage,nextUrl);
+      currentPageEl = nextPageEl;
+      test.gotoPage(nextPageEl,currentPage,nextUrl);
     }, 200);
   },
 
@@ -232,7 +297,6 @@ const test = {
       recipe.buyBtn(newCur.querySelector('.icaOnlineBuyButton').id, newCur.getAttribute('data-id'));
     }
   },
-
 
   scrollToElement(elem) {
     const elPosition = document.getElementById(elem).offsetTop - 70;
