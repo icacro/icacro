@@ -702,6 +702,8 @@ const test = {
 };
 
 $(document).ready(() => {
-  Object.assign(test, CROUTIL());
-  test.manipulateDom();
+  if (document.getElementById('recipes')) {
+    Object.assign(test, CROUTIL());
+    test.manipulateDom();
+  }
 });

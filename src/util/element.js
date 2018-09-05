@@ -42,6 +42,12 @@ class Element {
     }
     throw new Error(`Element does not exist! Function 'parent'`);
   }
+  next() {
+    if (this.element) {
+      return new Element(this.element.nextElementSibling);
+    }
+    throw new Error(`Element does not exist! Function 'next'`);
+  }
   css(...cn) {
     if (this.element) {
       if (cn) {
