@@ -157,6 +157,9 @@ const test = {
 			var url = test.getUrl(name) + "-" + id;
 			return { name: name, url: url};
 		},
+    getWidth() {
+      return "80vw";
+    },
   onClick(e) {
     e.preventDefault();
     console.log(e.target.href);
@@ -174,6 +177,7 @@ const test = {
     $div.addClass("bread-crumbs");
     var $bc = $("<ul />");
     $bc.addClass("breadcrumb");
+    $bc.css("width", test.getWidth());
 
     //$bc.append(test.getCrumbItem("", "ICA", 0));
     $bc.append(test.getCrumbItem("", "Recept", 1));
