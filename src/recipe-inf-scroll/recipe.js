@@ -56,6 +56,22 @@ const recipe = {
       })
     }
 
+    setTimeout(function () {
+      const saveBtn = currentPage.find('.button--heart');
+      if (saveBtn.exist()) {
+        saveBtn.removeAttr('href');
+        console.log(saveBtn.closest('.recipepage').attr('data-id'));
+        saveBtn.click((e) => {
+          e.preventDefault();
+          ICA.legacy.savedRecipes.add(saveBtn.closest('.recipepage').attr('data-id'), function (data) {
+            icadatalayer.add('recipe-save'); // Add info to datalayer for analytics
+            saveBtn.css('active');
+            saveBtn.css('icon-heart-filled');
+          });
+        })
+      }
+    }, 500);
+
     const howtoSection = currentPage.find('howto-steps');
     if (howtoSection.exist()) {
       const howTo = ELM.create('div howto-steps');

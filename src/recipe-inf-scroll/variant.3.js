@@ -26,7 +26,7 @@ const test = {
     activePageCount = 0;
     currentPageEl = ELM.get('#page');
     nextPageEl = currentPageEl;
-    currentPageEl.css('page-active').attr('data-count','0').attr('data-title',document.querySelector('meta[name=RecipeName]').getAttribute('content'));
+    currentPageEl.css('page-active').attr('data-count','0').attr('data-title',document.querySelector('meta[name=RecipeName]').getAttribute('content')).attr('data-url',currentUrl);
     recipesArr.push(currentUrl);
     const recipeWrapper = ELM.create('div recipe-wrapper pl').attr('id','recipe-wrapper-0');
     const loadingArea = test.addLoadingArea(currentPageEl);
@@ -67,7 +67,7 @@ const test = {
 
     activeUrl = currentUrl;
 
-    nextPageEl = ELM.create('iframe page recipe-scroll loading').attr('src',nextUrl).attr('id','page-' + pageCount).attr('name','recipe-scroll').attr('data-id',recipeId).attr('data-count',pageCount);
+    nextPageEl = ELM.create('iframe page recipe-scroll loading').attr('src',nextUrl).attr('id','page-' + pageCount).attr('name','recipe-scroll').attr('data-id',recipeId).attr('data-count',pageCount).attr('data-url',currentUrl);
     const recipeWrapper = ELM.create('div recipe-wrapper pl').attr('id','recipe-wrapper-' + pageCount);
     const loadingArea = test.addLoadingArea(nextPageEl);
     pageWrapper.append(recipeWrapper.append(nextPageEl).append(loadingArea));
@@ -164,24 +164,31 @@ const test = {
         }
       } else {
         setTimeout(function () {
-          //console.log(activePageCount + '/' + currentPageEl.attr('id'));
           if (activePageCount > 0) {
-            if (test.isElementInViewport(document.getElementById(currentPageEl.attr('id')))) {
-              //console.log(currentPageEl.attr('id') + ' i viewport - ' + activePageCount);
+            console.log(activePageCount + ' / ' + (pageCount - 1));
+            if (test.isElementInViewport(document.querySelector('.page[data-url="' + activeUrl + '"]'))) {
             } else if (activePageCount < pageCount) {
 
-              let checkPage;
-              if (activePageCount > 1) {
+              //console.log(activePageCount + '/' + activeUrl);
+              let checkPage, checkPageURL;
+              //if (activePageCount === 1) {
                 //console.log(currentPageEl.attr('id') + ' inte i viewport - kolla ' + (activePageCount - 1));
-                checkPage = 'page-' + (activePageCount - 1);
-              } else {
-                //console.log(currentPageEl.attr('id') + ' inte i viewport - kolla page');
-                checkPage = 'page';
-              }
+                checkPage = 'page-' + (activePageCount);
+                checkPageURL = ELM.get('#' + checkPage).attr('data-url');
+                //console.log(checkPageURL);
+                //activePageCount = activePageCount - 1;
+              // } else {
+              //   //console.log(currentPageEl.attr('id') + ' inte i viewport - kolla page');
+              //   checkPage = 'page';
+              //   checkPageURL = ELM.get('#page').attr('data-url');
+              // }
 
               setTimeout(function () {
-                if (test.isElementInViewport(document.getElementById(checkPage)) && document.getElementById(checkPage).getAttribute('src')) {
-                  console.log(checkPage + ': ' + document.getElementById(checkPage).getAttribute('data-title') + ' / ' + document.getElementById(checkPage).getAttribute('src'));
+                if (test.isElementInViewport(document.getElementById(checkPage))) {
+                  //console.log(checkPage + '' + document.getElementById(checkPage).getAttribute('data-title') + ' / ' + checkPageURL);
+                  test.changeURL('0',document.getElementById(checkPage).getAttribute('data-title'),checkPageURL);
+                  activeUrl = checkPageURL;
+                  activePageCount = document.getElementById(checkPage).getAttribute('data-count');
                 }
               }, 100);
 
@@ -233,7 +240,7 @@ const test = {
     currentPage.css('prev').removeClass('page-active').removeClass('active');
     currentPage.parent().css('prev').find('.loading-area').css('added').find('.rname').html(recipeName);
 
-    test.changeURL('0',recipeName,nextPageEl.attr('href'));
+    test.changeURL('0',recipeName,nextPageEl.attr('src'));
     activePageCount = nextPageEl.attr('data-count');
 
     document.getElementById(frameId).style.height = frame.getElementById('page').offsetHeight + 'px';
@@ -307,6 +314,7 @@ const test = {
 
   manipulateFrameDom() {
     ELM.get('body').css('cro-frame').removeClass('cro');
+    ELM.get('script[src="https://connect.facebook.net/en_US/fbevents.js"]').remove();
   }
 
 };

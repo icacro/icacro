@@ -48,6 +48,14 @@ class Element {
     }
     throw new Error(`Element does not exist! Function 'next'`);
   }
+
+  closest(el) {
+    if (this.element) {
+      return new Element(this.element.closest(el));
+    }
+    throw new Error(`Element does not exist! Function 'closest'`);
+  }
+
   css(...cn) {
     if (this.element) {
       if (cn) {
