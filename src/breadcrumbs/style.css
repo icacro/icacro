@@ -47,4 +47,5 @@
 }
 .cro .rating-stars {
   margin-right: 0 !important;
+  width: auto !important;
 }

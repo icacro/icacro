@@ -29,7 +29,8 @@ const test = {
   //['middag', 'nyttig', 'vegan', 'vegetarisk', 'vardag', 'fredag', 'lax', 'enkel']
 
   // specialkost?
-
+  hasLargeImage: $("#page").hasClass("recipepage--large"),
+  isRecipe: $("#page").hasClass("recipepage"),
   findTopCategory(tags, topCategories) {
     if(tags != undefined && tags.length > 0){
 
@@ -158,14 +159,18 @@ const test = {
 			return { name: name, url: url};
 		},
     getWidth() {
-      return "80vw";
+      return test.hasLargeImage ? "80vw" : "45vw";
     },
   onClick(e) {
-    e.preventDefault();
-    console.log(e.target.href);
+    //e.preventDefault();
+    //console.log(e.target.href);
     gaPush({ eventAction: 'Recept, Breadcrumbs', eventLabel: e.target.href });
   },
   manipulateDom() {
+    if(!test.isRecipe) {
+      return;
+    }
+
     // get current category
     var category = test.getCategory();
     if(category == null) { // no category found, no recipe
