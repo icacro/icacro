@@ -29,7 +29,6 @@ const test = {
   //['middag', 'nyttig', 'vegan', 'vegetarisk', 'vardag', 'fredag', 'lax', 'enkel']
 
   // specialkost?
-  hasLargeImage: $("#page").hasClass("recipepage--large"),
   isRecipe: $("#page").hasClass("recipepage"),
   findTopCategory(tags, topCategories) {
     if(tags != undefined && tags.length > 0){
@@ -158,9 +157,6 @@ const test = {
 			var url = test.getUrl(name) + "-" + id;
 			return { name: name, url: url};
 		},
-    getWidth() {
-      return test.hasLargeImage ? "80vw" : "45vw";
-    },
   onClick(e) {
     //e.preventDefault();
     //console.log(e.target.href);
@@ -182,7 +178,6 @@ const test = {
     $div.addClass("bread-crumbs");
     var $bc = $("<ul />");
     $bc.addClass("breadcrumb");
-    $bc.css("width", test.getWidth());
 
     //$bc.append(test.getCrumbItem("", "ICA", 0));
     $bc.append(test.getCrumbItem("", "Recept", 1));
