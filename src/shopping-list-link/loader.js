@@ -16,7 +16,7 @@ function init() {
   var head = document.querySelector('head');
 
   script.setAttribute('async', '');
-  script.setAttribute('src', 'https://cdn.rawgit.com/icacro/icacro/v1.0.245/src/shopping-list-link/variant.min.js');
+  script.setAttribute('src', 'https://cdn.rawgit.com/icacro/icacro/v1.0.246/src/shopping-list-link/variant.min.js');
 
   head.appendChild(script);
 }
