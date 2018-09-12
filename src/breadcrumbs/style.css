@@ -71,6 +71,7 @@
   width: 8px;
 }
 .cro .page .breadcrumb.backarrow li::after {
+  margin: 0 7px;
   transform: translate(-5px, 0) rotate(225deg);
 }
 .cro .page .breadcrumb li:last-child::after {
