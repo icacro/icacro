@@ -195,7 +195,6 @@ const test = {
     $header.append($div);
 
     // tracking
-    //gaPush({ eventAction: 'Recept, Breadcrumbs', eventLabel: länk url });
     $(".cro-breadcrumb-link").on("click", test.onClick);
 
     $(".recipe-header").append("<span class='cooking-time'>" + cookingTime + "</span>");

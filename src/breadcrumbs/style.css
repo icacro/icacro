@@ -4,17 +4,49 @@
 }
 
 @media (max-width: 1023px) and (min-width: 768px) {
-  .cro .recipepage--small ul.breadcrumb {
+  .cro .page.recipepage--small ul.breadcrumb {
     width: 45vw;
+  }
+  .cro .page.recipepage--small div.bread-crumbs {
+    top: -56px;
   }
 }
 
-.cro .breadcrumb {
+@media (max-width: 1260px) and (min-width: 1024px) {
+  .cro .page.recipepage--small div.bread-crumbs {
+    top: -98px;
+  }
+}
+
+@media (min-width: 1261px) {
+  .cro .page.recipepage--small div.bread-crumbs {
+    top: -29px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .cro .page.recipepage--small ul.breadcrumb {
+    width: 600px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .cro .page.recipepage--large div.bread-crumbs {
+    top: -32px;
+  }
+}
+
+.cro .page div.bread-crumbs {
+  position: relative;
+  top: -24px;
+}
+
+.cro .page .breadcrumb {
   list-style-type: none;
   font-size: 14px;
   padding-left: 10px;
 }
-.cro ul.breadcrumb {
+.cro .page ul.breadcrumb {
   padding-left: 0px;
   width: 80vw;
   white-space: nowrap;
@@ -22,19 +54,19 @@
   text-overflow: ellipsis;
   text-transform: none;
 }
-.cro .breadcrumb li {
+.cro .page .breadcrumb li {
   display: inline;
   color: #808283;
 }
-.cro .breadcrumb li a {
+.cro .page .breadcrumb li a {
   text-decoration: none;
   color: #343434;
   font-size: 14px;
 }
-.cro .breadcrumb li a:hover {
+.cro .page .breadcrumb li a:hover {
   color: #DC438C;
 }
-.cro .breadcrumb li::after {
+.cro .page .breadcrumb li::after {
   border-right: 1px solid #D5D7DA;
   border-top: 1px solid #D5D7DA;
   content: '';
@@ -44,15 +76,15 @@
   transform: translate(-5px, 0) rotate(45deg);
   width: 8px;
 }
-.cro .breadcrumb li:last-child::after {
+.cro .page .breadcrumb li:last-child::after {
   border : 0;
   display: none;
 }
-.cro span.cooking-time {
+.cro .page span.cooking-time {
  padding-left: 20px;
  font-size: 14px;
 }
-.cro .rating-stars {
+.cro .page .rating-stars {
   margin-right: 0 !important;
   width: auto !important;
 }
