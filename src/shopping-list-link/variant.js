@@ -38,11 +38,13 @@ const test = {
 
             closeBtn.click((e) => {
               modal.remove();
+              ELM.get('html').removeClass('force-no-scroll');
             });
 
             modal.click((e) => {
               if (e.target.id === 'cro-overlay') {
                 modal.remove();
+                ELM.get('html').removeClass('force-no-scroll');
               }
             });
 
