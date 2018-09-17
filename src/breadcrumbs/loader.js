@@ -12,17 +12,17 @@
 'use strict';
 
 function init() {
-  var css = '.classname { visibility: hidden; }';
-  var style = document.createElement('style');
   var script = document.createElement('script');
   var head = document.querySelector('head');
 
   script.setAttribute('async', '');
-  script.setAttribute('src', 'https://cdn.rawgit.com/Banzaci/ica/vx.x.xx/src/kupong-receptsidan/variant.min.js');
+  script.setAttribute('src', 'https://cdn.rawgit.com/icacro/icacro/v1.0.250/src/breadcrumbs/variant.min.js');
 
-  style.appendChild(document.createTextNode(css));
-
-  head.appendChild(style);
   head.appendChild(script);
+
+  var style = document.createElement('style');
+  style.setAttribute('type', 'text/css');
+  style.innerHTML = '.recipe-meta--header{visibility:hidden;}';
+  head.appendChild(style);
 }
 init();
