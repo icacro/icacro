@@ -32,7 +32,7 @@
 }
 @media (max-width: 600px) {
   .cro .page .breadcrumb li::after {
-    margin: 0 8px !important;
+    margin: 0 4px 0 10px !important;
   }
 }
 @media (max-width: 600px) {
@@ -57,6 +57,7 @@
   overflow: hidden;
   text-overflow: ellipsis;
   text-transform: none;
+
 }
 .cro .page .breadcrumb li {
   display: inline;
@@ -64,7 +65,7 @@
 }
 .cro .page .breadcrumb li a {
   text-decoration: none;
-  color: #343434;
+  /*color: #343434; */
   font-size: 14px;
 }
 .cro .page .breadcrumb li a:hover {
