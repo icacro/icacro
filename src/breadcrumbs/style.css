@@ -35,6 +35,11 @@
     margin: 0 8px !important;
   }
 }
+@media (max-width: 600px) {
+  .cro .page .breadcrumb.backarrow li::after {
+    margin: 0 3px !important;
+  }
+}
 
 .cro .page div.bread-crumbs {
   position: relative;
