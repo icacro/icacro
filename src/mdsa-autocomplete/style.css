@@ -1,8 +1,8 @@
-.cro .filtermenu {
+/*.cro .filtermenu {
  display: none;
-}
+}*/
 
-.cro .mob-filter-container.mob-filter-container {
+/*.cro .mob-filter-container.mob-filter-container {
   display: none !important;
 }
 
@@ -60,4 +60,4 @@
 }
 .cro .cro-help-button.open .arrow {
   transform: rotate(-90deg);
-}
+}*/

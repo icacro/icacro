@@ -62,7 +62,7 @@ const test = {
     );
   },
   manipulateDom() {
-    $('.mdsa-main-grid').parent().removeClass('lg_size15of20 xl_size16of20');
+    //$('.mdsa-main-grid').parent().removeClass('lg_size15of20 xl_size16of20');
     $('.cro .recipe-search').removeClass('sm_gte_hidden');
 
     window.setTimeout(() => test.initFilters(), 0);
@@ -75,7 +75,7 @@ const test = {
       .on('input', throttle(test.searchFieldInputHandler, 300))
       .on('blur', test.searchFieldBlurHandler);
 
-    test.addHelpLinks();
+    //test.addHelpLinks();
   },
   searchFieldInputHandler(e) {
     const q = $(e.target).val();
@@ -122,7 +122,7 @@ const test = {
     });
     return filters;
   },
-  hideFilterMenu() {
+  /*hideFilterMenu() {
     if ($('html').hasClass('is-mobile') ||
         $('html').hasClass('is-tablet')) {
       return;
@@ -143,8 +143,8 @@ const test = {
       filterMenu.toggle();
     });
     filterMenu.hide().before(button).addClass('cro-loaded');
-  },
-  addHelpLinks() {
+  },*/
+  /*addHelpLinks() {
     const links = $(`
       <ul class="cro-help-links">
           <li class="cro-help-links__item">
@@ -186,7 +186,7 @@ const test = {
       });
 
     $('.recipe-search').append(button).append(links);
-  },
+  },*/
 };
 
 $(document).ready(() => {
