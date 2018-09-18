@@ -1,9 +1,9 @@
 .cro .search-recipes.search-fieldset {
   overflow: visible;
 }
-.cro .filter-search {
+/*.cro .filter-search {
   display: none;
-}
+}*/
 .cro .recipe-search {
   margin-top: 1em !important;
 }
