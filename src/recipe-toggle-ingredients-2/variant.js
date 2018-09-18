@@ -53,6 +53,7 @@ const test = {
           const howtoPos = document.getElementById('recipe-howto').offsetTop + offsetTopParent - diff;
           const ingredientsPos = document.getElementById('ingredients-section').offsetTop + offsetTopParent - diff;
           const navPos = document.querySelector('.nav-buttons-wrapper').offsetTop + offsetTopParent;
+          checkScroll(detailsPos,howtoPos,ingredientsPos,navPos,offsetTopParent);
           window.onscroll = function() {checkScroll(detailsPos,howtoPos,ingredientsPos,navPos,offsetTopParent)};
         }, 500);
       }
