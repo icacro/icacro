@@ -42,9 +42,9 @@ const test = {
     return $(`<li/>`)
       .text(filter.name)
       .click(() => {
-        if (filter.element.attr('href') === '#') {
+        /*if (filter.element.attr('href') === '#') {
           test.createFilterElement(filter);
-        }
+        }*/
         if (filter.element.parent().hasClass('subcat')) {
           test.searchField.val(filter.name);
           $('.search > button:submit').click();
@@ -59,23 +59,48 @@ const test = {
 
     return $('<ul class="autocomplete"/>').append(
       test.sortList(list).map(test.createAutocompleteItem),
-    );
+    ).selectable().on('selectableselected', function(e, li) {
+      alert(li);
+    });
   },
   manipulateDom() {
     //$('.mdsa-main-grid').parent().removeClass('lg_size15of20 xl_size16of20');
-    $('.cro .recipe-search').removeClass('sm_gte_hidden');
+    //$('.cro .recipe-search').removeClass('sm_gte_hidden');
 
     window.setTimeout(() => test.initFilters(), 0);
 
-    test.searchField = $('.cro .recipe-search').find('#search2');
+    //.cro div.filter-search cssSearch //lilla
+    //.cro div.recipe-search cssSearch //stora mitten sm_gte_hidden
+    if($('.cro div.recipe-search').hasClass('sm_gte_hidden')){
+      test.searchField = $('.cro div.filter-search').find('#search2');
+    }
+    else {
+      test.searchField = $('.cro div.recipe-search').find('#search2');
+    }
+
+    //test.searchField = $('.cro .recipe-search').find('#search2');
 
     test.searchField
       .attr('placeholder', 'T ex nyttig middag, lax, pasta eller wok')
       .attr('autocomplete', 'off')
       .on('input', throttle(test.searchFieldInputHandler, 300))
-      .on('blur', test.searchFieldBlurHandler);
+      .on('blur', test.searchFieldBlurHandler)
+      .on('keydown', test.searchFieldKeyHandler);
+
+    //test.searchField.parent().parent().removeAttr('data-desktopclass');
+    test.searchField.parent().parent().parent().removeClass('md_lte_hidden');
 
     //test.addHelpLinks();
+  },
+  searchFieldKeyHandler(e) {
+    e = e || window.event;
+
+    if (e.keyCode == '40') { // arrow down
+      alert("test");
+      $('.autocomplete').first('li').select();
+    }
+    if (e.keyCode == '38') { //arrow up
+    }
   },
   searchFieldInputHandler(e) {
     const q = $(e.target).val();
@@ -87,7 +112,7 @@ const test = {
   searchFieldBlurHandler(e) {
     window.setTimeout(() => $('.autocomplete', e.target.parentNode).remove(), 500);
   },
-  createFilterElement(filter) {
+  /*createFilterElement(filter) {
     const closeIcon = $('<span class="sprite1-p remove"></span>')
       .click((e) => {
         $(e.target.parentNode).remove();
@@ -98,7 +123,7 @@ const test = {
       .text(filter.name)
       .append(closeIcon);
     test.searchField.parent().after(filterElement);
-  },
+  },*/
   initFilters() {
     const activeFilters = ICA.MDSA.urlHandler.getAllSegments()
       .map((s) => {
@@ -109,7 +134,7 @@ const test = {
           element: filter,
         };
       });
-    activeFilters.forEach(test.createFilterElement);
+    //activeFilters.forEach(test.createFilterElement);
   },
   sortList(filters) {
     test.topFilters.forEach((tf) => {
