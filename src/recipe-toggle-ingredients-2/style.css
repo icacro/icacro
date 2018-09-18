@@ -1,0 +1,60 @@
+.cro .nav-buttons-wrapper {
+  height:48px;
+  margin: 48px -10px -20px;
+  width: 100vw;
+}
+
+.cro .sticky-nav-buttons {
+  display: flex;
+  position: relative;
+  width: 100vw;
+  height: 48px;
+  background: #f7f7f7;
+  z-index: 3;
+  opacity: 1;
+  transition: all 0.5s ease-in-out;
+  margin: 0;
+  border-top: 1px solid #d5d7da;
+  border-bottom: 1px solid #d5d7da;
+}
+.cro .sticky-nav-buttons.fixed {
+  top: 48px;
+  position: fixed;
+}
+.cro .sticky-nav-buttons.hidden {
+  top: -50px;
+  position: fixed;
+  opacity: 0;
+}
+.cro .sticky-nav-buttons div {
+  display: block;
+  width: 50%;
+  height: 48px;
+}
+.cro .sticky-nav-buttons a {
+  display: block;
+  height: 48px;
+  line-height: 48px;
+  font-size: 16px;
+  text-align: center;
+  transition: all 0.1s ease-in-out;
+  color:#A02971;
+}
+.cro .sticky-nav-buttons a:active {
+  color:#A02971;
+}
+.cro .sticky-nav-buttons a.active {
+  color: rgb(235,31,7);
+  height:47px;
+  border-bottom: 2px solid rgb(235,31,7);
+}
+.cro .sticky-nav-buttons div:first-child a {
+  border-right: 1px solid #d5d7da;
+}
+.cro .footer-sub-nav {
+  margin-bottom: 40px;
+}
+
+@media only screen and (max-width: 780px) {
+  .cro { }
+}
