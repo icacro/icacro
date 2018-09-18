@@ -17,7 +17,6 @@ import recipe from './recipe.js';
 let recipesArr = [];
 const maxlength = 25;
 let nextPage,currentPage,nextUrl;
-const pageWrapper = ELM.get('#page-wrapper');
 
 const test = {
 
@@ -36,13 +35,12 @@ const test = {
     const recipeId = nameParts[nameParts.length - 1];
     page.attr('data-id',recipeId);
 
-    recipe.initFirst(page);
-
     test.gotoPage(pageNext,page,currentUrl);
 
   },
 
   gotoPage(pageNext,page,currentUrl) {
+    const pageWrapper = ELM.get('#page-wrapper');
 
     currentPage = pageNext;
     const prevPage = page;
@@ -58,12 +56,14 @@ const test = {
       const pagePosition = currentPage.offsetTop;
       const svg = '<svg><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/Assets/icons/sprite.svg#arrow-down"></use></svg>';
 
+      recipe.initRecipe(currentPage);
+
       if (pageCount >= maxlength) {
         //no more scrolling
         document.getElementById('footer').classList.add('visible');
       } else {
         //add next page
-        nextPage = ELM.create('div page page-mod-fullwidth pl recipepage page-next').attr('id','page-next');
+        nextPage = ELM.create('div page page-mod-fullwidth pl recipepage').attr('id','page-next');
         if (recipesArr.length < maxlength) {
           const relatedList = document.querySelectorAll('#page .related-recipes-list > a');
           for (var i = 0; i < relatedList.length; i++) {
@@ -71,13 +71,6 @@ const test = {
           }
           recipesArr = test.removeDuplicates(recipesArr);
         }
-
-        // OBS! Alla recept har inte relaterade recept!!!
-        // https://www.ica.se/recept/kanel-och-stjarnanissill-599287/
-
-        const gradient = ELM.create('a gradient').attr('href',currentUrl + '?recept');
-        currentPage.find('.recipe-content').append(gradient);
-
         nextUrl = recipesArr[recipesArr.indexOf(currentUrl)+1];
         test.loadNextPage(nextUrl);
         currentPage.append(loadingArea);
@@ -92,18 +85,17 @@ const test = {
         test.changeURL(pagePosition,title,currentUrl);
         currentPage.attr('data-count',pageCount);
 
-        // const buyBtnId = 'IcaOnlineBuyButton-' + prevPage.attr('data-count');
-        // if (prevPage.find('.icaOnlineBuyButton.buy-active').exist()) {
-        //   prevPage.find('.icaOnlineBuyButton.buy-active').removeClass('buy-active');
-        // }
-        // currentPage.find('#IcaOnlineBuyButton').attr('id',buyBtnId).css('buy-active');
-        const urlParts = currentUrl.split('/');
+        const buyBtnId = 'IcaOnlineBuyButton-' + prevPage.attr('data-count');
+        if (prevPage.find('.icaOnlineBuyButton.buy-active').exist()) {
+          prevPage.find('.icaOnlineBuyButton.buy-active').removeClass('buy-active');
+        }
+        currentPage.find('#IcaOnlineBuyButton').attr('id',buyBtnId).css('buy-active');
+
+        const urlParts = currentPage.attr('data-href').split('/');
         const nameParts = urlParts[2].split('-');
         const recipeId = nameParts[nameParts.length - 1];
         currentPage.attr('data-id',recipeId);
-        //recipe.buyBtn(buyBtnId,recipeId);
-
-        recipe.initRecipe(currentPage);
+        recipe.buyBtn(buyBtnId,recipeId);
 
       } else {
         //first page
@@ -174,12 +166,12 @@ const test = {
   changeActivePage(oldCur,newCur) {
     newCur.id = 'page';
     test.changeURL('0',newCur.getElementsByTagName('h1')[0].innerHTML,newCur.getAttribute('data-href'));
-    // oldCur.querySelector('.icaOnlineBuyButton').classList.remove('buy-active');
-    // newCur.querySelector('.icaOnlineBuyButton').classList.add('buy-active');
-    // if (newCur.querySelector('.icaOnlineBuyButton').hasChildNodes()) {
-    //   newCur.querySelector('.icaOnlineBuyButton').innerHTML='';
-    //   //recipe.buyBtn(newCur.querySelector('.icaOnlineBuyButton').id, newCur.getAttribute('data-id'));
-    // }
+    oldCur.querySelector('.icaOnlineBuyButton').classList.remove('buy-active');
+    newCur.querySelector('.icaOnlineBuyButton').classList.add('buy-active');
+    if (newCur.querySelector('.icaOnlineBuyButton').hasChildNodes()) {
+      newCur.querySelector('.icaOnlineBuyButton').innerHTML='';
+      recipe.buyBtn(newCur.querySelector('.icaOnlineBuyButton').id, newCur.getAttribute('data-id'));
+    }
   },
 
   scrollListener(loadingArea,nextPage,nextUrl,currentPage,pageCount) {

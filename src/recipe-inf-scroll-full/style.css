@@ -103,6 +103,7 @@
   display: block;
   position: absolute;
   top:0;
+  left:0;
   opacity: 1;
   transition: opacity 0.5s ease-in-out;
   border-bottom: 1rem solid #fff;
@@ -128,7 +129,7 @@
 .cro section.comments,
 .cro .recipe-details {
   position: relative;
-  padding-bottom: 20px;
+  padding-bottom: 40px;
 }
 .cro .comments-toggle,
 .cro .details-toggle {
@@ -141,7 +142,7 @@
 }
 
 .cro section.comments {
-  margin: 40px 0;
+  margin: 20px 0 40px;
 }
 
 
@@ -196,44 +197,6 @@
 .cro-frame .top-bar {
   display: none;
 }
-
-.cro .page-next .recipe-content {
-  height: 320px;
-  overflow: hidden;
-  padding-top: 5px;
-  position: relative;
-}
-
-.cro .page-next .recipe-content .gradient {
-  height: 370px;
-  position: absolute;
-  bottom:0;
-  left:0;
-  width:100%;
-  cursor: pointer;
-  background: linear-gradient(to top, rgba(255,255,255,1) 0%,rgba(255,255,255,0) 60%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-}
-
-.cro .page-next .recipe-details,
-.cro .page-next #comments-section,
-.cro .page-next .related-recipes
-/*,
-.cro .page-next .recipe-action-buttons,
-.cro .page-next .magazine-row */
-{
-  display: none;
-}
-
-/*.cro .page-next .rating-stars svg,
-.cro .page-next .rating-stars[data-rating^='5'] g,
-.cro .page-next .rating-stars[data-rating^='4'] .rating-stars__five ~ g,
-.cro .page-next .rating-stars[data-rating^='3'] .rating-stars__four ~ g,
-.cro .page-next .rating-stars[data-rating^='2'] .rating-stars__three ~ g,
-.cro .page-next .rating-stars[data-rating^='1'] .rating-stars__two ~ g {
-  color:#ea1000;
-  fill:#ea1000;
-}*/
-
 
 
 @media only screen and (max-width: 780px) {
