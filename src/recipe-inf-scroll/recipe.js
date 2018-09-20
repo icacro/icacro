@@ -5,74 +5,9 @@ import { gaPush } from '../util/utils';
 
 const pageWrapper = ELM.get('#page-wrapper');
 
-//bugg tom loadingarea? tillbaka till 1 och fram igen?
-//---(ev) förflytta sig i historiken - hamna högst upp på aktuellt recept
-
-//OK____skriv ut
-//OK____görsåhär-styling
-//OK____ingredienser-styling
-//OK???____e-handla nja....
-//OK____"För alla" m.m. (kvarvarande ol ok?)
-//lägg i inköpslista (primär om ingen varukorgknapp)
-//portionsomräknaren
-//timers
-//ladda kupong
-//spara recept
-//betygsätt
-
-//näring --- använd __recipeData /OK____klimatguide
-//kommentarer --- använd __recipeData
-
-//mutationObserver????
-
 const recipe = {
 
-  // buyBtn(buyBtnId,recipeId) {
-  //   if(recipeId) {
-  //     ICA_online.recipeToCart.init({
-  //       scriptTagId: "IcaOnlineBuyScript",
-  //       domHookId: buyBtnId,
-  //       recipeId: recipeId,
-  //       theme: 'icaSe2017'
-  //     });
-  //   }
-  // },
-
-  initRecipe(currentPage) {
-
-    // const shoppingListBtn = currentPage.find('.js-open-shoppinglist-modal');
-    // if (shoppingListBtn.exist()) {
-    //   shoppingListBtn.click(() => {
-    //     console.log('shoppingListBtn');
-    //     // isWindowModalOpen((element) => {
-    //     //   this.modal(element);
-    //     // });
-    //   });
-    // }
-
-    // const printBtn = currentPage.find('.button--print');
-    // if (printBtn.exist()) {
-    //   printBtn.removeAttr('href');
-    //   printBtn.click(() => {
-    //     window.print();
-    //   })
-    // }
-    //
-    // setTimeout(function () {
-    //   const saveBtn = currentPage.find('.button--heart');
-    //   if (saveBtn.exist()) {
-    //     saveBtn.removeAttr('href');
-    //     // console.log(saveBtn.closest('.recipepage').attr('data-id'));
-    //     saveBtn.click((e) => {
-    //       e.preventDefault();
-    //       ICA.legacy.savedRecipes.add(saveBtn.closest('.recipepage').attr('data-id'), function (data) {
-    //         icadatalayer.add('recipe-save'); // Add info to datalayer for analytics
-    //         saveBtn.css('active');
-    //         saveBtn.css('icon-heart-filled');
-    //       });
-    //     })
-    //   }
-    // }, 500);
+  initRecipe(currentPage,originalTitle,originalUrl) {
 
     const howtoSection = currentPage.find('howto-steps');
     if (howtoSection.exist()) {
@@ -103,16 +38,35 @@ const recipe = {
       wrapper.outerHTML = wrapper.innerHTML;
     }
 
-    const ratingsSpan = ELM.create('span rating-stars');
-    const ratingsA = currentPage.find('.js-recipe-ratings-modal');
-    ratingsSpan.html(ratingsA.html());
-    ratingsSpan.attr('data-recipeid',ratingsA.attr('data-recipeid')).attr('data-rating',ratingsA.attr('data-rating')).attr('title',ratingsA.attr('title'));
-    currentPage.find('.recipe-header').append(ratingsSpan);
-    ratingsA.remove();
+    const ratingsBtn = currentPage.find('.js-recipe-ratings-modal');
+    ratingsBtn.attr('href', '?betyg');
 
-    //data-recipeid="719322" data-rating="3.5" title="3.3"
+    const printBtn = currentPage.find('.button--print');
+    printBtn.attr('href', '?skriv-ut');
 
-    //sällanfel bör vara fixat iom .ingredients--dynamic-koll
+    const saveBtn = currentPage.find('.js-recipe-save');
+    if (saveBtn.attr('href') === '#') {
+      saveBtn.attr('href', '?spara');
+    }
+
+    ratingsBtn.click((e) => {
+      e.preventDefault();
+      const targetPage = e.target.closest('.page').getAttribute('data-href') + '?betyg';
+      history.replaceState(null, originalTitle, originalUrl);
+      document.location.href = targetPage;
+    })
+    printBtn.click((e) => {
+      e.preventDefault();
+      const targetPage = e.target.closest('.page').getAttribute('data-href') + '?skriv-ut';
+      history.replaceState(null, originalTitle, originalUrl);
+      document.location.href = targetPage;
+    })
+    saveBtn.click((e) => {
+      e.preventDefault();
+      const targetPage = e.target.closest('.page').getAttribute('data-href') + '?spara';
+      history.replaceState(null, originalTitle, originalUrl);
+      document.location.href = targetPage;
+    })
 
     const servingsPicker = currentPage.find('.servings-picker--static');
     if (servingsPicker.exist() && currentPage.find('.ingredients--dynamic').exist()) {
@@ -139,6 +93,10 @@ const recipe = {
       for (var i = 0; i < ingredientList.length; i++) {
         ingredientsContent.append(ingredientList[i]);
       }
+      servingsPicker.change((e) => {
+        const goToPage = e.target.closest('.page');
+        window.location.href = goToPage.getAttribute('data-href') + '?portioner=' + e.target.value;
+      })
     }
 
   },
@@ -182,9 +140,6 @@ const recipe = {
           document.querySelector('.nutrients .button--link').click();
         }
         detailsBtn.parent().find('.row').toggle('open');
-        // if (detailsBtn.parent().find('show-more[v-cloak]').exist()) {
-        //   detailsBtn.parent().find('show-more').removeAttr('v-cloak');
-        // }
       });
     }
 

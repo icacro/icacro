@@ -18,12 +18,48 @@ let recipesArr = [];
 const maxlength = 25;
 let nextPage,currentPage,nextUrl;
 const pageWrapper = ELM.get('#page-wrapper');
+const originalUrl = window.location.pathname;
+const originalTitle = window.title;
+
+//Parameter-URLar - scrolla så berörda element syns i viewport
+//skicka med scrollpos?
+
+//history/URLar???
+//om jag lämnar sidan via länk till annat recept (eller alla tänkbara sätt?) – gör ny replaceState till originalet
+//MÖJLIGT???? Bör fungera om länkarna skapas om?
 
 const test = {
 
+  triggerAction(type,action,el) {
+    setTimeout(function () {
+      if(type==='click') {
+        el.click();
+      } else {
+        const portions = action.split('?portioner=')[1];
+        el.value = portions;
+      }
+      const currentUrl = window.location.search.split(action)[0];
+      history.replaceState(null, null, currentUrl);
+    }, 500);
+  },
+
   manipulateDom() {
 
-    const currentUrl = window.location.pathname;
+    if (window.location.search.indexOf('?betyg') > -1) {
+      const el = document.querySelector('#page .js-recipe-ratings-modal');
+      test.triggerAction('click','?betyg',el);
+    } else if (window.location.search.indexOf('?spara') > -1) {
+      const el = document.querySelector('#page .js-recipe-save');
+      test.triggerAction('click','?spara',el);
+    } else if (window.location.search.indexOf('?skriv-ut') > -1) {
+      const el = document.querySelector('#page .button--print');
+      test.triggerAction('click','?skriv-ut',el);
+    } else if (window.location.search.indexOf('?portioner=') > -1) {
+      const el = document.querySelector('#page .js-servingspicker');
+      test.triggerAction('select','?portioner=' + portions,el);
+    }
+
+    const currentUrl = originalUrl;
     const page = ELM.get('#page');
     const pageNext = page;
     page.attr('data-count',1)
@@ -62,6 +98,7 @@ const test = {
         //no more scrolling
         document.getElementById('footer').classList.add('visible');
       } else {
+
         //add next page
         nextPage = ELM.create('div page page-mod-fullwidth pl recipepage page-next').attr('id','page-next');
         if (recipesArr.length < maxlength) {
@@ -72,38 +109,42 @@ const test = {
           recipesArr = test.removeDuplicates(recipesArr);
         }
 
-        // OBS! Alla recept har inte relaterade recept!!!
-        // https://www.ica.se/recept/kanel-och-stjarnanissill-599287/
+        if (recipesArr.length > 1) {
+          nextUrl = recipesArr[recipesArr.indexOf(currentUrl)+1];
+          test.loadNextPage(nextUrl);
+          currentPage.append(loadingArea);
+          nextPage.attr('data-href',nextUrl);
+          pageWrapper.append(nextPage);
+        } else {
+          //hantera t.ex. https://www.ica.se/recept/kanel-och-stjarnanissill-599287/ som inte har relaterade recept
+          document.getElementById('footer').classList.add('visible');
+        }
 
-        const gradient = ELM.create('a gradient').attr('href',currentUrl + '?recept');
-        currentPage.find('.recipe-content').append(gradient);
-
-        nextUrl = recipesArr[recipesArr.indexOf(currentUrl)+1];
-        test.loadNextPage(nextUrl);
-        currentPage.append(loadingArea);
-        nextPage.attr('data-href',nextUrl);
-        pageWrapper.append(nextPage);
       }
 
       if (currentPage !== prevPage) {
-        //meaning "not first page" - fix id:s,attrs,url etc
+        //meaning "not first page"
+
+        const gradient = ELM.create('a gradient').attr('href',currentUrl + '?recept');
+        const gradientBtn = ELM.create('span').css('button').html('Visa hela receptet');
+        gradient.append(gradientBtn);
+        currentPage.find('.recipe-content').append(gradient);
+
+        gradient.click((e) => {
+          history.replaceState(null, originalTitle, originalUrl);
+        })
+
         currentPage.attr('id','page');
         prevPage.attr('id','page-' + prevPage.attr('data-count'));
-        test.changeURL(pagePosition,title,currentUrl);
+        test.changeURL(title,currentUrl);
         currentPage.attr('data-count',pageCount);
 
-        // const buyBtnId = 'IcaOnlineBuyButton-' + prevPage.attr('data-count');
-        // if (prevPage.find('.icaOnlineBuyButton.buy-active').exist()) {
-        //   prevPage.find('.icaOnlineBuyButton.buy-active').removeClass('buy-active');
-        // }
-        // currentPage.find('#IcaOnlineBuyButton').attr('id',buyBtnId).css('buy-active');
         const urlParts = currentUrl.split('/');
         const nameParts = urlParts[2].split('-');
         const recipeId = nameParts[nameParts.length - 1];
         currentPage.attr('data-id',recipeId);
-        //recipe.buyBtn(buyBtnId,recipeId);
 
-        recipe.initRecipe(currentPage);
+        recipe.initRecipe(currentPage,originalTitle,originalUrl);
 
       } else {
         //first page
@@ -112,7 +153,9 @@ const test = {
       }
 
       $(window).on('scroll', _.debounce(function() {
-        test.scrollListener(loadingArea,nextPage,nextUrl,currentPage,pageCount);
+        if (recipesArr.length > 1) {
+          test.scrollListener(loadingArea,nextPage,nextUrl,currentPage,pageCount);
+        }
       }, 200));
 
       $('body').on('click','.page .loading-area.added .loading-area-title', function() {
@@ -141,13 +184,13 @@ const test = {
         const parser = new DOMParser();
         const xmlDoc = parser.parseFromString(resp,"text/html");
         const tds = xmlDoc.getElementById("page");
-        //const recipeinfo = xmlDoc.querySelector('script[type="application/ld+json"]');
+
         const arrow = '<div class="svg"><svg width="32px" height="32px"><use xlink:href="/Assets/icons/symbols.svg#arrow-down"></use></svg><span class="loader"></span></div>';
         const pageNext = document.getElementById('page-next');
         let title = xmlDoc.title;
         title = '<span>Nästa recept:</span> ' + title.substring(0, title.indexOf('|'));
         pageNext.innerHTML=tds.innerHTML;
-        //document.querySelector('script[type="application/ld+json"]').innerHTML = recipeinfo.innerHTML;
+
         document.querySelector('#page .loading-area .loading-area-title').innerHTML=title + arrow;
         if (tds.classList.contains('recipepage--large')) {
           pageNext.classList.add('recipepage--large');
@@ -165,21 +208,15 @@ const test = {
     request.send();
   },
 
-  changeURL(pagePosition,title,currentUrl) {
-    const stateObj = { position: pagePosition };
+  changeURL(title,currentUrl) {
     document.title = title;
-    history.pushState(stateObj, title, currentUrl);
+    //history.pushState(stateObj, title, currentUrl);
+    history.replaceState(null, title, currentUrl);
   },
 
   changeActivePage(oldCur,newCur) {
     newCur.id = 'page';
-    test.changeURL('0',newCur.getElementsByTagName('h1')[0].innerHTML,newCur.getAttribute('data-href'));
-    // oldCur.querySelector('.icaOnlineBuyButton').classList.remove('buy-active');
-    // newCur.querySelector('.icaOnlineBuyButton').classList.add('buy-active');
-    // if (newCur.querySelector('.icaOnlineBuyButton').hasChildNodes()) {
-    //   newCur.querySelector('.icaOnlineBuyButton').innerHTML='';
-    //   //recipe.buyBtn(newCur.querySelector('.icaOnlineBuyButton').id, newCur.getAttribute('data-id'));
-    // }
+    test.changeURL(newCur.getElementsByTagName('h1')[0].innerHTML,newCur.getAttribute('data-href'));
   },
 
   scrollListener(loadingArea,nextPage,nextUrl,currentPage,pageCount) {
