@@ -205,13 +205,18 @@
 }
 
 .cro .page-next .recipe-content .gradient {
-  height: 370px;
+  height: 260px;
   position: absolute;
   bottom:0;
   left:0;
   width:100%;
-  cursor: pointer;
   background: linear-gradient(to top, rgba(255,255,255,1) 0%,rgba(255,255,255,0) 60%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+}
+
+.cro .page-next .recipe-content .gradient span {
+  display: block;
+  width: 100px;
+  margin: 200px auto 0;
 }
 
 .cro .page-next .recipe-details,
