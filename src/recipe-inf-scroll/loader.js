@@ -16,7 +16,7 @@ function init() {
   var head = document.querySelector('head');
 
   script.setAttribute('async', '');
-  script.setAttribute('src', 'https://cdn.rawgit.com/icacro/icacro/v1.0.242/src/recipe-inf-scroll/variant.3.min.js');
+  script.setAttribute('src', 'https://cdn.rawgit.com/icacro/icacro/v1.0.254/src/recipe-inf-scroll/variant.min.js');
 
   head.appendChild(script);
 }

@@ -99,6 +99,10 @@
   opacity: 1;
 }
 
+.cro .loading-area-title {
+  cursor: pointer;
+}
+
 .cro .loading-area .svg .loader {
   display: block;
   position: absolute;

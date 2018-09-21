@@ -7,8 +7,28 @@ const pageWrapper = ELM.get('#page-wrapper');
 
 const recipe = {
 
-  initRecipe(currentPage,originalTitle,originalUrl) {
+  initRecipe(currentPage,currentUrl,prevPage,pageCount,originalTitle,originalUrl) {
 
+    //fade out effect for fixed height ingredients/instructions
+    const gradient = ELM.create('a gradient').attr('href',currentUrl + '?recept');
+    const gradientBtn = ELM.create('span').css('button').html('Visa hela receptet');
+    gradient.append(gradientBtn);
+    currentPage.find('.recipe-content').append(gradient);
+    gradient.click((e) => {
+      //prepare for clean back button functionality
+      history.replaceState(null, originalTitle, originalUrl);
+    })
+
+    //update page id's and set attributes data-count + data-id
+    currentPage.attr('id','page');
+    prevPage.attr('id','page-' + prevPage.attr('data-count'));
+    currentPage.attr('data-count',pageCount);
+    const urlParts = currentUrl.split('/');
+    const nameParts = urlParts[2].split('-');
+    const recipeId = nameParts[nameParts.length - 1];
+    currentPage.attr('data-id',recipeId);
+
+    //styling of instructions
     const howtoSection = currentPage.find('howto-steps');
     if (howtoSection.exist()) {
       const howTo = ELM.create('div howto-steps');
@@ -38,36 +58,7 @@ const recipe = {
       wrapper.outerHTML = wrapper.innerHTML;
     }
 
-    const ratingsBtn = currentPage.find('.js-recipe-ratings-modal');
-    ratingsBtn.attr('href', '?betyg');
-
-    const printBtn = currentPage.find('.button--print');
-    printBtn.attr('href', '?skriv-ut');
-
-    const saveBtn = currentPage.find('.js-recipe-save');
-    if (saveBtn.attr('href') === '#') {
-      saveBtn.attr('href', '?spara');
-    }
-
-    ratingsBtn.click((e) => {
-      e.preventDefault();
-      const targetPage = e.target.closest('.page').getAttribute('data-href') + '?betyg';
-      history.replaceState(null, originalTitle, originalUrl);
-      document.location.href = targetPage;
-    })
-    printBtn.click((e) => {
-      e.preventDefault();
-      const targetPage = e.target.closest('.page').getAttribute('data-href') + '?skriv-ut';
-      history.replaceState(null, originalTitle, originalUrl);
-      document.location.href = targetPage;
-    })
-    saveBtn.click((e) => {
-      e.preventDefault();
-      const targetPage = e.target.closest('.page').getAttribute('data-href') + '?spara';
-      history.replaceState(null, originalTitle, originalUrl);
-      document.location.href = targetPage;
-    })
-
+    //styling of servings picker
     const servingsPicker = currentPage.find('.servings-picker--static');
     if (servingsPicker.exist() && currentPage.find('.ingredients--dynamic').exist()) {
       servingsPicker.html(' ');
@@ -99,10 +90,67 @@ const recipe = {
       })
     }
 
+    //manipulate ratings button
+    const ratingsBtn = currentPage.find('.js-recipe-ratings-modal');
+    ratingsBtn.attr('href', '?betyg');
+    ratingsBtn.click((e) => {
+      e.preventDefault();
+      const targetPage = e.target.closest('.page').getAttribute('data-href') + '?betyg';
+      recipe.relocate(targetPage, originalTitle, originalUrl);
+    })
+
+    //manipulate print button
+    const printBtn = currentPage.find('.button--print');
+    printBtn.attr('href', '?skriv-ut');
+    printBtn.click((e) => {
+      e.preventDefault();
+      const targetPage = e.target.closest('.page').getAttribute('data-href') + '?skriv-ut';
+      recipe.relocate(targetPage, originalTitle, originalUrl);
+    })
+
+    //manipulate save button
+    const saveBtn = currentPage.find('.js-recipe-save');
+    if (saveBtn.attr('href') === '#') {
+      saveBtn.attr('href', '?spara');
+    }
+    saveBtn.click((e) => {
+      e.preventDefault();
+      const targetPage = e.target.closest('.page').getAttribute('data-href') + '?spara';
+      recipe.relocate(targetPage, originalTitle, originalUrl);
+    })
+
   },
 
-  initFirst(page) {
 
+  relocate(targetPage, originalTitle, originalUrl) {
+    //prepare for clean back button functionality
+    history.replaceState(null, originalTitle, originalUrl);
+    document.location.href = targetPage;
+  },
+
+
+  triggerAction(type,action,el) {
+    //when original page has one of these params: recept, skriv-ut, betyg, spara, portioner
+    const elPosition = el.getBoundingClientRect();
+    window.scrollTo(0, elPosition.top - 200);
+    console.log(elPosition.top);
+
+    setTimeout(function () {
+      if(type==='click') {
+        el.click();
+      } else if (type==='select') {
+        const portions = action.split('?portioner=')[1];
+        el.value = portions;
+      }
+      //Remove param from URL once triggered
+      const currentUrl = window.location.href.split(action)[0];
+      history.replaceState(null, null, currentUrl);
+    }, 500);
+  },
+
+
+  hideComments(page) {
+    //only on first/full page
     const commentsSection = page.find('section.comments');
     if (commentsSection.exist()) {
       let commentsText;
@@ -118,7 +166,11 @@ const recipe = {
         commentsBtn.parent().find('.comments__inner-wrapper').toggle('open');
       })
     }
+  },
 
+
+  hideNutrientsClimate(page) {
+    //only on first/full page
     const nutrientsSection = page.find('.recipe-details .nutrients');
     const climateSection = page.find('.recipe-details .climate');
     if (nutrientsSection.exist() || climateSection.exist()) {
@@ -142,8 +194,7 @@ const recipe = {
         detailsBtn.parent().find('.row').toggle('open');
       });
     }
-
-  }
+  },
 
 };
 

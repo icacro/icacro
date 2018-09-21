@@ -15,78 +15,84 @@ import './style.css';
 import recipe from './recipe.js';
 
 let recipesArr = [];
-const maxlength = 25;
+const maxlength = 10;
 let nextPage,currentPage,nextUrl;
+let pageCount = 1;
 const pageWrapper = ELM.get('#page-wrapper');
 const originalUrl = window.location.pathname;
 const originalTitle = window.title;
 
 //Parameter-URLar - scrolla så berörda element syns i viewport
-//skicka med scrollpos?
+//skicka med scrollpos??
 
 //history/URLar???
-//om jag lämnar sidan via länk till annat recept (eller alla tänkbara sätt?) – gör ny replaceState till originalet
-//MÖJLIGT???? Bör fungera om länkarna skapas om?
+
+//ngn form av osynk loading-area-title
+
+//varför inte > 1 recept i iOS Safari
 
 const test = {
 
-  triggerAction(type,action,el) {
-    setTimeout(function () {
-      if(type==='click') {
-        el.click();
-      } else {
-        const portions = action.split('?portioner=')[1];
-        el.value = portions;
-      }
-      const currentUrl = window.location.search.split(action)[0];
-      history.replaceState(null, null, currentUrl);
-    }, 500);
-  },
-
   manipulateDom() {
+    //only on first/full page
 
-    if (window.location.search.indexOf('?betyg') > -1) {
+    //if page is loaded with an action parameter
+    if (window.location.search.indexOf('?recept') > -1) {
+      const el = document.querySelector('#page .recipe-content');
+      recipe.triggerAction('scroll','?recept',el);
+    } else if (window.location.search.indexOf('?betyg') > -1) {
       const el = document.querySelector('#page .js-recipe-ratings-modal');
-      test.triggerAction('click','?betyg',el);
+      recipe.triggerAction('click','?betyg',el);
     } else if (window.location.search.indexOf('?spara') > -1) {
       const el = document.querySelector('#page .js-recipe-save');
-      test.triggerAction('click','?spara',el);
+      recipe.triggerAction('click','?spara',el);
     } else if (window.location.search.indexOf('?skriv-ut') > -1) {
       const el = document.querySelector('#page .button--print');
-      test.triggerAction('click','?skriv-ut',el);
+      recipe.triggerAction('click','?skriv-ut',el);
     } else if (window.location.search.indexOf('?portioner=') > -1) {
       const el = document.querySelector('#page .js-servingspicker');
-      test.triggerAction('select','?portioner=' + portions,el);
+      const portions = window.location.search.split('?portioner=')[1];
+      recipe.triggerAction('select','?portioner=' + portions,el);
     }
 
     const currentUrl = originalUrl;
     const page = ELM.get('#page');
     const pageNext = page;
+    const urlParts = currentUrl.split('/');
+    const nameParts = urlParts[2].split('-');
+    const recipeId = nameParts[nameParts.length - 1];
+
+    page.attr('data-id',recipeId);
     page.attr('data-count',1)
 
     recipesArr.push(currentUrl);
 
-    //bättre placering för dessa?
-    const urlParts = currentUrl.split('/');
-    const nameParts = urlParts[2].split('-');
-    const recipeId = nameParts[nameParts.length - 1];
-    page.attr('data-id',recipeId);
-
-    recipe.initFirst(page);
-
+    recipe.hideComments(page);
+    recipe.hideNutrientsClimate(page);
     test.gotoPage(pageNext,page,currentUrl);
 
+    $('body').on('click','.page .loading-area.added .loading-area-title', function() {
+      const elem = $(this).closest('.page').next().attr('id');
+      test.scrollToElement(elem);
+    });
+
+    $(window).on('scroll', _.debounce(function() {
+      test.scrollListener(nextPage,nextUrl,currentPage,pageCount);
+    }, 100));
+
   },
+
 
   gotoPage(pageNext,page,currentUrl) {
 
     currentPage = pageNext;
     const prevPage = page;
     const pages = document.querySelectorAll('.page');
-    const pageCount = pages.length;
+    pageCount = pages.length;
 
     if (currentPage.find('h1').exist()) {
 
+      //build loading area
       const loadingAreaTitle = ELM.create('p loading-area-title');
       const loadingArea = ELM.create('div loading-area');
       loadingArea.append(loadingAreaTitle);
@@ -95,7 +101,7 @@ const test = {
       const svg = '<svg><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/Assets/icons/sprite.svg#arrow-down"></use></svg>';
 
       if (pageCount >= maxlength) {
-        //no more scrolling
+        //no more scrolling if max length is reached
         document.getElementById('footer').classList.add('visible');
       } else {
 
@@ -106,7 +112,12 @@ const test = {
           for (var i = 0; i < relatedList.length; i++) {
             recipesArr.push(relatedList[i].getAttribute('href'));
           }
-          recipesArr = test.removeDuplicates(recipesArr);
+          recipesArr = removeDuplicates(recipesArr);
+        }
+
+        function removeDuplicates(recipesArr){
+          recipesArr = Array.from(new Set(recipesArr))
+          return recipesArr
         }
 
         if (recipesArr.length > 1) {
@@ -122,57 +133,30 @@ const test = {
 
       }
 
+      let loadingSuccess=0;
+
       if (currentPage !== prevPage) {
         //meaning "not first page"
 
-        const gradient = ELM.create('a gradient').attr('href',currentUrl + '?recept');
-        const gradientBtn = ELM.create('span').css('button').html('Visa hela receptet');
-        gradient.append(gradientBtn);
-        currentPage.find('.recipe-content').append(gradient);
-
-        gradient.click((e) => {
-          history.replaceState(null, originalTitle, originalUrl);
-        })
-
-        currentPage.attr('id','page');
-        prevPage.attr('id','page-' + prevPage.attr('data-count'));
         test.changeURL(title,currentUrl);
-        currentPage.attr('data-count',pageCount);
-
-        const urlParts = currentUrl.split('/');
-        const nameParts = urlParts[2].split('-');
-        const recipeId = nameParts[nameParts.length - 1];
-        currentPage.attr('data-id',recipeId);
-
-        recipe.initRecipe(currentPage,originalTitle,originalUrl);
+        if (currentUrl) {
+          loadingSuccess=1;
+          recipe.initRecipe(currentPage,currentUrl,prevPage,pageCount,originalTitle,originalUrl);
+        } else {
+          test.loadingFailed();
+        }
 
       } else {
         //first page
+        loadingSuccess=1;
         currentPage.attr('data-count','1');
         currentPage.attr('data-href',currentUrl);
       }
 
-      $(window).on('scroll', _.debounce(function() {
-        if (recipesArr.length > 1) {
-          test.scrollListener(loadingArea,nextPage,nextUrl,currentPage,pageCount);
-        }
-      }, 200));
-
-      $('body').on('click','.page .loading-area.added .loading-area-title', function() {
-        const elem = $(this).closest('.page').next().attr('id');
-        test.scrollToElement(elem);
-      });
-
     } else {
-      document.querySelector('#page .loading-area .loading-area-title').innerHTML='Vi lyckades tyvärr inte ladda nästa recept.<br><a href="' + currentPage.attr('data-href') + '">Prova igen!</a>';
-      document.querySelector('#page .loading-area').classList.add('reload');
+      test.loadingFailed();
     }
 
-  },
-
-  removeDuplicates(recipesArr){
-    recipesArr = Array.from(new Set(recipesArr))
-    return recipesArr
   },
 
   loadNextPage(url) {
@@ -208,31 +192,35 @@ const test = {
     request.send();
   },
 
+
   changeURL(title,currentUrl) {
     document.title = title;
     //history.pushState(stateObj, title, currentUrl);
     history.replaceState(null, title, currentUrl);
   },
 
+
   changeActivePage(oldCur,newCur) {
     newCur.id = 'page';
     test.changeURL(newCur.getElementsByTagName('h1')[0].innerHTML,newCur.getAttribute('data-href'));
   },
 
-  scrollListener(loadingArea,nextPage,nextUrl,currentPage,pageCount) {
-    if (document.getElementById('page')) {
+
+  scrollListener(nextPage,nextUrl,currentPage,pageCount) {
+    if (recipesArr.length > 1 && document.getElementById('page')) {
      const cur = document.getElementById('page');
      const pageHeight = cur.offsetHeight;
      const startPos = cur.offsetTop - 70;
      const endPos = startPos + pageHeight - 300;
      const currentPos = window.pageYOffset + window.innerHeight;
+     const loadingArea = cur.querySelector('.loading-area');
      if (currentPos < startPos) {
        //activate previous page
        test.goToPrevPage(cur);
      } else if (currentPos > endPos) {
        if(window.scrollY + window.innerHeight >= document.body.scrollHeight - 300) {
-         if (!loadingArea.hasClass('added')) {
-           loadingArea.css('added');
+         if (!loadingArea.classList.contains('added')) {
+           loadingArea.classList.add('added');
            window.setTimeout(function () {
              //activate new page
              test.gotoPage(nextPage,currentPage,nextUrl);
@@ -246,6 +234,7 @@ const test = {
    }
   },
 
+
   goToPrevPage(cur) {
     if (cur.getAttribute('data-count') > 2) {
       cur.id = 'page-' + cur.getAttribute('data-count');
@@ -255,6 +244,7 @@ const test = {
       test.changeActivePage(cur, document.getElementById('page-1'));
     }
   },
+
 
   goToNextPage(cur) {
     if (cur.nextSibling.id && cur.nextSibling.id !== 'page-next' && cur.nextSibling.id !== 'page') {
@@ -270,6 +260,7 @@ const test = {
     }
   },
 
+
   scrollToElement(elem) {
     const elPosition = document.getElementById(elem).offsetTop;
     $('html,body').animate({
@@ -277,11 +268,15 @@ const test = {
 		}, 400);
   },
 
+  loadingFailed() {
+    document.querySelector('#page .loading-area .loading-area-title').innerHTML='Vi lyckades tyvärr inte ladda nästa recept.<br><a href="' + currentPage.attr('data-href') + '">Prova igen!</a>';
+    document.querySelector('#page .loading-area').classList.add('reload');
+  },
+
 };
+
 
 $(document).ready(() => {
   Object.assign(test, CROUTIL());
-  if (window.self === window.top) {
-    test.manipulateDom();
-  }
+  test.manipulateDom();
 });
