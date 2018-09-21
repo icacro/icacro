@@ -143,4 +143,9 @@
   .cro header.page-header .searchicon {
     display: none;
   }
+  .cro div.filter-search {
+    max-width: 30em;
+    margin-left: auto;
+    margin-right: auto;
+  }
 }

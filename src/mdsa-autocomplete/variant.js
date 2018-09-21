@@ -41,10 +41,10 @@ const test = {
   createAutocompleteItem(filter) {
     return $(`<li/>`)
       .text(filter.name)
-      .click(() => {
+      /*.click(() => {
         /*if (filter.element.attr('href') === '#') {
           test.createFilterElement(filter);
-        }*/
+        }
         if (filter.element.parent().hasClass('subcat')) {
           test.searchField.val(filter.name);
           $('.search > button:submit').click();
@@ -52,7 +52,20 @@ const test = {
           filter.element[0].click();
         }
         test.searchField.val('');
-      });
+      });*/
+  },
+  onItemSelected(name) {
+    console.log(test.filters);
+    var filter = test.filters.find(function(element) {
+      return element.name == name;
+    });
+
+    if (filter.element.parent().hasClass('subcat')) {
+      test.searchField.val(filter.name);
+      $('.search > button:submit').click();
+    } else {
+      filter.element[0].click();
+    }
   },
   getAutocompleteList(list) {
     if (!list.length) return undefined;
@@ -60,7 +73,8 @@ const test = {
     return $('<ul class="autocomplete"/>').append(
       test.sortList(list).map(test.createAutocompleteItem),
     ).selectable().on('selectableselected', function(e, li) {
-      alert(li);
+      var name = li.selected == undefined ? $(li).text() : li.selected.textContent;
+      test.onItemSelected(name);
     });
   },
   manipulateDom() {
@@ -95,11 +109,29 @@ const test = {
   searchFieldKeyHandler(e) {
     e = e || window.event;
 
+    var $item = $('.autocomplete:first li.ui-selecting');
+
+    if (e.keyCode == '13' && $item.length) {
+      //e.preventDefault();
+      $item.removeClass('ui-selecting');
+      $item.addClass('ui-selected');
+      $item.parent().trigger('selectableselected', $item);
+    }
+
     if (e.keyCode == '40') { // arrow down
-      alert("test");
-      $('.autocomplete').first('li').select();
+      if($item.length) {
+        $item.next().addClass('ui-selecting');
+        $item.removeClass('ui-selecting');
+      }
+      else {
+        $('.autocomplete:first li:first').addClass('ui-selecting');
+      }
     }
     if (e.keyCode == '38') { //arrow up
+      if($item.length){
+        $item.prev().addClass('ui-selecting');
+        $item.removeClass('ui-selecting');
+      }
     }
   },
   searchFieldInputHandler(e) {
