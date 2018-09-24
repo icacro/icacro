@@ -90,34 +90,40 @@ const recipe = {
       })
     }
 
-    //manipulate ratings button
+    //edit ratings button
     const ratingsBtn = currentPage.find('.js-recipe-ratings-modal');
-    ratingsBtn.attr('href', '?betyg');
-    ratingsBtn.click((e) => {
-      e.preventDefault();
-      const targetPage = e.target.closest('.page').getAttribute('data-href') + '?betyg';
-      recipe.relocate(targetPage, originalTitle, originalUrl);
-    })
-
-    //manipulate print button
-    const printBtn = currentPage.find('.button--print');
-    printBtn.attr('href', '?skriv-ut');
-    printBtn.click((e) => {
-      e.preventDefault();
-      const targetPage = e.target.closest('.page').getAttribute('data-href') + '?skriv-ut';
-      recipe.relocate(targetPage, originalTitle, originalUrl);
-    })
-
-    //manipulate save button
-    const saveBtn = currentPage.find('.js-recipe-save');
-    if (saveBtn.attr('href') === '#') {
-      saveBtn.attr('href', '?spara');
+    if(ratingsBtn) {
+      ratingsBtn.attr('href', '?betyg');
+      ratingsBtn.click((e) => {
+        e.preventDefault();
+        const targetPage = e.target.closest('.page').getAttribute('data-href') + '?betyg';
+        recipe.relocate(targetPage, originalTitle, originalUrl);
+      })
     }
-    saveBtn.click((e) => {
-      e.preventDefault();
-      const targetPage = e.target.closest('.page').getAttribute('data-href') + '?spara';
-      recipe.relocate(targetPage, originalTitle, originalUrl);
-    })
+
+    //edit print button
+    const printBtn = currentPage.find('.button--print');
+    if(printBtn) {
+      printBtn.attr('href', '?skriv-ut');
+      printBtn.click((e) => {
+        e.preventDefault();
+        const targetPage = e.target.closest('.page').getAttribute('data-href') + '?skriv-ut';
+        recipe.relocate(targetPage, originalTitle, originalUrl);
+      })
+    }
+
+    //edit save button
+    const saveBtn = currentPage.find('.button--heart');
+    if(saveBtn) {
+      if (saveBtn.attr('href') === '#') {
+        saveBtn.attr('href', '?spara');
+      }
+      saveBtn.click((e) => {
+        e.preventDefault();
+        const targetPage = e.target.closest('.page').getAttribute('data-href') + '?spara';
+        recipe.relocate(targetPage, originalTitle, originalUrl);
+      })
+    }
 
   },
 
@@ -125,7 +131,7 @@ const recipe = {
   relocate(targetPage, originalTitle, originalUrl) {
     //prepare for clean back button functionality
     history.replaceState(null, originalTitle, originalUrl);
-    document.location.href = targetPage;
+    window.location.href = targetPage;
   },
 
 
@@ -133,7 +139,6 @@ const recipe = {
     //when original page has one of these params: recept, skriv-ut, betyg, spara, portioner
     const elPosition = el.getBoundingClientRect();
     window.scrollTo(0, elPosition.top - 200);
-    console.log(elPosition.top);
 
     setTimeout(function () {
       if(type==='click') {
@@ -141,6 +146,7 @@ const recipe = {
       } else if (type==='select') {
         const portions = action.split('?portioner=')[1];
         el.value = portions;
+        el.dispatchEvent(new Event('change'));
       }
       //Remove param from URL once triggered
       const currentUrl = window.location.href.split(action)[0];

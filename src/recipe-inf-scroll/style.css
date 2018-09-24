@@ -37,7 +37,7 @@
 
 .cro .recipe-image-square {
   opacity: 1;
-  transition: all 0.75s ease-out;
+  transition: opacity 0.75s ease-out;
   transition-delay: 0.25s;
 }
 
@@ -202,25 +202,25 @@
 }
 
 .cro .page-next .recipe-content {
-  height: 320px;
+  height: 340px;
   overflow: hidden;
   padding-top: 5px;
   position: relative;
 }
 
 .cro .page-next .recipe-content .gradient {
-  height: 260px;
+  height: 300px;
   position: absolute;
   bottom:0;
   left:0;
   width:100%;
-  background: linear-gradient(to top, rgba(255,255,255,1) 0%,rgba(255,255,255,0) 60%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  background: linear-gradient(to top, rgba(255,255,255,1) 0%,rgba(255,255,255,0) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
 }
 
 .cro .page-next .recipe-content .gradient span {
   display: block;
   width: 100px;
-  margin: 200px auto 0;
+  margin: 240px auto 0;
 }
 
 .cro .page-next .recipe-details,
