@@ -37,7 +37,7 @@ const test = {
       const el = document.querySelector('#page .js-recipe-ratings-modal');
       recipe.triggerAction('click','?betyg',el);
     } else if (window.location.search.indexOf('?spara') > -1) {
-      const el = document.querySelector('#page .js-recipe-save');
+      const el = document.querySelector('#page .button--heart');
       recipe.triggerAction('click','?spara',el);
     } else if (window.location.search.indexOf('?skriv-ut') > -1) {
       const el = document.querySelector('#page .button--print');
