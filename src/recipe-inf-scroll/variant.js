@@ -15,21 +15,14 @@ import './style.css';
 import recipe from './recipe.js';
 
 let recipesArr = [];
-const maxlength = 10;
+const maxlength = 25;
 let nextPage,currentPage,nextUrl;
 let pageCount = 1;
 const pageWrapper = ELM.get('#page-wrapper');
 const originalUrl = window.location.pathname;
 const originalTitle = window.title;
 
-//Parameter-URLar - scrolla så berörda element syns i viewport
-//skicka med scrollpos??
-
-//history/URLar???
-
-//ngn form av osynk loading-area-title
-
-//varför inte > 1 recept i iOS Safari
+//varför inte > 1 recept i iOS Safari?
 
 const test = {
 
@@ -120,7 +113,7 @@ const test = {
           return recipesArr
         }
 
-        if (recipesArr.length > 1) {
+        if (recipesArr.length > 1 && !loadingArea.hasClass('reload')) {
           nextUrl = recipesArr[recipesArr.indexOf(currentUrl)+1];
           test.loadNextPage(nextUrl);
           currentPage.append(loadingArea);
@@ -133,14 +126,11 @@ const test = {
 
       }
 
-      let loadingSuccess=0;
-
       if (currentPage !== prevPage) {
         //meaning "not first page"
 
         test.changeURL(title,currentUrl);
         if (currentUrl) {
-          loadingSuccess=1;
           recipe.initRecipe(currentPage,currentUrl,prevPage,pageCount,originalTitle,originalUrl);
         } else {
           test.loadingFailed();
@@ -148,7 +138,6 @@ const test = {
 
       } else {
         //first page
-        loadingSuccess=1;
         currentPage.attr('data-count','1');
         currentPage.attr('data-href',currentUrl);
       }
@@ -169,12 +158,12 @@ const test = {
         const xmlDoc = parser.parseFromString(resp,"text/html");
         const tds = xmlDoc.getElementById("page");
 
-        const arrow = '<div class="svg"><svg width="32px" height="32px"><use xlink:href="/Assets/icons/symbols.svg#arrow-down"></use></svg><span class="loader"></span></div>';
         const pageNext = document.getElementById('page-next');
-        let title = xmlDoc.title;
-        title = '<span>Nästa recept:</span> ' + title.substring(0, title.indexOf('|'));
         pageNext.innerHTML=tds.innerHTML;
 
+        let title = xmlDoc.title;
+        title = '<span>Nästa recept:</span> ' + title.substring(0, title.indexOf('|'));
+        const arrow = '<div class="svg"><svg width="32px" height="32px"><use xlink:href="/Assets/icons/symbols.svg#arrow-down"></use></svg><span class="loader"></span></div>';
         document.querySelector('#page .loading-area .loading-area-title').innerHTML=title + arrow;
         if (tds.classList.contains('recipepage--large')) {
           pageNext.classList.add('recipepage--large');
@@ -207,7 +196,7 @@ const test = {
 
 
   scrollListener(nextPage,nextUrl,currentPage,pageCount) {
-    if (recipesArr.length > 1 && document.getElementById('page')) {
+    if (pageCount < maxlength && recipesArr.length > 1 && document.getElementById('page')) {
      const cur = document.getElementById('page');
      const pageHeight = cur.offsetHeight;
      const startPos = cur.offsetTop - 70;
@@ -219,11 +208,13 @@ const test = {
        test.goToPrevPage(cur);
      } else if (currentPos > endPos) {
        if(window.scrollY + window.innerHeight >= document.body.scrollHeight - 300) {
-         if (!loadingArea.classList.contains('added')) {
+         if (!loadingArea.classList.contains('added') && !loadingArea.classList.contains('reload')) {
            loadingArea.classList.add('added');
            window.setTimeout(function () {
              //activate new page
-             test.gotoPage(nextPage,currentPage,nextUrl);
+             if (!loadingArea.classList.contains('reload')) {
+               test.gotoPage(nextPage,currentPage,nextUrl);
+             }
            }, 1000);
          }
        } else {

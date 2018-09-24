@@ -90,7 +90,7 @@ const recipe = {
       })
     }
 
-    //manipulate ratings button
+    //edit ratings button
     const ratingsBtn = currentPage.find('.js-recipe-ratings-modal');
     ratingsBtn.attr('href', '?betyg');
     ratingsBtn.click((e) => {
@@ -99,7 +99,7 @@ const recipe = {
       recipe.relocate(targetPage, originalTitle, originalUrl);
     })
 
-    //manipulate print button
+    //edit print button
     const printBtn = currentPage.find('.button--print');
     printBtn.attr('href', '?skriv-ut');
     printBtn.click((e) => {
@@ -108,16 +108,18 @@ const recipe = {
       recipe.relocate(targetPage, originalTitle, originalUrl);
     })
 
-    //manipulate save button
-    const saveBtn = currentPage.find('.js-recipe-save');
-    if (saveBtn.attr('href') === '#') {
-      saveBtn.attr('href', '?spara');
-    }
-    saveBtn.click((e) => {
-      e.preventDefault();
-      const targetPage = e.target.closest('.page').getAttribute('data-href') + '?spara';
-      recipe.relocate(targetPage, originalTitle, originalUrl);
-    })
+    //edit save button
+    // const saveBtn = currentPage.find('.js-recipe-save');
+    // if(saveBtn) {
+    //   if (saveBtn.attr('href') === '#') {
+    //     saveBtn.attr('href', '?spara');
+    //   }
+    //   saveBtn.click((e) => {
+    //     e.preventDefault();
+    //     const targetPage = e.target.closest('.page').getAttribute('data-href') + '?spara';
+    //     recipe.relocate(targetPage, originalTitle, originalUrl);
+    //   })
+    // }
 
   },
 
@@ -133,7 +135,6 @@ const recipe = {
     //when original page has one of these params: recept, skriv-ut, betyg, spara, portioner
     const elPosition = el.getBoundingClientRect();
     window.scrollTo(0, elPosition.top - 200);
-    console.log(elPosition.top);
 
     setTimeout(function () {
       if(type==='click') {
