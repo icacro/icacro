@@ -131,7 +131,7 @@ const recipe = {
   relocate(targetPage, originalTitle, originalUrl) {
     //prepare for clean back button functionality
     history.replaceState(null, originalTitle, originalUrl);
-    document.location.href = targetPage;
+    window.location.href = targetPage;
   },
 
 
