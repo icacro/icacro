@@ -113,17 +113,17 @@ const recipe = {
     }
 
     //edit save button
-    const saveBtn = currentPage.find('.js-recipe-save');
-    // if(saveBtn) {
-    //   if (saveBtn.attr('href') === '#') {
-    //     saveBtn.attr('href', '?spara');
-    //   }
-    //   saveBtn.click((e) => {
-    //     e.preventDefault();
-    //     const targetPage = e.target.closest('.page').getAttribute('data-href') + '?spara';
-    //     recipe.relocate(targetPage, originalTitle, originalUrl);
-    //   })
-    // }
+    const saveBtn = currentPage.find('.button--heart');
+    if(saveBtn) {
+      if (saveBtn.attr('href') === '#') {
+        saveBtn.attr('href', '?spara');
+      }
+      saveBtn.click((e) => {
+        e.preventDefault();
+        const targetPage = e.target.closest('.page').getAttribute('data-href') + '?spara';
+        recipe.relocate(targetPage, originalTitle, originalUrl);
+      })
+    }
 
   },
 
