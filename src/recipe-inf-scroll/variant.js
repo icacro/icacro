@@ -150,7 +150,7 @@ const test = {
 
   loadNextPage(url) {
     var request = new XMLHttpRequest();
-    request.open('GET', url, true);
+    request.open('GET', 'https://www.ica.se' + url, true);
     request.onload = function() {
       if (request.status >= 200 && request.status < 400) {
         const resp = request.responseText;
