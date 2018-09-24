@@ -92,38 +92,38 @@ const recipe = {
 
     //edit ratings button
     const ratingsBtn = currentPage.find('.js-recipe-ratings-modal');
-    // if(ratingsBtn) {
-    //   ratingsBtn.attr('href', '?betyg');
-    //   ratingsBtn.click((e) => {
-    //     e.preventDefault();
-    //     const targetPage = e.target.closest('.page').getAttribute('data-href') + '?betyg';
-    //     recipe.relocate(targetPage, originalTitle, originalUrl);
-    //   })
-    // }
+    if(ratingsBtn) {
+      ratingsBtn.attr('href', '?betyg');
+      ratingsBtn.click((e) => {
+        e.preventDefault();
+        const targetPage = e.target.closest('.page').getAttribute('data-href') + '?betyg';
+        recipe.relocate(targetPage, originalTitle, originalUrl);
+      })
+    }
 
     //edit print button
     const printBtn = currentPage.find('.button--print');
-    // if(printBtn) {
-    //   printBtn.attr('href', '?skriv-ut');
-    //   printBtn.click((e) => {
-    //     e.preventDefault();
-    //     const targetPage = e.target.closest('.page').getAttribute('data-href') + '?skriv-ut';
-    //     recipe.relocate(targetPage, originalTitle, originalUrl);
-    //   })
-    // }
+    if(printBtn) {
+      printBtn.attr('href', '?skriv-ut');
+      printBtn.click((e) => {
+        e.preventDefault();
+        const targetPage = e.target.closest('.page').getAttribute('data-href') + '?skriv-ut';
+        recipe.relocate(targetPage, originalTitle, originalUrl);
+      })
+    }
 
     //edit save button
     const saveBtn = currentPage.find('.js-recipe-save');
-    // if(saveBtn) {
-    //   if (saveBtn.attr('href') === '#') {
-    //     saveBtn.attr('href', '?spara');
-    //   }
-    //   saveBtn.click((e) => {
-    //     e.preventDefault();
-    //     const targetPage = e.target.closest('.page').getAttribute('data-href') + '?spara';
-    //     recipe.relocate(targetPage, originalTitle, originalUrl);
-    //   })
-    // }
+    if(saveBtn) {
+      if (saveBtn.attr('href') === '#') {
+        saveBtn.attr('href', '?spara');
+      }
+      saveBtn.click((e) => {
+        e.preventDefault();
+        const targetPage = e.target.closest('.page').getAttribute('data-href') + '?spara';
+        recipe.relocate(targetPage, originalTitle, originalUrl);
+      })
+    }
 
   },
 
