@@ -30,21 +30,22 @@ const test = {
     //only on first/full page
 
     //if page is loaded with an action parameter
-    if (window.location.search.indexOf('?recept') > -1) {
+    const params = new Map(location.search.slice(1).split('&').map(kv => kv.split('=')));
+    if (params.has('recept')) {
       const el = document.querySelector('#page .recipe-content');
       recipe.triggerAction('scroll','?recept',el);
-    } else if (window.location.search.indexOf('?betyg') > -1) {
+    } else if (params.has('betyg')) {
       const el = document.querySelector('#page .js-recipe-ratings-modal');
       recipe.triggerAction('click','?betyg',el);
-    } else if (window.location.search.indexOf('?spara') > -1) {
+    } else if (params.has('spara')) {
       const el = document.querySelector('#page .button--heart');
       recipe.triggerAction('click','?spara',el);
-    } else if (window.location.search.indexOf('?skriv-ut') > -1) {
+    } else if (params.has('skriv-ut')) {
       const el = document.querySelector('#page .button--print');
       recipe.triggerAction('click','?skriv-ut',el);
-    } else if (window.location.search.indexOf('?portioner=') > -1) {
+    } else if (params.has('portioner')) {
       const el = document.querySelector('#page .js-servingspicker');
-      const portions = window.location.search.split('?portioner=')[1];
+      const portions = params.get('portioner');
       recipe.triggerAction('select','?portioner=' + portions,el);
     }
 
