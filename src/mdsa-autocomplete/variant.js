@@ -94,8 +94,12 @@ const test = {
 
     //test.searchField = $('.cro .recipe-search').find('#search2');
 
+    // placeholder text: sök + rubrik (h1) ex: sök vegansk efterrätt
+    var searchTitle = $("meta[name='PageName']").attr("content");
+    searchTitle = searchTitle == undefined ? "recept" : searchTitle.toLowerCase();
+
     test.searchField
-      .attr('placeholder', 'T ex nyttig middag, lax, pasta eller wok')
+      .attr('placeholder', 'Sök ' + searchTitle)
       .attr('autocomplete', 'off')
       .on('input', throttle(test.searchFieldInputHandler, 300))
       .on('blur', test.searchFieldBlurHandler)
