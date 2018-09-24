@@ -136,18 +136,17 @@ const recipe = {
 
 
   triggerAction(type,action,el) {
-    console.log('tA1');
     //when original page has one of these params: recept, skriv-ut, betyg, spara, portioner
     const elPosition = el.getBoundingClientRect();
     window.scrollTo(0, elPosition.top - 200);
 
     setTimeout(function () {
       if(type==='click') {
-        console.log('tA2');
         el.click();
       } else if (type==='select') {
         const portions = action.split('?portioner=')[1];
         el.value = portions;
+        el.dispatchEvent(new Event('change'));
       }
       //Remove param from URL once triggered
       const currentUrl = window.location.href.split(action)[0];

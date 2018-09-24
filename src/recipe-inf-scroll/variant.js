@@ -32,23 +32,18 @@ const test = {
     //if page is loaded with an action parameter
     const params = new Map(location.search.slice(1).split('&').map(kv => kv.split('=')));
     if (params.has('recept')) {
-      console.log('p-recept');
       const el = document.querySelector('#page .recipe-content');
       recipe.triggerAction('scroll','?recept',el);
     } else if (params.has('betyg')) {
-      console.log('p-betyg');
       const el = document.querySelector('#page .js-recipe-ratings-modal');
       recipe.triggerAction('click','?betyg',el);
     } else if (params.has('spara')) {
-      console.log('p-spara');
       const el = document.querySelector('#page .button--heart');
       recipe.triggerAction('click','?spara',el);
     } else if (params.has('skriv-ut')) {
-      console.log('p-skriv-ut');
       const el = document.querySelector('#page .button--print');
       recipe.triggerAction('click','?skriv-ut',el);
     } else if (params.has('portioner')) {
-      console.log('p-portioner');
       const el = document.querySelector('#page .js-servingspicker');
       const portions = params.get('portioner');
       recipe.triggerAction('select','?portioner=' + portions,el);
