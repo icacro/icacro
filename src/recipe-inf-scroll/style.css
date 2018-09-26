@@ -19,61 +19,31 @@
   background: #f3f0eb;
   padding-bottom: 340px;
   text-align: center;
-  padding-top: 70px;
-}
-
-.cro #page-next {
-  height: 0;
-  opacity: 0;
-  overflow: hidden;
-  padding-top: 50px !important;
-}
-
-.cro #page {
-  height: auto;
-  opacity: 1;
-  overflow: visible;
-}
-
-.cro .recipe-image-square {
-  opacity: 1;
-  transition: opacity 0.75s ease-out;
-  transition-delay: 0.25s;
-}
-
-.cro #page-next .recipe-image-square {
-  margin-top: -60px;
-  opacity: 0;
-}
-
-.cro .page {
+  padding-top: 40px;
   transition: all 0.5s ease-out;
-}
-
-.cro .page + .page.recipepage {
-  margin-top: -120px;
-  padding-top: 0 !important;
-}
-
-.cro .page + .page.recipepage.recipepage--small {
-  padding-top: 0 !important;
 }
 
 .cro .loading-area p {
   width:100%;
-  max-width: 500px;
+  max-width: 700px;
   margin: 0 auto;
+  padding: 0 30px;
   font-size: 1em;
   transition: opacity 0.5s ease-in-out;
 }
 
-.cro .loading-area .loading-area-title span {
-  font-weight: lighter;
+.cro .loading-area .loading-area-title a {
+  color: #3F3F40;
+}
+
+.cro .loading-area .loading-area-title .title {
+  font-weight: bold;
   display: block;
 }
 
-.cro .loading-area .loading-area-title {
-  font-weight: bold;
+.cro .loading-area .loading-area-title .next-label {
+  font-weight: lighter;
+  display: block;
 }
 
 .cro .loading-area svg {
@@ -93,14 +63,7 @@
   margin: 20px auto;
   overflow: hidden;
   position: relative;
-}
-
-.cro .loading-area.added svg {
-  opacity: 1;
-}
-
-.cro .loading-area-title {
-  cursor: pointer;
+  transition: opacity 0.5s ease-in-out;
 }
 
 .cro .loading-area .svg .loader {
@@ -115,21 +78,87 @@
   border-left: 1rem solid #EB1F07;
 }
 
+.cro .loading-area.added .loading-area-title {
+  cursor: pointer;
+}
+
 .cro .loading-area.added .loader {
   opacity: 0;
   -webkit-animation: load8 1.1s 3 linear;
   animation: load8 1.1s 3 linear;
+  cursor: pointer;
 }
 
-.cro .loading-area.reload .loading-area-title {
+.cro .loading-area.added svg {
+  opacity: 1;
+}
+
+.cro .loading-area.added .svg {
+  opacity: 0;
+}
+
+.cro .loading-area.reload {
+  margin-bottom: 70px;
+  padding-bottom: 0;
+}
+
+.cro .loading-area.reload .loading-area-title .next-label,
+.cro .loading-area.reload .svg {
+  display: none;
+}
+
+.cro .loading-area.reload .loading-area-title .title::before,
+.cro .loading-area.reload .loading-area-title .title::after {
+  display: block;
   font-weight: lighter;
+  content: 'Vi misslyckades tyvärr med att ladda';
 }
 
-.cro .loading-area.reload .loading-area-title a {
-  font-weight: bold;
+.cro .loading-area.reload .loading-area-title .title::after {
+  content: 'Prova igen';
+  text-decoration: underline;
 }
 
-.cro section.comments,
+
+
+.cro #page-next {
+  height: 0;
+  opacity: 0;
+  overflow: hidden;
+  padding-top: 50px !important;
+  margin-top: -120px;
+}
+
+.cro #page {
+  height: auto;
+  opacity: 1;
+  overflow: visible;
+}
+
+.cro .recipe-image-square {
+  opacity: 1;
+  transition: all 0.5s ease-out;
+}
+
+.cro #page-next .recipe-image-square {
+  margin-top: -60px;
+  opacity: 0;
+}
+
+.cro .page {
+  transition: all 0.5s ease-out;
+}
+
+.cro .page + .page.recipepage {
+  margin-top: -220px;
+  padding-top: 0 !important;
+}
+
+.cro .page + .page.recipepage.recipepage--small {
+  padding-top: 0 !important;
+}
+
+/*.cro section.comments,
 .cro .recipe-details {
   position: relative;
   padding-bottom: 20px;
@@ -153,7 +182,7 @@
 .cro .page .comments__inner-wrapper {
   height: 0;
   overflow: hidden;
-}
+}*/
 
 .cro .recipe-details .row.open,
 .cro .comments__inner-wrapper.open {

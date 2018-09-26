@@ -155,52 +155,52 @@ const recipe = {
   },
 
 
-  hideComments(page) {
-    //only on first/full page
-    const commentsSection = page.find('section.comments');
-    if (commentsSection.exist()) {
-      let commentsText;
-      const commentsCount = page.find('.comments__header__text--votes');
-      if (commentsCount.exist()) {
-        commentsText = 'Kommentarer '+ commentsCount.text();
-      } else {
-        commentsText = 'Kommentarer (0)';
-      }
-      const commentsBtn = ELM.create('div comments-toggle button--link').append(commentsText).css('button');
-      commentsSection.append(commentsBtn);
-      commentsBtn.click(() => {
-        commentsBtn.parent().find('.comments__inner-wrapper').toggle('open');
-      })
-    }
-  },
-
-
-  hideNutrientsClimate(page) {
-    //only on first/full page
-    const nutrientsSection = page.find('.recipe-details .nutrients');
-    const climateSection = page.find('.recipe-details .climate');
-    if (nutrientsSection.exist() || climateSection.exist()) {
-      let detailsText;
-      if (nutrientsSection.exist() && climateSection.exist()) {
-        detailsText = 'Näringsvärde och klimatguide';
-      } else if (nutrientsSection.exist()) {
-        detailsText = 'Näringsvärde';
-      } else if (climateSection.exist()) {
-        detailsText = 'Klimatguide';
-      }
-      const detailsBtn = ELM.create('div details-toggle button--link').append(detailsText).css('button');
-      page.find('.recipe-details').append(detailsBtn);
-      detailsBtn.click(() => {
-        if (climateSection.exist()) {
-          document.querySelector('.climate .button--link').click();
-        }
-        if (nutrientsSection.exist()) {
-          document.querySelector('.nutrients .button--link').click();
-        }
-        detailsBtn.parent().find('.row').toggle('open');
-      });
-    }
-  },
+  // hideComments(page) {
+  //   //only on first/full page
+  //   const commentsSection = page.find('section.comments');
+  //   if (commentsSection.exist()) {
+  //     let commentsText;
+  //     const commentsCount = page.find('.comments__header__text--votes');
+  //     if (commentsCount.exist()) {
+  //       commentsText = 'Kommentarer '+ commentsCount.text();
+  //     } else {
+  //       commentsText = 'Kommentarer (0)';
+  //     }
+  //     const commentsBtn = ELM.create('div comments-toggle button--link').append(commentsText).css('button');
+  //     commentsSection.append(commentsBtn);
+  //     commentsBtn.click(() => {
+  //       commentsBtn.parent().find('.comments__inner-wrapper').toggle('open');
+  //     })
+  //   }
+  // },
+  //
+  //
+  // hideNutrientsClimate(page) {
+  //   //only on first/full page
+  //   const nutrientsSection = page.find('.recipe-details .nutrients');
+  //   const climateSection = page.find('.recipe-details .climate');
+  //   if (nutrientsSection.exist() || climateSection.exist()) {
+  //     let detailsText;
+  //     if (nutrientsSection.exist() && climateSection.exist()) {
+  //       detailsText = 'Näringsvärde och klimatguide';
+  //     } else if (nutrientsSection.exist()) {
+  //       detailsText = 'Näringsvärde';
+  //     } else if (climateSection.exist()) {
+  //       detailsText = 'Klimatguide';
+  //     }
+  //     const detailsBtn = ELM.create('div details-toggle button--link').append(detailsText).css('button');
+  //     page.find('.recipe-details').append(detailsBtn);
+  //     detailsBtn.click(() => {
+  //       if (climateSection.exist()) {
+  //         document.querySelector('.climate .button--link').click();
+  //       }
+  //       if (nutrientsSection.exist()) {
+  //         document.querySelector('.nutrients .button--link').click();
+  //       }
+  //       detailsBtn.parent().find('.row').toggle('open');
+  //     });
+  //   }
+  // },
 
 };
 

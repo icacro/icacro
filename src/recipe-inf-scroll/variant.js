@@ -15,14 +15,15 @@ import './style.css';
 import recipe from './recipe.js';
 
 let recipesArr = [];
-const maxlength = 25;
+const maxlength = 75;
 let nextPage,currentPage,nextUrl;
 let pageCount = 1;
 const pageWrapper = ELM.get('#page-wrapper');
 const originalUrl = window.location.pathname;
 const originalTitle = window.title;
 
-//varför inte > 1 recept i iOS Safari?
+//Design
+//Ngt i slutet av sidan?
 
 const test = {
 
@@ -61,18 +62,23 @@ const test = {
 
     recipesArr.push(currentUrl);
 
-    recipe.hideComments(page);
-    recipe.hideNutrientsClimate(page);
+    // recipe.hideComments(page);
+    // recipe.hideNutrientsClimate(page);
     test.gotoPage(pageNext,page,currentUrl);
 
     $('body').on('click','.page .loading-area.added .loading-area-title', function() {
-      const elem = $(this).closest('.page').next().attr('id');
-      test.scrollToElement(elem);
+      if ($(this).parent().hasClass('reload')) {
+        const url = $(this).closest('.page').next().attr('data-href');
+        window.location = url;
+      } else {
+        const elem = $(this).closest('.page').next().attr('id');
+        test.scrollToElement(elem);
+      }
     });
 
     $(window).on('scroll', _.debounce(function() {
       test.scrollListener(nextPage,nextUrl,currentPage,pageCount);
-    }, 100));
+    }, 50));
 
   },
 
@@ -163,7 +169,7 @@ const test = {
         pageNext.innerHTML=tds.innerHTML;
 
         let title = xmlDoc.title;
-        title = '<span>Nästa recept:</span> ' + title.substring(0, title.indexOf('|'));
+        title = '<span class="next-label">Nästa recept:</span><span class="title">' + title.substring(0, title.indexOf('|')) + '</span>';
         const arrow = '<div class="svg"><svg width="32px" height="32px"><use xlink:href="/Assets/icons/symbols.svg#arrow-down"></use></svg><span class="loader"></span></div>';
         document.querySelector('#page .loading-area .loading-area-title').innerHTML=title + arrow;
         if (tds.classList.contains('recipepage--large')) {
@@ -216,7 +222,7 @@ const test = {
              if (!loadingArea.classList.contains('reload')) {
                test.gotoPage(nextPage,currentPage,nextUrl);
              }
-           }, 1000);
+           }, 1500);
          }
        } else {
          //activate next (but not new) page
@@ -261,8 +267,8 @@ const test = {
   },
 
   loadingFailed() {
-    document.querySelector('#page .loading-area .loading-area-title').innerHTML='Vi lyckades tyvärr inte ladda nästa recept.<br><a href="' + currentPage.attr('data-href') + '">Prova igen!</a>';
     document.querySelector('#page .loading-area').classList.add('reload');
+    document.getElementById('footer').classList.add('visible');
   },
 
 };
