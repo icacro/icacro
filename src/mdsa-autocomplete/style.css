@@ -1,63 +1,68 @@
-/*.cro .filtermenu {
- display: none;
-}*/
+.cro .search-recipes.search-fieldset {
+  overflow: visible;
+}
 
-/*.cro .mob-filter-container.mob-filter-container {
+.cro .recipe-search {
+  margin-top: 1em !important;
+}
+.cro .coachmark-tooltip, .cro .coachmark-wrapper {
   display: none !important;
 }
-
-.cro .cro-help-button {
-  display: block;
-  margin: 1em auto;
-  background: none;
-  text-shadow: 0 0 15px black;
-}
-.cro .cro-help-button:hover {
-  background: none;
-}
-.cro .cro-help-links {
-  position: absolute;
-  z-index: 3;
-  width: 100%;
-  max-width: 25em;
+.cro .autocomplete {
+  margin: 0 16px;
+  background: white;
+  color: black;
   list-style: none;
-  display: none;
-  font-size: 14px;
+  text-align: left;
+  position: absolute;
+  border-left: 1px solid #ebebec;
+  border-right: 1px solid #ebebec;
+  width: 90%;
+  z-index: 4;
   box-shadow: 0 0 15px rgba(0,0,0,0.15);
 }
-.cro .cro-help-links.open {
-  display: block;
-}
-.cro .cro-help-links__item {
+.cro .autocomplete li {
+  position: relative;
+  font-size: 1.4rem;
+  line-height: 1.2em;
+  padding: 0 1rem;
   margin: 0;
-  padding: 0.2em;
-  border: solid 1px #ebebec;
-  border-bottom: none;
-  background-color: white;
+  border-bottom: 1px solid #ebebec;
+  cursor: pointer;
+  padding-top: .8rem;
+  padding-bottom: .6rem;
 }
-.cro .cro-help-links__item:last-child {
-  border-bottom: solid 1px #ebebec;
+.cro .autocomplete li:hover::before,
+.cro .autocomplete li:hover::after,
+.cro .autocomplete li.ui-selecting::before,
+.cro .autocomplete li.ui-selecting::after {
+  content: "";
+  display: block;
+  position: absolute;
+  top: 0;
 }
-.cro .cro-help-links a {
-  display: inline-block;
-  width: 100%;
+.cro .autocomplete li:hover::before,
+.cro .autocomplete li.ui-selecting::before {
+  left: 0;
+  right: 0;
+  opacity: 0;
 }
-.cro .cro-help-button .arrow {
-  max-height: 0;
-  max-width: 0;
-  border-width: 4px;
-  border-style: solid;
-  border-left: 5px solid #a02971;
-  display: inline-block;
-  transition: all 0.3s ease-out;
-  transform-origin: 25% 50%;
-  background-image: none !important;
-  color: white;
-  border-color: white;
-  border-top-color: transparent;
-  border-right-color: transparent;
-  border-bottom-color: transparent;
+.cro .autocomplete li:hover::after,
+.cro .autocomplete li.ui-selecting::after {
+  opacity: 1;
+  left: -1px;
+  bottom: 0;
+  width: 4px;
+  background: #dc438c;
 }
-.cro .cro-help-button.open .arrow {
-  transform: rotate(-90deg);
-}*/
+
+@media only screen and (max-width: 699px) {
+  .cro header.page-header .searchicon {
+    display: none;
+  }
+  .cro div.filter-search {
+    max-width: 30em;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}

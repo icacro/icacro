@@ -11,7 +11,6 @@
 
 import { CROUTIL } from '../util/main';
 import { throttle, gaPush } from '../util/utils';
-import './style.common.css';
 import './style.css';
 
 const filterStartsWith = q => (
@@ -55,7 +54,6 @@ const test = {
       });*/
   },
   onItemSelected(name) {
-    console.log(test.filters);
     var filter = test.filters.find(function(element) {
       return element.name == name;
     });
@@ -120,6 +118,7 @@ const test = {
       $item.removeClass('ui-selecting');
       $item.addClass('ui-selected');
       $item.parent().trigger('selectableselected', $item);
+      test.searchField.val('');
     }
 
     if (e.keyCode == '40') { // arrow down
@@ -202,6 +201,7 @@ const test = {
         button.find('.filter-toggle-button__text').text('Visa alla receptfilter');
       }
       filterMenu.toggle();
+
     });
     filterMenu.hide().before(button).addClass('cro-loaded');
   },*/
