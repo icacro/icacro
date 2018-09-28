@@ -99,6 +99,7 @@ const test = {
     test.searchField
       .attr('placeholder', 'Sök ' + searchTitle)
       .attr('autocomplete', 'off')
+      .attr('autocorrect', 'off')
       .on('input', throttle(test.searchFieldInputHandler, 300))
       .on('blur', test.searchFieldBlurHandler)
       .on('keydown', test.searchFieldKeyHandler);
@@ -118,7 +119,7 @@ const test = {
       $item.removeClass('ui-selecting');
       $item.addClass('ui-selected');
       $item.parent().trigger('selectableselected', $item);
-      test.searchField.val('');
+      //test.searchField.val('');
     }
 
     if (e.keyCode == '40') { // arrow down
@@ -251,6 +252,9 @@ const test = {
 };
 
 $(document).ready(() => {
+  if($("meta[name='IsMdsaLandingPage']").attr('content') == undefined && $("meta[name='PageType']").attr('content') != "RecipeStartPageType" ) {
+    return; // wrong page type
+  }
   Object.assign(test, CROUTIL());
   test.getFilters();
   test.manipulateDom();
