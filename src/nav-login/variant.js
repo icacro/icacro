@@ -18,7 +18,7 @@ const test = {
 
   manipulateDom() {
 
-    if(!$('.top-bar-display-name').length) {
+    if(!$('.top-bar-display-name').length && $('#js-toggle-avatar .js-track-nav-user-login').length) {
       if ($('.top-bar__wrapper').css('background-color') === 'rgb(230, 0, 100)') {
         var loginClass='white';
       } else {
