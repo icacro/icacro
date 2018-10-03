@@ -15,15 +15,16 @@ import './style.css';
 import recipe from './recipe.js';
 
 let recipesArr = [];
-const maxlength = 75;
-let nextPage,currentPage,nextUrl;
+const maxlength = 25;
+let nextPageElm,currentPageElm,nextUrl;
 let pageCount = 1;
 const pageWrapper = ELM.get('#page-wrapper');
 const originalUrl = window.location.pathname;
-const originalTitle = window.title;
 
-//Design
-//Ngt i slutet av sidan?
+
+//buggar?
+//tracking!
+
 
 const test = {
 
@@ -52,7 +53,6 @@ const test = {
 
     const currentUrl = originalUrl;
     const page = ELM.get('#page');
-    const pageNext = page;
     const urlParts = currentUrl.split('/');
     const nameParts = urlParts[2].split('-');
     const recipeId = nameParts[nameParts.length - 1];
@@ -62,100 +62,146 @@ const test = {
 
     recipesArr.push(currentUrl);
 
-    // recipe.hideComments(page);
-    // recipe.hideNutrientsClimate(page);
-    test.gotoPage(pageNext,page,currentUrl);
+    // $('body').on('click','.page .loading-area.initiated .loading-area-title', function() {
+    //   if ($(this).parent().hasClass('reload')) {
+    //     console.log('has reload');
+    //     const url = $(this).closest('.page').next().attr('data-href');
+    //     window.location = url;
+    //   } else {
+    //     console.log('no reload');
+    //     const elem = $(this).closest('.page').next().attr('id');
+    //     test.scrollToElement(elem);
+    //   }
+    // });
 
-    $('body').on('click','.page .loading-area.added .loading-area-title', function() {
-      if ($(this).parent().hasClass('reload')) {
-        const url = $(this).closest('.page').next().attr('data-href');
-        window.location = url;
+    if (sessionStorage.prevPage) {
+      if (sessionStorage.prevPage === originalUrl && sessionStorage.prevPageWrapper !== '') {
+        console.log('prevpage: ' + sessionStorage.prevPage);
+        pageWrapper.html(sessionStorage.prevPageWrapper);
+        if (pageWrapper.find('#page .loading-area').exist()) {
+          pageWrapper.find('#page .loading-area').removeClass('initiated');
+        }
+        sessionStorage.prevPageWrapper = '';
+        sessionStorage.prevPage = originalUrl;
+        pageCount = document.querySelectorAll('.page').length;
       } else {
-        const elem = $(this).closest('.page').next().attr('id');
-        test.scrollToElement(elem);
+        console.log('no prevpage: ' + sessionStorage.prevPage + ' / oUrl: ' + originalUrl);
       }
-    });
+    }
 
+    if(pageCount === 1) {
+      test.gotoPage(page,page,currentUrl);
+    } else {
+      const prevPage = ELM.get('#page');
+      currentPageElm = ELM.get('#page-next');
+      const relatedList = document.querySelectorAll('.related-recipes-list > a');
+      test.buildRecipesArr(relatedList);
+      nextUrl = recipesArr[pageCount];
+      if (pageCount < maxlength) {
+        recipe.initRecipe(currentPageElm,currentUrl,prevPage,pageCount,originalUrl);
+        const loadingAreaContent = ELM.create('div loading-area-content');
+        const loadingAreaTitle = ELM.create('p loading-area-title');
+        const loadingArea = ELM.create('div loading-area');
+        loadingAreaContent.append(loadingAreaTitle);
+        loadingArea.append(loadingAreaContent);
+        currentPageElm.append(loadingArea);
+        nextPageElm = ELM.create('div page page-mod-fullwidth pl recipepage page-next').attr('id','page-next');
+        nextPageElm.attr('data-href',nextUrl);
+        pageWrapper.append(nextPageElm);
+        const nextPageEl = document.getElementById('page-next');
+        const titleEl = document.querySelector('#page .loading-area .loading-area-title');
+        test.loadNextPage(nextUrl,nextPageEl,titleEl);
+      } else {
+        document.getElementById('page').classList.add('last-page');
+        document.getElementById('footer').classList.add('visible');
+      }
+    }
+
+    test.startListener();
+
+  },
+
+
+  startListener() {
     $(window).on('scroll', _.debounce(function() {
-      test.scrollListener(nextPage,nextUrl,currentPage,pageCount);
-    }, 50));
-
+      test.scrollListener(nextUrl,pageCount);
+    }, 5));
   },
 
 
   gotoPage(pageNext,page,currentUrl) {
-
-    currentPage = pageNext;
+    currentPageElm = pageNext;
     const prevPage = page;
     const pages = document.querySelectorAll('.page');
     pageCount = pages.length;
+    const title = currentPageElm.find('h1').text();
 
-    if (currentPage.find('h1').exist()) {
-
-      //build loading area
-      const loadingAreaTitle = ELM.create('p loading-area-title');
-      const loadingArea = ELM.create('div loading-area');
-      loadingArea.append(loadingAreaTitle);
-      const title  = currentPage.find('h1').text();
-      const pagePosition = currentPage.offsetTop;
-      const svg = '<svg><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/Assets/icons/sprite.svg#arrow-down"></use></svg>';
-
-      if (pageCount >= maxlength) {
-        //no more scrolling if max length is reached
-        document.getElementById('footer').classList.add('visible');
-      } else {
-
-        //add next page
-        nextPage = ELM.create('div page page-mod-fullwidth pl recipepage page-next').attr('id','page-next');
-        if (recipesArr.length < maxlength) {
-          const relatedList = document.querySelectorAll('#page .related-recipes-list > a');
-          for (var i = 0; i < relatedList.length; i++) {
-            recipesArr.push(relatedList[i].getAttribute('href'));
-          }
-          recipesArr = removeDuplicates(recipesArr);
-        }
-
-        function removeDuplicates(recipesArr){
-          recipesArr = Array.from(new Set(recipesArr))
-          return recipesArr
-        }
-
-        if (recipesArr.length > 1 && !loadingArea.hasClass('reload')) {
-          nextUrl = recipesArr[recipesArr.indexOf(currentUrl)+1];
-          test.loadNextPage(nextUrl);
-          currentPage.append(loadingArea);
-          nextPage.attr('data-href',nextUrl);
-          pageWrapper.append(nextPage);
-        } else {
-          //hantera t.ex. https://www.ica.se/recept/kanel-och-stjarnanissill-599287/ som inte har relaterade recept
-          document.getElementById('footer').classList.add('visible');
-        }
-
-      }
-
-      if (currentPage !== prevPage) {
-        //meaning "not first page"
-
-        test.changeURL(title,currentUrl);
-        if (currentUrl) {
-          recipe.initRecipe(currentPage,currentUrl,prevPage,pageCount,originalTitle,originalUrl);
-        } else {
-          test.loadingFailed();
-        }
-
-      } else {
-        //first page
-        currentPage.attr('data-count','1');
-        currentPage.attr('data-href',currentUrl);
-      }
-
+    if (currentPageElm !== prevPage) {
+      //meaning "not first page"
+      test.changeURL(title,currentUrl);
+      recipe.initRecipe(currentPageElm,currentUrl,prevPage,pageCount,originalUrl);
     } else {
-      test.loadingFailed();
+      //first page
+      currentPageElm.attr('data-count','1');
+      currentPageElm.attr('data-href',currentUrl);
+    }
+
+    //build loading area
+    const loadingAreaContent = ELM.create('div loading-area-content');
+    const loadingAreaTitle = ELM.create('p loading-area-title');
+    const loadingArea = ELM.create('div loading-area');
+    loadingAreaContent.append(loadingAreaTitle);
+    loadingArea.append(loadingAreaContent);
+
+    if (pageCount >= maxlength) {
+      //no more scrolling if max length is reached
+      document.getElementById('page').classList.add('last-page');
+      document.getElementById('footer').classList.add('visible');
+    } else {
+
+      //add next page
+      nextPageElm = ELM.create('div page page-mod-fullwidth pl recipepage page-next').attr('id','page-next');
+
+      const relatedList = document.querySelectorAll('#page .related-recipes-list > a');
+      test.buildRecipesArr(relatedList);
+
+      if (recipesArr.length > 1) {
+
+        nextUrl = recipesArr[recipesArr.indexOf(currentUrl)+1];
+        currentPageElm.append(loadingArea);
+        nextPageElm.attr('data-href',nextUrl);
+        pageWrapper.append(nextPageElm);
+        const nextPageEl = document.getElementById('page-next');
+        const titleEl = document.querySelector('#page .loading-area .loading-area-title');
+        test.loadNextPage(nextUrl,nextPageEl,titleEl);
+
+      } else {
+        //hantera t.ex. https://www.ica.se/recept/kanel-och-stjarnanissill-599287/ som inte har relaterade recept
+        document.getElementById('page').classList.add('last-page');
+        document.getElementById('footer').classList.add('visible');
+      }
+
     }
 
   },
 
-  loadNextPage(url) {
+  buildRecipesArr(relatedList) {
+
+    if (recipesArr.length < maxlength) {
+      for (var i = 0; i < relatedList.length; i++) {
+        recipesArr.push(relatedList[i].getAttribute('href'));
+      }
+      recipesArr = removeDuplicates(recipesArr);
+    }
+
+    function removeDuplicates(recipesArr){
+      recipesArr = Array.from(new Set(recipesArr))
+      return recipesArr;
+    }
+
+  },
+
+  loadNextPage(url,pageNext,loadingAreaTitle) {
     var request = new XMLHttpRequest();
     request.open('GET', 'https://www.ica.se' + url, true);
     request.onload = function() {
@@ -165,25 +211,31 @@ const test = {
         const xmlDoc = parser.parseFromString(resp,"text/html");
         const tds = xmlDoc.getElementById("page");
 
-        const pageNext = document.getElementById('page-next');
         pageNext.innerHTML=tds.innerHTML;
 
         let title = xmlDoc.title;
+
         title = '<span class="next-label">Nästa recept:</span><span class="title">' + title.substring(0, title.indexOf('|')) + '</span>';
-        const arrow = '<div class="svg"><svg width="32px" height="32px"><use xlink:href="/Assets/icons/symbols.svg#arrow-down"></use></svg><span class="loader"></span></div>';
-        document.querySelector('#page .loading-area .loading-area-title').innerHTML=title + arrow;
-        if (tds.classList.contains('recipepage--large')) {
-          pageNext.classList.add('recipepage--large');
-        } else {
-          pageNext.classList.add('recipepage--small');
+        const loader = '<div class="svg"><span class="loader"></span></div>';
+
+        if (!loadingAreaTitle.classList.contains('reload')) {
+          loadingAreaTitle.innerHTML=title + loader;
+
+          if (tds.classList.contains('recipepage--large')) {
+            pageNext.classList.add('recipepage--large');
+          } else {
+            pageNext.classList.add('recipepage--small');
+          }
+          pageNext.querySelector('#ingredients-section > div.button').classList.add('button--secondary');
         }
-        pageNext.querySelector('#ingredients-section > div.button').classList.add('button--secondary');
       } else {
         //felhantering?
+        console.log('loading error 1');
       }
     };
     request.onerror = function() {
       //felhantering?
+      console.log('loading error 2');
     };
     request.send();
   },
@@ -191,18 +243,23 @@ const test = {
 
   changeURL(title,currentUrl) {
     document.title = title;
-    //history.pushState(stateObj, title, currentUrl);
     history.replaceState(null, title, currentUrl);
+    //history.pushState(stateObj, title, currentUrl);
   },
 
 
   changeActivePage(oldCur,newCur) {
     newCur.id = 'page';
-    test.changeURL(newCur.getElementsByTagName('h1')[0].innerHTML,newCur.getAttribute('data-href'));
+    if(newCur.getElementsByTagName('h1')[0]) {
+      const title=newCur.getElementsByTagName('h1')[0].innerHTML;
+      test.changeURL(title,newCur.getAttribute('data-href'));
+    } else {
+      console.log('changeURL failed');
+    }
   },
 
 
-  scrollListener(nextPage,nextUrl,currentPage,pageCount) {
+  scrollListener(nextUrl,pageCount) {
     if (pageCount < maxlength && recipesArr.length > 1 && document.getElementById('page')) {
      const cur = document.getElementById('page');
      const pageHeight = cur.offsetHeight;
@@ -214,15 +271,37 @@ const test = {
        //activate previous page
        test.goToPrevPage(cur);
      } else if (currentPos > endPos) {
+
        if(window.scrollY + window.innerHeight >= document.body.scrollHeight - 300) {
-         if (!loadingArea.classList.contains('added') && !loadingArea.classList.contains('reload')) {
-           loadingArea.classList.add('added');
-           window.setTimeout(function () {
-             //activate new page
-             if (!loadingArea.classList.contains('reload')) {
-               test.gotoPage(nextPage,currentPage,nextUrl);
-             }
-           }, 1500);
+
+         if (!loadingArea.classList.contains('initiated')) {
+
+          loadingArea.classList.add('initiated');
+
+            window.setTimeout(function () {
+              if (nextPageElm.find('h1').exist()) {
+                //activate new page
+                test.gotoPage(nextPageElm,currentPageElm,nextUrl);
+                loadingArea.classList.add('added');
+              } else {
+                const config = { attributes: false, childList: true, subtree: true };
+                let pageObserver = new MutationObserver(function(mutations) {
+                 for (var i = 0; i < mutations.length; i++) {
+                   test.gotoPage(nextPageElm,currentPageElm,nextUrl);
+                   loadingArea.classList.add('added');
+                   pageObserver.disconnect();
+                 }
+                });
+                pageObserver.observe(document.getElementById('page-next'), config);
+                // window.setTimeout(function () {
+                //   if (!nextPageElm.find('h1').exist() && !loadingArea.classList.contains('added')) {
+                //     test.loadingFailed();
+                //     pageObserver.disconnect();
+                //   }
+                // }, 3000);
+              }
+            }, 1000);
+
          }
        } else {
          //activate next (but not new) page
@@ -268,7 +347,9 @@ const test = {
 
   loadingFailed() {
     document.querySelector('#page .loading-area').classList.add('reload');
+    document.getElementById('page').classList.add('last-page');
     document.getElementById('footer').classList.add('visible');
+    document.querySelector('#page .loading-area .loading-area-title').innerHTML = '<a href="/recept/">Ny text</a>';
   },
 
 };
