@@ -11,7 +11,6 @@
 
 import { CROUTIL } from '../util/main';
 import { throttle, gaPush } from '../util/utils';
-import './style.common.css';
 import './style.css';
 
 const filterStartsWith = q => (
@@ -55,7 +54,6 @@ const test = {
       });*/
   },
   onItemSelected(name) {
-    console.log(test.filters);
     var filter = test.filters.find(function(element) {
       return element.name == name;
     });
@@ -101,6 +99,7 @@ const test = {
     test.searchField
       .attr('placeholder', 'Sök ' + searchTitle)
       .attr('autocomplete', 'off')
+      .attr('autocorrect', 'off')
       .on('input', throttle(test.searchFieldInputHandler, 300))
       .on('blur', test.searchFieldBlurHandler)
       .on('keydown', test.searchFieldKeyHandler);
@@ -120,6 +119,7 @@ const test = {
       $item.removeClass('ui-selecting');
       $item.addClass('ui-selected');
       $item.parent().trigger('selectableselected', $item);
+      //test.searchField.val('');
     }
 
     if (e.keyCode == '40') { // arrow down
@@ -202,6 +202,7 @@ const test = {
         button.find('.filter-toggle-button__text').text('Visa alla receptfilter');
       }
       filterMenu.toggle();
+
     });
     filterMenu.hide().before(button).addClass('cro-loaded');
   },*/
@@ -251,6 +252,9 @@ const test = {
 };
 
 $(document).ready(() => {
+  if($("meta[name='IsMdsaLandingPage']").attr('content') == undefined && $("meta[name='PageType']").attr('content') != "RecipeStartPageType" ) {
+    return; // wrong page type
+  }
   Object.assign(test, CROUTIL());
   test.getFilters();
   test.manipulateDom();
