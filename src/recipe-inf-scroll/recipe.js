@@ -7,59 +7,52 @@ const pageWrapper = ELM.get('#page-wrapper');
 
 const recipe = {
 
-  initRecipe(currentPageEl,currentUrl,prevPage,pageCount,originalUrl) {
+  initRecipe(currentPageElm,currentUrl,prevPage,pageCount,originalUrl) {
 
-    recipe.addGradient(currentPageEl,currentUrl,originalUrl);
+    recipe.addGradient(currentPageElm,currentUrl,originalUrl);
 
     //update page id's and set attributes data-count + data-id
-    currentPageEl.id = 'page';
-    currentPageEl.setAttribute('data-count',pageCount);
+    if (prevPage !== 0) {
+      currentPageElm.attr('id','page');
+      prevPage.attr('id','page-' + prevPage.attr('data-count'));
+    }
+    currentPageElm.attr('data-count',pageCount);
     const urlParts = currentUrl.split('/');
     const nameParts = urlParts[2].split('-');
     const recipeId = nameParts[nameParts.length - 1];
-    currentPageEl.setAttribute('data-id',recipeId);
-    console.log('current = page');
-    prevPage.id = 'page-' + prevPage.getAttribute('data-count');
+    currentPageElm.attr('data-id',recipeId);
 
-    // recipe.styleInstructions(currentPageEl);
-    //
-    // recipe.styleServingsPicker(currentPageEl, originalUrl);
-    //
-    // recipe.editButtons(currentPageEl, originalUrl);
+    recipe.styleInstructions(currentPageElm);
+
+    recipe.styleServingsPicker(currentPageElm, originalUrl);
+
+    recipe.editButtons(currentPageElm, originalUrl);
 
   },
 
 
-  addGradient(currentPageEl,currentUrl,originalUrl) {
+  addGradient(currentPageElm,currentUrl,originalUrl) {
     //fade out effect for fixed height ingredients/instructions
-    // const gradient = ELM.create('a gradient').attr('href',currentUrl + '#recept');
-    // const gradientBtn = ELM.create('span').css('button').html('Visa hela receptet');
-
-    const gradient = document.createElement('a');
-    gradient.classList.add('gradient');
-    gradient.href = currentUrl + '#recept';
-    const gradientBtn = document.createElement('span');
-    gradientBtn.classList.add('button');
-    gradientBtn.innerHTML = 'Visa hela receptet';
-
-    gradient.appendChild(gradientBtn);
-    if (currentPageEl.querySelector('.recipe-content')) {
-      currentPageEl.querySelector('.recipe-content').appendChild(gradient);
+    const gradient = ELM.create('a gradient').attr('href',currentUrl + '#recept');
+    const gradientBtn = ELM.create('span').css('button').html('Visa hela receptet');
+    gradient.append(gradientBtn);
+    if (currentPageElm.find('.recipe-content').exist()) {
+      currentPageElm.find('.recipe-content').append(gradient);
     } else {
       console.log('no recipe-content');
     }
-    // gradient.click((e) => {
-    //   e.preventDefault();
-    //   const targetPage = e.target.closest('.page').getAttribute('data-href') + '#recept';
-    //   recipe.relocate(targetPage, originalUrl);
-    // })
+    gradient.click((e) => {
+      e.preventDefault();
+      const targetPage = e.target.closest('.page').getAttribute('data-href') + '#recept';
+      recipe.relocate(targetPage, originalUrl);
+    })
   },
 
 
-  styleInstructions(currentPageEl) {
+  styleInstructions(currentPageElm) {
     //styling of instructions
-    const howtoSection = currentPageEl.querySelector('howto-steps');
-    if (howtoSection) {
+    const howtoSection = currentPageElm.find('howto-steps');
+    if (howtoSection.exist()) {
       const howTo = ELM.create('div howto-steps');
       const howtoItems = document.querySelectorAll('.recipe-howto-steps ol > li');
       for (var i = 0; i < howtoItems.length; i++) {
