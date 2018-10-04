@@ -15,16 +15,14 @@ import './style.css';
 import recipe from './recipe.js';
 
 let recipesArr = [];
-const maxlength = 25;
+const maxlength = 40;
 let nextPageElm,currentPageElm,nextUrl;
 let pageCount = 1;
 const pageWrapper = ELM.get('#page-wrapper');
 const originalUrl = window.location.pathname;
 
-
 //buggar?
 //tracking!
-
 
 const test = {
 
@@ -32,23 +30,23 @@ const test = {
     //only on first/full page
 
     //if page is loaded with an action parameter
-    const params = new Map(location.search.slice(1).split('&').map(kv => kv.split('=')));
-    if (params.has('recept')) {
+    const hash = window.location.hash;
+    if (hash === '#recept') {
       const el = document.querySelector('#page .recipe-content');
-      recipe.triggerAction('scroll','?recept',el);
-    } else if (params.has('betyg')) {
+      recipe.triggerAction('scroll','#recept',el);
+    } else if (hash === '#betyg') {
       const el = document.querySelector('#page .js-recipe-ratings-modal');
-      recipe.triggerAction('click','?betyg',el);
-    } else if (params.has('spara')) {
+      recipe.triggerAction('click','#betyg',el);
+    } else if (hash === '#spara') {
       const el = document.querySelector('#page .button--heart');
-      recipe.triggerAction('click','?spara',el);
-    } else if (params.has('skriv-ut')) {
+      recipe.triggerAction('click','#spara',el);
+    } else if (hash === '#skriv-ut') {
       const el = document.querySelector('#page .button--print');
-      recipe.triggerAction('click','?skriv-ut',el);
-    } else if (params.has('portioner')) {
+      recipe.triggerAction('click','#skriv-ut',el);
+    } else if (hash.indexOf('#portioner=') !== -1) {
       const el = document.querySelector('#page .js-servingspicker');
-      const portions = params.get('portioner');
-      recipe.triggerAction('select','?portioner=' + portions,el);
+      const portions = hash.split('=')[1];
+      recipe.triggerAction('select','#portioner=' + portions,el);
     }
 
     const currentUrl = originalUrl;
@@ -76,7 +74,6 @@ const test = {
 
     if (sessionStorage.prevPage) {
       if (sessionStorage.prevPage === originalUrl && sessionStorage.prevPageWrapper !== '') {
-        console.log('prevpage: ' + sessionStorage.prevPage);
         pageWrapper.html(sessionStorage.prevPageWrapper);
         if (pageWrapper.find('#page .loading-area').exist()) {
           pageWrapper.find('#page .loading-area').removeClass('initiated');
@@ -84,8 +81,6 @@ const test = {
         sessionStorage.prevPageWrapper = '';
         sessionStorage.prevPage = originalUrl;
         pageCount = document.querySelectorAll('.page').length;
-      } else {
-        console.log('no prevpage: ' + sessionStorage.prevPage + ' / oUrl: ' + originalUrl);
       }
     }
 
@@ -138,7 +133,7 @@ const test = {
 
     if (currentPageElm !== prevPage) {
       //meaning "not first page"
-      test.changeURL(title,currentUrl);
+      //test.changeURL(title,currentUrl);
       recipe.initRecipe(currentPageElm,currentUrl,prevPage,pageCount,originalUrl);
     } else {
       //first page
@@ -241,27 +236,27 @@ const test = {
   },
 
 
-  changeURL(title,currentUrl) {
-    document.title = title;
-    history.replaceState(null, title, currentUrl);
+  // changeURL(title,currentUrl) {
+    //document.title = title;
+    //history.replaceState(null, title, currentUrl);
     //history.pushState(stateObj, title, currentUrl);
-  },
+  // },
 
 
-  changeActivePage(oldCur,newCur) {
-    newCur.id = 'page';
-    if(newCur.getElementsByTagName('h1')[0]) {
-      const title=newCur.getElementsByTagName('h1')[0].innerHTML;
-      test.changeURL(title,newCur.getAttribute('data-href'));
-    } else {
-      console.log('changeURL failed');
-    }
-  },
+  // changeActivePage(oldCur,newCur) {
+  //   newCur.id = 'page';
+  //   if(newCur.getElementsByTagName('h1')[0]) {
+  //     const title=newCur.getElementsByTagName('h1')[0].innerHTML;
+  //     test.changeURL(title,newCur.getAttribute('data-href'));
+  //   } else {
+  //     console.log('changeURL failed');
+  //   }
+  // },
 
 
   scrollListener(nextUrl,pageCount) {
     if (pageCount < maxlength && recipesArr.length > 1 && document.getElementById('page')) {
-     const cur = document.getElementById('page');
+     const cur = document.getElementById(currentPageElm.attr('id'));
      const pageHeight = cur.offsetHeight;
      const startPos = cur.offsetTop - 70;
      const endPos = startPos + pageHeight - 300;
@@ -284,7 +279,7 @@ const test = {
                 test.gotoPage(nextPageElm,currentPageElm,nextUrl);
                 loadingArea.classList.add('added');
               } else {
-                const config = { attributes: false, childList: true, subtree: true };
+                const config = { attributes: false, childList: true, subtree: false };
                 let pageObserver = new MutationObserver(function(mutations) {
                  for (var i = 0; i < mutations.length; i++) {
                    test.gotoPage(nextPageElm,currentPageElm,nextUrl);
@@ -293,14 +288,18 @@ const test = {
                  }
                 });
                 pageObserver.observe(document.getElementById('page-next'), config);
-                // window.setTimeout(function () {
-                //   if (!nextPageElm.find('h1').exist() && !loadingArea.classList.contains('added')) {
-                //     test.loadingFailed();
-                //     pageObserver.disconnect();
-                //   }
-                // }, 3000);
+                window.setTimeout(function () {
+                  if (nextPageElm.find('h1').exist()) {
+                    console.log('page exists...');
+                    test.gotoPage(nextPageElm,currentPageElm,nextUrl);
+                    loadingArea.classList.add('added');
+                  } else {
+                    console.log('page does not exist...');
+                    test.loadingFailed(cur);
+                  }
+                }, 3000);
               }
-            }, 1000);
+            }, 50);
 
          }
        } else {
@@ -315,10 +314,10 @@ const test = {
   goToPrevPage(cur) {
     if (cur.getAttribute('data-count') > 2) {
       cur.id = 'page-' + cur.getAttribute('data-count');
-      test.changeActivePage(cur, cur.previousSibling);
+      //test.changeActivePage(cur, cur.previousSibling);
     } else {
       cur.id = 'page-2';
-      test.changeActivePage(cur, document.getElementById('page-1'));
+      //test.changeActivePage(cur, document.getElementById('page-1'));
     }
   },
 
@@ -328,12 +327,12 @@ const test = {
       if (cur.getAttribute('data-count') > 1) {
         if ((parseInt(cur.getAttribute('data-count')) + 1) <= document.querySelectorAll('.page:not(#page-next)').length) {
           cur.id = 'page-' + cur.getAttribute('data-count');
-          test.changeActivePage(cur, cur.nextSibling);
+          //test.changeActivePage(cur, cur.nextSibling);
         }
       }
     } else if (cur.nextSibling.id !== 'page-next' && cur.nextSibling.id !== 'page' && document.querySelectorAll('.page:not(#page-next)').length > 1) {
       document.querySelector('#page-wrapper .page:first-child').id = 'page-1';
-      test.changeActivePage(cur, document.querySelector('#page-wrapper .page:nth-child(2)'));
+      //test.changeActivePage(cur, document.querySelector('#page-wrapper .page:nth-child(2)'));
     }
   },
 
@@ -345,11 +344,12 @@ const test = {
 		}, 400);
   },
 
-  loadingFailed() {
-    document.querySelector('#page .loading-area').classList.add('reload');
-    document.getElementById('page').classList.add('last-page');
+  loadingFailed(cur) {
+    console.log('loading failed');
+    //document.querySelector('#page .loading-area').classList.add('reload');
+    cur.classList.add('last-page');
     document.getElementById('footer').classList.add('visible');
-    document.querySelector('#page .loading-area .loading-area-title').innerHTML = '<a href="/recept/">Ny text</a>';
+    //document.querySelector('#page .loading-area .loading-area-title').innerHTML = '<a href="/recept/">Ny text</a>';
   },
 
 };

@@ -33,7 +33,7 @@ const recipe = {
 
   addGradient(currentPageElm,currentUrl,originalUrl) {
     //fade out effect for fixed height ingredients/instructions
-    const gradient = ELM.create('a gradient').attr('href',currentUrl + '?recept');
+    const gradient = ELM.create('a gradient').attr('href',currentUrl + '#recept');
     const gradientBtn = ELM.create('span').css('button').html('Visa hela receptet');
     gradient.append(gradientBtn);
     if (currentPageElm.find('.recipe-content').exist()) {
@@ -43,10 +43,9 @@ const recipe = {
     }
     gradient.click((e) => {
       e.preventDefault();
-      const targetPage = e.target.closest('.page').getAttribute('data-href') + '?recept';
+      const targetPage = e.target.closest('.page').getAttribute('data-href') + '#recept';
       recipe.relocate(targetPage, originalUrl);
     })
-
   },
 
 
@@ -114,7 +113,7 @@ const recipe = {
       }
       servingsPicker.change((e) => {
         const goToPage = e.target.closest('.page');
-        recipe.relocate(goToPage.getAttribute('data-href') + '?portioner=' + e.target.value, originalUrl);
+        recipe.relocate(goToPage.getAttribute('data-href') + '#portioner=' + e.target.value, originalUrl);
       })
     }
   },
@@ -125,10 +124,10 @@ const recipe = {
     //edit ratings button
     const ratingsBtn = currentPageElm.find('.js-recipe-ratings-modal');
     if(ratingsBtn.exist()) {
-      ratingsBtn.attr('href', '?betyg');
+      ratingsBtn.attr('href', '#betyg');
       ratingsBtn.click((e) => {
         e.preventDefault();
-        const targetPage = e.target.closest('.page').getAttribute('data-href') + '?betyg';
+        const targetPage = e.target.closest('.page').getAttribute('data-href') + '#betyg';
         recipe.relocate(targetPage, originalUrl);
       })
     }
@@ -136,10 +135,10 @@ const recipe = {
     //edit print button
     const printBtn = currentPageElm.find('.button--print');
     if(printBtn.exist()) {
-      printBtn.attr('href', '?skriv-ut');
+      printBtn.attr('href', '#skriv-ut');
       printBtn.click((e) => {
         e.preventDefault();
-        const targetPage = e.target.closest('.page').getAttribute('data-href') + '?skriv-ut';
+        const targetPage = e.target.closest('.page').getAttribute('data-href') + '#skriv-ut';
         recipe.relocate(targetPage, originalUrl);
       })
     }
@@ -148,11 +147,11 @@ const recipe = {
     const saveBtn = currentPageElm.find('.button--heart');
     if(saveBtn.exist()) {
       if (saveBtn.attr('href') === '#') {
-        saveBtn.attr('href', '?spara');
+        saveBtn.attr('href', '#spara');
       }
       saveBtn.click((e) => {
         e.preventDefault();
-        const targetPage = e.target.closest('.page').getAttribute('data-href') + '?spara';
+        const targetPage = e.target.closest('.page').getAttribute('data-href') + '#spara';
         recipe.relocate(targetPage, originalUrl);
       })
     }
@@ -173,22 +172,28 @@ const recipe = {
 
 
   triggerAction(type,action,el) {
-    //when original page has one of these params: recept, skriv-ut, betyg, spara, portioner
-    const elPosition = el.getBoundingClientRect();
-    window.scrollTo(0, elPosition.top - 200);
+    if(document.referrer !== '') {
+      //when original page has one of these params: recept, skriv-ut, betyg, spara, portioner
+      const elPosition = el.getBoundingClientRect();
+      window.scrollTo(0, elPosition.top - 200);
 
-    setTimeout(function () {
-      if(type==='click') {
-        el.click();
-      } else if (type==='select') {
-        const portions = action.split('?portioner=')[1];
-        el.value = portions;
-        el.dispatchEvent(new Event('change'));
-      }
-      //Remove param from URL once triggered
+      setTimeout(function () {
+        if(type==='click') {
+          el.click();
+        } else if (type==='select') {
+          const portions = action.split('#portioner=')[1];
+          el.value = portions;
+          el.dispatchEvent(new Event('change'));
+        }
+        //Remove param from URL once triggered
+        const currentUrl = window.location.href.split(action)[0];
+        history.replaceState(null, null, currentUrl);
+      }, 500);
+
+    } else {
       const currentUrl = window.location.href.split(action)[0];
       history.replaceState(null, null, currentUrl);
-    }, 500);
+    }
   },
 
 };
