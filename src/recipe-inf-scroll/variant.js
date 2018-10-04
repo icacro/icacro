@@ -16,9 +16,9 @@ import recipe from './recipe.js';
 
 let recipesArr = [];
 const maxlength = 40;
-let nextPageElm,currentPageElm,nextUrl;
+let nextPageEl,currentPageEl,nextUrl;
 let pageCount = 1;
-const pageWrapper = ELM.get('#page-wrapper');
+const pageWrapper = document.getElementById('page-wrapper');
 const originalUrl = window.location.pathname;
 
 //buggar?
@@ -50,13 +50,13 @@ const test = {
     }
 
     const currentUrl = originalUrl;
-    const page = ELM.get('#page');
+    const page = document.getElementById('page');
     const urlParts = currentUrl.split('/');
     const nameParts = urlParts[2].split('-');
     const recipeId = nameParts[nameParts.length - 1];
 
-    page.attr('data-id',recipeId);
-    page.attr('data-count',1)
+    page.setAttribute('data-id',recipeId);
+    page.setAttribute('data-count',1)
 
     recipesArr.push(currentUrl);
 
@@ -75,8 +75,8 @@ const test = {
     if (sessionStorage.prevPage) {
       if (sessionStorage.prevPage === originalUrl && sessionStorage.prevPageWrapper !== '') {
         pageWrapper.html(sessionStorage.prevPageWrapper);
-        if (pageWrapper.find('#page .loading-area').exist()) {
-          pageWrapper.find('#page .loading-area').removeClass('initiated');
+        if (pageWrapper.querySelector('#page .loading-area')) {
+          pageWrapper.querySelector('#page .loading-area').classList.remove('initiated');
         }
         sessionStorage.prevPageWrapper = '';
         sessionStorage.prevPage = originalUrl;
@@ -87,23 +87,23 @@ const test = {
     if(pageCount === 1) {
       test.gotoPage(page,page,currentUrl);
     } else {
-      const prevPage = ELM.get('#page');
-      currentPageElm = ELM.get('#page-next');
+      const prevPage = document.getElementById('page');
+      currentPageEl = document.getElementById('page-next');
       const relatedList = document.querySelectorAll('.related-recipes-list > a');
       test.buildRecipesArr(relatedList);
       nextUrl = recipesArr[pageCount];
       if (pageCount < maxlength) {
-        recipe.initRecipe(currentPageElm,currentUrl,prevPage,pageCount,originalUrl);
-        const loadingAreaContent = ELM.create('div loading-area-content');
-        const loadingAreaTitle = ELM.create('p loading-area-title');
-        const loadingArea = ELM.create('div loading-area');
-        loadingAreaContent.append(loadingAreaTitle);
-        loadingArea.append(loadingAreaContent);
-        currentPageElm.append(loadingArea);
-        nextPageElm = ELM.create('div page page-mod-fullwidth pl recipepage page-next').attr('id','page-next');
-        nextPageElm.attr('data-href',nextUrl);
-        pageWrapper.append(nextPageElm);
-        const nextPageEl = document.getElementById('page-next');
+        recipe.initRecipe(currentPageEl,currentUrl,prevPage,pageCount,originalUrl);
+
+        const loadingArea = test.buildLoadingArea();
+        page.appendChild(loadingArea);
+
+        nextPageEl = document.createElement('div');
+        nextPageEl.classList.add('page','page-mod-fullwidth','pl','recipepage','page-next');
+        nextPageEl.id = 'page-next';
+        nextPageEl.setAttribute('data-href',nextUrl);
+        pageWrapper.appendChild(nextPageEl);
+
         const titleEl = document.querySelector('#page .loading-area .loading-area-title');
         test.loadNextPage(nextUrl,nextPageEl,titleEl);
       } else {
@@ -125,28 +125,21 @@ const test = {
 
 
   gotoPage(pageNext,page,currentUrl) {
-    currentPageElm = pageNext;
+    currentPageEl = pageNext;
     const prevPage = page;
     const pages = document.querySelectorAll('.page');
     pageCount = pages.length;
-    const title = currentPageElm.find('h1').text();
+    const title = currentPageEl.querySelector('h1').innerHTML;
 
-    if (currentPageElm !== prevPage) {
+    if (currentPageEl !== prevPage) {
       //meaning "not first page"
       //test.changeURL(title,currentUrl);
-      recipe.initRecipe(currentPageElm,currentUrl,prevPage,pageCount,originalUrl);
+      recipe.initRecipe(currentPageEl,currentUrl,prevPage,pageCount,originalUrl);
     } else {
       //first page
-      currentPageElm.attr('data-count','1');
-      currentPageElm.attr('data-href',currentUrl);
+      currentPageEl.setAttribute('data-count','1');
+      currentPageEl.setAttribute('data-href',currentUrl);
     }
-
-    //build loading area
-    const loadingAreaContent = ELM.create('div loading-area-content');
-    const loadingAreaTitle = ELM.create('p loading-area-title');
-    const loadingArea = ELM.create('div loading-area');
-    loadingAreaContent.append(loadingAreaTitle);
-    loadingArea.append(loadingAreaContent);
 
     if (pageCount >= maxlength) {
       //no more scrolling if max length is reached
@@ -155,7 +148,9 @@ const test = {
     } else {
 
       //add next page
-      nextPageElm = ELM.create('div page page-mod-fullwidth pl recipepage page-next').attr('id','page-next');
+      nextPageEl = document.createElement('div');
+      nextPageEl.classList.add('page','page-mod-fullwidth','pl','recipepage','page-next');
+      nextPageEl.id = 'page-next';
 
       const relatedList = document.querySelectorAll('#page .related-recipes-list > a');
       test.buildRecipesArr(relatedList);
@@ -163,10 +158,12 @@ const test = {
       if (recipesArr.length > 1) {
 
         nextUrl = recipesArr[recipesArr.indexOf(currentUrl)+1];
-        currentPageElm.append(loadingArea);
-        nextPageElm.attr('data-href',nextUrl);
-        pageWrapper.append(nextPageElm);
-        const nextPageEl = document.getElementById('page-next');
+
+        const loadingArea = test.buildLoadingArea();
+        page.appendChild(loadingArea);
+
+        nextPageEl.setAttribute('data-href',nextUrl);
+        pageWrapper.appendChild(nextPageEl);
         const titleEl = document.querySelector('#page .loading-area .loading-area-title');
         test.loadNextPage(nextUrl,nextPageEl,titleEl);
 
@@ -256,12 +253,12 @@ const test = {
 
   scrollListener(nextUrl,pageCount) {
     if (pageCount < maxlength && recipesArr.length > 1 && document.getElementById('page')) {
-     const cur = document.getElementById(currentPageElm.attr('id'));
+     const cur = document.getElementById('page');
      const pageHeight = cur.offsetHeight;
      const startPos = cur.offsetTop - 70;
      const endPos = startPos + pageHeight - 300;
      const currentPos = window.pageYOffset + window.innerHeight;
-     const loadingArea = cur.querySelector('.loading-area');
+
      if (currentPos < startPos) {
        //activate previous page
        test.goToPrevPage(cur);
@@ -269,30 +266,34 @@ const test = {
 
        if(window.scrollY + window.innerHeight >= document.body.scrollHeight - 300) {
 
-         if (!loadingArea.classList.contains('initiated')) {
+        console.log(currentPageEl.querySelector('.loading-area').classList);
 
-          loadingArea.classList.add('initiated');
+        const pageLoadingArea = currentPageEl.querySelector('.loading-area').classList;
+
+         if (!pageLoadingArea.contains('initiated')) {
+
+          pageLoadingArea.add('initiated');
 
             window.setTimeout(function () {
-              if (nextPageElm.find('h1').exist()) {
+              if (nextPageEl.querySelector('h1')) {
                 //activate new page
-                test.gotoPage(nextPageElm,currentPageElm,nextUrl);
-                loadingArea.classList.add('added');
+                test.gotoPage(nextPageEl,currentPageEl,nextUrl);
+                pageLoadingArea.add('added');
               } else {
                 const config = { attributes: false, childList: true, subtree: false };
                 let pageObserver = new MutationObserver(function(mutations) {
                  for (var i = 0; i < mutations.length; i++) {
-                   test.gotoPage(nextPageElm,currentPageElm,nextUrl);
-                   loadingArea.classList.add('added');
+                   test.gotoPage(nextPageEl,currentPageEl,nextUrl);
+                   pageLoadingArea.add('added');
                    pageObserver.disconnect();
                  }
                 });
                 pageObserver.observe(document.getElementById('page-next'), config);
                 window.setTimeout(function () {
-                  if (nextPageElm.find('h1').exist()) {
+                  if (nextPageEl.querySelector('h1')) {
                     console.log('page exists...');
-                    test.gotoPage(nextPageElm,currentPageElm,nextUrl);
-                    loadingArea.classList.add('added');
+                    test.gotoPage(nextPageEl,currentPageEl,nextUrl);
+                    pageLoadingArea.add('added');
                   } else {
                     console.log('page does not exist...');
                     test.loadingFailed(cur);
@@ -301,7 +302,8 @@ const test = {
               }
             }, 50);
 
-         }
+          }
+
        } else {
          //activate next (but not new) page
          test.goToNextPage(cur);
@@ -344,6 +346,7 @@ const test = {
 		}, 400);
   },
 
+
   loadingFailed(cur) {
     console.log('loading failed');
     //document.querySelector('#page .loading-area').classList.add('reload');
@@ -351,6 +354,19 @@ const test = {
     document.getElementById('footer').classList.add('visible');
     //document.querySelector('#page .loading-area .loading-area-title').innerHTML = '<a href="/recept/">Ny text</a>';
   },
+
+
+  buildLoadingArea() {
+    const loadingAreaContent = document.createElement('div');
+    loadingAreaContent.classList.add('loading-area-content');
+    const loadingAreaTitle = document.createElement('p');
+    loadingAreaTitle.classList.add('loading-area-title');
+    const loadingArea = document.createElement('div');
+    loadingArea.classList.add('loading-area');
+    loadingAreaContent.appendChild(loadingAreaTitle);
+    loadingArea.appendChild(loadingAreaContent);
+    return loadingArea;
+  }
 
 };
 
