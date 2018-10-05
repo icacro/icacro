@@ -52,11 +52,7 @@
   font-weight: lighter;
 }
 
-.cro .loading-area .svg {
-  display: none;
-}
-
-.cro #page .loading-area svg {
+.cro .page .loading-area svg {
   width:20px;
   height: 20px;
   opacity: 0;
@@ -65,7 +61,7 @@
   transition: opacity 0.5s ease-in-out;
 }
 
-.cro #page .loading-area .svg {
+.cro .page .loading-area .svg {
   background: #fff;
   border-radius: 100%;
   display: block;
@@ -79,7 +75,7 @@
   transition: opacity 0.5s ease-in-out;
 }
 
-.cro #page .loading-area .svg .loader {
+.cro .page .loading-area .svg .loader {
   display: block;
   position: absolute;
   top:0;
@@ -114,7 +110,7 @@
   opacity: 0;
 }
 
-.cro .loading-area.initiated.reload {
+.cro .loading-area.initiated.failed {
   margin-bottom: 70px;
   padding-bottom: 0;
 }
