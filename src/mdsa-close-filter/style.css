@@ -1,0 +1,15 @@
+.cro { }
+@media only screen and (max-width: 780px) {
+  .cro { }
+}
+
+.cro div.reset-filter-segment svg {
+    fill: #A02971;
+    height: 32px;
+    width: 32px;
+    margin: -8px;
+}
+.cro div.reset-filter-segment svg:hover {
+    fill: #DC438C;
+    transition: all 0.2s ease-out;
+}
