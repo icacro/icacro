@@ -1,6 +1,6 @@
 'use strict';
 
-import { CROUTIL, ELM } from '../util/main';
+import { CROUTIL } from '../util/main';
 import { gaPush } from '../util/utils';
 
 const pageWrapper = document.getElementById('page-wrapper');
@@ -14,6 +14,8 @@ const recipe = {
     recipe.styleInstructions(currentPageEl);
     recipe.styleServingsPicker(currentPageEl, originalUrl);
     recipe.editButtons(currentPageEl, originalUrl);
+
+    gaPush({ eventAction: 'Inf-scroll: nytt recept', eventLabel: currentUrl });
 
   },
 
@@ -137,12 +139,18 @@ const recipe = {
     //edit save button
     const saveBtn = currentPageEl.querySelector('.button--heart');
     if(saveBtn) {
-      if (saveBtn.href === '#') {
-        saveBtn.href = '#spara';
+      const newSave = document.createElement('a');
+      const newHref = saveBtn.closest('.page').getAttribute('data-href') + '#spara';
+      newSave.href = newHref;
+      newSave.classList.add('button','button--heart','button--auto-width');
+      if (saveBtn.classList.contains('button--active')) {
+        newSave.classList.add('button--active');
       }
-      saveBtn.addEventListener("click", function(e) {
+      newSave.innerHTML = '<svg><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/Assets/icons/sprite.svg#heart"></use></svg><span class="recipe-save-text">Spara</span>';
+      saveBtn.parentNode.replaceChild(newSave, saveBtn);
+      newSave.addEventListener("click", function(e) {
         e.preventDefault();
-        const targetPage = e.target.closest('.page').getAttribute('data-href') + '#spara';
+        const targetPage = newHref;
         recipe.relocate(targetPage, originalUrl);
       })
     }
@@ -162,6 +170,7 @@ const recipe = {
 
 
   triggerAction(type,action,el) {
+    const currentUrl = window.location.href.split(action)[0];
     if(document.referrer !== '') {
       //when original page has one of these params: recept, skriv-ut, betyg, spara, portioner
       const elPosition = el.getBoundingClientRect();
@@ -176,14 +185,15 @@ const recipe = {
           el.dispatchEvent(new Event('change'));
         }
         //Remove param from URL once triggered
-        const currentUrl = window.location.href.split(action)[0];
         history.replaceState(null, null, currentUrl);
       }, 500);
 
     } else {
-      const currentUrl = window.location.href.split(action)[0];
       history.replaceState(null, null, currentUrl);
     }
+
+    gaPush({ eventAction: 'Inf-scroll: interaktion', eventLabel: action });
+
   },
 
 };

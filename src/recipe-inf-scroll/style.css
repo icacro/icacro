@@ -78,6 +78,7 @@
 .cro .page .loading-area .svg .loader {
   display: block;
   position: absolute;
+  z-index: 0;
   top:0;
   opacity: 1;
   transition: opacity 0.5s ease-in-out;

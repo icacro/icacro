@@ -9,8 +9,8 @@
 
 'use strict';
 
-import { CROUTIL, ELM } from '../util/main';
-import { triggerHotJar, gaPush } from '../util/utils';
+import { CROUTIL } from '../util/main';
+import { gaPush } from '../util/utils';
 import './style.css';
 import recipe from './recipe.js';
 
@@ -20,9 +20,6 @@ let currentPageEl,nextPageEl,nextUrl;
 let pageCount = 1;
 const pageWrapper = document.getElementById('page-wrapper');
 const originalUrl = window.location.pathname;
-
-//buggar?
-//tracking!
 
 const test = {
 
@@ -292,7 +289,6 @@ const test = {
                   } else {
                     pageObserver.disconnect();
                     test.loadingFailed();
-                    console.log('timeout');
                   }
                 }, 5000);
               }
@@ -313,6 +309,7 @@ const test = {
     loadingArea.querySelector('.svg').remove();
     loadingArea.append(reloadEl);
     document.querySelector('footer').classList.add('visible');
+    gaPush({ eventAction: 'Inf-scroll: nytt recept', eventLabel: 'failed' });
   },
 
 };
