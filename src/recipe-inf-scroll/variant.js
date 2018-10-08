@@ -267,30 +267,36 @@ const test = {
           loadingArea.classList.add('initiated');
 
             window.setTimeout(function () {
-              if (nextPageEl.querySelector('h1')) {
-                //activate new page
-                test.gotoPage(nextPageEl,currentPageEl,nextUrl);
-                loadingArea.classList.add('added');
-              } else {
-                const config = { attributes: false, childList: true, subtree: true };
-                let pageObserver = new MutationObserver(function(mutations) {
-                 for (var i = 0; i < mutations.length; i++) {
-                   test.gotoPage(nextPageEl,currentPageEl,nextUrl);
-                   loadingArea.classList.add('added');
-                   pageObserver.disconnect();
-                 }
-                });
-                pageObserver.observe(document.getElementById('page-next'), config);
-                window.setTimeout(function () {
-                  if (nextPageEl.querySelector('h1')) {
-                    test.gotoPage(nextPageEl,currentPageEl,nextUrl);
-                    loadingArea.classList.add('added');
-                    pageObserver.disconnect();
-                  } else {
-                    pageObserver.disconnect();
-                    test.loadingFailed();
-                  }
-                }, 5000);
+              if (!loadingArea.classList.contains('failed')) {
+                if (nextPageEl.querySelector('h1')) {
+                  //activate new page
+                  test.gotoPage(nextPageEl,currentPageEl,nextUrl);
+                  loadingArea.classList.add('added');
+                } else {
+                  const config = { attributes: false, childList: true, subtree: true };
+                  let pageObserver = new MutationObserver(function(mutations) {
+                   for (var i = 0; i < mutations.length; i++) {
+                     if (!loadingArea.classList.contains('failed')) {
+                       test.gotoPage(nextPageEl,currentPageEl,nextUrl);
+                       loadingArea.classList.add('added');
+                     }
+                     pageObserver.disconnect();
+                   }
+                  });
+                  pageObserver.observe(document.getElementById('page-next'), config);
+                  window.setTimeout(function () {
+                    if (!loadingArea.classList.contains('failed')) {
+                      if (nextPageEl.querySelector('h1')) {
+                        test.gotoPage(nextPageEl,currentPageEl,nextUrl);
+                        loadingArea.classList.add('added');
+                        pageObserver.disconnect();
+                      } else {
+                        pageObserver.disconnect();
+                        test.loadingFailed();
+                      }
+                    }
+                  }, 5000);
+                }
               }
             }, 1000);
 
@@ -304,9 +310,9 @@ const test = {
     const loadingArea = currentPageEl.querySelector('.loading-area');
     loadingArea.classList.add('failed');
     loadingArea.querySelector('.next-label').innerHTML = 'Vi lyckades tyvärr inte ladda';
+    loadingArea.querySelector('.svg').remove();
     const reloadEl = document.createElement('p');
     reloadEl.innerHTML = '<a href="' + nextPageEl.getAttribute('data-href') + '">Prova igen</a>';
-    loadingArea.querySelector('.svg').remove();
     loadingArea.append(reloadEl);
     document.querySelector('footer').classList.add('visible');
     gaPush({ eventAction: 'Inf-scroll: nytt recept', eventLabel: 'failed' });

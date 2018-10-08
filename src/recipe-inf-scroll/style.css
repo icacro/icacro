@@ -303,8 +303,13 @@
 
 
 
-@media only screen and (max-width: 780px) {
-  .cro { }
+@media (max-width: 767px) {
+  .cro .page.recipepage.recipepage--small .recipe-image-square--header {
+    margin-top:0;
+  }
+  .cro .page + .page.recipepage.recipepage--small {
+    padding-top: 0 !important;
+  }
 }
 
 
