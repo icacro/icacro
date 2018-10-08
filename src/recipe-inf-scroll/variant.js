@@ -88,8 +88,8 @@ const test = {
         nextPageEl.id = 'page-next';
         nextPageEl.setAttribute('data-href',nextUrl);
         pageWrapper.appendChild(nextPageEl);
-        const titleEl = currentPageEl.querySelector('.loading-area .loading-area-title');
-        test.loadNextPage(nextUrl,nextPageEl,titleEl);
+        //const titleEl = currentPageEl.querySelector('.loading-area .loading-area-title');
+        test.loadNextPage(nextUrl,nextPageEl,loadingArea);
       } else {
         document.getElementById('page').classList.add('last-page');
         document.getElementById('footer').classList.add('visible');
@@ -157,8 +157,8 @@ const test = {
         currentPageEl.appendChild(loadingArea);
         nextPageEl.setAttribute('data-href',nextUrl);
         pageWrapper.appendChild(nextPageEl);
-        const titleEl = currentPageEl.querySelector('.loading-area .loading-area-title');
-        test.loadNextPage(nextUrl,nextPageEl,titleEl);
+        //const titleEl = currentPageEl.querySelector('.loading-area .loading-area-title');
+        test.loadNextPage(nextUrl,nextPageEl,loadingArea);
 
       } else {
         //hantera t.ex. https://www.ica.se/recept/kanel-och-stjarnanissill-599287/ som inte har relaterade recept
@@ -207,7 +207,7 @@ const test = {
   },
 
 
-  loadNextPage(url,pageNext,loadingAreaTitle) {
+  loadNextPage(url,pageNext,loadingArea) {
     var request = new XMLHttpRequest();
     request.open('GET', 'https://www.ica.se' + url, true);
     request.onload = function() {
@@ -226,8 +226,8 @@ const test = {
           title = '<span class="next-label">Nästa recept:</span><span class="title">' + title.substring(0, title.indexOf('|')) + '</span>';
           const loader = '<div class="svg"><span class="loader"></span></div>';
 
-          if (!loadingAreaTitle.classList.contains('reload')) {
-            loadingAreaTitle.innerHTML=title + loader;
+          if (!loadingArea.classList.contains('failed')) {
+            loadingArea.querySelector('.loading-area-title').innerHTML=title + loader;
 
             if (tds.classList.contains('recipepage--large')) {
               pageNext.classList.add('recipepage--large');
