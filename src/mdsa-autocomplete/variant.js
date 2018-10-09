@@ -57,13 +57,16 @@ const test = {
     var filter = test.filters.find(function(element) {
       return element.name == name;
     });
+    console.log(filter);
+    filter.element[0].click();
+    test.searchField.val('');
 
-    if (filter.element.parent().hasClass('subcat')) {
+    /*if (filter.element.parent().hasClass('subcat')) {
       test.searchField.val(filter.name);
       $('.search > button:submit').click();
     } else {
       filter.element[0].click();
-    }
+    }*/
   },
   getAutocompleteList(list) {
     if (!list.length) return undefined;
