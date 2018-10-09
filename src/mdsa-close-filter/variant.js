@@ -16,7 +16,6 @@ import './style.css';
 const test = {
   manipulateDom() {
     const txt = "<svg><use xlink:href='/Assets/icons/v2-symbols.svg#close'></use></svg>";
-    /*const txt = "<a href='#' class='button button--link button--icon'><svg viewBox='0 0 32 32' width='32px' height='32px'><use xlink:href='/icons/sprite.svg#close'></use></svg></a>";*/
 
     $('.cro div.reset-filter-segment').html(txt);
   }

@@ -12,7 +12,7 @@
 'use strict';
 
 function init() {
-  var css = '.classname { visibility: hidden; }';
+  var css = '.sprite1.icon-refresh { visibility: hidden; }';
   var style = document.createElement('style');
   var script = document.createElement('script');
   var head = document.querySelector('head');
