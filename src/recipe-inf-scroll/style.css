@@ -315,9 +315,10 @@
 
 @media only print {
   .cro .page,
-  .cro .loading-area {display: none;}
+  .cro .loading-area {display: none !important; visibility: hidden !important;}
+
   .cro #page {
-    display: block;
+    display: block !important; visibility: visible !important;
     margin-top: 0;
   }
 }
