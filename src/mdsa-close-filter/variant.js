@@ -17,7 +17,7 @@ const test = {
   manipulateDom() {
     const txt = "<svg><use xlink:href='/Assets/icons/v2-symbols.svg#close'></use></svg>";
 
-    $('.cro div.reset-filter-segment').html(txt);
+    $('.cro .filtersegment div.reset-filter-segment').html(txt);
   }
 };
 
