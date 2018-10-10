@@ -18,6 +18,7 @@ const test = {
     const txt = "<svg><use xlink:href='/Assets/icons/v2-symbols.svg#close'></use></svg>";
 
     $('.cro .filtersegment div.reset-filter-segment').html(txt);
+    $('.cro .active-filter-display div.reset-filter-segment a').html("återställ alla filter");
   }
 };
 
