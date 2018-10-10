@@ -20,7 +20,7 @@ function init() {
   style.innerHTML = '.recipe-action-buttons .button--print{visibility:hidden;}';
 
   script.setAttribute('async', '');
-  script.setAttribute('src', 'https://cdn.rawgit.com/icacro/icacro/v1.0.282/src/recipe-share/variant.min.js');
+  script.setAttribute('src', 'https://cdn.rawgit.com/icacro/icacro/v1.0.286/src/recipe-android-share/variant.min.js');
 
   head.appendChild(script);
   head.appendChild(style);

@@ -41,8 +41,8 @@ const test = {
 
 
 $(document).ready(() => {
-  // if (window.navigator.share) {
+  if (window.navigator.share) {
     Object.assign(test, CROUTIL());
     test.manipulateDom();
-  // }
+  }
 });
