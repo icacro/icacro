@@ -1,0 +1,37 @@
+.cro .button--share {
+  min-width: 1px;
+  padding: 0 20px 0 3.6rem;
+  margin-left: 20px;
+}
+
+.cro .button--share svg {
+  position: absolute;
+  height: 4rem;
+  width: 4rem;
+  top: 0.6rem;
+  margin-left: -3.4rem;
+}
+
+.cro .recipe-action-buttons .button--print {
+  visibility: visible;
+  min-width: 1px;
+  padding-left: 20px;
+}
+
+@media (max-width: 400px) {
+  .cro .button--share {
+    padding-right: 0;
+    margin-left: 0;
+  }
+  .cro .recipe-action-buttons .button--heart {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+}
+
+@media (max-width: 340px) {
+  .cro .recipe-action-buttons .button--heart {
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+}
