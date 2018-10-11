@@ -45,6 +45,14 @@ const test = {
       //gaPush({ eventAction: 'Kopiera länk', eventLabel: window.location.href });
       //kopiera länk mha clipboard.js
       //visa bekräftelse
+      
+          // Bekräftelse motsv ordinarie notiser enligt följande kod (placera efter footer):
+          // <div id="bottom-bar" class="bottom-alerts">
+          //     <div class="notice" data-version="e5a8e744-e99a-4f62-8e80-d761eae82fe4" style="display: block;">
+          //         <p>Länken kopierades och finns nu i dina urklipp</p>
+          //         <a class="notice-close sprite2" title="Stäng"></a>
+          //     </div>
+          // </div>
     });
 
   },
