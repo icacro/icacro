@@ -45,9 +45,9 @@ const test = {
     var filter = test.filters.find(function(element) {
       return element.name == name;
     });
-    console.log(filter);
     filter.element[0].click();
     test.searchField.val('');
+    gaPush({ eventAction: 'MDSA, autocomplete', eventLabel: name });
   },
   getAutocompleteList(list) {
     if (!list.length) return undefined;
