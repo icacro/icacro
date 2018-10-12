@@ -17,6 +17,10 @@ const test = {
 
   manipulateDom() {
 
+    if (document.querySelector('.recipe-action-buttons.col-lg-4')) {
+      document.querySelector('.recipe-action-buttons').classList.remove('col-lg-4');
+    }
+
     const copyUrl = document.createElement('div');
     copyUrl.id = 'copy-url';
     copyUrl.innerHTML = window.location.href.split('?')[0] + '?utm_source=all_share';
@@ -32,6 +36,7 @@ const test = {
     document.querySelector('.recipe-action-buttons').insertBefore(copyBtn, document.querySelector('.button--print'));
 
     copyBtn.addEventListener('click', function(event) {
+      event.preventDefault();
       window.getSelection().removeAllRanges();
       const range = document.createRange();
       range.selectNode(copyUrl);
