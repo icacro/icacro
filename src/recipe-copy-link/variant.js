@@ -47,14 +47,14 @@ const test = {
       range.selectNode(copyUrl);
       window.getSelection().addRange(range);
       try {
-        const copy = document.execCommand('copy');
+        const copy = document.execCommand('copyX');
         if(!copy) {
           throw "Kopiera länk misslyckades";
         }
       } catch(err) {
         console.log(err);
         gaPush({ eventAction: 'Kopiera länk misslyckades', eventLabel: window.location.href });
-        test.showConfirmation("Det gick tyvärr inte att kopiera länken, prova att hämta den från adressfältet istället");
+        test.showConfirmation("Kopiering av länk misslyckades, prova här: " + window.location.href);
         return;
       }
       window.getSelection().removeAllRanges();
