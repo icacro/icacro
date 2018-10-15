@@ -37,6 +37,17 @@
   }
 }
 
+.cro #copy-link-message {
+  display: block;
+  bottom: 0;
+  transition: all .2s ease-out;
+}
+
+.cro #copy-link-message.copy-link-hidden {
+  display: block;
+  bottom: -48px;
+}
+
 @media (max-width: 340px) {
   .cro .recipe-action-buttons .button--heart {
     padding-left: 15px;
