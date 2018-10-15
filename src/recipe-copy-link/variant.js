@@ -53,12 +53,12 @@ const test = {
         }
       } catch(err) {
         console.log(err);
-        //gaPush({ eventAction: 'Kopiera länk misslyckades', eventLabel: window.location.href });
-        test.showConfirmation("Det gick tyvärr inte att kopiera länken");
+        gaPush({ eventAction: 'Kopiera länk misslyckades', eventLabel: window.location.href });
+        test.showConfirmation("Det gick tyvärr inte att kopiera länken, prova att hämta den från adressfältet istället");
         return;
       }
       window.getSelection().removeAllRanges();
-      //gaPush({ eventAction: 'Kopiera länk', eventLabel: window.location.href });
+      gaPush({ eventAction: 'Kopiera länk', eventLabel: window.location.href });
       test.showConfirmation("Länken kopierades och finns nu i dina urklipp");
     });
   },
