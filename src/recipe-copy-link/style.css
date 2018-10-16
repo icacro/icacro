@@ -5,7 +5,7 @@
 
 .cro .button--copy {
   min-width: 1px;
-  padding: 0 20px 0 3.6rem;
+  padding: 0 0 0 20px; /*0 20px 0 3.6rem;*/
   margin-left: 20px;
 }
 
