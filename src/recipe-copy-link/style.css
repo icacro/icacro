@@ -37,15 +37,29 @@
   }
 }
 
+/* #E16E30 orange
+    background-position: -307px -65px;
+    .sprite2, .sprite2-p:after, .sprite2-p:before */
+
 .cro #copy-link-message {
   display: block;
   bottom: 0;
   transition: all .2s ease-out;
+  background-color: #7db66d;
+  color: #ffffff;
+}
+
+.cro #copy-link-message.copy-link-error {
+  background-color: #E16E30;
 }
 
 .cro #copy-link-message.copy-link-hidden {
   display: block;
   bottom: -48px;
+}
+
+.cro .bottom-alerts #copy-link-message.notice .notice-close {
+  background-position: -307px -65px;
 }
 
 @media (max-width: 340px) {

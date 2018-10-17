@@ -54,15 +54,23 @@ const test = {
       } catch(err) {
         console.log(err);
         gaPush({ eventAction: 'Kopiera länk misslyckades', eventLabel: window.location.href });
-        test.showConfirmation("Länken kunde tyvärr inte kopieras. " + window.location.href);
+        test.showConfirmation("Länken kunde tyvärr inte kopieras. " + window.location.href, true);
         return;
       }
       window.getSelection().removeAllRanges();
       gaPush({ eventAction: 'Kopiera länk', eventLabel: window.location.href });
-      test.showConfirmation("Länken kopierades!");
+      test.showConfirmation("Länken kopierades!", false);
     });
   },
-  showConfirmation(txt) {
+  showConfirmation(txt, isError) {
+    if(isError != $('.cro #copy-link-message').hasClass('copy-link-error')){
+      if(isError){
+        $('.cro #copy-link-message').addClass('copy-link-error');
+      }
+      else {
+        $('.cro #copy-link-message').removeClass('copy-link-error');
+      }
+    }
     $('.cro #copy-link-message p').html(txt);
     $('.cro #copy-link-message').removeClass('copy-link-hidden');
   }
