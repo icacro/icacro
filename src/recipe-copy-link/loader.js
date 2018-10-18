@@ -20,7 +20,7 @@ function init() {
   style.innerHTML = '.recipe-action-buttons .button--print{visibility:hidden;}';
 
   script.setAttribute('async', '');
-  script.setAttribute('src', 'https://cdn.rawgit.com/icacro/icacro/v1.0.288/src/recipe-copy-link/variant.min.js');
+  script.setAttribute('src', 'https://cdn.rawgit.com/icacro/icacro/v1.0.295/src/recipe-copy-link/variant.min.js');
 
   head.appendChild(script);
   head.appendChild(style);
