@@ -60,6 +60,8 @@
 
 .cro .bottom-alerts #copy-link-message.notice .notice-close {
   background-position: -307px -65px;
+  top: 2px;
+  right: 0px;
 }
 
 @media (max-width: 340px) {
