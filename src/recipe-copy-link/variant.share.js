@@ -52,14 +52,13 @@ const test = {
           throw "Kopiera länk misslyckades";
         }
       } catch(err) {
-        console.log(err);
         gaPush({ eventAction: 'Kopiera länk misslyckades', eventLabel: window.location.href });
         test.showConfirmation("Länken kunde tyvärr inte kopieras. " + window.location.href, true);
         return;
       }
       window.getSelection().removeAllRanges();
       gaPush({ eventAction: 'Kopiera länk', eventLabel: window.location.href });
-      test.showConfirmation("Länken kopierades!", false);
+      test.showConfirmation("Länken kopierades och är redo att delas!", false);
     });
   },
   showConfirmation(txt, isError) {

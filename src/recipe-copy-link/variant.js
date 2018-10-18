@@ -52,7 +52,6 @@ const test = {
           throw "Kopiera länk misslyckades";
         }
       } catch(err) {
-        console.log(err);
         gaPush({ eventAction: 'Kopiera länk misslyckades', eventLabel: window.location.href });
         test.showConfirmation("Länken kunde tyvärr inte kopieras. " + window.location.href, true);
         return;
