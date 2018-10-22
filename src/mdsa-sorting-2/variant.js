@@ -29,17 +29,24 @@ const test = {
       test.sort(selectedSorting);
     } else if (selectedSorting === 'Saves') {
       test.sort(selectedSorting);
+    } else if (selectedSorting === 'Relevance') {
+      ELM.get('.filter-dropdown-selected-content').attr('data-emptycase','Relevans');
     }
 
-    let listObserver = new MutationObserver(function(mutations) {
+    let changeSortingObserver = new MutationObserver(function(mutations) {
       for (var i = 0; i < mutations.length; i++) {
         if ((getCookie('recipeSortingPreferenceSelected') !== getCookie('recipeSortingPreference')) && getCookie('recipeSortingPreference') !== null) {
           document.cookie = 'recipeSortingPreferenceSelected=' + getCookie('recipeSortingPreference') + '; path=/';
         } else if (getCookie('recipeSortingPreference') === null) {
           document.cookie = 'recipeSortingPreferenceSelected=Relevance; path=/';
         }
+      }
+    });
+
+    let optionsObserver = new MutationObserver(function(mutations) {
+      for (var i = 0; i < mutations.length; i++) {
         let filterText;
-        if (ELM.get('.filter-dropdown-wrapper filter-option[selected]')) {
+        if (ELM.get('.filter-dropdown-wrapper filter-option[selected]').exist()) {
           filterText = ELM.get('.filter-dropdown-wrapper filter-option[selected]').text();
         } else {
           filterText = 'Relevans';
@@ -55,7 +62,8 @@ const test = {
       subtree: true
     };
 
-    listObserver.observe(document.querySelector('filter-dropdown.filter-dropdown .filter-dropdown-wrapper'), config);
+    changeSortingObserver.observe(document.querySelector('filter-dropdown.filter-dropdown'), config);
+    optionsObserver.observe(document.querySelector('filter-dropdown.filter-dropdown .filter-dropdown-wrapper'), config);
 
   },
 
