@@ -38,6 +38,13 @@ const test = {
         } else if (getCookie('recipeSortingPreference') === null) {
           document.cookie = 'recipeSortingPreferenceSelected=Relevance; path=/';
         }
+        let filterText;
+        if (ELM.get('.filter-dropdown-wrapper filter-option[selected]')) {
+          filterText = ELM.get('.filter-dropdown-wrapper filter-option[selected]').text();
+        } else {
+          filterText = 'Relevans';
+        }
+        ELM.get('.filter-dropdown-selected-content').attr('data-emptycase',filterText);
       }
     });
 
@@ -48,7 +55,7 @@ const test = {
       subtree: true
     };
 
-    listObserver.observe(document.querySelector('filter-dropdown.filter-dropdown'), config);
+    listObserver.observe(document.querySelector('filter-dropdown.filter-dropdown .filter-dropdown-wrapper'), config);
 
   },
 
@@ -58,6 +65,7 @@ const test = {
     if (selectedSorting === 'Saves') {
       ELM.get('filter-dropdown').attr('selected','selected');
       ELM.get('.filter-dropdown-selected .filter-dropdown-selected-content').text('Populärast');
+      ELM.get('.filter-dropdown-selected-content').attr('data-emptycase','Populärast');
     }
   }
 
