@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         mdsa-sorting
-// @path         //./src/mdsa-sorting-2/variant.2.js
+// @path         //./src/mdsa-sorting-2/variant.js
 // @namespace    http://tampermonkey.net/
 // @version      0.1
 // @match        https://www.ica.se/recept/*
@@ -17,6 +17,8 @@ const test = {
   manipulateDom() {
 
     const defaultSorting = 'Saves';
+
+    ELM.get('.filter-dropdown-wrapper filter-option[value="Saves"]').text('Sparad antal gånger');
 
     let selectedSorting = getCookie('recipeSortingPreferenceSelected');
 
@@ -55,6 +57,7 @@ const test = {
     ICA.MDSA.recipeList.updateSort();
     if (selectedSorting === 'Saves') {
       ELM.get('filter-dropdown').attr('selected','selected');
+      ELM.get('.filter-dropdown-selected .filter-dropdown-selected-content').text('Sparad antal gånger');
     }
   }
 
