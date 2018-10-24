@@ -27,8 +27,10 @@ const test = {
       document.cookie = 'recipeSortingPreferenceSelected=' + selectedSorting + '; path=/';
       document.cookie = 'recipeSortingPreference=' + selectedSorting + '; path=/';
       test.sort(selectedSorting);
-    } else if (selectedSorting === 'Saves') {
+    } else if (selectedSorting === 'Saves' && getCookie('recipeSortingPreference') !== 'Saves') {
       test.sort(selectedSorting);
+    } else if (selectedSorting === 'Saves') {
+      test.selectSaves();
     } else if (selectedSorting === 'Relevance') {
       ELM.get('.filter-dropdown-selected-content').attr('data-emptycase','Relevans');
     }
@@ -71,10 +73,14 @@ const test = {
     ICA.MDSA.recipeList.defaultSort = selectedSorting;
     ICA.MDSA.recipeList.updateSort();
     if (selectedSorting === 'Saves') {
-      ELM.get('filter-dropdown').attr('selected','selected');
-      ELM.get('.filter-dropdown-selected .filter-dropdown-selected-content').text('Sparad antal gånger');
-      ELM.get('.filter-dropdown-selected-content').attr('data-emptycase','Sparad antal gånger');
+      test.selectSaves();
     }
+  },
+
+  selectSaves() {
+    ELM.get('filter-dropdown').attr('selected','selected');
+    ELM.get('.filter-dropdown-selected .filter-dropdown-selected-content').text('Sparad antal gånger');
+    ELM.get('.filter-dropdown-selected-content').attr('data-emptycase','Sparad antal gånger');
   }
 
 };

@@ -12,13 +12,13 @@
 'use strict';
 
 function init() {
-  var css = '#recipes .article {opacity:0;} filter-dropdown.filter-dropdown {border:0;} filter-dropdown .toggle-arrow-icon {display:none} .filter-dropdown-selected-content {color:#fff;}';
+  var css = '.filter-dropdown-selected-content {visibility: visible;}';
   var style = document.createElement('style');
   var script = document.createElement('script');
   var head = document.querySelector('head');
 
   script.setAttribute('async', '');
-  script.setAttribute('src', 'https://cdn.rawgit.com/icacro/icacro/v1.0.228/src/mdsa-sorting/variant.1.min.js');
+  script.setAttribute('src', 'https://cdn.rawgit.com/icacro/icacro/v1.0.302/src/mdsa-sorting-2/variant.min.js');
 
   style.appendChild(document.createTextNode(css));
 
