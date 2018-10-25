@@ -1,0 +1,114 @@
+.cro .recipe-meta--header{visibility:visible;}
+@media (max-width: 1023px) and (min-width: 768px) {
+  .cro .page.recipepage--small ul.breadcrumb {
+    width: 45vw;
+  }
+}
+@media (min-width: 1200px) {
+  .cro .page.recipepage--small ul.breadcrumb {
+    width: 600px;
+  }
+}
+@media (max-width: 600px) {
+  .cro .page .breadcrumb li::after {
+    margin: 0 4px 0 10px !important;
+  }
+}
+@media (max-width: 600px) {
+  .cro .page .breadcrumb.backarrow li::after {
+    margin: 0 3px !important;
+  }
+}
+
+.cro .recipepage--large .container-backdrop {
+  padding-top:10px;
+}
+.cro .recipepage--small .bread-crumbs {
+  margin-top: -30px;
+}
+
+.cro .page .breadcrumb {
+  list-style-type: none;
+  font-size: 14px;
+  padding-left: 10px;
+}
+.cro .page ul.breadcrumb {
+  padding-left: 0px;
+  width: 80vw;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-transform: none;
+
+}
+.cro .page .breadcrumb li {
+  display: inline;
+  color: #808283;
+}
+.cro .page .breadcrumb li a {
+  text-decoration: none;
+  /*color: #343434; */
+  font-size: 14px;
+}
+.cro .page .breadcrumb li a:hover {
+  color: #DC438C;
+}
+.cro .page .breadcrumb li::after {
+  border-right: 1px solid #D5D7DA;
+  border-top: 1px solid #D5D7DA;
+  content: '';
+  display: inline-block;
+  height: 8px;
+  margin: 0 15px;
+  transform: translate(-5px, 0) rotate(45deg);
+  width: 8px;
+}
+
+.cro .page .breadcrumb.backarrow li::after {
+  border-right: 1px solid #A02971;
+  border-top: 1px solid #A02971;
+  margin: 0 5px;
+  transform: translate(0, -1px) rotate(225deg);
+}
+.cro .page .breadcrumb.backarrow li a {
+  text-decoration: none;
+  color: #A02971;
+  font-size: 14px;
+}
+.cro .page .breadcrumb.backarrow li a:hover {
+  color: #DC438C;
+}
+
+.cro .page .breadcrumb li:last-child::after {
+  border : 0;
+  display: none;
+}
+.cro .page span.cooking-time {
+ padding-left: 20px;
+ font-size: 14px;
+}
+.cro .page .rating-stars {
+  margin-right: 0 !important;
+  width: auto !important;
+}
+
+@media (max-width: 1260px) {
+  .cro .recipepage--small .bread-crumbs {
+    margin-top: -98px;
+  }
+}
+
+@media (max-width: 1023px) {
+  .cro .recipepage--large .container-backdrop {
+    padding-top:0;
+  }
+  .cro .recipepage--small .bread-crumbs {
+    margin-top: -56px;
+  }
+}
+
+@media (max-width: 767px) {
+  .cro .recipepage--small .bread-crumbs {
+    margin-top: -22px;
+  }
+}
