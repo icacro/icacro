@@ -10,7 +10,7 @@
 
 'use strict';
 
-import { CROUTIL, ELM } from '../util/main';
+import { CROUTIL } from '../util/main';
 import { gaPush } from '../util/utils';
 import './style.css';
 
@@ -46,7 +46,6 @@ const test = {
 
       if (cookieContent !== getCookie('icaxNyckelhal') && cookieContent !== '') {
         document.cookie = 'icaxNyckelhal=' + cookieContent + ';path=/;';
-        console.log('cookie set: ' + cookieContent);
       }
 
       if(headerCopy) {
@@ -71,6 +70,12 @@ const test = {
             document.querySelector('body').classList.add('icax-cro');
           }, 200);
         }
+
+        gaPush({ eventAction: 'icaxNyckelhal', eventLabel: cookieContent });
+
+      } else {
+
+        gaPush({ eventAction: 'icaxNyckelhal', eventLabel: 'original' });
 
       }
 
