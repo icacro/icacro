@@ -33,6 +33,7 @@ const test = {
         cookieContent = 'halsosammare-val';
       } else if (!cookieContent) {
         cookieContent = '';
+        document.querySelector('body').classList.add('icax-cro');
       }
 
       if(cookieContent === 'smart-halsa') {
