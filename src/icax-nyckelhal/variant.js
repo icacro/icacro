@@ -55,7 +55,7 @@ const test = {
         const miniTitle =  document.querySelector('header h1 .mini-title');
 
         if (h1)         h1.innerHTML = headerCopy;
-        if (h1 && miniTitle)  h1.innerHTML = miniTitle + headerCopy;
+        if (h1 && miniTitle)  h1.innerHTML = '<span class="mini-title">' + miniTitle.innerHTML + '</span>' + headerCopy;
 
         if (introText) {
           introText.innerHTML = bodyCopy;
