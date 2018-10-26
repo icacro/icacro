@@ -61,7 +61,7 @@ const test = {
           introText.innerHTML = bodyCopy;
           let pObserver = new MutationObserver(function(mutations) {
             for (var i = 0; i < mutations.length; i++) {
-              if (introText.innerHTML !== bodyCopy) {
+              if (introText.innerHTML !== bodyCopy || (introText.hasAttribute('title') && introText.getAttribute('title') !== bodyCopy)) {
                 introText.innerHTML = bodyCopy;
                 if (introText.hasAttribute('title')) introText.setAttribute('title',bodyCopy);
               }
