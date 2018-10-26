@@ -12,7 +12,7 @@
 'use strict';
 
 function init() {
-  var css = '.cro header p.truncate, .cro header h1 {visibility: visible;}';
+  var css = 'header p.truncate, header h1 {visibility: hidden;}';
 
   var style = document.createElement('style');
   var script = document.createElement('script');
