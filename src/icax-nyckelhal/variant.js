@@ -62,6 +62,9 @@ const test = {
           let pObserver = new MutationObserver(function(mutations) {
             for (var i = 0; i < mutations.length; i++) {
               if (introText.innerHTML !== bodyCopy) introText.innerHTML = bodyCopy;
+              setTimeout(function () {
+                document.getElementByTagName('body').classList.add('icax-cro');
+              }, 100);
             }
           });
           const config = {attributes: true, childList: true, characterData: true, subtree: true};

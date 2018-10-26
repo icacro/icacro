@@ -22,7 +22,7 @@ function init() {
   style.appendChild(document.createTextNode(css))
   head.appendChild(style);
   script.setAttribute('async', '');
-  script.setAttribute('src', 'https://cdn.rawgit.com/icacro/icacro/v1.0.310/src/icax-nyckelhal/variant.min.js');
+  script.setAttribute('src', 'https://cdn.rawgit.com/icacro/icacro/v1.0.302/src/icax-nyckelhal/variant.min.js');
 
   head.appendChild(script);
 }
