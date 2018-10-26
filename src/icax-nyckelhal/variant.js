@@ -61,7 +61,10 @@ const test = {
           introText.innerHTML = bodyCopy;
           let pObserver = new MutationObserver(function(mutations) {
             for (var i = 0; i < mutations.length; i++) {
-              if (introText.innerHTML !== bodyCopy) introText.innerHTML = bodyCopy;
+              if (introText.innerHTML !== bodyCopy) {
+                introText.innerHTML = bodyCopy;
+                if (introText.hasAttribute('title')) introText.setAttribute('title',bodyCopy);
+              }
             }
           });
           const config = {attributes: true, childList: true, characterData: true, subtree: true};
