@@ -12,7 +12,7 @@
 'use strict';
 
 function init() {
-  var css = '.classname { visibility: hidden; }';
+  var css = 'a.button.button--heart { display: none; }';
   var style = document.createElement('style');
   var script = document.createElement('script');
   var head = document.querySelector('head');

@@ -1,3 +1,20 @@
 @media only screen and (max-width: 780px) {
   .cro { }
 }
+
+.cro a.button.button--heart {
+  display: none;
+}
+
+.cro div.new-save-field a.button.button--heart {
+  display: inline-block;
+}
+
+.cro div.new-save-field {
+  position: absolute;
+  right: 0;
+  top: -12px;
+  z-index: 10;
+}
+
+/*button button--heart button--auto-width js-login-return-function js-login-modal-iframe js-login-modal-initiated */
