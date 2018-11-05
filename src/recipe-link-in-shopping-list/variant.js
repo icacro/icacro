@@ -49,18 +49,21 @@ const test = {
             </a>*/
 
   },
-  function create_cookie(value) {
+  create_cookie(value) {
     var cookie = [test.cookieName, '=', JSON.stringify(value), '; domain=.', window.location.host.toString(), '; path=/;'].join('');
     document.cookie = cookie;
   },
-  function read_cookie() {
+  read_cookie() {
     var result = document.cookie.match(new RegExp(test.cookieName + '=([^;]+)'));
     result && (result = JSON.parse(result[1]));
     return result;
   },
-  const cookieName = "recipes-in-shopping-list",
-  function save(){
-    var cookie = test.read_cookie();
+  cookieName: "recipes-in-shopping-list",
+  save(){
+    var recipes = test.read_cookie();
+    if(recipes != undefined) {
+
+    }
   }
 };
 
