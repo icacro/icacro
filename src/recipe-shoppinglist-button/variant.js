@@ -17,8 +17,14 @@ const test = {
 
   manipulateDom() {
     var btn = document.querySelector(".button.js-open-shoppinglist-modal");
-    document.querySelector(".ingredients__header").insertAdjacentElement("beforeend", btn);
-    //document.querySelector(".ingredients__header").insertAdjacentElement("beforeend", document.querySelector(".servings-picker.servings-picker--dynamic"));
+    var header = document.querySelector(".ingredients__header");
+    var position = "beforeend";
+    if (header == null) { // recept utan portioner
+      header = document.getElementById("ingredients-section");
+      position = "afterbegin";
+      btn.classList.add("no-portions");
+    }
+    header.insertAdjacentElement(position, btn);
   }
 };
 
