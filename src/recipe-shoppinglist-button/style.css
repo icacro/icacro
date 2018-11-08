@@ -1,0 +1,23 @@
+@media only screen and (max-width: 780px) {
+  .cro { }
+}
+
+.cro div.button.button-round.js-open-shoppinglist-modal {
+  position: absolute;
+  top: 43px;
+  z-index: 10;
+}
+
+.cro div.button.button-round.js-open-shoppinglist-modal.no-portions {
+  top: -5px;
+  right: 0;
+}
+
+.cro .ingredients__header h2 {
+  margin-bottom: 70px;
+}
+/*.cro div.servings-picker--dynamic {
+  float: none;
+  margin-top: -25px;
+  margin-bottom: 10px;
+}*/
