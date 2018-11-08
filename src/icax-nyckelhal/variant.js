@@ -38,10 +38,10 @@ const test = {
 
       if(cookieContent === 'smart-halsa') {
         headerCopy  = 'Smart hälsa';
-        bodyCopy    = 'Även för den som lever ett aktivt liv och äter en hälsosam kost kan inspirationen tryta. Här hittar du varierande recept med bra fetter och mycket grönsaker som dessutom uppfyller kriterierna för nyckelhålsmärkt mat';
+        bodyCopy    = 'Även för den som lever ett aktivt liv och äter en hälsosam kost kan inspirationen tryta. Här hittar du varierande recept med bra fetter och mycket grönsaker som är utvalda av ICAs legitimerade dietister.';
       } else if(cookieContent === 'halsosammare-val') {
         headerCopy  = 'Hälsosammare val';
-        bodyCopy    = 'Att ändra sina matvanor kan vara ett bra steg för att förebygga både hjärt- och kärlsjukdomar och förhöjda blodsockernivåer. Här hittar du hälsosamma och goda recept som uppfyller kriterierna för nyckelhålsmärkt mat';
+        bodyCopy    = 'Att ändra sina matvanor kan vara ett bra steg för att förebygga både hjärt- och kärlsjukdomar och förhöjda blodsockernivåer. Här hittar du hälsosamma och goda recept som är utvalda av ICAs legitimerade dietister.';
       }
 
       if (cookieContent !== getCookie('icaxNyckelhal') && cookieContent !== '') {
