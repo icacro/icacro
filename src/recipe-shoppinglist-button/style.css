@@ -9,15 +9,14 @@
 }
 
 .cro div.button.button-round.js-open-shoppinglist-modal.no-portions {
-  top: -5px;
+  top: 4px;
   right: 0;
 }
 
 .cro .ingredients__header h2 {
   margin-bottom: 70px;
 }
-/*.cro div.servings-picker--dynamic {
-  float: none;
-  margin-top: -25px;
-  margin-bottom: 10px;
-}*/
+
+.cro div.servings-picker--dynamic {
+  margin-top: 48px;
+}
