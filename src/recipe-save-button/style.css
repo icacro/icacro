@@ -13,7 +13,7 @@
 .cro div.new-save-field {
   position: absolute;
   right: 0;
-  top: -2px;
+  top: -5px;
   z-index: 10;
 }
 

@@ -18,7 +18,7 @@ function init() {
   var head = document.querySelector('head');
 
   script.setAttribute('async', '');
-  script.setAttribute('src', 'https://cdn.rawgit.com/icacro/icacro/v1.0.176/src/recipe-shoppinglist-button/variant.min.js');
+  script.setAttribute('src', 'https://cdn.rawgit.com/icacro/icacro/v1.0.315/src/recipe-shoppinglist-button/variant.min.js');
 
   style.appendChild(document.createTextNode(css));
 
