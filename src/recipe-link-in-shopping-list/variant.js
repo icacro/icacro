@@ -17,17 +17,24 @@ const test = {
 
   manipulateDom() {
 
+    var shoppingList = document.querySelector(".all-shoppinglists__login-puff");
+    if(shoppingList != null) {
+      console.log(shoppingList);
+      shoppingList.appendChild(test.getLinkList());
+      return;
+    }
+
     // klick på lägg till i inköpslista, spara länk till recpet i cookie
     var btn = document.querySelector(".button.js-open-shoppinglist-modal");
     btn.addEventListener("click", function(e) {
       //alert("test");
-      console.log(e);
+      test.save();
 
-      setTimeout(function() {
+      /*setTimeout(function() {
         document.querySelector(".shoppinglists__item.js-add-to-existing-shoppinglist").addEventListener("click", function(e) {
           console.log(e);
         });
-      }, 3000);
+      }, 3000); */
 
 
 
@@ -49,6 +56,7 @@ const test = {
             </a>*/
 
   },
+  cookieName: "recipes-in-shopping-list",
   create_cookie(value) {
     var cookie = [test.cookieName, '=', JSON.stringify(value), '; domain=.', window.location.host.toString(), '; path=/;'].join('');
     document.cookie = cookie;
@@ -58,12 +66,30 @@ const test = {
     result && (result = JSON.parse(result[1]));
     return result;
   },
-  cookieName: "recipes-in-shopping-list",
-  save(){
+  save() {
     var recipes = test.read_cookie();
-    if(recipes != undefined) {
-
+    const title = document.querySelector("meta[name='title']").getAttribute("content");
+    const id = document.querySelector("meta[name='Id']").getAttribute("content")
+    var current = { id: id, name: title, url: window.location.href };
+    if(recipes == null) {
+      recipes = [];
     }
+
+    if(!recipes.find(function(r) {
+      return r.id == id;
+    })) {
+      recipes.push(current);
+    }
+
+    test.create_cookie(recipes);
+  },
+  getLinkList() {
+    var links = document.createElement("ul");
+    test.read_cookie().forEach(function(element) {
+      links.append("<li><a href='" + element.url + "'>" + element.name + "</a></li>")
+      console.log(element);
+    });
+    return links;
   }
 };
 
