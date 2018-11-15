@@ -12,17 +12,17 @@
 'use strict';
 
 function init() {
-  var css = '@media only screen and (max-width: 699px) {.mob-filter-container .active-filter-display, .filter-toggle-button, #recipe-header {display:none;}}';
-  var style = document.createElement('style');
   var script = document.createElement('script');
+  var style = document.createElement('style');
   var head = document.querySelector('head');
 
+  style.setAttribute('type', 'text/css');
+  style.innerHTML = 'header p.truncate {visibility:hidden}';
+
   script.setAttribute('async', '');
-  script.setAttribute('src', 'https://cdn.rawgit.com/icacro/icacro/v1.0.217/src/mdsa-priofilter/variant.min.js');
+  script.setAttribute('src', 'https://cdn.rawgit.com/icacro/icacro/v1.0.317/src/mdsa-related-filters/variant.min.js');
 
-  style.appendChild(document.createTextNode(css));
-
-  head.appendChild(style);
   head.appendChild(script);
+  head.appendChild(style);
 }
 init();

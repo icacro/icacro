@@ -44,6 +44,11 @@ const test = {
         relatedTag.href = relatedUrl;
         relatedTag.classList.add('button','button--color-purple','button--purple-light');
         relatedFilters.append(relatedTag);
+        relatedTag.addEventListener('click', trackClick);
+      }
+
+      function trackClick() {
+        gaPush({ eventAction: 'MDSA, relaterad-länk variant', eventLabel: this.href });
       }
 
     }
