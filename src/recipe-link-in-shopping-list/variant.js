@@ -17,28 +17,56 @@ const test = {
 
   manipulateDom() {
 
-    var shoppingList = document.querySelector(".all-shoppinglists__login-puff");
+    var shoppingList = document.querySelector(".ingredient-search");
     if(shoppingList != null) {
       console.log(shoppingList);
       shoppingList.appendChild(test.getLinkList());
       return;
     }
+    // visa på aktuell inköpslista
+    // när inköplskista välja
+
+    var target = document.querySelector(".modal-container.pl");
+    var config = { attributes: false, childList: true, subtree: false };
+
+    var observer = new MutationObserver(function(mutationsList, observer) {
+      for(var mutation of mutationsList) {
+        if (mutation.type == 'childList') {
+            console.log(mutation);
+            mutation.target.querySelectorAll(".shoppinglists__item").forEach(function(item) {
+              console.log(item);
+              item.addEventListener("click", function(e) {
+                console.log(e.target);
+                test.save();
+              });
+            });
+        }
+      }
+    });
+
+    observer.observe(target, config);
+
+    //observer.disconnect();
 
     // klick på lägg till i inköpslista, spara länk till recpet i cookie
-    var btn = document.querySelector(".button.js-open-shoppinglist-modal");
+    /*var btn = document.querySelector(".button.js-open-shoppinglist-modal");
+    if (btn == null) {
+      return;
+    }
     btn.addEventListener("click", function(e) {
       //alert("test");
-      test.save();
+      //test.save();
 
-      /*setTimeout(function() {
-        document.querySelector(".shoppinglists__item.js-add-to-existing-shoppinglist").addEventListener("click", function(e) {
+      setTimeout(function() {
+        document.querySelector(".shoppinglists__item").addEventListener("click", function(e) {
+          console.log(e.target.parentNode.value);
           console.log(e);
         });
-      }, 3000); */
+      }, 3000);
 
+//document.querySelectorAll(".modal-container.pl")
 
-
-    });
+}); */
 
 
     /*<a href="#" class="shoppinglists__item js-add-to-existing-shoppinglist" data-id="6222508" data-secureid="d35961ee-5daa-4bb4-9967-0a680c1322c2">
@@ -84,9 +112,13 @@ const test = {
     test.create_cookie(recipes);
   },
   getLinkList() {
+    const recipes = test.read_cookie();
+    if(!recipes) {
+      return;
+    }
     var links = document.createElement("ul");
-    test.read_cookie().forEach(function(element) {
-      links.append("<li><a href='" + element.url + "'>" + element.name + "</a></li>")
+    recipes.forEach(function(element) {
+      links.insertAdjacentHTML("beforeend", "<li><a href='" + element.url + "'>" + element.name + "</a></li>");
       console.log(element);
     });
     return links;
