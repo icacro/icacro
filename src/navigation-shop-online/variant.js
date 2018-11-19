@@ -18,9 +18,9 @@ const test = {
 
   manipulateDom() {
 
-    const navigationInner = document.getElementById('offcanvas-left').querySelector('.navigation__inner');
+    if(document.getElementById('offcanvas-left')) {
 
-    if(navigationInner) {
+      const navigationInner = document.getElementById('offcanvas-left').querySelector('.navigation__inner');
 
       const bagLink = navigationInner.querySelector('li:first-child a');
       bagLink.href = '/handla-online/ica-matkassen/';
@@ -33,6 +33,7 @@ const test = {
       shopLink.innerHTML = 'Handla online';
       shopLink.href = '/handla/';
       shopEl.prepend(shopLink);
+      
       navigationInner.prepend(shopEl);
 
       shopLink.addEventListener('click', trackClick);
