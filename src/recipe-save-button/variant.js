@@ -19,6 +19,10 @@ const test = {
 
     var btnOld = document.querySelector("a.button.button--heart");
     var btn = document.createElement("div");
+
+    var txt = btnOld.querySelector(".recipe-save-text").innerText;
+    btnOld.removeChild(btnOld.querySelector(".recipe-save-text"));
+    btnOld.insertAdjacentHTML("beforeend", "<span />" + txt);
     btn.appendChild(btnOld);
     btn.classList.add('new-save-field');
     btn.classList.add('save-recipe-button');
