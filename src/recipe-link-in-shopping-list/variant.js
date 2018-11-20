@@ -24,10 +24,14 @@ const test = {
       return;
     }
     // visa på aktuell inköpslista
-    // när inköplskista välja
+    // när inköpslista välja
 
     var target = document.querySelector(".modal-container.pl");
     var config = { attributes: false, childList: true, subtree: false };
+
+    if(target == null) {
+      return;
+    }
 
     var observer = new MutationObserver(function(mutationsList, observer) {
       for(var mutation of mutationsList) {
@@ -40,6 +44,15 @@ const test = {
                 test.save();
               });
             });
+
+            var newList = mutation.target.querySelector(".js-activate-add-new-shoppinglist");
+            if(newList != null) {
+              newList.addEventListener("click", function(e) {
+                console.log(e.target);
+                test.save();
+              });
+            }
+
         }
       }
     });
@@ -48,7 +61,7 @@ const test = {
 
     //observer.disconnect();
 
-    // klick på lägg till i inköpslista, spara länk till recpet i cookie
+    // klick på lägg till i inköpslista, spara länk till recepet i cookie
     /*var btn = document.querySelector(".button.js-open-shoppinglist-modal");
     if (btn == null) {
       return;
@@ -116,9 +129,10 @@ const test = {
     if(!recipes) {
       return;
     }
-    var links = document.createElement("ul");
+    var links = document.createElement("span");
+    links.insertAdjacentHTML("beforeend", "Recept: ");
     recipes.forEach(function(element) {
-      links.insertAdjacentHTML("beforeend", "<li><a href='" + element.url + "'>" + element.name + "</a></li>");
+      links.insertAdjacentHTML("beforeend", "<a href='" + element.url + "'>" + element.name + "</a>");
       console.log(element);
     });
     return links;
