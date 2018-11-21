@@ -1,0 +1,55 @@
+.cro #RelatedPages,
+.cro #PopularPages {
+  height: 0;
+  overflow: hidden;
+  margin-bottom: -20px;
+}
+.cro .related-filters {
+  text-align: center;
+  margin: -10px auto 80px;
+  max-width: 62%;
+  max-height: 100px;
+  overflow: hidden;
+}
+.cro .recipe-start .related-filters {
+  margin: 10px auto 30px;
+}
+
+.cro .related-filters a {
+  min-width: 50px !important;
+  width: auto !important;
+  background-color: #F5E9F0 !important;
+  color: #A02971 !important;
+  margin: 5px !important;
+}
+
+.cro header #status-bar,
+.cro header #recipeListSortingMode {
+  display: none !important;
+}
+
+@media (max-width: 979px) {
+  .cro .related-filters {
+    max-width: 75%;
+  }
+  .cro .recipe-start .filtermenu {
+    margin-top: 21px;
+  }
+  .cro .recipe-start .related-filters {
+    margin-bottom: 0;
+  }
+}
+
+@media (max-width: 699px) {
+  .cro .related-filters {
+    max-width: 90%;
+    max-height: 92px;
+    margin: -20px auto 0;
+  }
+
+  .cro .related-filters a {
+    font-size: 1.2rem;
+    height: 3.6rem;
+    padding: 0 1.2rem;
+  }
+}
