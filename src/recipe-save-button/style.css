@@ -15,6 +15,7 @@
   right: 0;
   top: -5px;
   z-index: 10;
+  width: 78px;
 }
 
 .cro .icon-heart:before {
@@ -30,4 +31,13 @@
 
 .cro .icon-heart:hover:before {
     background-position: -12px -303px;
+}
+
+.cro div.new-save-field a.button--active {
+  background-color: transparent;
+  color: #e10000;
+}
+
+.cro .button--active.icon-heart:before {
+  background-position: -62px -253px;
 }
