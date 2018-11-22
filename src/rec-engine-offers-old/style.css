@@ -1,37 +1,28 @@
-.cro .flag-on .icon-offer,
-.cro .ingredients__list__item.icon-offer {
-  display: block;
-  position: absolute;
-  width:40px;
-  height:32px;
-  background-image: url(/Templates/General/Views/Images/RWD/sprites/sprite-store@2x.png?3);
-  background-repeat: no-repeat;
-  background-size: 650px 1050px;
-  top:8px;
-  right:3px;
-}
-
-.cro .flag-on {
-  background: #F5E9F0 !important;
+.cro .flag-on,
+.cro .flag {
+  background-color: #F5E9F0 !important;
 }
 
 .cro #ingredients-section .offers {
-  padding-top: 1rem;
+  padding-top: 2rem;
+  display: flex;
 }
 
 .cro #ingredients-section .offers > div {
-  padding: 0 2rem;
+  width: 50%;
+  padding: 0 2rem 2rem;
   border: 1px solid #F5F2EE;
-  border-top: 0;
 }
 
 .cro #ingredients-section .offers > div:first-child {
-  border-top: 1px solid #F5F2EE;
+  border-right: 0;
 }
 
 .cro #ingredients-section .offers p {
   margin: 0;
   font-size: 1.4rem;
+  text-align: center;
+  min-height: 44px;
 }
 
 .cro #ingredients-section .offers .price {
@@ -42,14 +33,22 @@
 
 .cro #ingredients-section .offers img {
   display: block;
-  width: 4rem;
-  margin: 0;
+  width: 65%;
+  margin: 3rem auto;
 }
 
 
 .cro #ingredients-section .offer-ctas {
-  display: none;
+  display: flex;
+  padding: 0 1.5rem;
+  margin: -0.5rem 0 1rem;
 }
+
+.cro #ingredients-section .offer-ctas > div {
+  width: 50%;
+  text-align: center;
+}
+
 .cro #ingredients-section .offer-ctas > div a {
   display: block;
   font-size: 1rem;
@@ -64,9 +63,15 @@
   margin: 0 auto;
   transition: background .2s ease-in,box-shadow .2s ease-in,color .2s ease-in;
 }
+
 .cro #ingredients-section .offer-ctas > div:first-child a {
   background: #94c01f;
 }
+
+.cro #ingredients-section .offer-ctas > div a:hover {
+  background: #DC438C;
+}
+
 .cro #ingredients-section .offer-ctas > div:first-child a:hover {
   background: #b7d56b;
 }
