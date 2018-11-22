@@ -38,17 +38,17 @@ const test = {
         if (mutation.type == 'childList') {
             console.log(mutation);
             mutation.target.querySelectorAll(".shoppinglists__item").forEach(function(item) {
-              console.log(item);
+              var listId = item.attributes["data-id"].value;
               item.addEventListener("click", function(e) {
-                console.log(e.target);
-                test.save();
+                console.log(listId);
+                test.save(listId);
               });
             });
 
             var newList = mutation.target.querySelector(".js-activate-add-new-shoppinglist");
             if(newList != null) {
               newList.addEventListener("click", function(e) {
-                console.log(e.target);
+                //console.log(e.target);
                 test.save();
               });
             }
@@ -107,17 +107,17 @@ const test = {
     result && (result = JSON.parse(result[1]));
     return result;
   },
-  save() {
+  save(listId) {
     var recipes = test.read_cookie();
     const title = document.querySelector("meta[name='title']").getAttribute("content");
     const id = document.querySelector("meta[name='Id']").getAttribute("content")
-    var current = { id: id, name: title, url: window.location.href };
+    var current = { id: id, name: title, url: window.location.href, list: listId };
     if(recipes == null) {
       recipes = [];
     }
 
     if(!recipes.find(function(r) {
-      return r.id == id;
+      return r.id == id && r.list == listId;
     })) {
       recipes.push(current);
     }
