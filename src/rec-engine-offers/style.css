@@ -30,30 +30,45 @@
 
 .cro #ingredients-section .offer {
   padding: 0;
-  margin-top: 20px;
+  margin: 20px auto 0;
+  border: 15px solid #F8C8DF;
+  max-width: 580px;
+}
+
+.cro #ingredients-section .offer .row {
+  padding: 10px;
+  text-align: left;
   display: flex;
   flex-wrap: wrap;
   -webkit-box-align: center;
   -webkit-align-items: center;
   -ms-flex-align: center;
   align-items: center;
-  border: 15px solid #F8C8DF;
-  min-height: 153px;
-}
-
-.cro #ingredients-section .offer .row {
-  padding: 0 10px;
-  text-align: left;
 }
 
 .cro #ingredients-section .offer svg {
   width: 100px;
-  margin-top: 0;
+  position: absolute;
+  right: -12px;
+  top:0;
+  margin-top:-3px;
 }
 
 .cro #ingredients-section .offer a {
   font-size: 1.4rem;
   margin:0 0 10px;
+}
+
+.cro #ingredients-section .offer p {
+  padding-right: 70px;
+}
+
+.cro #ingredients-section .offer .title {
+  font-family: 'IcaRubrik';
+  margin-top: 10px;
+  color: #3F3F40;
+  font-size: 1.8rem;
+  line-height: 1;
 }
 
 .cro #ingredients-section .offer .price {
@@ -63,11 +78,24 @@
   margin-bottom: 0;
 }
 
+
+.cro #ingredients-section .offer .info {
+  color: #808283;
+  font-size: 1.3rem;
+  line-height: 1;
+  margin: 5px 0 0;
+}
+
+.cro #ingredients-section .offer .link {
+  margin: 4px 0 2px;
+}
+
 .cro #ingredients-section .offer img {
   display: block;
   height: auto;
   max-width: 100%;
   width: auto;
+  padding:10px;
 }
 
 
@@ -100,6 +128,38 @@
   .cro article.flag-on .icon-offer {
     margin-top:-5px;
     right:15px;
+  }
+}
+@media (max-width: 360px) {
+  .cro #ingredients-section .offer p {
+    padding-right: 0;
+  }
+  .cro #ingredients-section .offer .title {
+    padding-right: 70px;
+    font-size: 1.4rem;
+  }
+  .cro #ingredients-section .offer .price {
+    font-size: 2.2rem;
+  }
+  .cro #ingredients-section .offer.pl .col-3 {
+    -webkit-box-flex: 0;
+    -webkit-flex: 0 0 30%;
+    -ms-flex: 0 0 30%;
+    flex: 0 0 30%;
+    max-width: 30%;
+  }
+  .cro #ingredients-section .offer.pl .col-9 {
+    -webkit-box-flex: 0;
+    -webkit-flex: 0 0 70%;
+    -ms-flex: 0 0 70%;
+    flex: 0 0 70%;
+    max-width: 70%;
+  }
+  .cro #ingredients-section .offer svg {
+    width: 90px;
+  }
+  .cro #ingredients-section .offer img {
+    padding:0 5px 0 0;
   }
 }
 @media (max-width: 330px) {

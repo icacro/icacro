@@ -153,43 +153,50 @@ const test = {
   },
 
   getOffer(id) {
-    let offerImg, offerTitle, offerPrice, offerOnlineLink;
+    let offerImg, offerTitle, offerInfo, offerPrice, offerOnlineLink;
     const offerWrapper = document.createElement('div');
     const offer = document.createElement('div');
     if (id===481) {
       offerImg =          '/06/350x350/2332813000006.jpg';
-      offerTitle =        'Minutfilé ca 600g Kronfågel';
-      offerPrice =        '99 kr';
+      offerTitle =        'Minutfilé';
+      offerInfo =         'Kronfågel ca 600g';
+      offerPrice =        '99 kr/kg';
       offerOnlineLink =   '/null/';
     } else if (id===482) {
       offerImg =          '/08/350x350/2332804000008.jpg';
-      offerTitle =        'Kycklingfilé ca 925g Kronfågel';
-      offerPrice =        '99 kr';
+      offerTitle =        'Kycklingfilé';
+      offerInfo =         'Kronfågel ca 925g';
+      offerPrice =        '99 kr/kg';
       offerOnlineLink =   '/null/';
     } else if (id===483) {
       offerImg =          '/85/350x350/8711000530085.jpg';
-      offerTitle =        'Bryggkaffe Mellanrost 450g Gevalia';
+      offerTitle =        'Bryggkaffe Mellanrost';
+      offerInfo =         'Gevalia 450g';
       offerPrice =        '3 för 69 kr';
       offerOnlineLink =   '/bryggkaffe-mellanrost-450g-gevalia-id_p_8711000530085/';
     } else if (id===484) {
       offerImg =          '/68/350x350/7310865005168.jpg';
-      offerTitle =        'Smör Normalsaltat 82% 500g Svenskt smör';
+      offerTitle =        'Smör Normalsaltat 82%';
+      offerInfo =         'Svenskt smör 500g';
       offerPrice =        '39 kr';
       offerOnlineLink =   '/smor-normalsaltat-82-500g-svenskt-smor-id_p_7310865005168/';
     } else if (id===485) {
       offerImg =          '/29/350x350/7310130006029.jpg';
-      offerTitle =        'Kärnvetemjöl 2kg Kungsörnen';
+      offerTitle =        'Kärnvetemjöl';
+      offerInfo =         'Kungsörnen 2kg';
       offerPrice =        '2 för 15 kr';
       offerOnlineLink =   '/karnvetemjol-2kg-kungsornen-id_p_7310130006029/';
     } else if (id===486) {
       offerImg =          '/03/350x350/7310511210403.jpg';
-      offerTitle =        'Mjölkchoklad 200g Marabou';
+      offerTitle =        'Mjölkchoklad';
+      offerInfo =         'Marabou 200g';
       offerPrice =        '3 för 30 kr';
       offerOnlineLink =   '/mjolkchoklad-200g-marabou-id_p_7310511210403/';
     } else if (id===487) {
       offerImg =          '/09/350x350/2340385800009.jpg';
-      offerTitle =        'Präst 31% lagrad 12 mån ca 690g Arla';
-      offerPrice =        '89 kr';
+      offerTitle =        'Präst 31% lagrad 12 mån';
+      offerInfo =         'Arla ca 690g';
+      offerPrice =        '89 kr/kg';
       offerOnlineLink =   '/null/';
     }
 
@@ -200,16 +207,12 @@ const test = {
       imgEl.src = 'https://atgcdn-production.prod.vuitonline.com/online/' + offerImg;
       imgEl.alt = offerTitle;
     const titleEl = document.createElement('div');
-      titleEl.innerHTML = '<p>' + offerTitle + '</p><p class="price">' + offerPrice + '</p><a href="/null/">Mer info + villkor</p>';
-      titleEl.classList.add('col-6');
-    const priceEl = document.createElement('div');
-      priceEl.classList.add('col-3');
-      priceEl.innerHTML = cardSvg;
+      titleEl.innerHTML = '<p class="title">' + offerTitle + '</p><p class="price">' + offerPrice + '</p><p class="info">' + offerInfo + '</p><p class="link"><a href="/null/">Mer info</a></p>' + cardSvg;
+      titleEl.classList.add('col-9');
 
     imgWrapper.append(imgEl);
     offer.append(imgWrapper);
     offer.append(titleEl);
-    offer.append(priceEl);
     offer.classList.add('offer-' + id, 'row');
     offerWrapper.classList.add('offer','pl');
     offerWrapper.append(offer);
