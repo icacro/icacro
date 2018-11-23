@@ -36,22 +36,22 @@ const test = {
     var observer = new MutationObserver(function(mutationsList, observer) {
       for(var mutation of mutationsList) {
         if (mutation.type == 'childList') {
-            console.log(mutation);
             mutation.target.querySelectorAll(".shoppinglists__item").forEach(function(item) {
               var listId = item.attributes["data-id"].value;
               item.addEventListener("click", function(e) {
-                console.log(listId);
                 test.save(listId);
               });
             });
 
-            var newList = mutation.target.querySelector(".js-activate-add-new-shoppinglist");
+            //var newList = mutation.target.querySelector(".js-activate-add-new-shoppinglist");
+            var newList = mutation.target.querySelector(".button.js-add-to-new-shoppinglist");
             if(newList != null) {
               newList.addEventListener("click", function(e) {
-                //console.log(e.target);
-                test.save();
+                setTimeout(test.save, 3000);
               });
             }
+
+            //button js-add-to-new-shoppinglist
 
         }
       }
@@ -102,13 +102,16 @@ const test = {
     var cookie = [test.cookieName, '=', JSON.stringify(value), '; domain=.', window.location.host.toString(), '; path=/;'].join('');
     document.cookie = cookie;
   },
-  read_cookie() {
-    var result = document.cookie.match(new RegExp(test.cookieName + '=([^;]+)'));
+  read_cookie(name) {
+    var result = document.cookie.match(new RegExp(name + '=([^;]+)'));
     result && (result = JSON.parse(result[1]));
     return result;
   },
   save(listId) {
-    var recipes = test.read_cookie();
+    if(listId == undefined) {
+      listId = test.read_cookie("shoppingListLoggedInUserCookie");
+    }
+    var recipes = test.read_cookie(test.cookieName);
     const title = document.querySelector("meta[name='title']").getAttribute("content");
     const id = document.querySelector("meta[name='Id']").getAttribute("content")
     var current = { id: id, name: title, url: window.location.href, list: listId };
@@ -125,7 +128,7 @@ const test = {
     test.create_cookie(recipes);
   },
   getLinkList() {
-    const recipes = test.read_cookie();
+    const recipes = test.read_cookie(test.cookieName);
     if(!recipes) {
       return;
     }
@@ -133,7 +136,6 @@ const test = {
     links.insertAdjacentHTML("beforeend", "Recept: ");
     recipes.forEach(function(element) {
       links.insertAdjacentHTML("beforeend", "<a href='" + element.url + "'>" + element.name + "</a>");
-      console.log(element);
     });
     return links;
   }
