@@ -153,7 +153,7 @@ const test = {
   },
 
   getOffer(id) {
-    let offerImg, offerTitle, offerInfo, offerPrice, offerOnlineLink;
+    let offerImg, offerTitle, offerInfo, offerPrice, offerInfoExtra;
     const offerWrapper = document.createElement('div');
     const offer = document.createElement('div');
     if (id===481) {
@@ -161,53 +161,55 @@ const test = {
       offerTitle =        'Minutfilé';
       offerInfo =         'Kronfågel ca 600g';
       offerPrice =        '99 kr/kg';
-      offerOnlineLink =   '/null/';
+      offerInfoExtra =    'jfr-pris 99:00 kr/kg. Kronfågel. Ursprung Sverige. Naturell. Ca 650-925 g';
     } else if (id===482) {
       offerImg =          '/08/350x350/2332804000008.jpg';
       offerTitle =        'Kycklingfilé';
       offerInfo =         'Kronfågel ca 925g';
       offerPrice =        '99 kr/kg';
-      offerOnlineLink =   '/null/';
+      offerInfoExtra =    'jfr-pris 99:00 kr/kg. Kronfågel. Ursprung Sverige. Naturell. Ca 650-925 g';
     } else if (id===483) {
       offerImg =          '/85/350x350/8711000530085.jpg';
       offerTitle =        'Bryggkaffe Mellanrost';
       offerInfo =         'Gevalia 450g';
       offerPrice =        '3 för 69 kr';
-      offerOnlineLink =   '/bryggkaffe-mellanrost-450g-gevalia-id_p_8711000530085/';
+      offerInfoExtra =    'jfr-pris 51:11-54:12 kr/kg. Gevalia. Brygg, kok. Gäller ej koffeinfritt. Max 1 erbj per kund. 425-450 g';
     } else if (id===484) {
       offerImg =          '/68/350x350/7310865005168.jpg';
       offerTitle =        'Smör Normalsaltat 82%';
       offerInfo =         'Svenskt smör 500g';
       offerPrice =        '39 kr';
-      offerOnlineLink =   '/smor-normalsaltat-82-500g-svenskt-smor-id_p_7310865005168/';
+      offerInfoExtra =    'jfr-pris 78:00 kr/kg. Svenskt smör. Gäller ej eko. Max 2 erbj per kund. 500 g';
     } else if (id===485) {
       offerImg =          '/29/350x350/7310130006029.jpg';
       offerTitle =        'Kärnvetemjöl';
       offerInfo =         'Kungsörnen 2kg';
       offerPrice =        '2 för 15 kr';
-      offerOnlineLink =   '/karnvetemjol-2kg-kungsornen-id_p_7310130006029/';
+      offerInfoExtra =    'jfr-pris 3:75 kr/kg. Kungsörnen. Gäller ej eko, fullkorn, special, self rising. Max 1 erbj per kund. 2 kg';
     } else if (id===486) {
       offerImg =          '/03/350x350/7310511210403.jpg';
       offerTitle =        'Mjölkchoklad';
       offerInfo =         'Marabou 200g';
       offerPrice =        '3 för 30 kr';
-      offerOnlineLink =   '/mjolkchoklad-200g-marabou-id_p_7310511210403/';
+      offerInfoExtra =    'jfr-pris 75:00-83:33 kr/kg. Marabou. Flera olika sorter. 180-200 g';
     } else if (id===487) {
       offerImg =          '/09/350x350/2340385800009.jpg';
       offerTitle =        'Präst 31% lagrad 12 mån';
       offerInfo =         'Arla ca 690g';
       offerPrice =        '89 kr/kg';
-      offerOnlineLink =   '/null/';
+      offerInfoExtra =    'jfr-pris 89:00 kr/kg. Arla. Lagrade 9-14 mån. Fetthalt 17-31%. Ca 500-700 g';
     }
+
+    offerImg = 'https://atgcdn-production.prod.vuitonline.com/online/' + offerImg;
 
     // https://www.ica.se/handla/produkt/
     const imgWrapper = document.createElement('div');
       imgWrapper.classList.add('col-3');
     const imgEl = document.createElement('img');
-      imgEl.src = 'https://atgcdn-production.prod.vuitonline.com/online/' + offerImg;
+      imgEl.src = offerImg;
       imgEl.alt = offerTitle;
     const titleEl = document.createElement('div');
-      titleEl.innerHTML = '<p class="title">' + offerTitle + '</p><p class="price">' + offerPrice + '</p><p class="info">' + offerInfo + '</p><p class="link"><a href="/null/">Mer info</a></p>' + cardSvg;
+      titleEl.innerHTML = '<p class="title">' + offerTitle + '</p><p class="price">' + offerPrice + '</p><p class="info">' + offerInfo + '</p><p class="link"><a href="#">Mer info</a></p>' + cardSvg;
       titleEl.classList.add('col-9');
 
     imgWrapper.append(imgEl);
@@ -217,7 +219,61 @@ const test = {
     offerWrapper.classList.add('offer','pl');
     offerWrapper.append(offer);
 
+    offerWrapper.addEventListener('click', clickHandler);
+
+    function clickHandler() {
+      //gaPush({ eventAction: 'Erbjudande på recept', eventLabel: offerTitle });
+      test.createModal(offerImg,offerTitle,offerPrice,offerInfo,offerInfoExtra);
+    }
+
     return offerWrapper;
+  },
+
+  createModal(offerImg,offerTitle,offerPrice,offerInfo,offerInfoExtra) {
+    const modal = document.createElement('div');
+    modal.classList.add('pl-modal');
+    const modalWrapper = document.createElement('div');
+    modalWrapper.classList.add('pl-modal__window');
+    const modalInner = document.createElement('div');
+    modalInner.classList.add('hse-campaign');
+    const modalClose = document.createElement('a');
+    modalClose.classList.add('button','button--icon','pl-modal__close-button','button--link');
+    modalClose.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="3.092778444290161 4.548774719238281 17.0854434967041 17.08416748046875"><path d="M15.224 13.091l4.582 4.606q.315.291.364.691t-.194.667q-1.042 1.333-2.376 2.376-.267.242-.667.194t-.715-.339l-4.582-4.606-4.606 4.606q-.291.291-.691.339t-.691-.194q-1.309-1.042-2.352-2.352-.242-.291-.194-.691t.339-.691l4.606-4.606-4.582-4.582q-.315-.315-.364-.715t.194-.667q1.018-1.309 2.352-2.376.291-.242.691-.194t.691.364l4.606 4.388 4.582-4.388q.315-.315.715-.364t.667.194q1.333 1.042 2.376 2.376.242.267.194.667t-.364.715z"></path></svg>';
+
+    const modalHeader = document.createElement('div');
+    modalHeader.classList.add('hse-campaign__header');
+    modalHeader.innerHTML = 'Erbjudande';
+
+    const sectionWrapper = document.createElement('section');
+    sectionWrapper.classList.add('hse-campaign__section');
+
+    const offerContent = document.createElement('div');
+    offerContent.classList.add('hse-campaign__offer__content-section');
+    const offerWrapper = document.createElement('div');
+    offerWrapper.classList.add('hse-campaign__offer__wrapper');
+    const shoppingList = document.createElement('a');
+    shoppingList.classList.add('button');
+    shoppingList.href = '#';
+    shoppingList.innerHTML = 'Lägg i inköpslista';
+
+    offerContent.append(offerWrapper);
+    offerWrapper.innerHTML = '<div class="hse-campaign__offer__content-container"><div class="hse-campaign__offer__image"><img src="'+offerImg+'" alt="'+offerTitle+'"></div><div class="hse-campaign__offer__offer-info"><div class="hse-campaign__offer__name">'+offerTitle+'</div> <div class="hse-campaign__offer__condition">'+offerPrice+'</div></div></div><div class="hse-campaign__offer__more-info"><p class="hse-campaign__offer__disclaimer hse-campaign__offer__disclaimer--product">'+offerInfoExtra+'</p><p class="hse-campaign__offer__disclaimer">Gäller v 48 med ICA Kort. Lägre priser och avvikelser i sortiment kan förekomma både i butik och online.</p></div>';
+    offerWrapper.append(shoppingList);
+
+    sectionWrapper.append(offerContent);
+    modalInner.append(modalHeader);
+    modalInner.append(sectionWrapper);
+    modalInner.append(modalClose);
+    modalWrapper.append(modalInner);
+    modal.append(modalWrapper);
+
+    document.querySelector('.modal-container.pl').append(modal);
+
+    modalClose.addEventListener('click', closeModal);
+
+    function closeModal() {
+      document.querySelector('.modal-container.pl .pl-modal').remove();
+    }
   }
 
 };
