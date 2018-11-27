@@ -30,10 +30,44 @@ const test = {
 
     if (related) {
 
+      gaPush({ eventAction: 'MDSA-relaterad, sida med relateratlänkar', eventLabel: document.location.href });
+
+      document.querySelector('body').classList.add('cro-related');
+
+      if (!document.querySelector('.banner-area')) {
+        const bannerArea = document.createElement('div');
+        const bannerAreaInner = document.createElement('div');
+        bannerArea.classList.add('grid_fluid','banner-area');
+        bannerAreaInner.classList.add('column','size20of20','white-bg');
+        bannerArea.prepend(bannerAreaInner);
+        document.querySelector('.main-content').prepend(bannerArea);
+      }
+
+      const toggleArrow = document.querySelector('a.toggle-arrow');
+
+      if (toggleArrow) {
+        toggleArrow.setAttribute('data-activetext','Dölj filter');
+        toggleArrow.addEventListener('click', function() {
+          setTimeout(function () {
+            let eventAction;
+            if (toggleArrow.classList.contains('open')) {
+              eventAction = 'MDSA-relaterad, öppna filter';
+            } else {
+              eventAction = 'MDSA-relaterad, stäng filter';
+            }
+            gaPush({ eventAction: eventAction, eventLabel: document.location.href });
+          }, 50);
+        });
+      }
+
       const relatedFilters = document.createElement('div');
       document.getElementById('content').querySelector('#recipe-header').append(relatedFilters);
 
       relatedFilters.classList.add('related-filters','column-align-center','quicklink-list','pl');
+      const relatedHeader = document.createElement('div');
+      relatedHeader.classList.add('related-header');
+      relatedHeader.innerHTML = 'SE ÄVEN';
+      relatedFilters.append(relatedHeader);
 
       const relatedList = related.querySelectorAll('.accord-content .grid_fluid a');
       for (var i = 0; i < relatedList.length; i++) {
@@ -44,11 +78,9 @@ const test = {
         relatedTag.href = relatedUrl;
         relatedTag.classList.add('button','button--color-purple','button--purple-light');
         relatedFilters.append(relatedTag);
-        relatedTag.addEventListener('click', trackClick);
-      }
-
-      function trackClick() {
-        gaPush({ eventAction: 'MDSA, relaterad-länk variant', eventLabel: this.href });
+        relatedTag.addEventListener('click', function() {
+          gaPush({ eventAction: 'MDSA-relaterad, klick på länk', eventLabel: this.href });
+        });
       }
 
     }
