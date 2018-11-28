@@ -1,5 +1,9 @@
-.cro #recipe-header, .cro .mob-filter-container {display:block;}
-.cro.cro-related #recipe-header, .cro.cro-related .mob-filter-container {display:block;}
+.cro #recipe-header,
+.cro .mob-filter-container,
+.cro.cro-related #recipe-header,
+.cro.cro-related .mob-filter-container {
+  display:block;
+}
 
 .cro-related #RelatedPages,
 .cro-related #PopularPages {
@@ -21,7 +25,7 @@
   width: auto !important;
   background-color: #F5E9F0 !important;
   color: #A02971 !important;
-  margin: 0 10px 5px 0 !important;
+  margin: 0 5px 5px 0 !important;
   font-size: 1.1rem;
   height: 3.6rem;
   line-height: 3.6rem;
@@ -98,6 +102,11 @@
   .cro-related #recipe-header {
     padding-top: 0;
     margin-top: -4px;
+  }
+
+  .cro .mob-filter-container,
+  .cro.cro-related .mob-filter-container {
+    display:none;
   }
 
 }

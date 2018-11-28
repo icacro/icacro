@@ -20,7 +20,7 @@ function init() {
   style.innerHTML = '#recipe-header, .mob-filter-container {display:none}';
 
   script.setAttribute('async', '');
-  script.setAttribute('src', 'https://cdn.rawgit.com/icacro/icacro/v1.0.327/src/mdsa-priofilter-related/variant.min.js');
+  script.setAttribute('src', 'https://cdn.rawgit.com/icacro/icacro/v1.0.324/src/mdsa-priofilter-related/variant.min.js');
 
   head.appendChild(script);
   head.appendChild(style);
