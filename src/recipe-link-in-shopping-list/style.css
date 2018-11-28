@@ -1,3 +1,19 @@
 @media only screen and (max-width: 780px) {
   .cro { }
 }
+
+.cro #shoppinglist-app div.shopping-list-recipes {
+  margin-top: 10px;
+}
+
+.cro #shoppinglist-app div.shopping-list-recipes a.recipe-link::after {
+  content: ', ';
+}
+
+.cro #shoppinglist-app div.shopping-list-recipes a.recipe-link:last-child::after {
+  content: '';
+}
+
+.cro #shoppinglist-app div.shopping-list-recipes a.recipe-link {
+  margin-left: 8px;
+}
