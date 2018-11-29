@@ -6,14 +6,28 @@
   margin-top: 10px;
 }
 
-.cro #shoppinglist-app div.shopping-list-recipes a.recipe-link::after {
-  content: ', ';
+/*.cro #shoppinglist-app div.shopping-list-recipes a.recipe-link::after {
+  content: '';
+  margin-right: 20px;
 }
 
 .cro #shoppinglist-app div.shopping-list-recipes a.recipe-link:last-child::after {
   content: '';
-}
+}*/
 
 .cro #shoppinglist-app div.shopping-list-recipes a.recipe-link {
-  margin-left: 8px;
+  margin-right: 20px;
+  display:inline-block;
+}
+
+/*.cro #shoppinglist-app div.shopping-list-recipes a.recipe-link:first {
+  margin-left: 0;
+}*/
+
+.cro .shopping-list-recipes div.recipe-items-header {
+  font-family: IcaText;
+  font-weight: 700;
+  font-size: 13px;
+  text-transform: uppercase;
+  color: #808283;
 }
