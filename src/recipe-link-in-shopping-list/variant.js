@@ -57,12 +57,7 @@ const test = {
     var currentList = shoppingList.querySelector(".ingredient-search");
     if(currentList != null) {
       currentList.insertAdjacentElement("beforeend", test.getLinkList());
-
-      shoppingList.querySelectorAll("a.recipe-link").forEach(function(item) {
-        item.addEventListener("click", function(e) {
-          gaPush({ eventAction: 'Klick på receptlänk i inköpslista', eventLabel: item.href });
-        });
-      });
+      test.trackClicks(shoppingList);
     }
 
     var observer = new MutationObserver(function(mutationsList, observer) {
@@ -72,8 +67,8 @@ const test = {
           if(list != null) {
             var node = test.getLinkList();
             if(node) {
+              test.trackClicks(node);
               shoppingList.querySelector(".ingredient-search").insertAdjacentElement("beforeend", node);
-              //gaPush({ eventAction: 'Kopiera länk', eventLabel: window.location.href });
             }
           }
         }
@@ -81,6 +76,14 @@ const test = {
     });
 
     observer.observe(shoppingList, { attributes: true, childList: true, subtree: true });
+  },
+  trackClicks(node) {
+    node.querySelectorAll("a.recipe-link").forEach(function(item) {
+      item.addEventListener("click", function(e) {
+        console.log("click");
+        gaPush({ eventAction: 'Klick på receptlänk i inköpslista', eventLabel: item.href });
+      });
+    });
   },
   cookieName: "recipes-in-shopping-list",
   create_cookie(value) {
