@@ -28,11 +28,57 @@ const test = {
       related = document.getElementById('RelatedPages');
     }
 
+    const toggleArrow = document.querySelector('a.toggle-arrow');
+
+    if (toggleArrow) {
+      let toggleCount = '';
+      toggleArrow.setAttribute('data-activetext','Dölj filter');
+      toggleArrow.addEventListener('click', function() {
+        setTimeout(function () {
+          let eventAction;
+          if (toggleArrow.classList.contains('open')) {
+            eventAction = 'MDSA-relaterad, öppna filter';
+          } else {
+            eventAction = 'MDSA-relaterad, stäng filter';
+          }
+          gaPush({ eventAction: eventAction, eventLabel: document.location.href });
+        }, 50);
+      });
+
+      const activeFilterEl = document.querySelector('.mob-filter-container .active-filter-display');
+      if (activeFilterEl) {
+        const numberAdded = document.createElement('span');
+        numberAdded.classList.add('filter-amount');
+        toggleArrow.append(numberAdded);
+        function printNumber() {
+          if (activeFilterEl.getAttribute('data-activefilters')) {
+            numberAdded.innerHTML = ' (' + activeFilterEl.getAttribute('data-activefilters') + ')';
+          }
+        }
+
+        printNumber();
+
+        let activeFilterObserver = new MutationObserver(function(mutations) {
+          for (var i = 0; i < mutations.length; i++) {
+            printNumber();
+          }
+        });
+
+        activeFilterObserver.observe(recipes, {
+          attributes: true,
+          characterData: true,
+          childList: true,
+          subtree: true
+        });
+      }
+
+    }
+
     if (related) {
 
-      gaPush({ eventAction: 'MDSA-relaterad, sida med relateratlänkar', eventLabel: document.location.href });
-
       document.querySelector('body').classList.add('cro-related');
+
+      gaPush({ eventAction: 'MDSA-relaterad, sida med relateratlänkar', eventLabel: document.location.href });
 
       if (!document.querySelector('.banner-area')) {
         const bannerArea = document.createElement('div');
@@ -41,52 +87,6 @@ const test = {
         bannerAreaInner.classList.add('column','size20of20','white-bg');
         bannerArea.prepend(bannerAreaInner);
         document.querySelector('.main-content').prepend(bannerArea);
-      }
-
-      const toggleArrow = document.querySelector('a.toggle-arrow');
-
-      if (toggleArrow) {
-        let toggleCount = '';
-        toggleArrow.setAttribute('data-activetext','Dölj filter');
-        toggleArrow.addEventListener('click', function() {
-          setTimeout(function () {
-            let eventAction;
-            if (toggleArrow.classList.contains('open')) {
-              eventAction = 'MDSA-relaterad, öppna filter';
-            } else {
-              eventAction = 'MDSA-relaterad, stäng filter';
-            }
-            gaPush({ eventAction: eventAction, eventLabel: document.location.href });
-          }, 50);
-        });
-
-        const activeFilterEl = document.querySelector('.mob-filter-container .active-filter-display');
-        if (activeFilterEl) {
-          let numberadded = 0;
-
-          function printNumber() {
-            if (activeFilterEl.getAttribute('data-activefilters') && numberadded === 0) {
-              numberadded = 1;
-              toggleArrow.append(' (' + activeFilterEl.getAttribute('data-activefilters') + ')');
-            }
-          }
-
-          printNumber();
-
-          let activeFilterObserver = new MutationObserver(function(mutations) {
-            for (var i = 0; i < mutations.length; i++) {
-              printNumber();
-            }
-          });
-
-          activeFilterObserver.observe(recipes, {
-            attributes: true,
-            characterData: false,
-            childList: false,
-            subtree: false
-          });
-        }
-
       }
 
       const relatedFilters = document.createElement('div');

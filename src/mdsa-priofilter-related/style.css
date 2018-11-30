@@ -1,7 +1,7 @@
 .cro #recipe-header,
 .cro .mob-filter-container,
-.cro.cro-related #recipe-header,
-.cro.cro-related .mob-filter-container {
+.cro #recipe-header,
+.cro .mob-filter-container {
   display:block;
 }
 
@@ -37,16 +37,16 @@
   margin-bottom: 10px;
 }
 
-.cro-related .active-filter-display {
+.cro .active-filter-display {
   display: none !important;
 }
 
-.cro-related .recipes.grid_fluid .mob-filter-container {
+.cro .recipes.grid_fluid .mob-filter-container {
   border-top-width: 0;
   padding-top: 0;
 }
 
-.cro-related .recipes.grid_fluid .mob-filter-container > a {
+.cro .recipes.grid_fluid .mob-filter-container > a {
   background: #fff !important;
   color: #A02971 !important;
   margin: 0;
@@ -54,23 +54,23 @@
   font-size: 1.2rem;
 }
 
-.cro-related .recipes.grid_fluid .mob-filter-container > a.toggle.button.open[data-activetext] {
+.cro .recipes.grid_fluid .mob-filter-container > a.toggle.button.open[data-activetext] {
   font-size: 0px;
 }
 
-.cro-related .recipes.grid_fluid .mob-filter-container > a:after {
+.cro .recipes.grid_fluid .mob-filter-container > a:after {
   font-size: 1.2rem;
 }
 
-.cro-related #recipe-header {
+.cro #recipe-header {
   padding: 15px 20px;
 }
 
-.cro-related .filtermenu.open {
+.cro .filtermenu.open {
   margin-top: 10px !important;
 }
 
-.cro-related .related-header {
+.cro .related-header {
   margin: 3px 0 6px 0;
   font-size: 1.2rem;
   color: #868686;
@@ -80,7 +80,7 @@
 
 @media (min-width: 700px) {
 
-  .cro-related .status-bar {
+  .cro .status-bar {
     height: 20px;
   }
 
@@ -99,7 +99,7 @@
     margin-bottom: 22px;
   }
 
-  .cro-related #recipe-header {
+  .cro #recipe-header {
     padding-top: 0;
     margin-top: -4px;
   }
@@ -113,12 +113,16 @@
 
 @media (max-width: 699px) {
 
+  .cro #recipe-header {
+    padding: 5px 0;
+  }
+
   .cro-related #recipe-header {
     padding: 10px 0;
   }
 
-  .cro-related header #status-bar,
-  .cro-related header #recipeListSortingMode {
+  .cro header #status-bar,
+  .cro header #recipeListSortingMode {
     display: none !important;
   }
 
