@@ -62,9 +62,11 @@ const test = {
 
         const activeFilterEl = document.querySelector('.mob-filter-container .active-filter-display');
         if (activeFilterEl) {
+          let numberadded = 0;
 
           function printNumber() {
-            if (activeFilterEl.getAttribute('data-activefilters')) {
+            if (activeFilterEl.getAttribute('data-activefilters') && numberadded === 0) {
+              numberadded = 1;
               toggleArrow.append(' (' + activeFilterEl.getAttribute('data-activefilters') + ')');
             }
           }
