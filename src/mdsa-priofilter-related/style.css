@@ -38,7 +38,7 @@
 }
 
 .cro-related .active-filter-display {
-  display: none;
+  display: none !important;
 }
 
 .cro-related .recipes.grid_fluid .mob-filter-container {

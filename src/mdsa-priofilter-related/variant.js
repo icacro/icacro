@@ -46,6 +46,15 @@ const test = {
       const toggleArrow = document.querySelector('a.toggle-arrow');
 
       if (toggleArrow) {
+        let toggleCount = '';
+        const activeFilterEl = document.querySelector('.mob-filter-container .active-filter-display');
+        if (activeFilterEl) {
+          setTimeout(function () {
+            if (activeFilterEl.getAttribute('data-activefilters')) {
+              toggleArrow.append(' (' + activeFilterEl.getAttribute('data-activefilters') + ')');
+            }
+          }, 250);
+        }
         toggleArrow.setAttribute('data-activetext','Dölj filter');
         toggleArrow.addEventListener('click', function() {
           setTimeout(function () {
