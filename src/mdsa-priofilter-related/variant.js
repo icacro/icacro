@@ -47,14 +47,6 @@ const test = {
 
       if (toggleArrow) {
         let toggleCount = '';
-        const activeFilterEl = document.querySelector('.mob-filter-container .active-filter-display');
-        if (activeFilterEl) {
-          setTimeout(function () {
-            if (activeFilterEl.getAttribute('data-activefilters')) {
-              toggleArrow.append(' (' + activeFilterEl.getAttribute('data-activefilters') + ')');
-            }
-          }, 250);
-        }
         toggleArrow.setAttribute('data-activetext','Dölj filter');
         toggleArrow.addEventListener('click', function() {
           setTimeout(function () {
@@ -67,6 +59,32 @@ const test = {
             gaPush({ eventAction: eventAction, eventLabel: document.location.href });
           }, 50);
         });
+
+        const activeFilterEl = document.querySelector('.mob-filter-container .active-filter-display');
+        if (activeFilterEl) {
+
+          function printNumber() {
+            if (activeFilterEl.getAttribute('data-activefilters')) {
+              toggleArrow.append(' (' + activeFilterEl.getAttribute('data-activefilters') + ')');
+            }
+          }
+
+          printNumber();
+
+          let activeFilterObserver = new MutationObserver(function(mutations) {
+            for (var i = 0; i < mutations.length; i++) {
+              printNumber();
+            }
+          });
+
+          activeFilterObserver.observe(recipes, {
+            attributes: true,
+            characterData: false,
+            childList: false,
+            subtree: false
+          });
+        }
+
       }
 
       const relatedFilters = document.createElement('div');
