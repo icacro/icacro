@@ -31,6 +31,8 @@ const test = {
     const toggleArrow = document.querySelector('a.toggle-arrow');
 
     if (toggleArrow) {
+
+      //justera knapptexter, lägg på eventtracking
       let toggleCount = '';
       toggleArrow.setAttribute('data-activetext','Dölj filter');
       toggleArrow.addEventListener('click', function() {
@@ -46,7 +48,11 @@ const test = {
       });
 
       const activeFilterEl = document.querySelector('.mob-filter-container .active-filter-display');
+
       if (activeFilterEl) {
+
+        // visa antal valda filter i öppna-knappen
+        // av ngn anledning verkar dettainte alltid fungera i iOS
         const numberAdded = document.createElement('span');
         numberAdded.classList.add('filter-amount');
         toggleArrow.append(numberAdded);
@@ -76,10 +82,12 @@ const test = {
 
     if (related) {
 
-      document.querySelector('body').classList.add('cro-related');
+      //om relateratlänkar finns
 
+      document.querySelector('body').classList.add('cro-related');
       gaPush({ eventAction: 'MDSA-relaterad, sida med relateratlänkar', eventLabel: document.location.href });
 
+      //fixa inkonsekvent layout
       if (!document.querySelector('.banner-area')) {
         const bannerArea = document.createElement('div');
         const bannerAreaInner = document.createElement('div');
@@ -89,6 +97,7 @@ const test = {
         document.querySelector('.main-content').prepend(bannerArea);
       }
 
+      //skapa upp relateratblock
       const relatedFilters = document.createElement('div');
       document.getElementById('content').querySelector('#recipe-header').append(relatedFilters);
 
