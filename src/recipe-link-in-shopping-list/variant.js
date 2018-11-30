@@ -80,7 +80,6 @@ const test = {
   trackClicks(node) {
     node.querySelectorAll("a.recipe-link").forEach(function(item) {
       item.addEventListener("click", function(e) {
-        console.log("click");
         gaPush({ eventAction: 'Klick på receptlänk i inköpslista', eventLabel: item.href });
       });
     });
@@ -136,7 +135,6 @@ const test = {
         ct++;
       }
     });
-    // tracka visning samt klick på länkarna
 
     if(ct == 0) {
       return;
