@@ -53,14 +53,17 @@ const test = {
           if (unchecked) {
             for (var j = 0; j < unchecked.length; j++) {
               const article = unchecked[j];
-              const recipeIngredients = unchecked[j].querySelector('span.ingredients').getAttribute('title').split(/\r?\n/);
-              if (!article.querySelector('span.icon-offer')) {
-                const iconOffer = document.createElement('span');
-                iconOffer.classList.add('icon-offer');
-                iconOffer.innerHTML = cardSvg;
-                article.prepend(iconOffer);
+              const ingredientsList = article.querySelector('span.ingredients');
+              if(ingredientsList != null) {
+                const recipeIngredients = ingredientsList.getAttribute('title').split(/\r?\n/);
+                if (!article.querySelector('span.icon-offer')) {
+                  const iconOffer = document.createElement('span');
+                  iconOffer.classList.add('icon-offer');
+                  iconOffer.innerHTML = cardSvg;
+                  article.prepend(iconOffer);
+                }
+                test.checkRecipesMDSA(recipeIngredients,article);
               }
-              test.checkRecipesMDSA(recipeIngredients,article);
             }
           }
         }
@@ -103,11 +106,7 @@ const test = {
               offerId = 482;
             //}
           } else if (recipeIngredient === 'nötfärs') {
-            /*const title = document.querySelector('.recipepage__headline').innerHTML;
-            const preamble = document.querySelector('.recipe-preamble').innerHTML;
-            if (test.checkException(recipeIngredient,title,preamble)) { */
-              offerId = 483;
-            //}
+            offerId = 483;
           } else if (recipeIngredient === 'snabbkaffe' || recipeIngredient === 'pulverkaffe') {
             offerId = 484;
           } else if (recipeIngredient === 'prästost' || recipeIngredient === 'herrgård' || recipeIngredient === 'herrgårdsost' || recipeIngredient === 'cheddarost' || recipeIngredient === 'grevéost') {
@@ -177,15 +176,15 @@ const test = {
       article.classList.add('flag-check');
       const recipeIngredient = recipeIngredients[i];
       if (recipeFlag.indexOf(recipeIngredient) !== -1) {
-        if (recipeIngredient === 'smör' || recipeIngredient === 'vetemjöl') {
+        /*if (recipeIngredient === 'smör' || recipeIngredient === 'vetemjöl') {
           const title = article.querySelector('header h2 a').innerHTML;
           const preamble = article.querySelector('.content.sm_hidden a p').innerHTML;
           if (test.checkException(recipeIngredient,title,preamble)) {
             test.flagMDSA(article,recipeIngredient);
           }
-        } else {
+        } else {*/
           test.flagMDSA(article,recipeIngredient);
-        }
+        //}
       }
     }
   },
