@@ -14,6 +14,7 @@ import { ajax, gaPush } from '../util/utils';
 import './style.css';
 
 let offerInfoViewed = 0; // tracking av visad information på receptsidor
+let mdsaLoaded = 0; // browser fix mutation observer
 
 const recipes = document.getElementById('recipes'); // mdsa-sida
 const recipe = document.querySelector('.recipepage'); // recept-receptsida
@@ -44,7 +45,7 @@ const test = {
       let recipesObserver = new MutationObserver(function(mutations) {
         for (var i = 0; i < mutations.length; i++) {
           const unchecked = recipes.querySelectorAll('article:not(flag-check)');
-          if (unchecked) {
+          if (unchecked && mdsaLoaded == 0) {
             for (var j = 0; j < unchecked.length; j++) {
               const article = unchecked[j];
               const ingredientsList = article.querySelector('span.ingredients');
@@ -59,6 +60,7 @@ const test = {
                 test.checkRecipesMDSA(recipeIngredients,article);
               }
             }
+            mdsaLoaded = 1;
           }
         }
       });
@@ -87,11 +89,7 @@ const test = {
           if (recipeIngredient === 'kycklingfilé' || recipeIngredient === 'kycklingbröstfilé') {
             offerId = 481;
           } else if (recipeIngredient === 'blandfärs') {
-            /*const title = document.querySelector('.recipepage__headline').innerHTML;
-            const preamble = document.querySelector('.recipe-preamble').innerHTML;
-            if (test.checkException(recipeIngredient,title,preamble)) { */
-              offerId = 482;
-            //}
+            offerId = 482;
           } else if (recipeIngredient === 'nötfärs') {
             offerId = 483;
           } else if (recipeIngredient === 'snabbkaffe' || recipeIngredient === 'pulverkaffe') {
@@ -101,7 +99,6 @@ const test = {
           } else if ( ['präst','herrgård','cheddar','grevé','svecia'].find(function(item) {
             return recipeIngredient.includes(item);
           }) != undefined) {
-            //recipeIngredient === 'prästost' || recipeIngredient === 'herrgård' || recipeIngredient === 'herrgårdsost' || recipeIngredient === 'cheddarost' || recipeIngredient === 'grevéost') {
             offerId = 485;
           }
 
@@ -116,29 +113,6 @@ const test = {
             //Tracking visad
             console.log("gaPush({ eventAction: 'Erbjudande laddat på receptsida', eventLabel: " + recipeIngredient + " });");
             //gaPush({ eventAction: 'Erbjudande laddat på receptsida', eventLabel: recipeIngredient });
-
-            //Markera ingrediens
-
-            const ingredientsItems = document.getElementById('ingredients-section').querySelectorAll('ul li');
-            for (var j = 0; j < ingredientsItems.length; j++) {
-              if (ingredientsItems[j].innerHTML.indexOf(recipeIngredient) !== -1 && !ingredientsItems[j].querySelector('span.icon-offer')) {
-                ingredientsItems[j].classList.add('flag');
-                const iconOffer = document.createElement('span');
-                iconOffer.classList.add('icon-offer');
-                iconOffer.innerHTML = cardSvg;
-                ingredientsItems[j].prepend(iconOffer);
-                iconOffer.addEventListener("click", function(e) {
-                  console.log("gaPush({ eventAction: 'Klick på erbjudandeflagga på receptsida', eventLabel: " + recipeIngredient + " });");
-                  //gaPush({ eventAction: 'Klick på erbjudandeflagga på receptsida', eventLabel: recipeIngredient });
-                  test.createModal(test.getOfferDetails(offerId));
-                });
-              }
-            }
-
-            //Visa erbjudande efter recept
-            const offer = test.getOffer(offerId);
-            document.getElementById('ingredients-section').append(offer);
-
           }
         }
       }
@@ -173,7 +147,7 @@ const test = {
   },
 
   flagMDSA(article,recipeIngredient) {
-    article.classList.add('flag-on');
+    //article.classList.add('flag-on');
     //Tracking visad + klickad
     console.log("gaPush({ eventAction: 'Erbjudandeflagga på MDSA laddad', eventLabel: " + recipeIngredient + " });");
     //gaPush({ eventAction: 'Erbjudandeflagga på MDSA laddad', eventLabel: recipeIngredient });

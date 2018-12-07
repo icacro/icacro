@@ -15,25 +15,28 @@ import './style.css';
 
 //länk till bilder: https://handla.ica.se/?setWeekNumber=50
 // todo:
+// - testa firefox, ta bort om det inte funkar!!!
+// - testa tracking
           // - ta bort knapp i modalen
           // - byta ut erbjudanden till v. 50
           // - lägg till scroll-tracking, se recipe-inf-scroll-2
           // - kolla (ta bort/lägg till) undantag som vetemjöl - gluten etc...
-// - skapa fake-orginal
+          // - skapa fake-orginal
           // - modal vid klick på Erbjudandeflagga
-// - tracking: samma eventaction på orginal och variant
-  //  - orginal-MDSA, erbjudandeflaggor som skulla ha visats
-  //***  - MDSA, erbjudandeflaggor som visas: 'Erbjudandeflagga på MDSA laddad'
-  //  - orginal-MDSA, klick på recept som skulle haft erbjudandeflagga
-  //***  - MDSA, klick på recept med erbjudandeflagga: 'Erbjudandeflagga på MDSA klickad'
-  //  - orginal-recept, laddat sida som skulle ha innehållit erbjudande
-  //***  - recept, laddat sida med erbjudanden: 'Erbjudande laddat på receptsida'
-  //  - orginal-recept, scrollning ner till dit erbjudandekupong skulle ha visats
-  //***  - recept, scrollning ner till erbjudandekupong: 'Erbjudande visat på receptsida'
-  //***  - recept, klick på erbjudandeflagga i ingredienslista: 'Klick på erbjudandeflagga på receptsida'
-  //***  - recept, klick på erbjudandekupong: 'Klick på erbjudande på receptsida'
+          // - tracking: samma eventaction på orginal och variant
+            //***  - orginal-MDSA, erbjudandeflaggor som skulla ha visats
+            //***  - MDSA, erbjudandeflaggor som visas: 'Erbjudandeflagga på MDSA laddad'
+            //***  - orginal-MDSA, klick på recept som skulle haft erbjudandeflagga
+            //***  - MDSA, klick på recept med erbjudandeflagga: 'Erbjudandeflagga på MDSA klickad'
+            //***  - orginal-recept, laddat sida som skulle ha innehållit erbjudande
+            //***  - recept, laddat sida med erbjudanden: 'Erbjudande laddat på receptsida'
+            //***  - orginal-recept, scrollning ner till dit erbjudandekupong skulle ha visats
+            //***  - recept, scrollning ner till erbjudandekupong: 'Erbjudande visat på receptsida'
+            //***  - recept, klick på erbjudandeflagga i ingredienslista: 'Klick på erbjudandeflagga på receptsida'
+            //***  - recept, klick på erbjudandekupong: 'Klick på erbjudande på receptsida'
 
 let offerInfoViewed = 0; // tracking av visad information på receptsidor
+let mdsaLoaded = 0; // browser fix mutation observer
 
 const recipes = document.getElementById('recipes'); // mdsa-sida
 const recipe = document.querySelector('.recipepage'); // recept-receptsida
@@ -66,7 +69,7 @@ const test = {
       let recipesObserver = new MutationObserver(function(mutations) {
         for (var i = 0; i < mutations.length; i++) {
           const unchecked = recipes.querySelectorAll('article:not(flag-check)');
-          if (unchecked) {
+          if (unchecked && mdsaLoaded == 0) {
             for (var j = 0; j < unchecked.length; j++) {
               const article = unchecked[j];
               const ingredientsList = article.querySelector('span.ingredients');
@@ -81,6 +84,7 @@ const test = {
                 test.checkRecipesMDSA(recipeIngredients,article);
               }
             }
+            mdsaLoaded = 1;
           }
         }
       });
