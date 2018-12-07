@@ -15,7 +15,7 @@ import './style.css';
 
 let offerInfoViewed = 0; // tracking av visad information på receptsidor
 
-const recipes = document.getElementById('recipes'); // mdsa-sida
+let recipes = document.querySelector('.mdsa-main-grid'); // mdsa-sida
 const recipe = document.querySelector('.recipepage'); // recept-receptsida
 
 // namn på erbjudanden, ändra här
@@ -54,7 +54,7 @@ const test = {
             console.log('observer-unchecked');
             for (var j = 0; j < unchecked.length; j++) {
               const article = unchecked[j];
-              console.log(article.querySelector('.title a').innerHTML);
+              console.log('observer-unchecked + ' + article.querySelector('.title a').innerHTML);
               const ingredientsList = article.querySelector('span.ingredients');
               if(ingredientsList != null) {
                 const recipeIngredients = ingredientsList.getAttribute('title').split(/\r?\n/);
