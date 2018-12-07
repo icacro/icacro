@@ -16,11 +16,22 @@ import './style.css';
 //länk till bilder: https://handla.ica.se/?setWeekNumber=50
 // todo:
           // - ta bort knapp i modalen
-// - byta ut erbjudanden till v. 50
+          // - byta ut erbjudanden till v. 50
           // - lägg till scroll-tracking, se recipe-inf-scroll-2
-// - kolla (ta bort/lägg till) undantag som vetemjöl - gluten etc...
+          // - kolla (ta bort/lägg till) undantag som vetemjöl - gluten etc...
 // - skapa fake-orginal
           // - modal vid klick på Erbjudandeflagga
+// - tracking: samma eventaction på orginal och variant
+  //  - orginal-MDSA, erbjudandeflaggor som skulla ha visats
+  //***  - MDSA, erbjudandeflaggor som visas: 'Erbjudandeflagga på MDSA laddad'
+  //  - orginal-MDSA, klick på recept som skulle haft erbjudandeflagga
+  //***  - MDSA, klick på recept med erbjudandeflagga: 'Erbjudandeflagga på MDSA klickad'
+  //  - orginal-recept, laddat sida som skulle ha innehållit erbjudande
+  //***  - recept, laddat sida med erbjudanden: 'Erbjudande laddat på receptsida'
+  //  - orginal-recept, scrollning ner till dit erbjudandekupong skulle ha visats
+  //***  - recept, scrollning ner till erbjudandekupong: 'Erbjudande visat på receptsida'
+  //***  - recept, klick på erbjudandeflagga i ingredienslista: 'Klick på erbjudandeflagga på receptsida'
+  //***  - recept, klick på erbjudandekupong: 'Klick på erbjudande på receptsida'
 
 let offerInfoViewed = 0; // tracking av visad information på receptsidor
 
@@ -78,22 +89,12 @@ const test = {
         attributes: false,
         characterData: false,
         childList: true,
-        subtree: false
+        subtree: true
       });
 
     } else if (recipe) {
-
-      $(window).on('resize scroll', function() {
-        if (offerInfoViewed === 0) {
-          if($('div.button.button-round.js-open-shoppinglist-modal').isInViewport()) {
-            console.log("gaPush({ eventAction: 'rec-engine-offer: erbjudande visat'});");
-            offerInfoViewed = 1;
-          }
-        }
-      });
-
       const recipeIngredients = document.querySelector('head meta[name="ingredients"]').getAttribute('content').split(',');
-      console.log(recipeIngredients);
+      var currentOffers = null;
       for (var i = 0; i < recipeIngredients.length; i++) {
         let offerId = 0;
         const recipeIngredient = recipeIngredients[i];
@@ -127,10 +128,16 @@ const test = {
           }
 
           if (offerId !== 0) {
+            if(currentOffers == null) {
+              currentOffers = recipeIngredient;
+            }
+            else {
+              currentOffers += ", " + recipeIngredient;
+            }
 
             //Tracking visad
-            console.log("gaPush({ eventAction: 'Erbjudande visas på receptsida', eventLabel: " + recipeIngredient + " });");
-            //gaPush({ eventAction: 'Erbjudande visas på receptsida', eventLabel: recipeIngredient });
+            console.log("gaPush({ eventAction: 'Erbjudande laddat på receptsida', eventLabel: " + recipeIngredient + " });");
+            //gaPush({ eventAction: 'Erbjudande laddat på receptsida', eventLabel: recipeIngredient });
 
             //Markera ingrediens
 
@@ -143,28 +150,38 @@ const test = {
                 iconOffer.innerHTML = cardSvg;
                 ingredientsItems[j].prepend(iconOffer);
                 iconOffer.addEventListener("click", function(e) {
+                  console.log("gaPush({ eventAction: 'Klick på erbjudandeflagga på receptsida', eventLabel: " + recipeIngredient + " });");
+                  //gaPush({ eventAction: 'Klick på erbjudandeflagga på receptsida', eventLabel: recipeIngredient });
                   test.createModal(test.getOfferDetails(offerId));
                 });
               }
             }
 
             //Visa erbjudande efter recept
-
             const offer = test.getOffer(offerId);
             document.getElementById('ingredients-section').append(offer);
 
           }
-
         }
-
       }
 
+      if(currentOffers != null) {
+        $(window).on('resize scroll', function() {
+          if (offerInfoViewed === 0) {
+            if($('div.button.button-round.js-open-shoppinglist-modal').isInViewport()) {
+              console.log("gaPush({ eventAction: 'Erbjudande visat på receptsida', eventLabel: " + currentOffers + " });");
+              //gaPush({ eventAction: 'Erbjudande visat på receptsida', eventLabel: currentOffers });
+              offerInfoViewed = 1;
+            }
+          }
+        });
+      }
 
     }
 
   },
 
-  checkException(recipeIngredient,title,preamble) {
+  /*checkException(recipeIngredient,title,preamble) {
     if (recipeIngredient === 'smör') {
       const checkFor = ['laktos','vegan','mjölkfri','mjölkprotein'];
       if (title.indexOf('vegan') === -1 && preamble.indexOf('vegan') === -1
@@ -182,7 +199,7 @@ const test = {
         return false;
       }
     }
-  },
+  },*/
 
   checkRecipesMDSA(recipeIngredients,article) {
     for (var i = 0; i < recipeIngredients.length; i++) {
@@ -208,8 +225,12 @@ const test = {
   flagMDSA(article,recipeIngredient) {
     article.classList.add('flag-on');
     //Tracking visad + klickad
-    console.log("gaPush({ eventAction: 'Erbjudandeflagga på MDSA', eventLabel: " + recipeIngredient + " });");
-    //gaPush({ eventAction: 'Erbjudandeflagga på MDSA', eventLabel: recipeIngredient });
+    console.log("gaPush({ eventAction: 'Erbjudandeflagga på MDSA laddad', eventLabel: " + recipeIngredient + " });");
+    //gaPush({ eventAction: 'Erbjudandeflagga på MDSA laddad', eventLabel: recipeIngredient });
+    article.addEventListener("click", function(e) {
+      console.log("gaPush({ eventAction: 'Erbjudandeflagga på MDSA klickad', eventLabel: " + recipeIngredient + " });");
+      //gaPush({ eventAction: 'Erbjudandeflagga på MDSA klickad', eventLabel: recipeIngredient });
+    });
   },
 
   getOfferDetails(id) {
@@ -287,9 +308,8 @@ const test = {
 
     offerWrapper.addEventListener('click', function(event){
       event.preventDefault();
-      //Tracking klickad:
-      console.log("gaPush({ eventAction: 'Öppnat erbjudande på recept', eventLabel: " + offerInfo.title + " });");
-      //gaPush({ eventAction: 'Öppnat erbjudande på recept', eventLabel: offerTitle });
+      console.log("gaPush({ eventAction: 'Klick på erbjudande på receptsida', eventLabel: " + offerInfo.title + " });");
+      //gaPush({ eventAction: 'Klick på erbjudande på receptsida', eventLabel: offerTitle });
       test.createModal(offerInfo);
     });
 
