@@ -48,8 +48,9 @@ const test = {
       console.log('recipes');
 
       let recipesObserver = new MutationObserver(function(mutations) {
+        console.log('observer1');
         for (var i = 0; i < mutations.length; i++) {
-          console.log('observer');
+          console.log('observer2');
           const unchecked = recipes.querySelectorAll('article:not(flag-check)');
           if (unchecked) {
             console.log('observer-unchecked');
@@ -76,7 +77,7 @@ const test = {
         attributes: false,
         characterData: false,
         childList: true,
-        subtree: false
+        subtree: true
       });
 
       // let recipesObserver = new MutationObserver(function(mutations) {
