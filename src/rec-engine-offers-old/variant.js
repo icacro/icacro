@@ -15,7 +15,7 @@ import './style.css';
 
 let offerInfoViewed = 0; // tracking av visad information på receptsidor
 
-let recipes = document.querySelector('.mdsa-main-grid'); // mdsa-sida
+const recipes = document.getElementById('recipes'); // mdsa-sida
 const recipe = document.querySelector('.recipepage'); // recept-receptsida
 
 // namn på erbjudanden, ändra här
@@ -45,6 +45,7 @@ const test = {
   manipulateDom() {
 
     if (recipes) {
+      console.log('recipes');
 
       let recipesObserver = new MutationObserver(function(mutations) {
         for (var i = 0; i < mutations.length; i++) {
@@ -106,6 +107,7 @@ const test = {
       // }
 
     } else if (recipe) {
+      console.log('recipe');
 
       // const currentUrl = window.location.pathname;
       // const urlParts = currentUrl.split('/');
@@ -120,6 +122,9 @@ const test = {
       //
       // }
 
+
+    } else {
+      console.log('nothing');
     }
 
   },
