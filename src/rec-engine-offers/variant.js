@@ -24,7 +24,7 @@ import './style.css';
           // - skapa fake-orginal
           // - modal vid klick på Erbjudandeflagga
           // - tracking: samma eventaction på orginal och variant
-            //***  - orginal-MDSA, erbjudandeflaggor som skulla ha visats
+            //***  - orginal-MDSA, erbjudandeflaggor som skulla ha visats: 'Erbjudandeflagga på MDSA laddad'
             //***  - MDSA, erbjudandeflaggor som visas: 'Erbjudandeflagga på MDSA laddad'
             //***  - orginal-MDSA, klick på recept som skulle haft erbjudandeflagga
             //***  - MDSA, klick på recept med erbjudandeflagga: 'Erbjudandeflagga på MDSA klickad'
@@ -36,7 +36,6 @@ import './style.css';
             //***  - recept, klick på erbjudandekupong: 'Klick på erbjudande på receptsida'
 
 let offerInfoViewed = 0; // tracking av visad information på receptsidor
-let mdsaLoaded = 0; // browser fix mutation observer
 
 const recipes = document.getElementById('recipes'); // mdsa-sida
 const recipe = document.querySelector('.recipepage'); // recept-receptsida
@@ -69,7 +68,7 @@ const test = {
       let recipesObserver = new MutationObserver(function(mutations) {
         for (var i = 0; i < mutations.length; i++) {
           const unchecked = recipes.querySelectorAll('article:not(flag-check)');
-          if (unchecked && mdsaLoaded == 0) {
+          if (unchecked) {
             for (var j = 0; j < unchecked.length; j++) {
               const article = unchecked[j];
               const ingredientsList = article.querySelector('span.ingredients');
@@ -84,7 +83,6 @@ const test = {
                 test.checkRecipesMDSA(recipeIngredients,article);
               }
             }
-            mdsaLoaded = 1;
           }
         }
       });
@@ -222,9 +220,14 @@ const test = {
   },
 
   flagMDSA(article,recipeIngredient) {
+    if(article.classList.contains("flag-on")) {
+      return;
+    }
     article.classList.add('flag-on');
+    //console.log("Erbjudandeflagga på MDSA laddad: " + recipeIngredient);
     gaPush({ eventAction: 'Erbjudandeflagga på MDSA laddad', eventLabel: recipeIngredient });
     article.addEventListener("click", function(e) {
+      //console.log("Erbjudandeflagga på MDSA klickad");
       gaPush({ eventAction: 'Erbjudandeflagga på MDSA klickad', eventLabel: recipeIngredient });
     });
   },
