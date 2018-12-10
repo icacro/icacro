@@ -131,7 +131,15 @@ const test = {
     links.insertAdjacentHTML("beforeend", "<div class='recipe-items-header'>Recept</div>");
     recipes.forEach(function(element) {
       if(element.list == listId[0]) {
-        links.insertAdjacentHTML("beforeend", "<a class='recipe-link' href='" + element.url + "'>" + element.name + "</a>");
+        var link = document.createElement('a');
+        link.classList.add('recipe-link');
+        link.setAttribute("href", element.url);
+        link.innerHTML = element.name;
+        links.insertAdjacentElement("beforeend", link);
+        link.addEventListener("click", function(e) {
+          console.log(element.name);
+          //gaPush({ eventAction: 'Klick på receptlänk i inköpslista', eventLabel: element.url });
+        });
         ct++;
       }
     });
