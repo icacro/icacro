@@ -79,9 +79,6 @@ const test = {
         let offerId = 0;
         const recipeIngredient = recipeIngredients[i];
         const recipeIndex = recipeFlagExact.indexOf(recipeIngredient);
-        //if(recipeIndex < 0) {
-          //recipeIndex = recipeFlagExact.indexOf(recipeIngredient);
-        //}
         if (recipeIndex !== -1) {
 
           //Sätt erbjudande-id
@@ -109,10 +106,8 @@ const test = {
             else {
               currentOffers += ", " + recipeIngredient;
             }
-
-            //Tracking visad
-            console.log("gaPush({ eventAction: 'Erbjudande laddat på receptsida', eventLabel: " + recipeIngredient + " });");
-            //gaPush({ eventAction: 'Erbjudande laddat på receptsida', eventLabel: recipeIngredient });
+            //console.log("Erbjudande laddat på receptsida: " + recipeIngredient);
+            gaPush({ eventAction: 'Erbjudande laddat på receptsida', eventLabel: recipeIngredient });
           }
         }
       }
@@ -121,8 +116,8 @@ const test = {
         $(window).on('resize scroll', function() {
           if (offerInfoViewed === 0) {
             if($('div.button.button-round.js-open-shoppinglist-modal').isInViewport()) {
-              console.log("gaPush({ eventAction: 'Erbjudande visat på receptsida', eventLabel: " + currentOffers + " });");
-              //gaPush({ eventAction: 'Erbjudande visat på receptsida', eventLabel: currentOffers });
+              //console.log("Erbjudande visat på receptsida: " + currentOffers);
+              gaPush({ eventAction: 'Erbjudande visat på receptsida', eventLabel: currentOffers });
               offerInfoViewed = 1;
             }
           }
@@ -148,138 +143,12 @@ const test = {
 
   flagMDSA(article,recipeIngredient) {
     //article.classList.add('flag-on');
-    //Tracking visad + klickad
-    console.log("gaPush({ eventAction: 'Erbjudandeflagga på MDSA laddad', eventLabel: " + recipeIngredient + " });");
-    //gaPush({ eventAction: 'Erbjudandeflagga på MDSA laddad', eventLabel: recipeIngredient });
+    //console.log("Erbjudandeflagga på MDSA laddad: " + recipeIngredient);
+    gaPush({ eventAction: 'Erbjudandeflagga på MDSA laddad', eventLabel: recipeIngredient });
     article.addEventListener("click", function(e) {
-      console.log("gaPush({ eventAction: 'Erbjudandeflagga på MDSA klickad', eventLabel: " + recipeIngredient + " });");
-      //gaPush({ eventAction: 'Erbjudandeflagga på MDSA klickad', eventLabel: recipeIngredient });
+      //console.log("Erbjudandeflagga på MDSA klickad: " + recipeIngredient);
+      gaPush({ eventAction: 'Erbjudandeflagga på MDSA klickad', eventLabel: recipeIngredient });
     });
-  },
-
-  getOfferDetails(id) {
-    //const imageUrl = "https://atgcdn-production.prod.vuitonline.com/online/";
-    if(id == 481) {
-      return {
-        image: "https://assets.icanet.se/t_product_large_v1,f_auto/7300322544002.jpg",
-        title: "Kycklingfilé Fryst 1kg",
-        info: "Kronfågel",
-        price: "75 kr",
-        extra: "jfr-pris 75:00 kr/kg. Kronfågel. Ursprung Sverige. Fryst. 1000 g"};
-    }
-    if(id == 482) {
-      return {
-        image: "https://assets.icanet.se/t_product_large_v1,f_auto/2319102200002.jpg",
-        title: "Blandfärs",
-        info: "ICA",
-        price: "39:90/kg",
-        extra: "ICA, ursprung Sverige, storpack, max 22% fetthalt. Max 2 köp/kund"};
-    }
-    if(id == 483) {
-      return {
-        image: "https://assets.icanet.se/t_product_large_v1,f_auto/2319103200001.jpg",
-        title: "Nötfärs",
-        info: "ICA",
-        price: "59:90/kg",
-        extra: "ICA, ursprung Sverige, storpack, max 12% fetthalt. Max 2 köp/kund"};
-    }
-    if(id == 484) {
-      return {
-        image: "https://assets.icanet.se/t_product_large_v1,f_auto/7613031210374.jpg",
-        title: "Snabbkaffe",
-        info: "Nescafé",
-        price: "49:90 kr",
-        extra: "Nescafé, 200 g, gäller mellanrost i påse, jmfpris 249:50/kg"};
-    }
-    if(id == 485) {
-      return {
-        image: "https://assets.icanet.se/t_product_large_v1,f_auto/2324623300001.jpg",
-        title: "Ost",
-        info: "Allerum",
-        price: "89:90/kg",
-        extra: "Grevé, Präst, Herrgård, Svecia, Cheddar, Allerum, ca 700 g, 28-35%, vällagrad 11-14 mån. Max 2 köp/kund"};
-    }
-    if(id == 486) {
-      return {
-        image: "https://assets.icanet.se/t_product_large_v1,f_auto/7300200080004.jpg",
-        title: "Köttbullar",
-        info: "Scan",
-        price: "45 kr",
-        extra: "Scan, 1000 g, kylda, jmfpris 45 kr/kg. Max 2 köp/kund"};
-    }
-  },
-
-  getOffer(id) {
-    const offerWrapper = document.createElement('div');
-    const offer = document.createElement('div');
-    const offerInfo = test.getOfferDetails(id);
-
-    const imgWrapper = document.createElement('div');
-      imgWrapper.classList.add('col-3');
-    const imgEl = document.createElement('img');
-      imgEl.src = offerInfo.image;
-      imgEl.alt = offerInfo.title;
-    const titleEl = document.createElement('div');
-      titleEl.innerHTML = '<p class="title">' + offerInfo.title + '</p><p class="price">' + offerInfo.price + '</p><p class="info">' + offerInfo.info + '</p><p class="link"><a href="#">Mer info</a></p>' + cardSvg;
-      titleEl.classList.add('col-9');
-
-    imgWrapper.append(imgEl);
-    offer.append(imgWrapper);
-    offer.append(titleEl);
-    offer.classList.add('offer-' + id, 'row');
-    offerWrapper.classList.add('offer','pl');
-    offerWrapper.append(offer);
-
-    offerWrapper.addEventListener('click', function(event){
-      event.preventDefault();
-      console.log("gaPush({ eventAction: 'Klick på erbjudande på receptsida', eventLabel: " + offerInfo.title + " });");
-      //gaPush({ eventAction: 'Klick på erbjudande på receptsida', eventLabel: offerTitle });
-      test.createModal(offerInfo);
-    });
-
-    return offerWrapper;
-  },
-
-  createModal(offer) {
-    const modal = document.createElement('div');
-    modal.classList.add('pl-modal');
-    const modalWrapper = document.createElement('div');
-    modalWrapper.classList.add('pl-modal__window');
-    const modalInner = document.createElement('div');
-    modalInner.classList.add('hse-campaign');
-    const modalClose = document.createElement('a');
-    modalClose.classList.add('button','button--icon','pl-modal__close-button','button--link');
-    modalClose.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="3.092778444290161 4.548774719238281 17.0854434967041 17.08416748046875"><path d="M15.224 13.091l4.582 4.606q.315.291.364.691t-.194.667q-1.042 1.333-2.376 2.376-.267.242-.667.194t-.715-.339l-4.582-4.606-4.606 4.606q-.291.291-.691.339t-.691-.194q-1.309-1.042-2.352-2.352-.242-.291-.194-.691t.339-.691l4.606-4.606-4.582-4.582q-.315-.315-.364-.715t.194-.667q1.018-1.309 2.352-2.376.291-.242.691-.194t.691.364l4.606 4.388 4.582-4.388q.315-.315.715-.364t.667.194q1.333 1.042 2.376 2.376.242.267.194.667t-.364.715z"></path></svg>';
-
-    const modalHeader = document.createElement('div');
-    modalHeader.classList.add('hse-campaign__header');
-    modalHeader.innerHTML = 'Erbjudande';
-
-    const sectionWrapper = document.createElement('section');
-    sectionWrapper.classList.add('hse-campaign__section');
-
-    const offerContent = document.createElement('div');
-    offerContent.classList.add('hse-campaign__offer__content-section');
-    const offerWrapper = document.createElement('div');
-    offerWrapper.classList.add('hse-campaign__offer__wrapper');
-
-    offerContent.append(offerWrapper);
-    offerWrapper.innerHTML = '<div class="hse-campaign__offer__content-container"><div class="hse-campaign__offer__image"><img src="' + offer.image + '" alt="' + offer.title + '"></div><div class="hse-campaign__offer__offer-info"><div class="hse-campaign__offer__name">' + offer.title + '</div> <div class="hse-campaign__offer__condition">' + offer.price + '</div></div></div><div class="hse-campaign__offer__more-info"><p class="hse-campaign__offer__disclaimer hse-campaign__offer__disclaimer--product">' + offer.extra + '</p><p class="hse-campaign__offer__disclaimer">Gäller v 50 med ICA Kort. Lägre priser och avvikelser i sortiment kan förekomma både i butik och online.</p></div>';
-
-    sectionWrapper.append(offerContent);
-    modalInner.append(modalHeader);
-    modalInner.append(sectionWrapper);
-    modalInner.append(modalClose);
-    modalWrapper.append(modalInner);
-    modal.append(modalWrapper);
-
-    document.querySelector('.modal-container.pl').append(modal);
-
-    modalClose.addEventListener('click', function(event){
-      event.preventDefault();
-      document.querySelector('.modal-container.pl .pl-modal').remove();
-    });
-
   }
 
 };

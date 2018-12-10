@@ -138,10 +138,7 @@ const test = {
             else {
               currentOffers += ", " + recipeIngredient;
             }
-
-            //Tracking visad
-            console.log("gaPush({ eventAction: 'Erbjudande laddat på receptsida', eventLabel: " + recipeIngredient + " });");
-            //gaPush({ eventAction: 'Erbjudande laddat på receptsida', eventLabel: recipeIngredient });
+            gaPush({ eventAction: 'Erbjudande laddat på receptsida', eventLabel: recipeIngredient });
 
             //Markera ingrediens
 
@@ -154,8 +151,7 @@ const test = {
                 iconOffer.innerHTML = cardSvg;
                 ingredientsItems[j].prepend(iconOffer);
                 iconOffer.addEventListener("click", function(e) {
-                  console.log("gaPush({ eventAction: 'Klick på erbjudandeflagga på receptsida', eventLabel: " + recipeIngredient + " });");
-                  //gaPush({ eventAction: 'Klick på erbjudandeflagga på receptsida', eventLabel: recipeIngredient });
+                  gaPush({ eventAction: 'Klick på erbjudandeflagga på receptsida', eventLabel: recipeIngredient });
                   test.createModal(test.getOfferDetails(offerId));
                 });
               }
@@ -173,8 +169,7 @@ const test = {
         $(window).on('resize scroll', function() {
           if (offerInfoViewed === 0) {
             if($('div.button.button-round.js-open-shoppinglist-modal').isInViewport()) {
-              console.log("gaPush({ eventAction: 'Erbjudande visat på receptsida', eventLabel: " + currentOffers + " });");
-              //gaPush({ eventAction: 'Erbjudande visat på receptsida', eventLabel: currentOffers });
+              gaPush({ eventAction: 'Erbjudande visat på receptsida', eventLabel: currentOffers });
               offerInfoViewed = 1;
             }
           }
@@ -228,17 +223,13 @@ const test = {
 
   flagMDSA(article,recipeIngredient) {
     article.classList.add('flag-on');
-    //Tracking visad + klickad
-    console.log("gaPush({ eventAction: 'Erbjudandeflagga på MDSA laddad', eventLabel: " + recipeIngredient + " });");
-    //gaPush({ eventAction: 'Erbjudandeflagga på MDSA laddad', eventLabel: recipeIngredient });
+    gaPush({ eventAction: 'Erbjudandeflagga på MDSA laddad', eventLabel: recipeIngredient });
     article.addEventListener("click", function(e) {
-      console.log("gaPush({ eventAction: 'Erbjudandeflagga på MDSA klickad', eventLabel: " + recipeIngredient + " });");
-      //gaPush({ eventAction: 'Erbjudandeflagga på MDSA klickad', eventLabel: recipeIngredient });
+      gaPush({ eventAction: 'Erbjudandeflagga på MDSA klickad', eventLabel: recipeIngredient });
     });
   },
 
   getOfferDetails(id) {
-    //const imageUrl = "https://atgcdn-production.prod.vuitonline.com/online/";
     if(id == 481) {
       return {
         image: "https://assets.icanet.se/t_product_large_v1,f_auto/7300322544002.jpg",
@@ -312,8 +303,7 @@ const test = {
 
     offerWrapper.addEventListener('click', function(event){
       event.preventDefault();
-      console.log("gaPush({ eventAction: 'Klick på erbjudande på receptsida', eventLabel: " + offerInfo.title + " });");
-      //gaPush({ eventAction: 'Klick på erbjudande på receptsida', eventLabel: offerTitle });
+      gaPush({ eventAction: 'Klick på erbjudande på receptsida', eventLabel: offerInfo.title });
       test.createModal(offerInfo);
     });
 
@@ -364,14 +354,6 @@ const test = {
       event.preventDefault();
       document.querySelector('.modal-container.pl .pl-modal').remove();
     });
-
-    /*shoppingList.addEventListener('click', function(event){
-      event.preventDefault();
-      //Tracking klickad:
-      console.log("gaPush({ eventAction: 'Klick inköpslista', eventLabel: " + offerTitle + " });");
-      //gaPush({ eventAction: 'Klick inköpslista', eventLabel: offerTitle });
-      alert('Hoppsan, något gick fel och vi lyckades tyvärr inte uppdatera din inköpslista.');
-    });*/
 
   }
 
