@@ -28,9 +28,9 @@ import './style.css';
             //***  - MDSA, erbjudandeflaggor som visas: 'Erbjudandeflagga på MDSA laddad'
             //***  - orginal-MDSA, klick på recept som skulle haft erbjudandeflagga
             //***  - MDSA, klick på recept med erbjudandeflagga: 'Erbjudandeflagga på MDSA klickad'
-            //***  - orginal-recept, laddat sida som skulle ha innehållit erbjudande
+            //***  - orginal-recept, laddat sida som skulle ha innehållit erbjudande: 'Erbjudande laddat på receptsida'
             //***  - recept, laddat sida med erbjudanden: 'Erbjudande laddat på receptsida'
-            //***  - orginal-recept, scrollning ner till dit erbjudandekupong skulle ha visats
+            //***  - orginal-recept, scrollning ner till dit erbjudandekupong skulle ha visats: 'Erbjudande visat på receptsida'
             //***  - recept, scrollning ner till erbjudandekupong: 'Erbjudande visat på receptsida'
             //***  - recept, klick på erbjudandeflagga i ingredienslista: 'Klick på erbjudandeflagga på receptsida'
             //***  - recept, klick på erbjudandekupong: 'Klick på erbjudande på receptsida'
