@@ -19,14 +19,16 @@ const test = {
     if (document.querySelector('.recipepage')) {
 
       const video = document.createElement('video');
-      const videos = '<source src="https://cdn.rawgit.com/icacro/icacro/v1.0.342/src/recipe-video/flower.mp4" type="video/mp4">';
+      //const videos = '<source src="https://cdn.rawgit.com/icacro/icacro/v1.0.342/src/recipe-video/flower.mp4" type="video/mp4">';
       video.setAttribute('controls','controls');
+      video.setAttribute('src','https://cdn.rawgit.com/icacro/icacro/v1.0.342/src/recipe-video/flower.mp4');
+      video.setAttribute('type','video/mp4');
 
       //<video loop autoplay controls="true" width='100%' height='100%' src='//some_video.mp4' type='video/mp4'></video>
 
-      video.innerHTML = videos;
+      //video.innerHTML = videos;
       const mobileVideo = video.cloneNode();
-      mobileVideo.innerHTML = videos;
+      //mobileVideo.innerHTML = videos;
 
       const fullscreen = document.querySelector('.hero__image__background');
       const square = document.querySelector('main .recipe-image-square__image');
