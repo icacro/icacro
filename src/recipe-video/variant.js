@@ -20,9 +20,9 @@ const test = {
 
       const video = document.createElement('video');
       //const videos = '<source src="https://cdn.rawgit.com/icacro/icacro/v1.0.342/src/recipe-video/flower.mp4" type="video/mp4">';
-      video.setAttribute('controls','controls');
-      video.setAttribute('src','https://cdn.rawgit.com/icacro/icacro/v1.0.342/src/recipe-video/flower.mp4');
-      video.setAttribute('type','video/mp4');
+      video.controls = true;
+      video.src = 'https://cdn.rawgit.com/icacro/icacro/v1.0.342/src/recipe-video/flower.mp4';
+      video.type = 'video/mp4';
 
       //<video loop autoplay controls="true" width='100%' height='100%' src='//some_video.mp4' type='video/mp4'></video>
 
