@@ -19,7 +19,7 @@ const test = {
     if (document.querySelector('.recipepage')) {
 
       const video = document.createElement('video');
-      const videos = '<source src="https://interactive-examples.mdn.mozilla.net/media/examples/flower.webm" type="video/webm"><source src="https://interactive-examples.mdn.mozilla.net/media/examples/flower.mp4" type="video/mp4">';
+      const videos = '<source src="https://cdn.rawgit.com/icacro/icacro/v1.0.341/src/recipe-video/flower.mp4" type="video/mp4">';
       video.setAttribute('controls','1');
       video.innerHTML = videos;
       const mobileVideo = video.cloneNode();
