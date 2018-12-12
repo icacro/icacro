@@ -56,8 +56,10 @@ const test = {
 
     var currentList = shoppingList.querySelector(".ingredient-search");
     if(currentList != null) {
-      currentList.insertAdjacentElement("beforeend", test.getLinkList());
-      test.trackClicks(shoppingList);
+      const node = test.getLinkList();
+      if(node) {
+        currentList.insertAdjacentElement("beforeend", node);
+      }
     }
 
     var observer = new MutationObserver(function(mutationsList, observer) {
@@ -66,8 +68,7 @@ const test = {
           var list = mutation.target.querySelector(".ingredient-search");
           if(list != null) {
             var node = test.getLinkList();
-            if(node) {
-              test.trackClicks(node);
+            if(node != undefined) {
               shoppingList.querySelector(".ingredient-search").insertAdjacentElement("beforeend", node);
             }
           }
@@ -76,13 +77,6 @@ const test = {
     });
 
     observer.observe(shoppingList, { attributes: true, childList: true, subtree: true });
-  },
-  trackClicks(node) {
-    node.querySelectorAll("a.recipe-link").forEach(function(item) {
-      item.addEventListener("click", function(e) {
-        gaPush({ eventAction: 'Klick på receptlänk i inköpslista', eventLabel: item.href });
-      });
-    });
   },
   cookieName: "recipes-in-shopping-list",
   create_cookie(value) {
@@ -131,7 +125,15 @@ const test = {
     links.insertAdjacentHTML("beforeend", "<div class='recipe-items-header'>Recept</div>");
     recipes.forEach(function(element) {
       if(element.list == listId[0]) {
-        links.insertAdjacentHTML("beforeend", "<a class='recipe-link' href='" + element.url + "'>" + element.name + "</a>");
+        var link = document.createElement('a');
+        link.classList.add('recipe-link');
+        link.setAttribute("href", element.url);
+        link.innerHTML = element.name;
+        links.insertAdjacentElement("beforeend", link);
+        link.addEventListener("click", function(e) {
+          console.log("Klick på receptlänk i inköpslista: " + element.url);
+          //gaPush({ eventAction: 'Klick på receptlänk i inköpslista', eventLabel: element.url });
+        });
         ct++;
       }
     });
@@ -140,7 +142,8 @@ const test = {
       return;
     }
 
-    gaPush({ eventAction: 'Receptlänkar på inköpslista har visats', eventLabel: ct + " länkar" });
+    console.log("Receptlänkar på inköpslista har visats: " + ct + " länkar");
+    //gaPush({ eventAction: 'Receptlänkar på inköpslista har visats', eventLabel: ct + " länkar" });
     return links;
   }
 };

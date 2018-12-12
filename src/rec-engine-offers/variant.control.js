@@ -14,7 +14,6 @@ import { ajax, gaPush } from '../util/utils';
 import './style.css';
 
 let offerInfoViewed = 0; // tracking av visad information på receptsidor
-let mdsaLoaded = 0; // browser fix mutation observer
 
 const recipes = document.getElementById('recipes'); // mdsa-sida
 const recipe = document.querySelector('.recipepage'); // recept-receptsida
@@ -45,7 +44,7 @@ const test = {
       let recipesObserver = new MutationObserver(function(mutations) {
         for (var i = 0; i < mutations.length; i++) {
           const unchecked = recipes.querySelectorAll('article:not(flag-check)');
-          if (unchecked && mdsaLoaded == 0) {
+          if (unchecked) {
             for (var j = 0; j < unchecked.length; j++) {
               const article = unchecked[j];
               const ingredientsList = article.querySelector('span.ingredients');
@@ -60,7 +59,6 @@ const test = {
                 test.checkRecipesMDSA(recipeIngredients,article);
               }
             }
-            mdsaLoaded = 1;
           }
         }
       });
@@ -142,7 +140,10 @@ const test = {
   },
 
   flagMDSA(article,recipeIngredient) {
-    //article.classList.add('flag-on');
+    if(article.classList.contains("flag-on-control")) {
+      return;
+    }
+    article.classList.add('flag-on-control');
     //console.log("Erbjudandeflagga på MDSA laddad: " + recipeIngredient);
     gaPush({ eventAction: 'Erbjudandeflagga på MDSA laddad', eventLabel: recipeIngredient });
     article.addEventListener("click", function(e) {
