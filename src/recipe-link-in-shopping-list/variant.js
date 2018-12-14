@@ -131,8 +131,8 @@ const test = {
         link.innerHTML = element.name;
         links.insertAdjacentElement("beforeend", link);
         link.addEventListener("click", function(e) {
-          console.log("Klick på receptlänk i inköpslista: " + element.url);
-          //gaPush({ eventAction: 'Klick på receptlänk i inköpslista', eventLabel: element.url });
+          //console.log("Klick på receptlänk i inköpslista: " + element.url);
+          gaPush({ eventAction: 'Klick på receptlänk i inköpslista', eventLabel: element.url });
         });
         ct++;
       }
@@ -142,8 +142,8 @@ const test = {
       return;
     }
 
-    console.log("Receptlänkar på inköpslista har visats: " + ct + " länkar");
-    //gaPush({ eventAction: 'Receptlänkar på inköpslista har visats', eventLabel: ct + " länkar" });
+    //console.log("Receptlänkar på inköpslista har visats: " + ct + " länkar");
+    gaPush({ eventAction: 'Receptlänkar på inköpslista har visats', eventLabel: ct + " länkar" });
     return links;
   }
 };
