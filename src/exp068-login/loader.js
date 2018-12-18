@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         loginCoachmark
-// @path         //./src/avatarmenu-offers/variant.js
+// @path         //./src/exp068-login/variant.js
 // @namespace    http://tampermonkey.net/
 // @version      0.1
 // @match        https://www.ica.se/*
