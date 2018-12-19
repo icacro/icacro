@@ -37,6 +37,15 @@ const test = {
 
     avatar.parentNode.insertBefore(coachmark, avatar.nextSibling);
 
+    mark.addEventListener("mouseover", function(e) {
+      //.pl .coachmark-tooltip:hover::after
+      console.log(mark);
+      var t = document.querySelector(".cro .pl .coachmark-tooltip");
+      t.addEventListener("click", test.closeCoachmark);
+    });
+
+
+
 
 
 
@@ -50,6 +59,10 @@ const test = {
 
     document.getElementById('dropdown-avatar').querySelector('.circle-links').prepend(myOffers); */
 
+  },
+  closeCoachmark(e) {
+    console.log(e);
+    alert("test");
   }
 
 };
