@@ -22,6 +22,9 @@ const test = {
   },
   showLoginShout() {
     const avatar = document.getElementById('js-toggle-avatar');
+    if(avatar == null || avatar == undefined) {
+      return;
+    }
 
     const coachmark = document.createElement("div");
     coachmark.classList.add("coachmark-wrapper");
@@ -45,21 +48,27 @@ const test = {
     coachmark.classList.remove("hidden");
 
     closer.addEventListener("click", function(e) {
-        alert("new test");
-        console.log(e);
+        coachmark.classList.add("hidden");
+    });
+
+    mark.addEventListener("click", function(e) {
+      e.preventDefault();
+      coachmark.classList.add("hidden");
+      document.querySelector('#js-toggle-avatar').click();
+      //document.querySelector('#js-toggle-avatar .js-track-nav-user-login').click();
     });
 
     coachmark.addEventListener("mouseover", function(e) {
       //.pl .coachmark-tooltip:hover::after
       //console.log(mark);
-      var t = document.querySelector(".cro .pl .coachmark-tooltip");
-      t.addEventListener("click", test.closeCoachmark);
+      //var t = document.querySelector(".cro .pl .coachmark-tooltip");
+      //t.addEventListener("click", test.closeCoachmark);
     });
 
   },
   closeCoachmark(e) {
     console.log(e);
-    alert("test");
+    document.querySelector('#js-toggle-avatar .js-track-nav-user-login').click();
   }
 
 };
