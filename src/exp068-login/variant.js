@@ -12,11 +12,16 @@
 
 import { CROUTIL } from '../util/main';
 import { gaPush } from '../util/utils';
+import { isLoggedIn } from '../util/utils';
 import './style.css';
 
 const test = {
 
   manipulateDom() {
+    if(isLoggedIn()){
+      return;
+    }
+
     const avatar = document.getElementById('js-toggle-avatar');
     if(avatar == null || avatar == undefined) {
       return;
