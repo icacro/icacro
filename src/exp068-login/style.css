@@ -1,41 +1,27 @@
-/*.cro .coachmark-arrow {
-  font-family: IcaHand;
-  font-size: 2rem;
-  position: relative;
-  padding: 2rem 0 0 0;
-  margin-top:10px;
-  width: 300px;
-  text-align: center;
-  margin: 0 auto;
+@media (max-width: 480px) {
+  .cro .pl.coachmark-wrapper.login-shout {
+    margin-left: -21px !important;
+  }
+}
+@media (max-width: 768px) {
+  .cro .pl.coachmark-wrapper.login-shout {
+    top: 49px !important;
+  }
 }
 
-.cro .coachmark-arrow svg {
-  content: '';
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 10px;
-  height: 31px;
-  -webkit-transform: scale(-1, -1) rotate(-20deg);
-  transform: scale(-1, -1) rotate(-20deg);
-}
-
-.cro .coachmark-arrow svg g {
-  fill: #fff;
-}*/
-
-.cro .hidden {
+.cro .pl.coachmark-wrapper.login-shout.hidden-shout {
   visibility: hidden;
   opacity: 0;
-  transition: all 2s ease;
 }
 
-.cro div.pl.coachmark-wrapper.login-shout {
+.cro .pl.coachmark-wrapper.login-shout {
+  visibility: visible;
+  opacity: 1;
   margin-left: -49px;
   top: 62px;
   position: absolute;
   z-index: 99;
-  transition: all 2s ease;
+  transition: all .7s ease-in;
 }
 
 .cro div.coachmark-tooltip.coachmark-tooltip--top-middle {
@@ -48,18 +34,30 @@
   content: none;
 }
 
-.cro .pl span.coachmark-tooltip.close {
-    background: #A02971;
-    border-radius: 5rem;
-    height: 2.1rem;
-    line-height: 3.6rem;
-    position: absolute;
-    right: -.8rem;
-    text-align: center;
-    top: -.9rem;
-    width: 2.1rem;
-    z-index: 1;
-    transition: all 0.2s ease-out;
+.cro .login-shout span.coachmark-tooltip.close {
+  background: #A02971;
+  border-radius: 5rem;
+  height: 2.1rem;
+  line-height: 3.6rem;
+  position: absolute;
+  right: -.8rem;
+  text-align: center;
+  top: -.9rem;
+  width: 2.1rem;
+  z-index: 1;
+  visibility: hidden;
+  opacity: 0;
+  transition: all .2s ease-in;
+}
+
+.cro .login-shout:hover span.coachmark-tooltip.close {
+    visibility: visible;
+    opacity: 1;
+    transition: all .2s ease-out;
+}
+
+.cro .login-shout:hover span.coachmark-tooltip.close:hover {
+  background: #DC438C;
 }
 
 .cro .pl span.coachmark-tooltip.close  svg {
