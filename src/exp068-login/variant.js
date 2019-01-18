@@ -57,27 +57,19 @@ const test = {
 
     const closer = document.querySelector(".coachmark-tooltip.close");
     closer.addEventListener("click", function(e) {
-        coachmark.classList.add("hidden-shout");
+        test.hideLoginShout();
     });
 
     const mark = document.querySelector(".coachmark-tooltip--top-middle.coachmark-tooltip");
     mark.addEventListener("click", function(e) {
       e.preventDefault();
-      coachmark.classList.add("hidden-shout");
+      test.hideLoginShout();
       //document.querySelector('#js-toggle-avatar').click();
       document.querySelector('#js-toggle-avatar .js-track-nav-user-login').click();
     });
-
-    /*mark.addEventListener("mouseover", function(e) {
-      closer.classList.remove("hidden-shout");
-    });
-
-    coachmark.addEventListener("mouseout", function(e) {
-      e.preventDefault();
-      console.log(e);
-      closer.classList.add("hidden-shout");
-    });*/
-
+  },
+  hideLoginShout() {
+    document.querySelector(".coachmark-wrapper.login-shout").classList.add("hidden-shout");
   },
   closeCoachmark(e) {
     console.log(e);
