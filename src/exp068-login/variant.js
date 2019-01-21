@@ -18,7 +18,7 @@ import './style.css';
 const test = {
 
   manipulateDom() {
-    if(isLoggedIn()){
+    if(isLoggedIn() || document.cookie.match(new RegExp("showloginshout" + '=([^;]+)'))){
       return;
     }
 
@@ -49,7 +49,6 @@ const test = {
     avatar.parentNode.insertBefore(coachmark, avatar.nextSibling);
 
     window.setTimeout(test.showLoginShout, 3000);
-
   },
   showLoginShout() {
     const coachmark = document.querySelector(".coachmark-wrapper.login-shout");
@@ -67,6 +66,10 @@ const test = {
       //document.querySelector('#js-toggle-avatar').click();
       document.querySelector('#js-toggle-avatar .js-track-nav-user-login').click();
     });
+
+    document.cookie = ['showloginshout', '=', true, '; domain=.', window.location.host.toString(), '; path=/', '; expires=', ''].join('');
+
+    window.setTimeout(test.hideLoginShout, 6000);
   },
   hideLoginShout() {
     document.querySelector(".coachmark-wrapper.login-shout").classList.add("hidden-shout");

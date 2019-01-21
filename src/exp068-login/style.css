@@ -21,7 +21,7 @@
   top: 62px;
   position: absolute;
   z-index: 99;
-  transition: all .7s ease-in;
+  transition: all .7s ease-out;
 }
 
 .cro div.coachmark-tooltip.coachmark-tooltip--top-middle {
