@@ -36,7 +36,7 @@ const test = {
     const mark = document.createElement("div");
     mark.classList.add("coachmark-tooltip");
     mark.classList.add("coachmark-tooltip--top-middle");
-    mark.innerHTML = "<span class='coachmark-tooltip__arrow' style='left: 50%; top: 0px; position: absolute; transform: translateX(0px);'></span><span>Logga in, vettja!</span>";
+    mark.innerHTML = "<span class='coachmark-tooltip__arrow' style='left: 50%; top: 0px; position: absolute; transform: translateX(0px);'></span><span>Logga in för att spara recept, hitta dina erbjudanden och din inköpslista!</span>";
     coachmark.insertAdjacentElement("afterbegin", mark);
 
     const closer = document.createElement("span");
@@ -68,7 +68,7 @@ const test = {
     });
 
     document.cookie = ['showloginshout', '=', true, '; domain=.', window.location.host.toString(), '; path=/', '; expires=', ''].join('');
-    //gaPush({ eventAction: 'Login uppmaning visad', eventLabel: 'kort text' });
+    gaPush({ eventAction: 'Login uppmaning visad', eventLabel: 'recept, erbjudanden och inköpslista' });
 
     window.setTimeout(test.hideLoginShout, 6000);
   },

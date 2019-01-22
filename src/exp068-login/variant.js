@@ -70,7 +70,7 @@ const test = {
     });
 
     document.cookie = ['showloginshout', '=', true, '; domain=.', window.location.host.toString(), '; path=/', '; expires=', ''].join('');
-    //gaPush({ eventAction: 'Login uppmaning visad', eventLabel: 'kort text' });
+    gaPush({ eventAction: 'Login uppmaning visad', eventLabel: 'lång text samt knapp' });
 
     window.setTimeout(test.hideLoginShout, 6000);
   },
