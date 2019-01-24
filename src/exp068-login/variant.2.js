@@ -33,10 +33,12 @@ const test = {
     coachmark.classList.add("pl");
     coachmark.classList.add("login-shout");
 
+    const msg = "Logga in för att se bonus och saldo!<div class='login-shout-button'>Logga in</div>";
+
     const mark = document.createElement("div");
     mark.classList.add("coachmark-tooltip");
     mark.classList.add("coachmark-tooltip--top-middle");
-    mark.innerHTML = "<span class='coachmark-tooltip__arrow' style='left: 50%; top: 0px; position: absolute; transform: translateX(0px);'></span><span>Logga in för att se bonus och saldo!</span>";
+    mark.innerHTML = "<span class='coachmark-tooltip__arrow' style='left: 50%; top: -5px; position: absolute; transform: translateX(0px);'></span><span>" + msg + "</span>";
     coachmark.insertAdjacentElement("afterbegin", mark);
 
     const closer = document.createElement("span");
@@ -74,12 +76,7 @@ const test = {
   },
   hideLoginShout() {
     document.querySelector(".coachmark-wrapper.login-shout").classList.add("hidden-shout");
-  },
-  closeCoachmark(e) {
-    console.log(e);
-    document.querySelector('#js-toggle-avatar .js-track-nav-user-login').click();
   }
-
 };
 
 $(document).ready(() => {
