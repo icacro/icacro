@@ -2,3 +2,10 @@
   height: 20px;
   width: 20px;
 }
+
+.cro .pl.coachmark-wrapper {
+  left: 50px;
+  top: 280px;
+  position: absolute;
+  z-index: 99;
+}

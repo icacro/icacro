@@ -19,21 +19,50 @@ const test = {
 
   manipulateDom() {
 
-    const myOffers = document.createElement('a');
-    myOffers.classList.add('circle-link','js-track-nav-user-item');
-    myOffers.href = '/erbjudanden/butikserbjudanden/';
+    const offerLink = isLoggedIn() ? document.createElement('a') : document.createElement('div');
+
+    offerLink.classList.add('circle-link','js-track-nav-user-item');
+    offerLink.href = '/erbjudanden/butikserbjudanden/';
     var dataTracking = document.createAttribute('data-tracking');
     dataTracking.value = '{"name":"Erbjudanden"}';
-    myOffers.setAttributeNode(dataTracking);
+    offerLink.setAttributeNode(dataTracking);
     if(isLoggedIn()) {
-      myOffers.innerHTML = '<div class="circle-icon circle-icon--purple circle-offers"><svg><use xlink:href="/Assets/icons/symbols.svg#price-tag"></use></svg></div><span class="circle-link__label">Erbjudanden</span>';
+      offerLink.innerHTML = '<div class="circle-icon circle-icon--purple circle-offers"><svg><use xlink:href="/Assets/icons/symbols.svg#price-tag"></use></svg></div><span class="circle-link__label">Erbjudanden</span>';
     }
     else {
-      myOffers.innerHTML = '<div class="circle-icon circle-icon--grey circle-offers"><svg><use xlink:href="/Assets/icons/symbols.svg#price-tag"></use></svg></div><span class="circle-link__label">Erbjudanden</span>';
+      offerLink.innerHTML = '<div class="circle-icon circle-icon--grey circle-offers"><svg><use xlink:href="/Assets/icons/symbols.svg#price-tag"></use></svg></div><span class="circle-link__label">Erbjudanden</span>';
+      test.createCoachmark();
+      offerLink.addEventListener("mouseover", function(e){
+
+      });
     }
-    document.getElementById('dropdown-avatar').querySelector('.circle-links').prepend(myOffers);
+    document.getElementById('dropdown-avatar').querySelector('.circle-links').prepend(offerLink);
+
+  },
+  createCoachmark() {
+    const msg = "Logga in för att se erbjudanden";
+    const wrapper = document.createElement("div");
+    wrapper.classList.add("coachmark-wrapper");
+    wrapper.classList.add("pl");
+
+    const mark = document.createElement("div");
+    mark.classList.add("coachmark-tooltip");
+    mark.classList.add("coachmark-tooltip--bottom-middle");
+    mark.innerHTML = "<span class='coachmark-tooltip__arrow' style='left: 50%; top: 35px; position: absolute; transform: translateX(0px);'></span><span>" + msg + "</span>";
+    wrapper.insertAdjacentElement("afterbegin", mark);
+
+    document.getElementById("dropdown-avatar").insertAdjacentElement("beforeend", wrapper);
+  },
+  showCoachmark() {
 
   }
+
+  /*<div class="pl coachmark-wrapper" style="z-index: 99; left: 802px; top: 1631.33px; position: absolute;">
+  <div class="coachmark-tooltip coachmark-tooltip--top-middle">
+    <span class="coachmark-tooltip__arrow" style="transform: translateX(0px); position: absolute; top: 0px; left: 50%;"></span>
+    Så enkelt!
+</div>
+</div>*/
 
 };
 
