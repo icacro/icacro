@@ -16,7 +16,7 @@ import { isLoggedIn } from '../util/utils';
 import './style.css';
 
 const test = {
-
+  show: false,
   manipulateDom() {
 
     const offerLink = isLoggedIn() ? document.createElement('a') : document.createElement('div');
@@ -33,7 +33,10 @@ const test = {
       offerLink.innerHTML = '<div class="circle-icon circle-icon--grey circle-offers"><svg><use xlink:href="/Assets/icons/symbols.svg#price-tag"></use></svg></div><span class="circle-link__label">Erbjudanden</span>';
       test.createCoachmark();
       offerLink.addEventListener("mouseover", function(e){
-
+        test.displayCoachmark();
+      });
+      offerLink.addEventListener("click", function(e){
+        test.displayCoachmark();
       });
     }
     document.getElementById('dropdown-avatar').querySelector('.circle-links').prepend(offerLink);
@@ -51,19 +54,18 @@ const test = {
     mark.innerHTML = "<span class='coachmark-tooltip__arrow' style='left: 50%; top: 35px; position: absolute; transform: translateX(0px);'></span><span>" + msg + "</span>";
     wrapper.insertAdjacentElement("afterbegin", mark);
 
-    document.getElementById("dropdown-avatar").insertAdjacentElement("beforeend", wrapper);
+    document.querySelector('.circle-links.pl').append(wrapper);
   },
-  showCoachmark() {
-
+  displayCoachmark() {
+    if(test.show) {
+      return;
+    }
+    document.querySelector('.coachmark-wrapper.pl').classList.add("shout");
+    test.show = true;
+    window.setTimeout(function() {
+      document.querySelector('.coachmark-wrapper.pl').classList.remove("shout");
+    }, 3000);
   }
-
-  /*<div class="pl coachmark-wrapper" style="z-index: 99; left: 802px; top: 1631.33px; position: absolute;">
-  <div class="coachmark-tooltip coachmark-tooltip--top-middle">
-    <span class="coachmark-tooltip__arrow" style="transform: translateX(0px); position: absolute; top: 0px; left: 50%;"></span>
-    Så enkelt!
-</div>
-</div>*/
-
 };
 
 $(document).ready(() => {

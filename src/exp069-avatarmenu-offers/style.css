@@ -8,4 +8,13 @@
   top: 280px;
   position: absolute;
   z-index: 99;
+  visibility: hidden;
+  opacity: 0;
+  transition: all .7s ease-in;
+}
+
+.cro .pl.coachmark-wrapper.shout {
+  visibility: visible;
+  opacity: 1;
+  transition: all .7s ease-out;
 }
