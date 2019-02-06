@@ -28,6 +28,9 @@ const test = {
     offerLink.setAttributeNode(dataTracking);
     if(isLoggedIn()) {
       offerLink.innerHTML = '<div class="circle-icon circle-icon--purple circle-offers"><svg><use xlink:href="/Assets/icons/symbols.svg#price-tag"></use></svg></div><span class="circle-link__label">Erbjudanden</span>';
+      offerLink.addEventListener("click", function() {
+        gaPush({ eventAction: 'Användarmeny', eventLabel: 'Erbjudande aktiv' });
+      });
     }
     else {
       offerLink.innerHTML = '<div class="circle-icon circle-icon--grey circle-offers"><svg><use xlink:href="/Assets/icons/symbols.svg#price-tag"></use></svg></div><span class="circle-link__label">Erbjudanden</span>';
@@ -38,11 +41,11 @@ const test = {
       offerLink.addEventListener("click", function(e){
         e.preventDefault();
         e.stopPropagation();
+        gaPush({ eventAction: 'Användarmeny', eventLabel: 'Erbjudande inaktiv' });
         test.displayCoachmark();
       });
     }
     document.getElementById('dropdown-avatar').querySelector('.circle-links').prepend(offerLink);
-
   },
   createCoachmark() {
     const msg = "Logga in för att se erbjudanden";

@@ -18,16 +18,19 @@ const test = {
 
   manipulateDom() {
 
-    const myOffers = document.createElement('a');
-    myOffers.classList.add('circle-link','js-track-nav-user-item');
-    myOffers.href = '/erbjudanden/butikserbjudanden/';
+    const offerLink = document.createElement('a');
+    offerLink.classList.add('circle-link','js-track-nav-user-item');
+    offerLink.href = '/erbjudanden/butikserbjudanden/';
     var dataTracking = document.createAttribute('data-tracking');
-    dataTracking.value = '{"name":"Erbjudanden"}';
-    myOffers.setAttributeNode(dataTracking);
-    myOffers.innerHTML = '<div class="circle-icon circle-icon--purple circle-offers"><svg><use xlink:href="/Assets/icons/symbols.svg#price-tag"></use></svg></div><span class="circle-link__label">Erbjudanden</span>';
+    offerLink.value = '{"name":"Erbjudanden"}';
+    offerLink.setAttributeNode(dataTracking);
+    offerLink.innerHTML = '<div class="circle-icon circle-icon--purple circle-offers"><svg><use xlink:href="/Assets/icons/symbols.svg#price-tag"></use></svg></div><span class="circle-link__label">Erbjudanden</span>';
 
-    document.getElementById('dropdown-avatar').querySelector('.circle-links').prepend(myOffers);
+    document.getElementById('dropdown-avatar').querySelector('.circle-links').prepend(offerLink);
 
+    offerLink.addEventListener("click", function() {
+      gaPush({ eventAction: 'Användarmeny', eventLabel: 'Erbjudande aktiv' });
+    });
   }
 
 };
