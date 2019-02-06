@@ -36,6 +36,8 @@ const test = {
         test.displayCoachmark();
       });
       offerLink.addEventListener("click", function(e){
+        e.preventDefault();
+        e.stopPropagation();
         test.displayCoachmark();
       });
     }
