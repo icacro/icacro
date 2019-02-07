@@ -17,7 +17,7 @@ function init() {
   var head = document.querySelector('head');
 
   script.setAttribute('async', '');
-  script.setAttribute('src', 'https://cdn.rawgit.com/icacro/icacro/v1.0.354/src/exp069-avatarmenu-offers/variant.min.js');
+  script.setAttribute('src', 'https://cdn.rawgit.com/icacro/icacro/v1.0.355/src/exp069-avatarmenu-offers/variant.min.js');
 
   head.appendChild(script);
 }
