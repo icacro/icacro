@@ -17,8 +17,43 @@ import './style.css';
 const test = {
 
   manipulateDom() {
+    const link = document.getElementById("navigation-store-link").href;
+    if(link == null || link.length < 10){ //ingen butik vald
+      return;
+    }
+    var pos = link.slice(0, link.length - 1).lastIndexOf("/") + 1;
+    var storeOffersLink = link.slice(0, pos) + "erbjudanden";
 
-    const offerLink = document.createElement('a');
+    const nodes = document.querySelectorAll(".navigation__link.js-track-nav-menu-item");
+    console.log(nodes);
+    var offersLink = null;
+    nodes.forEach(function(node) {
+      if(offersLink == null && node.innerText == "Erbjudanden"){
+        offersLink = node;
+      }
+    });
+    console.log(offersLink);
+    console.log(storeOffersLink);
+
+    offersLink.href = storeOffersLink;
+
+    const pageType = document.head.querySelector("[name=PageType][content]").content;
+    if(pageType != "OffersInStorePageType"){ // inte sida med butikserbjudanden
+      return;
+    }
+
+    //layoutfix butikserbjudanden 
+
+    const buttons = document.querySelectorAll(".add-item-to-shoppinglist");
+    buttons.forEach(function(button) {
+      button.addEventListener("click", function(e){
+        alert("test");
+        console.log("gaPush({ eventAction: 'Butikserbjudanden', eventLabel: 'Lägg till i inköpslista' });");
+        //gaPush({ eventAction: 'Butikserbjudanden', eventLabel: 'Lägg till i inköpslista' });
+      });
+    });
+
+    /*const offerLink = document.createElement('a');
     offerLink.classList.add('circle-link','js-track-nav-user-item');
     offerLink.href = '/erbjudanden/butikserbjudanden/';
     var dataTracking = document.createAttribute('data-tracking');
@@ -30,7 +65,7 @@ const test = {
 
     offerLink.addEventListener("click", function() {
       gaPush({ eventAction: 'Användarmeny', eventLabel: 'Erbjudande aktiv' });
-    });
+    });*/
   }
 
 };
