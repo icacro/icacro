@@ -5,7 +5,7 @@
 }
 
 @media (max-width: 452px) {
-  .cro .top-bar-sub-menu__item a {
+  .cro .store-offers-experiment.top-bar-sub-menu__item a {
     font-size: 1.4rem;
     padding: 0 0 3px;
   }
