@@ -42,7 +42,23 @@ const test = {
       return;
     }
 
-    //layoutfix butikserbjudanden 
+    //layout butikserbjudanden
+
+    const topbar = document.querySelector(".top-bar");
+
+    const menu = document.createElement("div");
+    menu.classList.add("top-bar__sub-menu");
+
+    const menuItems = document.createElement("ul");
+    menuItems.classList.add("top-bar-sub-menu");
+
+    menuItems.append(test.createMenuItem("Nöjeserbjudanden", "/erbjudanden/nojeserbjudanden/", false));
+    //menuItems.append(test.createMenuItem("Butikserbjudanden", "/erbjudanden/butikserbjudanden/", true));
+    menuItems.append(test.createMenuItem("Reklamfilmer", "/erbjudanden/icas-reklamfilmer/", false));
+    menuItems.append(test.createMenuItem("Ändra butik", "/butiker/", false));
+
+    menu.append(menuItems);
+    topbar.append(menu);
 
     const buttons = document.querySelectorAll(".add-item-to-shoppinglist");
     buttons.forEach(function(button) {
@@ -52,22 +68,17 @@ const test = {
         //gaPush({ eventAction: 'Butikserbjudanden', eventLabel: 'Lägg till i inköpslista' });
       });
     });
-
-    /*const offerLink = document.createElement('a');
-    offerLink.classList.add('circle-link','js-track-nav-user-item');
-    offerLink.href = '/erbjudanden/butikserbjudanden/';
-    var dataTracking = document.createAttribute('data-tracking');
-    offerLink.value = '{"name":"Erbjudanden"}';
-    offerLink.setAttributeNode(dataTracking);
-    offerLink.innerHTML = '<div class="circle-icon circle-icon--purple circle-offers"><svg><use xlink:href="/Assets/icons/symbols.svg#price-tag"></use></svg></div><span class="circle-link__label">Erbjudanden</span>';
-
-    document.getElementById('dropdown-avatar').querySelector('.circle-links').prepend(offerLink);
-
-    offerLink.addEventListener("click", function() {
-      gaPush({ eventAction: 'Användarmeny', eventLabel: 'Erbjudande aktiv' });
-    });*/
+  },
+  createMenuItem(text, url, isActive) {
+    const li = document.createElement("li");
+    li.classList.add("top-bar-sub-menu__item");
+    if(isActive) {
+      li.classList.add("top-bar-sub-menu__item--active");
+    }
+    li.classList.add("store-offers-experiment");
+    li.innerHTML = "<a href='" + url + "'>" +text + "</a>";
+    return li;
   }
-
 };
 
 $(document).ready(() => {
