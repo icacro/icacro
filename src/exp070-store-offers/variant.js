@@ -25,7 +25,7 @@ const test = {
     var storeOffersLink = link.slice(0, pos) + "erbjudanden";
 
     const nodes = document.querySelectorAll(".navigation__link.js-track-nav-menu-item");
-    console.log(nodes);
+    //console.log(nodes);
     var offersLink = null;
     nodes.forEach(function(node) {
       if(offersLink == null && node.innerText == "Erbjudanden"){
@@ -35,7 +35,9 @@ const test = {
     console.log(offersLink);
     console.log(storeOffersLink);
 
-    offersLink.href = storeOffersLink;
+    if(offersLink != null) {
+      offersLink.href = storeOffersLink;
+    }
 
     const pageType = document.head.querySelector("[name=PageType][content]").content;
     if(pageType != "OffersInStorePageType"){ // inte sida med butikserbjudanden
@@ -63,7 +65,6 @@ const test = {
     const buttons = document.querySelectorAll(".add-item-to-shoppinglist");
     buttons.forEach(function(button) {
       button.addEventListener("click", function(e){
-        alert("test");
         console.log("gaPush({ eventAction: 'Butikserbjudanden', eventLabel: 'Lägg till i inköpslista' });");
         //gaPush({ eventAction: 'Butikserbjudanden', eventLabel: 'Lägg till i inköpslista' });
       });
