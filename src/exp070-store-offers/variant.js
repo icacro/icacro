@@ -17,6 +17,19 @@ import './style.css';
 const test = {
 
   manipulateDom() {
+    const metaTag = document.head.querySelector("[name=PageType][content]");
+    if(metaTag == null){
+      return;
+    }
+
+    const pageType = metaTag.content;
+
+    if(pageType != "OffersInStorePageType"){ // inte sida med butikserbjudanden
+      return;
+    }
+
+    const isOffersInStorePage = metaTag.content == "OffersInStorePageType";
+
     const link = document.getElementById("navigation-store-link").href;
     if(link == null || link.length < 10){ //ingen butik vald
       return;
@@ -35,14 +48,16 @@ const test = {
     console.log(offersLink);
     console.log(storeOffersLink);
 
+    // fixa "tillbaka till ica" länk!
+
     if(offersLink != null) {
       offersLink.href = storeOffersLink;
     }
 
-    const pageType = document.head.querySelector("[name=PageType][content]").content;
+    /*const pageType = document.head.querySelector("[name=PageType][content]").content;
     if(pageType != "OffersInStorePageType"){ // inte sida med butikserbjudanden
       return;
-    }
+    }*/
 
     //layout butikserbjudanden
 
