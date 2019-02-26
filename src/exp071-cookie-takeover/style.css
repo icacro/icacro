@@ -1,0 +1,16 @@
+@media (min-width: 700px) {
+  .cro .page.bhs-offers .store-top-container .logo-heading-container {
+    padding: 78px 28px;
+  }
+}
+
+@media (max-width: 452px) {
+  .cro .store-offers-experiment.top-bar-sub-menu__item a {
+    font-size: 1.4rem;
+    padding: 0 0 3px;
+  }
+}
+
+.cro .page.bhs-offers .store-top-container .logo-heading-container {
+  padding: 65px 0 15px 0;
+}
