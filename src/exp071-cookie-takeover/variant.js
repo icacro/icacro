@@ -21,6 +21,16 @@ const test = {
       return;
     }
 
+    /*
+    Vit modal, med nuvarande ID.
+    Rubrik: Ica Rubrik black, 32px, lineheigt 40px.
+    Bröd: Ica text Regular, 16pc, lineheight 24px.
+    Knappar icas nuvarande cta-färg #a02971 och 100%radius
+    i desktop modalen har jag satt paddingen till top 80, left & right 80 och bottom 88
+
+    juste modalen på desktop är 640px bred
+    */
+
     //cb-enabled: accepted
     //document.cookie = ['cb-enabled', '=', 'accepted', '; domain=.', '.ica.se', '; path=/', '; expires=', ''].join('');
     const oldMsg = document.querySelector(".cb-enable.sprite2");

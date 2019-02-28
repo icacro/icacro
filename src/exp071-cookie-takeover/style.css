@@ -5,14 +5,16 @@
   z-index: 99;
   left: 0;
   top: 0;
+  /*background-color: rgb(128,130,131);
+  background-color: rgba(128,130,131, 0.5); */
   background-color: rgb(128,130,131);
-  background-color: rgba(128,130,131, 0.5);
+  background-color: rgba(0,0,0, 0.6);
   overflow-x: hidden; /* Disable horizontal scroll */
   transition: 0.4s;
 }
 
 .cro .cookie-overlay div.cookie-overlay-content {
-  background-color: rgba(128,130,131, 1);
+  background-color: rgb(255,255,255);
   /*border: 1px solid #3F3F40; */
   border-radius: 10px;
   position: relative;
@@ -37,7 +39,7 @@
 }
 
 .cro .cookie-overlay div.cookie-overlay-content a.button--link {
-  background-color: rgba(128,130,131, 1);
+  background-color: rgb(255,255,255);
   color: #A02971;
 }
 
