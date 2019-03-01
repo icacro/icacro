@@ -15,21 +15,11 @@ import { gaPush } from '../util/utils';
 import './style.css';
 
 const test = {
-
+  orginalOverflow: document.body.style.overflow,
   manipulateDom() {
     if(document.cookie.match(new RegExp("acceptCookiesVariant" + '=([^;]+)'))){
       return;
     }
-
-    /*
-    Vit modal, med nuvarande ID.
-    Rubrik: Ica Rubrik black, 32px, lineheigt 40px.
-    Bröd: Ica text Regular, 16pc, lineheight 24px.
-    Knappar icas nuvarande cta-färg #a02971 och 100%radius
-    i desktop modalen har jag satt paddingen till top 80, left & right 80 och bottom 88
-
-    juste modalen på desktop är 640px bred
-    */
 
     //cb-enabled: accepted
     //document.cookie = ['cb-enabled', '=', 'accepted', '; domain=.', '.ica.se', '; path=/', '; expires=', ''].join('');
@@ -38,7 +28,7 @@ const test = {
       oldMsg.click();
     }
 
-    const txt= "<h2>Får vi bjuda på kakor?</h2><p>ICA använder kakor för att tillhandahålla tjänster i våra digitala kanaler, kommunicera och lämna erbjudanden och för att följa upp och utvärdera användningen av våra digitala kanaler. Kakor används också för att hantera, skydda och utveckla våra system och tjänster. Genom att använda vår webbplats accepterar du att kakor används. Du kan styra användningen av kakor i inställningarna i din webbläsare.</p>";
+    const txt= "<div>Får vi bjuda på kakor?</div><p>ICA använder kakor för att tillhandahålla tjänster i våra digitala kanaler, kommunicera och lämna erbjudanden och för att följa upp och utvärdera användningen av våra digitala kanaler. Kakor används också för att hantera, skydda och utveckla våra system och tjänster. Genom att använda vår webbplats accepterar du att kakor används. Du kan styra användningen av kakor i inställningarna i din webbläsare.</p>";
 
     const takeover = document.createElement("div");
     takeover.classList.add("cookie-overlay");
@@ -49,10 +39,10 @@ const test = {
 
     const btnAccept = document.createElement("a");
     btnAccept.classList.add("button");
-    btnAccept.innerHTML = "Ok, Jag förstår";
+    btnAccept.innerHTML = "Ok, jag förstår";
     btnAccept.addEventListener("click", function(e) {
-      //gaPush({ eventAction: 'Accepterade cookies', eventLabel: 'cookie takeover' });
-      console.log("gaPush({ eventAction: 'Accepterade cookies', eventLabel: 'cookie takeover' });");
+      gaPush({ eventAction: 'Accepterade cookies', eventLabel: 'cookie takeover' });
+      //console.log("gaPush({ eventAction: 'Accepterade cookies', eventLabel: 'cookie takeover' });");
       takeover.style.height = "0";
       test.accept();
     });
@@ -63,8 +53,8 @@ const test = {
     btnReadMore.innerHTML = "Hantera cookies";
     btnReadMore.href = "https://www.ica.se/policies/cookies/?utm_source=cookiemessage";
     btnReadMore.addEventListener("click", function(e) {
-      //gaPush({ eventAction: 'Klick på hantera cookies', eventLabel: 'cookie takeover' });
-      console.log("gaPush({ eventAction: 'Klick på hantera cookies', eventLabel: 'cookie takeover' });");
+      gaPush({ eventAction: 'Klick på hantera cookies', eventLabel: 'cookie takeover' });
+      //console.log("gaPush({ eventAction: 'Klick på hantera cookies', eventLabel: 'cookie takeover' });");
       test.accept();
     });
 
@@ -77,11 +67,13 @@ const test = {
     hdr.insertAdjacentElement("afterbegin", takeover);
     window.setTimeout(function() {
       takeover.style.height = "100vh";
-    }, 1000);
+      document.body.style.overflow = 'hidden';
+    }, 400);
 
   },
   accept() {
     document.cookie = ['acceptCookiesVariant', '=', true, '; domain=.', window.location.host.toString(), '; path=/', '; expires=Sun, 1 Mar 2020 23:59:59 GMT', ''].join('');
+    document.body.style.overflow = test.orginalOverflow;
   }
 };
 

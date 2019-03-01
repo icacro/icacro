@@ -16,26 +16,39 @@
 .cro .cookie-overlay div.cookie-overlay-content {
   background-color: rgb(255,255,255);
   /*border: 1px solid #3F3F40; */
-  border-radius: 10px;
+  border-radius: 3px;
   position: relative;
-  top: 25%;
-  width: 375px;
+  top: 130px;
+  width: 640px;
   text-align: left;
-  padding: 35px;
+  padding: 80px 80px 88px 80px;
   margin: 0 auto;
   -webkit-box-shadow: 0px 0px 6px 2px rgba(0,0,0,0.75);
   -moz-box-shadow: 0px 0px 6px 2px rgba(0,0,0,0.75);
   box-shadow: 0px 0px 6px 2px rgba(0,0,0,0.75);
 }
 
-.cro .cookie-overlay div.cookie-overlay-content h2 {
-  color: Black;
-  font-weight: bold;
+.cro .cookie-overlay div.cookie-overlay-content div {
+  color: #3F3F40;
+  font-family: 'IcaRubrik';
+  font-weight: 900;
+  font-size: 32px;
+  line-height: 40px;
+}
+
+.cro .cookie-overlay div.cookie-overlay-content p {
+  line-height: 24px;
+  color: #3f3f40;
+  font-family: 'icatext';
+  font-size: 16px;
 }
 
 .cro .cookie-overlay div.cookie-overlay-content a {
   margin-right: 20px;
-  border-radius: 5px;
+  border-radius: 3.125rem;
+  padding: 9px 38px;
+  font-size: 16px;
+  font-family: 'icatext';
 }
 
 .cro .cookie-overlay div.cookie-overlay-content a.button--link {
@@ -49,4 +62,18 @@
 
 .cro #cookie-bar {
   display: none;
+}
+
+@media (max-width: 640px) {
+  .cro .cookie-overlay div.cookie-overlay-content {
+    width: 90vw;
+    padding: 40px 20px 48px 20px;
+    top: 10%;
+  }
+}
+
+@media (max-width: 496px) {
+  .cro .cookie-overlay div.cookie-overlay-content a {
+    width: 100%;
+  }
 }
