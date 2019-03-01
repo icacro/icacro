@@ -1,0 +1,90 @@
+// ==UserScript==
+// @name         CookieTakeover
+// @namespace    http://tampermonkey.net/
+// @version      0.1
+// @description  try to take over the world!
+// @author       You
+// @match        https://www.ica.se/*
+// @grant        none
+// ==/UserScript==
+
+'use strict';
+
+import { CROUTIL } from '../util/main';
+import { gaPush } from '../util/utils';
+import './style.css';
+
+const test = {
+  orginalOverflow: document.body.style.overflow,
+  manipulateDom() {
+    if(document.cookie.match(new RegExp("acceptCookiesVariant" + '=([^;]+)'))){
+      return;
+    }
+
+    //cb-enabled: accepted
+    //document.cookie = ['cb-enabled', '=', 'accepted', '; domain=.', '.ica.se', '; path=/', '; expires=', ''].join('');
+    const oldMsg = document.querySelector(".cb-enable.sprite2");
+    if(oldMsg != null){
+      oldMsg.click();
+    }
+
+    var txt= "<div>Får vi bjuda på kakor?</div><p>ICA använder kakor för att tillhandahålla tjänster i våra digitala kanaler, kommunicera och lämna erbjudanden och för att följa upp och utvärdera användningen av våra digitala kanaler. Kakor används också för att hantera, skydda och utveckla våra system och tjänster. Genom att använda vår webbplats accepterar du att kakor används. Du kan styra användningen av kakor i inställningarna i din webbläsare.</p>";
+
+    txt += "<p>Vi har delat in de kakor vi använder i följande kategorier:<ul>";
+    txt += "<li><b>Analyskakor</b> används för att samla in och analysera statistik, t.ex. besöks- och klickhistorik eller öppnings- och läsningsstatistik.</li>";
+    txt += "<li><b>Funktionella kakor</b> används för att möjliggöra funktionalitet på webbplatsen.</li>";
+    txt += "<li><b>Marknadsföringskakor</b> används för att visa annonser och rekommendationer på webbplatser (men även för att begränsa antalet gånger som en viss annons visas).</li>";
+    txt += "<li><b>Nödvändiga kakor</b> behövs för att tillhandahålla tjänsten som du har efterfrågat.</li>";
+    txt += "<li><b>Säkerhetskakor</b> behövs för att skydda t.ex. ditt konto på webbplatsen.</li></ul></p>";
+
+    const takeover = document.createElement("div");
+    takeover.classList.add("cookie-overlay");
+
+    const content = document.createElement("div");
+    content.classList.add("cookie-overlay-content");
+    content.innerHTML = txt;
+
+    const btnAccept = document.createElement("a");
+    btnAccept.classList.add("button");
+    btnAccept.innerHTML = "Ok, jag förstår";
+    btnAccept.addEventListener("click", function(e) {
+      gaPush({ eventAction: 'Accepterade cookies', eventLabel: 'cookie takeover' });
+      //console.log("gaPush({ eventAction: 'Accepterade cookies', eventLabel: 'cookie takeover' });");
+      takeover.style.height = "0";
+      test.accept();
+    });
+
+    const btnReadMore = document.createElement("a");
+    btnReadMore.classList.add("button");
+    btnReadMore.classList.add("button--link");
+    btnReadMore.innerHTML = "Hantera cookies";
+    btnReadMore.href = "https://www.ica.se/policies/cookies/?utm_source=cookiemessage";
+    btnReadMore.addEventListener("click", function(e) {
+      gaPush({ eventAction: 'Klick på hantera cookies', eventLabel: 'cookie takeover' });
+      //console.log("gaPush({ eventAction: 'Klick på hantera cookies', eventLabel: 'cookie takeover' });");
+      test.accept();
+    });
+
+    content.insertAdjacentElement("beforeend", btnAccept);
+    content.insertAdjacentElement("beforeend", btnReadMore);
+
+    takeover.insertAdjacentElement("afterbegin", content);
+
+    const hdr = document.getElementsByTagName('header')[0];
+    hdr.insertAdjacentElement("afterbegin", takeover);
+    window.setTimeout(function() {
+      takeover.style.height = "100vh";
+      document.body.style.overflow = 'hidden';
+    }, 400);
+
+  },
+  accept() {
+    document.cookie = ['acceptCookiesVariant', '=', true, '; domain=.', window.location.host.toString(), '; path=/', '; expires=Sun, 1 Mar 2020 23:59:59 GMT', ''].join('');
+    document.body.style.overflow = test.orginalOverflow;
+  }
+};
+
+$(document).ready(() => {
+  Object.assign(test, CROUTIL());
+  test.manipulateDom();
+});
