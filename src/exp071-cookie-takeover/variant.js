@@ -72,7 +72,7 @@ const test = {
 
   },
   accept() {
-    document.cookie = ['acceptCookiesVariant', '=', true, '; domain=.', window.location.host.toString(), '; path=/', '; expires=Sun, 1 Mar 2020 23:59:59 GMT', ''].join('');
+    document.cookie = ['acceptCookiesVariant', '=', true, '; domain=.', window.location.host.toString(), '; path=/', '; expires=Sun, 31 Mar 2019 23:59:59 GMT', ''].join('');
     document.body.style.overflow = test.orginalOverflow;
   }
 };
