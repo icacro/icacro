@@ -1,6 +1,6 @@
 // ==UserScript==
-// @name         CookieTakeover
-// @path         //./src/src/exp071-cookie-takeover/variant.js
+// @name         CookieTopbar
+// @path         //./src/src/exp072-cookie-topbar/variant.js
 // @namespace    http://tampermonkey.net/
 // @version      0.1
 // @match        https://www.ica.se/*
@@ -16,7 +16,7 @@ function init() {
   var head = document.querySelector('head');
 
   script.setAttribute('async', '');
-  script.setAttribute('src', 'https://cdn.rawgit.com/icacro/icacro/v1.0.359/src/exp071-cookie-takeover/variant.min.js');
+  script.setAttribute('src', 'https://cdn.rawgit.com/icacro/icacro/v1.0.359/src/exp072-cookie-topbar/variant.min.js');
 
   head.appendChild(script);
 }

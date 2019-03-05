@@ -1,0 +1,79 @@
+.cro div.cookie-overlay {
+  height: 0;
+  width: 100vw;
+  position: fixed;
+  z-index: 99;
+  left: 0;
+  top: 0;
+  /*background-color: rgb(128,130,131);
+  background-color: rgba(128,130,131, 0.5); */
+  background-color: rgb(128,130,131);
+  background-color: rgba(0,0,0, 0.6);
+  overflow-x: hidden; /* Disable horizontal scroll */
+  transition: 0.4s;
+}
+
+.cro div.cookie-message {
+  background-color: rgb(255,255,255);
+  text-align: left;
+  padding: 10px 80px 20px 80px;
+  border-bottom: 1px solid #D5D7DA;
+  width: 100vw;
+}
+
+.cro div.cookie-message div {
+  color: #3F3F40;
+  font-family: 'IcaRubrik';
+  font-weight: 900;
+  font-size: 32px;
+  line-height: 40px;
+}
+
+.cro div.cookie-message p {
+  line-height: 24px;
+  color: #3f3f40;
+  font-family: 'icatext';
+  font-size: 16px;
+}
+
+.cro div.cookie-message a {
+  margin-right: 20px;
+  border-radius: 3.125rem;
+  padding: 9px 38px;
+  font-size: 16px;
+  font-family: 'icatext';
+}
+
+.cro div.cookie-message a.button--link {
+  background-color: rgb(255,255,255);
+  color: #A02971;
+}
+
+.cro div.cookie-message a.button--link:hover {
+  color: #DC438C;
+}
+
+.cro #cookie-bar {
+  display: none;
+}
+
+@media (max-width: 640px) {
+  .cro div.cookie-message {
+    width: 90vw;
+    padding: 40px 20px 48px 20px;
+    top: 10%;
+  }
+}
+
+@media (max-width: 496px) {
+  .cro div.cookie-message a {
+    width: 100%;
+    margin-top: 8px;
+  }
+  .cro div.cookie-message div {
+    font-size: 24px;
+  }
+  .cro div.cookie-message a.button--link {
+    margin-bottom: 5px;
+  }
+}
