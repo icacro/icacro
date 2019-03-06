@@ -16,7 +16,6 @@ import './style.css';
 
 const test = {
   cookieName: "acceptCookiesFromTopBarVariant",
-  orginalOverflow: document.body.style.overflow,
   manipulateDom() {
     if(document.cookie.match(new RegExp(test.cookieName + '=([^;]+)'))){
       return;
@@ -29,30 +28,24 @@ const test = {
       oldMsg.click();
     }
 
-    var txt= "<div>Får vi bjuda på kakor?</div><p>ICA använder kakor för att tillhandahålla tjänster i våra digitala kanaler, kommunicera och lämna erbjudanden och för att följa upp och utvärdera användningen av våra digitala kanaler. Kakor används också för att hantera, skydda och utveckla våra system och tjänster. Genom att använda vår webbplats accepterar du att kakor används. Du kan styra användningen av kakor i inställningarna i din webbläsare.</p>";
+    // <div>Får vi bjuda på kakor?</div>
+    const txt= "<p>ICA använder kakor för att tillhandahålla tjänster i våra digitala kanaler, kommunicera och lämna erbjudanden och för att följa upp och utvärdera användningen av våra digitala kanaler. Kakor används också för att hantera, skydda och utveckla våra system och tjänster. Genom att använda vår webbplats accepterar du att kakor används. Du kan styra användningen av kakor i inställningarna i din webbläsare.</p>";
 
-    txt += "<p>Vi har delat in de kakor vi använder i följande kategorier:<ul>";
-    txt += "<li><b>Analyskakor</b> används för att samla in och analysera statistik, t.ex. besöks- och klickhistorik eller öppnings- och läsningsstatistik.</li>";
-    txt += "<li><b>Funktionella kakor</b> används för att möjliggöra funktionalitet på webbplatsen.</li>";
-    txt += "<li><b>Marknadsföringskakor</b> används för att visa annonser och rekommendationer på webbplatser (men även för att begränsa antalet gånger som en viss annons visas).</li>";
-    txt += "<li><b>Nödvändiga kakor</b> behövs för att tillhandahålla tjänsten som du har efterfrågat.</li>";
-    txt += "<li><b>Säkerhetskakor</b> behövs för att skydda t.ex. ditt konto på webbplatsen.</li></ul></p>";
+    // variant 1: försvinner vid klick varsomhelst
+    // variant 2: försvinner vid klick på ok eller hantera cookies
+    // event när meddelandet stängs
 
-    const takeover = document.createElement("div");
-    takeover.classList.add("cookie-overlay");
-
-    const content = document.createElement("div");
-    content.classList.add("cookie-overlay-content");
-    content.innerHTML = txt;
+    const message = document.createElement("div");
+    message.classList.add("cookie-message");
+    message.innerHTML = txt;
 
     const btnAccept = document.createElement("a");
     btnAccept.classList.add("button");
     btnAccept.innerHTML = "Ok, jag förstår";
     btnAccept.addEventListener("click", function(e) {
-      gaPush({ eventAction: 'Accepterade cookies', eventLabel: 'cookie topbar' });
-      //console.log("gaPush({ eventAction: 'Accepterade cookies', eventLabel: 'cookie topbar' });");
-      takeover.style.height = "0";
-      test.accept();
+      //gaPush({ eventAction: 'Accepterade cookies', eventLabel: 'cookie topbar' });
+      console.log("gaPush({ eventAction: 'Accepterade cookies', eventLabel: 'cookie topbar' });");
+      test.close(message);
     });
 
     const btnReadMore = document.createElement("a");
@@ -61,27 +54,25 @@ const test = {
     btnReadMore.innerHTML = "Hantera cookies";
     btnReadMore.href = "https://www.ica.se/policies/cookies/?utm_source=cookiemessage";
     btnReadMore.addEventListener("click", function(e) {
-      gaPush({ eventAction: 'Klick på hantera cookies', eventLabel: 'cookie topbar' });
-      //console.log("gaPush({ eventAction: 'Klick på hantera cookies', eventLabel: 'cookie topbar' });");
-      test.accept();
+      //gaPush({ eventAction: 'Klick på hantera cookies', eventLabel: 'cookie topbar' });
+      console.log("gaPush({ eventAction: 'Klick på hantera cookies', eventLabel: 'cookie topbar' });");
+      test.close(message);
     });
 
-    content.insertAdjacentElement("beforeend", btnAccept);
-    content.insertAdjacentElement("beforeend", btnReadMore);
-
-    takeover.insertAdjacentElement("afterbegin", content);
+    message.insertAdjacentElement("beforeend", btnAccept);
+    message.insertAdjacentElement("beforeend", btnReadMore);
 
     const hdr = document.getElementsByTagName('header')[0];
-    hdr.insertAdjacentElement("afterbegin", takeover);
+    hdr.insertAdjacentElement("afterbegin", message);
+
     window.setTimeout(function() {
-      takeover.style.height = "100vh";
-      document.body.style.overflow = 'hidden';
-    }, 400);
+      message.classList.add("show-full-message");
+    }, 500);
 
   },
-  accept() {
-    document.cookie = [test.cookieName, '=', true, '; domain=.', window.location.host.toString(), '; path=/', '; expires=Sun, 31 Mar 2019 23:59:59 GMT', ''].join('');
-    document.body.style.overflow = test.orginalOverflow;
+  close(msg) {
+    //document.cookie = [test.cookieName, '=', true, '; domain=.', window.location.host.toString(), '; path=/', '; expires=Sun, 31 Mar 2019 23:59:59 GMT', ''].join('');
+    msg.classList.remove("show-full-message");
   }
 };
 

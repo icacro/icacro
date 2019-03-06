@@ -16,7 +16,6 @@ import './style.css';
 
 const test = {
   cookieName: "acceptCookiesFromTopBarVariant",
-  orginalOverflow: document.body.style.overflow,
   manipulateDom() {
     if(document.cookie.match(new RegExp(test.cookieName + '=([^;]+)'))){
       return;
@@ -29,25 +28,16 @@ const test = {
       oldMsg.click();
     }
 
-    const txt= "<div>Får vi bjuda på kakor?</div><p>ICA använder kakor för att tillhandahålla tjänster i våra digitala kanaler, kommunicera och lämna erbjudanden och för att följa upp och utvärdera användningen av våra digitala kanaler. Kakor används också för att hantera, skydda och utveckla våra system och tjänster. Genom att använda vår webbplats accepterar du att kakor används. Du kan styra användningen av kakor i inställningarna i din webbläsare.</p>";
+    // <div>Får vi bjuda på kakor?</div>
+    const txt= "<p>ICA använder kakor för att tillhandahålla tjänster i våra digitala kanaler, kommunicera och lämna erbjudanden och för att följa upp och utvärdera användningen av våra digitala kanaler. Kakor används också för att hantera, skydda och utveckla våra system och tjänster. Genom att använda vår webbplats accepterar du att kakor används. Du kan styra användningen av kakor i inställningarna i din webbläsare.</p>";
 
     // variant 1: försvinner vid klick varsomhelst
-
     // variant 2: försvinner vid klick på ok eller hantera cookies
-
     // event när meddelandet stängs
 
     const message = document.createElement("div");
     message.classList.add("cookie-message");
     message.innerHTML = txt;
-
-
-    /*const takeover = document.createElement("div");
-    takeover.classList.add("cookie-overlay");
-
-    const content = document.createElement("div");
-    content.classList.add("cookie-overlay-content");
-    content.innerHTML = txt;*/
 
     const btnAccept = document.createElement("a");
     btnAccept.classList.add("button");
@@ -55,38 +45,39 @@ const test = {
     btnAccept.addEventListener("click", function(e) {
       //gaPush({ eventAction: 'Accepterade cookies', eventLabel: 'cookie topbar' });
       console.log("gaPush({ eventAction: 'Accepterade cookies', eventLabel: 'cookie topbar' });");
-      //takeover.style.height = "0";
-      //test.accept();
+      test.close(message);
     });
 
     const btnReadMore = document.createElement("a");
     btnReadMore.classList.add("button");
     btnReadMore.classList.add("button--link");
     btnReadMore.innerHTML = "Hantera cookies";
-    btnReadMore.href = "https://www.ica.se/policies/cookies/?utm_source=cookiemessage";
+    btnReadMore.href = "https://www.ica.se/policies/cookies/";
     btnReadMore.addEventListener("click", function(e) {
       //gaPush({ eventAction: 'Klick på hantera cookies', eventLabel: 'cookie topbar' });
       console.log("gaPush({ eventAction: 'Klick på hantera cookies', eventLabel: 'cookie topbar' });");
-      //test.accept();
+      test.close(message);
     });
 
     message.insertAdjacentElement("beforeend", btnAccept);
     message.insertAdjacentElement("beforeend", btnReadMore);
 
-    //takeover.insertAdjacentElement("afterbegin", content);
-
     const hdr = document.getElementsByTagName('header')[0];
     hdr.insertAdjacentElement("afterbegin", message);
 
-    /*window.setTimeout(function() {
-      takeover.style.height = "100vh";
-      document.body.style.overflow = 'hidden';
-    }, 400);*/
+    window.setTimeout(function() {
+      message.classList.add("show-full-message");
+      document.body.addEventListener("click", function(e) {
+        //gaPush({ eventAction: 'Klick på sidan', eventLabel: 'cookie topbar' });
+        console.log("gaPush({ eventAction: 'Klick på sidan', eventLabel: 'cookie topbar' });");
+        test.close(message);
+      }, { once: true });
+    }, 500);
 
   },
-  accept() {
-    document.cookie = [test.cookieName, '=', true, '; domain=.', window.location.host.toString(), '; path=/', '; expires=Sun, 31 Mar 2019 23:59:59 GMT', ''].join('');
-    document.body.style.overflow = test.orginalOverflow;
+  close(msg) {
+    //document.cookie = [test.cookieName, '=', true, '; domain=.', window.location.host.toString(), '; path=/', '; expires=Sun, 31 Mar 2019 23:59:59 GMT', ''].join('');
+    msg.classList.remove("show-full-message");
   }
 };
 

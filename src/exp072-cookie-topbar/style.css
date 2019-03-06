@@ -1,24 +1,21 @@
-.cro div.cookie-overlay {
-  height: 0;
-  width: 100vw;
-  position: fixed;
-  z-index: 99;
-  left: 0;
-  top: 0;
-  /*background-color: rgb(128,130,131);
-  background-color: rgba(128,130,131, 0.5); */
-  background-color: rgb(128,130,131);
-  background-color: rgba(0,0,0, 0.6);
-  overflow-x: hidden; /* Disable horizontal scroll */
-  transition: 0.4s;
-}
-
 .cro div.cookie-message {
   background-color: rgb(255,255,255);
   text-align: left;
+  height: 0;
+  width: 100vw;
+  z-index: 99;
+  left: 0;
+  top: 0;
+  opacity: 0;
+  transition: 0.2s ease-in;
+}
+
+.cro div.cookie-message.show-full-message {
   padding: 10px 80px 20px 80px;
   border-bottom: 1px solid #D5D7DA;
-  width: 100vw;
+  opacity: 1;
+  height: 100%;
+  transition: 0.5s ease-out;
 }
 
 .cro div.cookie-message div {
@@ -58,8 +55,7 @@
 }
 
 @media (max-width: 640px) {
-  .cro div.cookie-message {
-    width: 90vw;
+  .cro div.cookie-message.show-full-message {
     padding: 40px 20px 48px 20px;
     top: 10%;
   }
