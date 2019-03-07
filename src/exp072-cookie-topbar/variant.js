@@ -43,8 +43,8 @@ const test = {
     btnAccept.classList.add("button");
     btnAccept.innerHTML = "Ok, jag förstår";
     btnAccept.addEventListener("click", function(e) {
-      //gaPush({ eventAction: 'Accepterade cookies', eventLabel: 'cookie topbar' });
-      console.log("gaPush({ eventAction: 'Accepterade cookies', eventLabel: 'cookie topbar' });");
+      gaPush({ eventAction: 'Accepterade cookies', eventLabel: 'cookie topbar' });
+      //console.log("gaPush({ eventAction: 'Accepterade cookies', eventLabel: 'cookie topbar' });");
       test.close(message);
     });
 
@@ -54,8 +54,8 @@ const test = {
     btnReadMore.innerHTML = "Hantera cookies";
     btnReadMore.href = "https://www.ica.se/policies/cookies/";
     btnReadMore.addEventListener("click", function(e) {
-      //gaPush({ eventAction: 'Klick på hantera cookies', eventLabel: 'cookie topbar' });
-      console.log("gaPush({ eventAction: 'Klick på hantera cookies', eventLabel: 'cookie topbar' });");
+      gaPush({ eventAction: 'Klick på hantera cookies', eventLabel: 'cookie topbar' });
+      //console.log("gaPush({ eventAction: 'Klick på hantera cookies', eventLabel: 'cookie topbar' });");
       test.close(message);
     });
 
@@ -68,15 +68,15 @@ const test = {
     window.setTimeout(function() {
       message.classList.add("show-full-message");
       document.body.addEventListener("click", function(e) {
-        //gaPush({ eventAction: 'Klick på sidan', eventLabel: 'cookie topbar' });
-        console.log("gaPush({ eventAction: 'Klick på sidan', eventLabel: 'cookie topbar' });");
+        gaPush({ eventAction: 'Klick på sidan', eventLabel: 'cookie topbar' });
+        //console.log("gaPush({ eventAction: 'Klick på sidan', eventLabel: 'cookie topbar' });");
         test.close(message);
       }, { once: true });
     }, 500);
 
   },
   close(msg) {
-    //document.cookie = [test.cookieName, '=', true, '; domain=.', window.location.host.toString(), '; path=/', '; expires=Sun, 31 Mar 2019 23:59:59 GMT', ''].join('');
+    document.cookie = [test.cookieName, '=', true, '; domain=.', window.location.host.toString(), '; path=/', '; expires=Sun, 31 Mar 2019 23:59:59 GMT', ''].join('');
     msg.classList.remove("show-full-message");
   }
 };
