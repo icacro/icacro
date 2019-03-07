@@ -16,6 +16,10 @@ In Chrome
   - Find tampermonkey
   - allowed to access local file URIs
 
+After push:
+  - npm run patch
+  - put new version number in url in optimized
+
 In Tampermonkey
 
 // ==UserScript==
