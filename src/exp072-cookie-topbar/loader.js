@@ -16,7 +16,7 @@ function init() {
   var head = document.querySelector('head');
 
   script.setAttribute('async', '');
-  script.setAttribute('src', 'https://cdn.rawgit.com/icacro/icacro/v1.0.360/src/exp072-cookie-topbar/variant.min.js');
+  script.setAttribute('src', 'https://cdn.rawgit.com/icacro/icacro/v1.0.361/src/exp072-cookie-topbar/variant.min.js');
 
   head.appendChild(script);
 }
